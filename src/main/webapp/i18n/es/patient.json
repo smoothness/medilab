@@ -1,0 +1,32 @@
+{
+  "medilabApp": {
+    "patient": {
+      "home": {
+        "title": "Patients",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Patient",
+        "createOrEditLabel": "Crear o editar Patient",
+        "notFound": "Ningún Patients encontrado"
+      },
+      "created": "Un nuevo Patient ha sido creado con el identificador {{ param }}",
+      "updated": "Un Patient ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Patient ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Patient {{ id }}?"
+      },
+      "detail": {
+        "title": "Patient"
+      },
+      "id": "ID",
+      "secondSurname": "Second Surname",
+      "phone": "Phone",
+      "token": "Token",
+      "active": "Active",
+      "internalUser": "Internal User",
+      "emergencyContact": "Emergency Contact",
+      "ratingUser": "Rating User",
+      "commentUser": "Comment User",
+      "internalUser": "Internal User"
+    }
+  }
+}

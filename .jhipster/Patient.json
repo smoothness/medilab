@@ -1,0 +1,64 @@
+{
+  "name": "Patient",
+  "fields": [
+    {
+      "fieldName": "secondSurname",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "phone",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "token",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "active",
+      "fieldType": "Boolean"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "patient",
+      "relationshipName": "internalUser",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "emergencyContact",
+      "otherEntityRelationshipName": "patient",
+      "relationshipName": "emergencyContact"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "ratingUser",
+      "otherEntityRelationshipName": "patient",
+      "relationshipName": "ratingUser"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "commentUser",
+      "otherEntityRelationshipName": "patient",
+      "relationshipName": "commentUser"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "appointment",
+      "otherEntityRelationshipName": "patient",
+      "relationshipName": "internalUser"
+    }
+  ],
+  "entityTableName": "patient",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["Medilab"],
+  "changelogDate": "20210706233110"
+}

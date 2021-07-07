@@ -1,0 +1,26 @@
+{
+  "medilabApp": {
+    "commentUser": {
+      "home": {
+        "title": "Comment Users",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Comment User",
+        "createOrEditLabel": "Crear o editar Comment User",
+        "notFound": "Ningún Comment Users encontrado"
+      },
+      "created": "Un nuevo Comment User ha sido creado con el identificador {{ param }}",
+      "updated": "Un Comment User ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Comment User ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Comment User {{ id }}?"
+      },
+      "detail": {
+        "title": "Comment User"
+      },
+      "id": "ID",
+      "comment": "Comment",
+      "patient": "Patient",
+      "doctor": "Doctor"
+    }
+  }
+}

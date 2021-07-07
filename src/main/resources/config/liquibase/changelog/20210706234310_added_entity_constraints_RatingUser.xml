@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity RatingUser.
+    -->
+    <changeSet id="20210706234310-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="rating_id"
+                                 baseTableName="rating_user"
+                                 constraintName="fk_rating_user__rating_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="rating"/>
+
+        <addForeignKeyConstraint baseColumnNames="patient_id"
+                                 baseTableName="rating_user"
+                                 constraintName="fk_rating_user__patient_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="patient"/>
+
+        <addForeignKeyConstraint baseColumnNames="doctor_id"
+                                 baseTableName="rating_user"
+                                 constraintName="fk_rating_user__doctor_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="doctor"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+    <property name="now" value="now()" dbms="mysql, mariadb"/>
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql, mariadb"/>
+    <property name="clobType" value="clob" dbms="h2"/>
+    <property name="clobType" value="clob" dbms="mysql, oracle, mssql, mariadb, postgresql"/>
+    <property name="uuidType" value="varchar(36)" dbms="h2, mysql, mariadb"/>
+    <property name="datetimeType" value="datetime(6)" dbms="mysql, mariadb"/>
+    <property name="datetimeType" value="datetime" dbms="oracle, mssql, postgresql, h2"/>
+
+    <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706233110_added_entity_Patient.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706233210_added_entity_Doctor.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706233310_added_entity_Appointment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706233410_added_entity_EmergencyContact.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706233510_added_entity_Treatment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706233610_added_entity_Ailment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706233710_added_entity_AppointmentTreatmentAilment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706233810_added_entity_MedicalExams.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706233910_added_entity_Invoice.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706234010_added_entity_LineComment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706234110_added_entity_Binnacle.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706234210_added_entity_Rating.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706234310_added_entity_RatingUser.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706234410_added_entity_Comment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706234510_added_entity_CommentUser.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20210706233110_added_entity_constraints_Patient.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706233210_added_entity_constraints_Doctor.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706233310_added_entity_constraints_Appointment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706233410_added_entity_constraints_EmergencyContact.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706233710_added_entity_constraints_AppointmentTreatmentAilment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706233810_added_entity_constraints_MedicalExams.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706233910_added_entity_constraints_Invoice.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706234010_added_entity_constraints_LineComment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706234310_added_entity_constraints_RatingUser.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210706234510_added_entity_constraints_CommentUser.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+    <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
+</databaseChangeLog>

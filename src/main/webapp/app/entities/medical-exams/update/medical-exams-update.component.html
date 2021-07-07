@@ -1,0 +1,75 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="medi-medical-exams-heading"
+        data-cy="MedicalExamsCreateUpdateHeading"
+        mediTranslate="medilabApp.medicalExams.home.createOrEditLabel"
+      >
+        Create or edit a Medical Exams
+      </h2>
+
+      <div>
+        <medi-alert-error></medi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" mediTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" mediTranslate="medilabApp.medicalExams.name" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" mediTranslate="medilabApp.medicalExams.description" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" mediTranslate="medilabApp.medicalExams.removed" for="field_removed">Removed</label>
+          <input type="checkbox" class="form-check" name="removed" id="field_removed" data-cy="removed" formControlName="removed" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" mediTranslate="medilabApp.medicalExams.appointment" for="field_appointment">Appointment</label>
+          <select class="form-control" id="field_appointment" data-cy="appointment" name="appointment" formControlName="appointment">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                appointmentOption.id === editForm.get('appointment')!.value?.id ? editForm.get('appointment')!.value : appointmentOption
+              "
+              *ngFor="let appointmentOption of appointmentsSharedCollection; trackBy: trackAppointmentById"
+            >
+              {{ appointmentOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span mediTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

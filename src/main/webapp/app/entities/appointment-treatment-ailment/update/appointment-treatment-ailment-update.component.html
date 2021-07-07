@@ -1,0 +1,106 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="medi-appointment-treatment-ailment-heading"
+        data-cy="AppointmentTreatmentAilmentCreateUpdateHeading"
+        mediTranslate="medilabApp.appointmentTreatmentAilment.home.createOrEditLabel"
+      >
+        Create or edit a Appointment Treatment Ailment
+      </h2>
+
+      <div>
+        <medi-alert-error></medi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" mediTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" mediTranslate="medilabApp.appointmentTreatmentAilment.description" for="field_description"
+            >Description</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" mediTranslate="medilabApp.appointmentTreatmentAilment.removed" for="field_removed"
+            >Removed</label
+          >
+          <input type="checkbox" class="form-check" name="removed" id="field_removed" data-cy="removed" formControlName="removed" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" mediTranslate="medilabApp.appointmentTreatmentAilment.ailment" for="field_ailment"
+            >Ailment</label
+          >
+          <select class="form-control" id="field_ailment" data-cy="ailment" name="ailment" formControlName="ailment">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="ailmentOption.id === editForm.get('ailment')!.value?.id ? editForm.get('ailment')!.value : ailmentOption"
+              *ngFor="let ailmentOption of ailmentsSharedCollection; trackBy: trackAilmentById"
+            >
+              {{ ailmentOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" mediTranslate="medilabApp.appointmentTreatmentAilment.treatment" for="field_treatment"
+            >Treatment</label
+          >
+          <select class="form-control" id="field_treatment" data-cy="treatment" name="treatment" formControlName="treatment">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="treatmentOption.id === editForm.get('treatment')!.value?.id ? editForm.get('treatment')!.value : treatmentOption"
+              *ngFor="let treatmentOption of treatmentsSharedCollection; trackBy: trackTreatmentById"
+            >
+              {{ treatmentOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" mediTranslate="medilabApp.appointmentTreatmentAilment.appointment" for="field_appointment"
+            >Appointment</label
+          >
+          <select class="form-control" id="field_appointment" data-cy="appointment" name="appointment" formControlName="appointment">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                appointmentOption.id === editForm.get('appointment')!.value?.id ? editForm.get('appointment')!.value : appointmentOption
+              "
+              *ngFor="let appointmentOption of appointmentsSharedCollection; trackBy: trackAppointmentById"
+            >
+              {{ appointmentOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span mediTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

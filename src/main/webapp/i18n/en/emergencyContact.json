@@ -1,0 +1,28 @@
+{
+  "medilabApp": {
+    "emergencyContact": {
+      "home": {
+        "title": "Emergency Contacts",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Emergency Contact",
+        "createOrEditLabel": "Create or edit a Emergency Contact",
+        "notFound": "No Emergency Contacts found"
+      },
+      "created": "A new Emergency Contact is created with identifier {{ param }}",
+      "updated": "A Emergency Contact is updated with identifier {{ param }}",
+      "deleted": "A Emergency Contact is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Emergency Contact {{ id }}?"
+      },
+      "detail": {
+        "title": "Emergency Contact"
+      },
+      "id": "ID",
+      "name": "Name",
+      "phone": "Phone",
+      "email": "Email",
+      "relationShip": "Relation Ship",
+      "patient": "Patient"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "name": "Doctor",
+  "fields": [
+    {
+      "fieldName": "specialty",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "active",
+      "fieldType": "Boolean"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "doctor",
+      "relationshipName": "internalUser",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "ratingUser",
+      "otherEntityRelationshipName": "doctor",
+      "relationshipName": "ratingUser"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "commentUser",
+      "otherEntityRelationshipName": "doctor",
+      "relationshipName": "commentUser"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "appointment",
+      "otherEntityRelationshipName": "doctor",
+      "relationshipName": "internalUser"
+    }
+  ],
+  "entityTableName": "doctor",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["Medilab"],
+  "changelogDate": "20210706233210"
+}

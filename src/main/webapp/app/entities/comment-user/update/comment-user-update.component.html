@@ -1,0 +1,77 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="medi-comment-user-heading"
+        data-cy="CommentUserCreateUpdateHeading"
+        mediTranslate="medilabApp.commentUser.home.createOrEditLabel"
+      >
+        Create or edit a Comment User
+      </h2>
+
+      <div>
+        <medi-alert-error></medi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" mediTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" mediTranslate="medilabApp.commentUser.comment" for="field_comment">Comment</label>
+          <select class="form-control" id="field_comment" data-cy="comment" name="comment" formControlName="comment">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="commentOption.id === editForm.get('comment')!.value?.id ? editForm.get('comment')!.value : commentOption"
+              *ngFor="let commentOption of commentsSharedCollection; trackBy: trackCommentById"
+            >
+              {{ commentOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" mediTranslate="medilabApp.commentUser.patient" for="field_patient">Patient</label>
+          <select class="form-control" id="field_patient" data-cy="patient" name="patient" formControlName="patient">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="patientOption.id === editForm.get('patient')!.value?.id ? editForm.get('patient')!.value : patientOption"
+              *ngFor="let patientOption of patientsSharedCollection; trackBy: trackPatientById"
+            >
+              {{ patientOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" mediTranslate="medilabApp.commentUser.doctor" for="field_doctor">Doctor</label>
+          <select class="form-control" id="field_doctor" data-cy="doctor" name="doctor" formControlName="doctor">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="doctorOption.id === editForm.get('doctor')!.value?.id ? editForm.get('doctor')!.value : doctorOption"
+              *ngFor="let doctorOption of doctorsSharedCollection; trackBy: trackDoctorById"
+            >
+              {{ doctorOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span mediTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

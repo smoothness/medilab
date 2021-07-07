@@ -1,0 +1,29 @@
+{
+  "medilabApp": {
+    "appointment": {
+      "home": {
+        "title": "Appointments",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Appointment",
+        "createOrEditLabel": "Crear o editar Appointment",
+        "notFound": "Ningún Appointments encontrado"
+      },
+      "created": "Un nuevo Appointment ha sido creado con el identificador {{ param }}",
+      "updated": "Un Appointment ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Appointment ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Appointment {{ id }}?"
+      },
+      "detail": {
+        "title": "Appointment"
+      },
+      "id": "ID",
+      "date": "Date",
+      "status": "Status",
+      "appointmentTreatmentAilment": "Appointment Treatment Ailment",
+      "medicalExams": "Medical Exams",
+      "patient": "Patient",
+      "doctor": "Doctor"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "medilabApp": {
+    "ratingUser": {
+      "home": {
+        "title": "Rating Users",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Rating User",
+        "createOrEditLabel": "Crear o editar Rating User",
+        "notFound": "Ningún Rating Users encontrado"
+      },
+      "created": "Un nuevo Rating User ha sido creado con el identificador {{ param }}",
+      "updated": "Un Rating User ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Rating User ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Rating User {{ id }}?"
+      },
+      "detail": {
+        "title": "Rating User"
+      },
+      "id": "ID",
+      "rating": "Rating",
+      "patient": "Patient",
+      "doctor": "Doctor"
+    }
+  }
+}

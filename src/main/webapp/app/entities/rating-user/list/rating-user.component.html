@@ -1,0 +1,94 @@
+<div>
+  <h2 id="page-heading" data-cy="RatingUserHeading">
+    <span mediTranslate="medilabApp.ratingUser.home.title">Rating Users</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span mediTranslate="medilabApp.ratingUser.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-rating-user"
+        [routerLink]="['/rating-user/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span mediTranslate="medilabApp.ratingUser.home.createLabel"> Create a new Rating User </span>
+      </button>
+    </div>
+  </h2>
+
+  <medi-alert-error></medi-alert-error>
+
+  <medi-alert></medi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="ratingUsers?.length === 0">
+    <span mediTranslate="medilabApp.ratingUser.home.notFound">No ratingUsers found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="ratingUsers && ratingUsers.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span mediTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span mediTranslate="medilabApp.ratingUser.rating">Rating</span></th>
+          <th scope="col"><span mediTranslate="medilabApp.ratingUser.patient">Patient</span></th>
+          <th scope="col"><span mediTranslate="medilabApp.ratingUser.doctor">Doctor</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ratingUser of ratingUsers; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/rating-user', ratingUser.id, 'view']">{{ ratingUser.id }}</a>
+          </td>
+          <td>
+            <div *ngIf="ratingUser.rating">
+              <a [routerLink]="['/rating', ratingUser.rating?.id, 'view']">{{ ratingUser.rating?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="ratingUser.patient">
+              <a [routerLink]="['/patient', ratingUser.patient?.id, 'view']">{{ ratingUser.patient?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="ratingUser.doctor">
+              <a [routerLink]="['/doctor', ratingUser.doctor?.id, 'view']">{{ ratingUser.doctor?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/rating-user', ratingUser.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" mediTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/rating-user', ratingUser.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" mediTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(ratingUser)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

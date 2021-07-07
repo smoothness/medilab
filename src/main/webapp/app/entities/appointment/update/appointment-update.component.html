@@ -1,0 +1,94 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="medi-appointment-heading"
+        data-cy="AppointmentCreateUpdateHeading"
+        mediTranslate="medilabApp.appointment.home.createOrEditLabel"
+      >
+        Create or edit a Appointment
+      </h2>
+
+      <div>
+        <medi-alert-error></medi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" mediTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" mediTranslate="medilabApp.appointment.date" for="field_date">Date</label>
+          <div class="input-group">
+            <input
+              id="field_date"
+              data-cy="date"
+              type="text"
+              class="form-control"
+              name="date"
+              ngbDatepicker
+              #dateDp="ngbDatepicker"
+              formControlName="date"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" mediTranslate="medilabApp.appointment.status" for="field_status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null">{{ 'medilabApp.Status.null' | translate }}</option>
+            <option value="CANCELED">{{ 'medilabApp.Status.CANCELED' | translate }}</option>
+            <option value="PENDING">{{ 'medilabApp.Status.PENDING' | translate }}</option>
+            <option value="PAID">{{ 'medilabApp.Status.PAID' | translate }}</option>
+            <option value="FINISHED">{{ 'medilabApp.Status.FINISHED' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" mediTranslate="medilabApp.appointment.patient" for="field_patient">Patient</label>
+          <select class="form-control" id="field_patient" data-cy="patient" name="patient" formControlName="patient">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="patientOption.id === editForm.get('patient')!.value?.id ? editForm.get('patient')!.value : patientOption"
+              *ngFor="let patientOption of patientsSharedCollection; trackBy: trackPatientById"
+            >
+              {{ patientOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" mediTranslate="medilabApp.appointment.doctor" for="field_doctor">Doctor</label>
+          <select class="form-control" id="field_doctor" data-cy="doctor" name="doctor" formControlName="doctor">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="doctorOption.id === editForm.get('doctor')!.value?.id ? editForm.get('doctor')!.value : doctorOption"
+              *ngFor="let doctorOption of doctorsSharedCollection; trackBy: trackDoctorById"
+            >
+              {{ doctorOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span mediTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

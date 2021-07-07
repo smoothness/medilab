@@ -1,0 +1,66 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="appointmentTreatmentAilment">
+      <h2 data-cy="appointmentTreatmentAilmentDetailsHeading">
+        <span mediTranslate="medilabApp.appointmentTreatmentAilment.detail.title">Appointment Treatment Ailment</span>
+      </h2>
+
+      <hr />
+
+      <medi-alert-error></medi-alert-error>
+
+      <medi-alert></medi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span mediTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ appointmentTreatmentAilment.id }}</span>
+        </dd>
+        <dt><span mediTranslate="medilabApp.appointmentTreatmentAilment.description">Description</span></dt>
+        <dd>
+          <span>{{ appointmentTreatmentAilment.description }}</span>
+        </dd>
+        <dt><span mediTranslate="medilabApp.appointmentTreatmentAilment.removed">Removed</span></dt>
+        <dd>
+          <span>{{ appointmentTreatmentAilment.removed }}</span>
+        </dd>
+        <dt><span mediTranslate="medilabApp.appointmentTreatmentAilment.ailment">Ailment</span></dt>
+        <dd>
+          <div *ngIf="appointmentTreatmentAilment.ailment">
+            <a [routerLink]="['/ailment', appointmentTreatmentAilment.ailment?.id, 'view']">{{
+              appointmentTreatmentAilment.ailment?.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span mediTranslate="medilabApp.appointmentTreatmentAilment.treatment">Treatment</span></dt>
+        <dd>
+          <div *ngIf="appointmentTreatmentAilment.treatment">
+            <a [routerLink]="['/treatment', appointmentTreatmentAilment.treatment?.id, 'view']">{{
+              appointmentTreatmentAilment.treatment?.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span mediTranslate="medilabApp.appointmentTreatmentAilment.appointment">Appointment</span></dt>
+        <dd>
+          <div *ngIf="appointmentTreatmentAilment.appointment">
+            <a [routerLink]="['/appointment', appointmentTreatmentAilment.appointment?.id, 'view']">{{
+              appointmentTreatmentAilment.appointment?.id
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span mediTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button
+        type="button"
+        [routerLink]="['/appointment-treatment-ailment', appointmentTreatmentAilment.id, 'edit']"
+        class="btn btn-primary"
+      >
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span mediTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

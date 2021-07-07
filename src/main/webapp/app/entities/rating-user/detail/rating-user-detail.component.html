@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="ratingUser">
+      <h2 data-cy="ratingUserDetailsHeading"><span mediTranslate="medilabApp.ratingUser.detail.title">Rating User</span></h2>
+
+      <hr />
+
+      <medi-alert-error></medi-alert-error>
+
+      <medi-alert></medi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span mediTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ ratingUser.id }}</span>
+        </dd>
+        <dt><span mediTranslate="medilabApp.ratingUser.rating">Rating</span></dt>
+        <dd>
+          <div *ngIf="ratingUser.rating">
+            <a [routerLink]="['/rating', ratingUser.rating?.id, 'view']">{{ ratingUser.rating?.id }}</a>
+          </div>
+        </dd>
+        <dt><span mediTranslate="medilabApp.ratingUser.patient">Patient</span></dt>
+        <dd>
+          <div *ngIf="ratingUser.patient">
+            <a [routerLink]="['/patient', ratingUser.patient?.id, 'view']">{{ ratingUser.patient?.id }}</a>
+          </div>
+        </dd>
+        <dt><span mediTranslate="medilabApp.ratingUser.doctor">Doctor</span></dt>
+        <dd>
+          <div *ngIf="ratingUser.doctor">
+            <a [routerLink]="['/doctor', ratingUser.doctor?.id, 'view']">{{ ratingUser.doctor?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span mediTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/rating-user', ratingUser.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span mediTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

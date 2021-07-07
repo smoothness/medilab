@@ -1,0 +1,152 @@
+application {
+  config {
+    baseName Medilab,
+    applicationType monolith,
+    packageName com.cenfotec.medilab,
+    authenticationType session,
+    devDatabaseType mysql,
+    prodDatabaseType mysql,
+    clientFramework angular,
+    buildTool maven,
+    languages	[es, en],
+    nativeLanguage	es,
+    enableTranslation true,
+    serverPort 9090,
+    jhiPrefix medi
+  }
+  entities *
+}
+
+entity Patient{
+  secondSurname String,
+  phone String,
+  token String,
+  active Boolean 
+}
+
+entity Doctor{
+  specialty String,
+  active Boolean 
+}
+
+entity Appointment{
+	date LocalDate,
+    status Status
+}
+
+entity EmergencyContact(emergency_contact) {
+    name String,
+    phone String,
+    email String, 
+    relationShip String
+}
+
+entity Treatment{
+	specifications String,
+    medicines String,
+    duration String,
+    removed Boolean
+}
+
+entity Ailment{
+	name String,
+    removed Boolean
+}
+
+entity AppointmentTreatmentAilment(appointment_treatment_ailment) {
+    description String ,
+    removed Boolean
+}
+
+entity MedicalExams(medical_exams) {
+	name String,
+    description String,
+    removed Boolean
+}
+
+enum Status{
+    CANCELED, PENDING, PAID, FINISHED
+}
+
+entity Invoice{
+	date LocalDate required,
+    subtotal Double,
+    taxes Double,
+    discount Double,
+    total Double,
+    status Status
+}
+
+entity LineComment{
+    description String,
+    quantity Long,
+    unitPrice Double
+}
+
+entity Binnacle (binnacle){
+	doctorCode String,
+    date LocalDate
+}
+
+entity Rating (rating){
+	value Integer , 
+    date LocalDate
+}
+
+entity RatingUser(rating_user) {
+
+}
+
+entity Comment(comment){
+	value Integer,
+    date LocalDate
+}
+
+
+entity CommentUser (comment_user){
+   
+}
+
+
+
+//User - Doctor & Patient
+relationship OneToOne {Doctor{internalUser} to User}
+relationship OneToOne {Patient{internalUser} to User}
+//Appointment
+relationship OneToOne {Invoice{appointment} to Appointment}
+relationship OneToMany {Ailment to AppointmentTreatmentAilment{ailment}}
+relationship OneToMany{Treatment to AppointmentTreatmentAilment{treatment}}
+relationship OneToMany {Appointment to AppointmentTreatmentAilment{appointment}}
+relationship OneToMany{Appointment to MedicalExams{appointment}}
+//Patient - Emergency Contact
+relationship OneToMany{Patient to EmergencyContact{patient}}
+//Rating
+relationship OneToMany{Rating to RatingUser{rating}}
+relationship OneToMany{Patient to RatingUser{patient}}
+relationship OneToMany{Doctor to RatingUser{doctor}}
+//Comment
+relationship OneToMany{Comment to CommentUser{comment}}
+relationship OneToMany{Patient to CommentUser{patient}}
+relationship OneToMany{Doctor to CommentUser{doctor}}
+//User - Appointment
+relationship OneToMany{Patient{internalUser} to Appointment{patient}}
+relationship OneToMany{Doctor{internalUser} to Appointment{doctor}}
+//Invoice
+relationship OneToMany{Invoice to LineComment{invoiceCode}}
+
+
+
+
+service all with serviceImpl
+// Set pagination options
+//paginate JobHistory, Employee with infinite-scroll
+//paginate Job with pagination
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+//service all with serviceImpl
+
+// Set an angular suffix
+// angularSuffix * with mySuffix

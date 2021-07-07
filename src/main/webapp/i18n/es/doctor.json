@@ -1,0 +1,29 @@
+{
+  "medilabApp": {
+    "doctor": {
+      "home": {
+        "title": "Doctors",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Doctor",
+        "createOrEditLabel": "Crear o editar Doctor",
+        "notFound": "Ningún Doctors encontrado"
+      },
+      "created": "Un nuevo Doctor ha sido creado con el identificador {{ param }}",
+      "updated": "Un Doctor ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Doctor ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Doctor {{ id }}?"
+      },
+      "detail": {
+        "title": "Doctor"
+      },
+      "id": "ID",
+      "specialty": "Specialty",
+      "active": "Active",
+      "internalUser": "Internal User",
+      "ratingUser": "Rating User",
+      "commentUser": "Comment User",
+      "internalUser": "Internal User"
+    }
+  }
+}

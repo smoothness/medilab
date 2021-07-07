@@ -1,0 +1,25 @@
+{
+  "medilabApp": {
+    "binnacle": {
+      "home": {
+        "title": "Binnacles",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Binnacle",
+        "createOrEditLabel": "Crear o editar Binnacle",
+        "notFound": "Ningún Binnacles encontrado"
+      },
+      "created": "Un nuevo Binnacle ha sido creado con el identificador {{ param }}",
+      "updated": "Un Binnacle ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Binnacle ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Binnacle {{ id }}?"
+      },
+      "detail": {
+        "title": "Binnacle"
+      },
+      "id": "ID",
+      "doctorCode": "Doctor Code",
+      "date": "Date"
+    }
+  }
+}

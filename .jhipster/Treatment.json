@@ -1,0 +1,39 @@
+{
+  "name": "Treatment",
+  "fields": [
+    {
+      "fieldName": "specifications",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "medicines",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "duration",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "removed",
+      "fieldType": "Boolean"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "appointmentTreatmentAilment",
+      "otherEntityRelationshipName": "treatment",
+      "relationshipName": "appointmentTreatmentAilment"
+    }
+  ],
+  "entityTableName": "treatment",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["Medilab"],
+  "changelogDate": "20210706233510"
+}

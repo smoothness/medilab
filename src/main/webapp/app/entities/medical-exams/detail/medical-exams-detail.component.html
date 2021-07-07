@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="medicalExams">
+      <h2 data-cy="medicalExamsDetailsHeading"><span mediTranslate="medilabApp.medicalExams.detail.title">Medical Exams</span></h2>
+
+      <hr />
+
+      <medi-alert-error></medi-alert-error>
+
+      <medi-alert></medi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span mediTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ medicalExams.id }}</span>
+        </dd>
+        <dt><span mediTranslate="medilabApp.medicalExams.name">Name</span></dt>
+        <dd>
+          <span>{{ medicalExams.name }}</span>
+        </dd>
+        <dt><span mediTranslate="medilabApp.medicalExams.description">Description</span></dt>
+        <dd>
+          <span>{{ medicalExams.description }}</span>
+        </dd>
+        <dt><span mediTranslate="medilabApp.medicalExams.removed">Removed</span></dt>
+        <dd>
+          <span>{{ medicalExams.removed }}</span>
+        </dd>
+        <dt><span mediTranslate="medilabApp.medicalExams.appointment">Appointment</span></dt>
+        <dd>
+          <div *ngIf="medicalExams.appointment">
+            <a [routerLink]="['/appointment', medicalExams.appointment?.id, 'view']">{{ medicalExams.appointment?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span mediTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/medical-exams', medicalExams.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span mediTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

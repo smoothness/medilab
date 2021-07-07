@@ -1,0 +1,31 @@
+{
+  "name": "Ailment",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "removed",
+      "fieldType": "Boolean"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "appointmentTreatmentAilment",
+      "otherEntityRelationshipName": "ailment",
+      "relationshipName": "appointmentTreatmentAilment"
+    }
+  ],
+  "entityTableName": "ailment",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["Medilab"],
+  "changelogDate": "20210706233610"
+}

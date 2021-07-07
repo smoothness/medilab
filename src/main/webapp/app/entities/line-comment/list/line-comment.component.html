@@ -1,0 +1,88 @@
+<div>
+  <h2 id="page-heading" data-cy="LineCommentHeading">
+    <span mediTranslate="medilabApp.lineComment.home.title">Line Comments</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span mediTranslate="medilabApp.lineComment.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-line-comment"
+        [routerLink]="['/line-comment/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span mediTranslate="medilabApp.lineComment.home.createLabel"> Create a new Line Comment </span>
+      </button>
+    </div>
+  </h2>
+
+  <medi-alert-error></medi-alert-error>
+
+  <medi-alert></medi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="lineComments?.length === 0">
+    <span mediTranslate="medilabApp.lineComment.home.notFound">No lineComments found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="lineComments && lineComments.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span mediTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span mediTranslate="medilabApp.lineComment.description">Description</span></th>
+          <th scope="col"><span mediTranslate="medilabApp.lineComment.quantity">Quantity</span></th>
+          <th scope="col"><span mediTranslate="medilabApp.lineComment.unitPrice">Unit Price</span></th>
+          <th scope="col"><span mediTranslate="medilabApp.lineComment.invoiceCode">Invoice Code</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let lineComment of lineComments; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/line-comment', lineComment.id, 'view']">{{ lineComment.id }}</a>
+          </td>
+          <td>{{ lineComment.description }}</td>
+          <td>{{ lineComment.quantity }}</td>
+          <td>{{ lineComment.unitPrice }}</td>
+          <td>
+            <div *ngIf="lineComment.invoiceCode">
+              <a [routerLink]="['/invoice', lineComment.invoiceCode?.id, 'view']">{{ lineComment.invoiceCode?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/line-comment', lineComment.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" mediTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/line-comment', lineComment.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" mediTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(lineComment)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+{
+  "medilabApp": {
+    "lineComment": {
+      "home": {
+        "title": "Line Comments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Line Comment",
+        "createOrEditLabel": "Create or edit a Line Comment",
+        "notFound": "No Line Comments found"
+      },
+      "created": "A new Line Comment is created with identifier {{ param }}",
+      "updated": "A Line Comment is updated with identifier {{ param }}",
+      "deleted": "A Line Comment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Line Comment {{ id }}?"
+      },
+      "detail": {
+        "title": "Line Comment"
+      },
+      "id": "ID",
+      "description": "Description",
+      "quantity": "Quantity",
+      "unitPrice": "Unit Price",
+      "invoiceCode": "Invoice Code"
+    }
+  }
+}

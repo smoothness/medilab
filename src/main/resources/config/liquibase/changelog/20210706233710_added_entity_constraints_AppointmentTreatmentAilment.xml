@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity AppointmentTreatmentAilment.
+    -->
+    <changeSet id="20210706233710-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="ailment_id"
+                                 baseTableName="appointment_treatment_ailment"
+                                 constraintName="fk_appointment_treatment_ailment__ailment_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ailment"/>
+
+        <addForeignKeyConstraint baseColumnNames="treatment_id"
+                                 baseTableName="appointment_treatment_ailment"
+                                 constraintName="fk_appointment_treatment_ailment__treatment_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="treatment"/>
+
+        <addForeignKeyConstraint baseColumnNames="appointment_id"
+                                 baseTableName="appointment_treatment_ailment"
+                                 constraintName="fk_appointment_treatment_ailment__appointment_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="appointment"/>
+    </changeSet>
+</databaseChangeLog>

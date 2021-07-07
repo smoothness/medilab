@@ -1,0 +1,28 @@
+{
+  "medilabApp": {
+    "appointmentTreatmentAilment": {
+      "home": {
+        "title": "Appointment Treatment Ailments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Appointment Treatment Ailment",
+        "createOrEditLabel": "Create or edit a Appointment Treatment Ailment",
+        "notFound": "No Appointment Treatment Ailments found"
+      },
+      "created": "A new Appointment Treatment Ailment is created with identifier {{ param }}",
+      "updated": "A Appointment Treatment Ailment is updated with identifier {{ param }}",
+      "deleted": "A Appointment Treatment Ailment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Appointment Treatment Ailment {{ id }}?"
+      },
+      "detail": {
+        "title": "Appointment Treatment Ailment"
+      },
+      "id": "ID",
+      "description": "Description",
+      "removed": "Removed",
+      "ailment": "Ailment",
+      "treatment": "Treatment",
+      "appointment": "Appointment"
+    }
+  }
+}

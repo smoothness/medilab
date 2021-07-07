@@ -1,0 +1,111 @@
+<div>
+  <h2 id="page-heading" data-cy="AppointmentTreatmentAilmentHeading">
+    <span mediTranslate="medilabApp.appointmentTreatmentAilment.home.title">Appointment Treatment Ailments</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span mediTranslate="medilabApp.appointmentTreatmentAilment.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-appointment-treatment-ailment"
+        [routerLink]="['/appointment-treatment-ailment/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span mediTranslate="medilabApp.appointmentTreatmentAilment.home.createLabel"> Create a new Appointment Treatment Ailment </span>
+      </button>
+    </div>
+  </h2>
+
+  <medi-alert-error></medi-alert-error>
+
+  <medi-alert></medi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="appointmentTreatmentAilments?.length === 0">
+    <span mediTranslate="medilabApp.appointmentTreatmentAilment.home.notFound">No appointmentTreatmentAilments found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="appointmentTreatmentAilments && appointmentTreatmentAilments.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span mediTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span mediTranslate="medilabApp.appointmentTreatmentAilment.description">Description</span></th>
+          <th scope="col"><span mediTranslate="medilabApp.appointmentTreatmentAilment.removed">Removed</span></th>
+          <th scope="col"><span mediTranslate="medilabApp.appointmentTreatmentAilment.ailment">Ailment</span></th>
+          <th scope="col"><span mediTranslate="medilabApp.appointmentTreatmentAilment.treatment">Treatment</span></th>
+          <th scope="col"><span mediTranslate="medilabApp.appointmentTreatmentAilment.appointment">Appointment</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let appointmentTreatmentAilment of appointmentTreatmentAilments; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/appointment-treatment-ailment', appointmentTreatmentAilment.id, 'view']">{{
+              appointmentTreatmentAilment.id
+            }}</a>
+          </td>
+          <td>{{ appointmentTreatmentAilment.description }}</td>
+          <td>{{ appointmentTreatmentAilment.removed }}</td>
+          <td>
+            <div *ngIf="appointmentTreatmentAilment.ailment">
+              <a [routerLink]="['/ailment', appointmentTreatmentAilment.ailment?.id, 'view']">{{
+                appointmentTreatmentAilment.ailment?.id
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="appointmentTreatmentAilment.treatment">
+              <a [routerLink]="['/treatment', appointmentTreatmentAilment.treatment?.id, 'view']">{{
+                appointmentTreatmentAilment.treatment?.id
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="appointmentTreatmentAilment.appointment">
+              <a [routerLink]="['/appointment', appointmentTreatmentAilment.appointment?.id, 'view']">{{
+                appointmentTreatmentAilment.appointment?.id
+              }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/appointment-treatment-ailment', appointmentTreatmentAilment.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" mediTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/appointment-treatment-ailment', appointmentTreatmentAilment.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" mediTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button
+                type="submit"
+                (click)="delete(appointmentTreatmentAilment)"
+                class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton"
+              >
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

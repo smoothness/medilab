@@ -1,0 +1,58 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="invoice">
+      <h2 data-cy="invoiceDetailsHeading"><span mediTranslate="medilabApp.invoice.detail.title">Invoice</span></h2>
+
+      <hr />
+
+      <medi-alert-error></medi-alert-error>
+
+      <medi-alert></medi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span mediTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ invoice.id }}</span>
+        </dd>
+        <dt><span mediTranslate="medilabApp.invoice.date">Date</span></dt>
+        <dd>
+          <span>{{ invoice.date | formatMediumDate }}</span>
+        </dd>
+        <dt><span mediTranslate="medilabApp.invoice.subtotal">Subtotal</span></dt>
+        <dd>
+          <span>{{ invoice.subtotal }}</span>
+        </dd>
+        <dt><span mediTranslate="medilabApp.invoice.taxes">Taxes</span></dt>
+        <dd>
+          <span>{{ invoice.taxes }}</span>
+        </dd>
+        <dt><span mediTranslate="medilabApp.invoice.discount">Discount</span></dt>
+        <dd>
+          <span>{{ invoice.discount }}</span>
+        </dd>
+        <dt><span mediTranslate="medilabApp.invoice.total">Total</span></dt>
+        <dd>
+          <span>{{ invoice.total }}</span>
+        </dd>
+        <dt><span mediTranslate="medilabApp.invoice.status">Status</span></dt>
+        <dd>
+          <span mediTranslate="{{ 'medilabApp.Status.' + invoice.status }}">{{ invoice.status }}</span>
+        </dd>
+        <dt><span mediTranslate="medilabApp.invoice.appointment">Appointment</span></dt>
+        <dd>
+          <div *ngIf="invoice.appointment">
+            <a [routerLink]="['/appointment', invoice.appointment?.id, 'view']">{{ invoice.appointment?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span mediTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/invoice', invoice.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span mediTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

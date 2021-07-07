@@ -1,0 +1,74 @@
+<div>
+  <h2 id="page-heading" data-cy="DoctorHeading">
+    <span mediTranslate="medilabApp.doctor.home.title">Doctors</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span mediTranslate="medilabApp.doctor.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-doctor"
+        [routerLink]="['/doctor/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span mediTranslate="medilabApp.doctor.home.createLabel"> Create a new Doctor </span>
+      </button>
+    </div>
+  </h2>
+
+  <medi-alert-error></medi-alert-error>
+
+  <medi-alert></medi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="doctors?.length === 0">
+    <span mediTranslate="medilabApp.doctor.home.notFound">No doctors found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="doctors && doctors.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span mediTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span mediTranslate="medilabApp.doctor.specialty">Specialty</span></th>
+          <th scope="col"><span mediTranslate="medilabApp.doctor.active">Active</span></th>
+          <th scope="col"><span mediTranslate="medilabApp.doctor.internalUser">Internal User</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let doctor of doctors; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/doctor', doctor.id, 'view']">{{ doctor.id }}</a>
+          </td>
+          <td>{{ doctor.specialty }}</td>
+          <td>{{ doctor.active }}</td>
+          <td>
+            {{ doctor.internalUser?.id }}
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/doctor', doctor.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" mediTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/doctor', doctor.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" mediTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(doctor)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

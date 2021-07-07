@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="appointment">
+      <h2 data-cy="appointmentDetailsHeading"><span mediTranslate="medilabApp.appointment.detail.title">Appointment</span></h2>
+
+      <hr />
+
+      <medi-alert-error></medi-alert-error>
+
+      <medi-alert></medi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span mediTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ appointment.id }}</span>
+        </dd>
+        <dt><span mediTranslate="medilabApp.appointment.date">Date</span></dt>
+        <dd>
+          <span>{{ appointment.date | formatMediumDate }}</span>
+        </dd>
+        <dt><span mediTranslate="medilabApp.appointment.status">Status</span></dt>
+        <dd>
+          <span mediTranslate="{{ 'medilabApp.Status.' + appointment.status }}">{{ appointment.status }}</span>
+        </dd>
+        <dt><span mediTranslate="medilabApp.appointment.patient">Patient</span></dt>
+        <dd>
+          <div *ngIf="appointment.patient">
+            <a [routerLink]="['/patient', appointment.patient?.id, 'view']">{{ appointment.patient?.id }}</a>
+          </div>
+        </dd>
+        <dt><span mediTranslate="medilabApp.appointment.doctor">Doctor</span></dt>
+        <dd>
+          <div *ngIf="appointment.doctor">
+            <a [routerLink]="['/doctor', appointment.doctor?.id, 'view']">{{ appointment.doctor?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span mediTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/appointment', appointment.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span mediTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+{
+  "medilabApp": {
+    "medicalExams": {
+      "home": {
+        "title": "Medical Exams",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Medical Exams",
+        "createOrEditLabel": "Create or edit a Medical Exams",
+        "notFound": "No Medical Exams found"
+      },
+      "created": "A new Medical Exams is created with identifier {{ param }}",
+      "updated": "A Medical Exams is updated with identifier {{ param }}",
+      "deleted": "A Medical Exams is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Medical Exams {{ id }}?"
+      },
+      "detail": {
+        "title": "Medical Exams"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "removed": "Removed",
+      "appointment": "Appointment"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity MedicalExams.
+    -->
+    <changeSet id="20210706233810-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="appointment_id"
+                                 baseTableName="medical_exams"
+                                 constraintName="fk_medical_exams__appointment_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="appointment"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,51 @@
+<div>
+  <h2>
+    <span id="metrics-page-heading" mediTranslate="metrics.title" data-cy="metricsPageHeading">Application Metrics</span>
+
+    <button class="btn btn-primary float-right" (click)="refresh()">
+      <fa-icon icon="sync"></fa-icon> <span mediTranslate="metrics.refresh.button">Refresh</span>
+    </button>
+  </h2>
+
+  <h3 mediTranslate="metrics.jvm.title">JVM Metrics</h3>
+
+  <div class="row" *ngIf="metrics && !updatingMetrics">
+    <medi-jvm-memory class="col-md-4" [updating]="updatingMetrics" [jvmMemoryMetrics]="metrics.jvm"></medi-jvm-memory>
+
+    <medi-jvm-threads class="col-md-4" [threads]="threads"></medi-jvm-threads>
+
+    <medi-metrics-system class="col-md-4" [updating]="updatingMetrics" [systemMetrics]="metrics.processMetrics"></medi-metrics-system>
+  </div>
+
+  <medi-metrics-garbagecollector
+    *ngIf="metrics && metricsKeyExists('garbageCollector')"
+    [updating]="updatingMetrics"
+    [garbageCollectorMetrics]="metrics.garbageCollector"
+  ></medi-metrics-garbagecollector>
+
+  <div class="well well-lg" *ngIf="updatingMetrics" mediTranslate="metrics.updating">Updating...</div>
+
+  <medi-metrics-request
+    *ngIf="metrics && metricsKeyExists('http.server.requests')"
+    [updating]="updatingMetrics"
+    [requestMetrics]="metrics['http.server.requests']"
+  ></medi-metrics-request>
+
+  <medi-metrics-endpoints-requests
+    *ngIf="metrics && metricsKeyExists('services')"
+    [updating]="updatingMetrics"
+    [endpointsRequestsMetrics]="metrics.services"
+  ></medi-metrics-endpoints-requests>
+
+  <medi-metrics-cache
+    *ngIf="metrics && metricsKeyExists('cache')"
+    [updating]="updatingMetrics"
+    [cacheMetrics]="metrics.cache"
+  ></medi-metrics-cache>
+
+  <medi-metrics-datasource
+    *ngIf="metrics && metricsKeyExistsAndObjectNotEmpty('databases')"
+    [updating]="updatingMetrics"
+    [datasourceMetrics]="metrics.databases"
+  ></medi-metrics-datasource>
+</div>
