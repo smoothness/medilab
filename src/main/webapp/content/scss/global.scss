@@ -1,6 +1,7 @@
 @import 'bootstrap-variables';
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
+@import './bootstrap-variables';
 
 /* ==============================================================
 Bootstrap tweaks
@@ -107,7 +108,7 @@ Generic styles
 }
 
 .hand,
-[medisortby] {
+[jhisortby] {
   cursor: pointer;
 }
 
@@ -199,4 +200,64 @@ ui bootstrap tweaks
   white-space: nowrap;
 }
 
-/* jhipster-needle-scss-add-main JHipster will add new css style */
+/** overwrites **/
+.table-dark {
+  background-color: $dark-bgd;
+}
+
+.table-dark.table-striped tbody tr:nth-of-type(odd) {
+  background-color: $dark;
+}
+
+.table-dark th,
+.table-dark td,
+.table-dark thead th {
+  border-color: $black;
+}
+
+.card {
+  border-radius: 7px;
+}
+
+.card-header {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-light {
+  background-color: #a5a5a5;
+  border-color: #a5a5a5;
+  color: $black;
+}
+
+.btn-dark {
+  background-color: $black;
+}
+
+.dropdown-menu {
+  background-color: $dark-bgd;
+}
+
+.dropdown-menu a {
+  color: $white;
+}
+
+.list-group-item {
+  background-color: $light-bgd;
+}
+
+.alert-warning {
+  background-color: $brand-light;
+  border-color: $brand;
+}
+
+.ml-login,
+.ml-register {
+  span,
+  .alert-warning .alert-link {
+    color: $black;
+  }
+
+  .form-check-label span {
+    color: $white;
+  }
+}
