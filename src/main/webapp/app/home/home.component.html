@@ -1,78 +1,58 @@
-<div class="row">
-  <div class="col-md-3">
-    <span class="hipster img-fluid rounded"></span>
-  </div>
-
-  <div class="col-md-9">
-    <h1 class="display-4"><span mediTranslate="home.title">Welcome, Java Hipster!</span> (Medilab)</h1>
-
-    <p class="lead" mediTranslate="home.subtitle">This is your homepage</p>
-
-    <div [ngSwitch]="account !== null">
-      <div class="alert alert-success" *ngSwitchCase="true">
-        <span id="home-logged-message" *ngIf="account" mediTranslate="home.logged.message" [translateValues]="{ username: account.login }"
-          >You are logged in as user "{{ account.login }}".</span
-        >
+<div class="ml-profile">
+  <div class="mb-4">
+    <div class="ml-profile-top">
+      <div class="card bg-dark">
+        <div class="card-body">
+          <div>
+            <img src="../../content/images/avatar.png" width="100" alt="test" />
+            <p>Jose Castro Vargas</p>
+          </div>
+        </div>
+        <div class="ml-profile-stats">
+          <div class="card-header">
+            <p>Datos:</p>
+          </div>
+          <div class="card-body">
+            <p><b>Ultima cita:</b> 08 de Diciembre de 2020</p>
+            <p><b>Hora:</b> 4:00 P.M.</p>
+            <p><b>Atendido por:</b> Dr. Julían Castro Fallas</p>
+            <p><b>Especialidad:</b> Ortopedia</p>
+            <br />
+            <a href="#" class="btn btn-secondary">Ver última cita</a>
+          </div>
+        </div>
       </div>
 
-      <div class="alert alert-warning" *ngSwitchCase="false">
-        <span mediTranslate="global.messages.info.authenticated.prefix">If you want to </span>
-        <a class="alert-link" (click)="login()" mediTranslate="global.messages.info.authenticated.link">sign in</a
-        ><span mediTranslate="global.messages.info.authenticated.suffix"
-          >, you can try the default accounts:<br />- Administrator (login="admin" and password="admin") <br />- User (login="user" and
-          password="user").</span
-        >
-      </div>
-
-      <div class="alert alert-warning" *ngSwitchCase="false">
-        <span mediTranslate="global.messages.info.register.noaccount">You don't have an account yet?</span>&nbsp;
-        <a class="alert-link" routerLink="account/register" mediTranslate="global.messages.info.register.link">Register a new account</a>
+      <div class="card bg-dark">
+        <h5 class="card-header">Información personal</h5>
+        <div class="card-body">
+          <p class="info-title">Tipo de identificación</p>
+          <p>Cédula de identidad</p>
+          <p class="info-title">Número de identificación</p>
+          <p>4-0987-0981</p>
+          <p class="info-title">Género</p>
+          <p>Masculino</p>
+          <p class="info-title">Teléfono</p>
+          <p>8765-2323</p>
+          <p class="info-title">Correo electrónico</p>
+          <p>jose.castro@gmail.com</p>
+          <p class="info-title">Dirección</p>
+          <p>San José, Curridabat, Sánchez, Lomas de Ayarco, Condominio Villas de Florencia, casa 4b.</p>
+        </div>
       </div>
     </div>
 
-    <p mediTranslate="home.question">If you have any question on JHipster:</p>
-
-    <ul>
-      <li>
-        <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer" mediTranslate="home.link.homepage"
-          >JHipster homepage</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://stackoverflow.com/tags/jhipster/info"
-          target="_blank"
-          rel="noopener noreferrer"
-          mediTranslate="home.link.stackoverflow"
-          >JHipster on Stack Overflow</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/jhipster/generator-jhipster/issues?state=open"
-          target="_blank"
-          rel="noopener noreferrer"
-          mediTranslate="home.link.bugtracker"
-          >JHipster bug tracker</a
-        >
-      </li>
-      <li>
-        <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" mediTranslate="home.link.chat"
-          >JHipster public chat room</a
-        >
-      </li>
-      <li>
-        <a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer" mediTranslate="home.link.follow"
-          >follow @jhipster on Twitter</a
-        >
-      </li>
-    </ul>
-
-    <p>
-      <span mediTranslate="home.like">If you like JHipster, don't forget to give us a star on</span>
-      <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" mediTranslate="home.github"
-        >GitHub</a
-      >!
-    </p>
+    <div class="card bg-dark mt-3">
+      <h5 class="card-header">Tratamientos</h5>
+      <div class="card-body">
+        <ul class="list-group">
+          <li class="list-group-item" aria-current="true">An active item</li>
+          <li class="list-group-item">A second item</li>
+          <li class="list-group-item">A third item</li>
+          <li class="list-group-item">A fourth item</li>
+          <li class="list-group-item">And a fifth one</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>

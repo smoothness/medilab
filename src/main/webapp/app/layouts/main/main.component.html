@@ -1,13 +1,10 @@
-<medi-page-ribbon></medi-page-ribbon>
-
-<div>
-  <router-outlet name="navbar"></router-outlet>
-</div>
-
-<div class="container-fluid">
-  <div class="card jh-card">
-    <router-outlet></router-outlet>
+<!--<jhi-page-ribbon></jhi-page-ribbon>-->
+<div class="ml-layout">
+  <div class="ml-nav">
+    <router-outlet name="navbar"></router-outlet>
   </div>
-
-  <medi-footer></medi-footer>
+  <div class="ml-main">
+    <router-outlet></router-outlet>
+    <!--<medi-footer></medi-footer>-->
+  </div>
 </div>

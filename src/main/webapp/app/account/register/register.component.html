@@ -2,23 +2,18 @@
   <div class="row justify-content-center">
     <div class="col-md-8">
       <h1 mediTranslate="register.title" data-cy="registerTitle">Registration</h1>
-
       <div class="alert alert-success" *ngIf="success" mediTranslate="register.messages.success">
         <strong>Registration saved!</strong> Please check your email for confirmation.
       </div>
-
       <div class="alert alert-danger" *ngIf="error" mediTranslate="register.messages.error.fail">
         <strong>Registration failed!</strong> Please try again later.
       </div>
-
       <div class="alert alert-danger" *ngIf="errorUserExists" mediTranslate="register.messages.error.userexists">
         <strong>Login name already registered!</strong> Please choose another one.
       </div>
-
       <div class="alert alert-danger" *ngIf="errorEmailExists" mediTranslate="register.messages.error.emailexists">
         <strong>Email is already in use!</strong> Please choose another one.
       </div>
-
       <div class="alert alert-danger" *ngIf="doNotMatch" mediTranslate="global.messages.error.dontmatch">
         The password and its confirmation do not match!
       </div>
@@ -26,7 +21,7 @@
   </div>
 
   <div class="row justify-content-center">
-    <div class="col-md-8">
+    <div class="col-md-8 ml-register">
       <form name="form" role="form" (ngSubmit)="register()" [formGroup]="registerForm" *ngIf="!success">
         <div class="form-group">
           <label class="form-control-label" for="login" mediTranslate="global.form.username.label">Username</label>
