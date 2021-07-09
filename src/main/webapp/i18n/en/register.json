@@ -1,16 +1,16 @@
 {
   "register": {
-    "title": "Registration",
+    "title": "Create account",
     "form": {
       "button": "Register"
     },
     "messages": {
       "validate": {
         "login": {
-          "required": "Your username is required.",
-          "minlength": "Your username is required to be at least 1 character.",
-          "maxlength": "Your username cannot be longer than 50 characters.",
-          "pattern": "Your username is invalid."
+          "required": "Your identification is required.",
+          "minlength": "Your identification is required to be at least 9 character.",
+          "maxlength": "Your identification cannot be longer than 50 characters.",
+          "pattern": "Your identification is invalid."
         }
       },
       "success": "<strong>Registration saved!</strong> Please check your email for confirmation.",

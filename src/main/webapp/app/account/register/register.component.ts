@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
-import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from 'app/config/error.constants';
+import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from './../../config/error.constants';
 import { RegisterService } from './register.service';
 
 @Component({
@@ -31,9 +31,11 @@ export class RegisterComponent implements AfterViewInit {
         Validators.pattern('^[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$'),
       ],
     ],
-    email: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
-    confirmPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
+    name: ['', [Validators.required]],
+    lastname: ['', [Validators.required]],
+    secondlastname:[''],
+    phone:['', [Validators.required]],
+    email: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]]
   });
 
   constructor(private translateService: TranslateService, private registerService: RegisterService, private fb: FormBuilder) {}
