@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SharedModule } from '../../shared/shared.module';
+import { ChildRoutingModule } from './child-routing.module';
 
 import { PersonalInfoComponent } from './personal-info/personal-info.component';
 import { ContactInfoComponent } from './contact-info/contact-info.component';
 import { EmergencyContactComponent } from './emergency-contact/emergency-contact.component';
 import { RegisterComponent } from './register.component';
+
 
 
 @NgModule({
@@ -19,6 +21,7 @@ import { RegisterComponent } from './register.component';
   imports: [
     SharedModule,
     CommonModule,
+    ChildRoutingModule
   ],
   exports: [
     PersonalInfoComponent,

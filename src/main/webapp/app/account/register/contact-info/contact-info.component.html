@@ -1,1 +1,34 @@
-<p>contact-info works!</p>
+<div class="mb-4">
+  <h3>Información de contacto</h3>
+</div>
+
+<form name="contactInfoForm" role="form" autocomplete="off" [formGroup]="contactInfoForm">
+        <!-- phone -->
+        <div class="form-group">
+          <label class="form-control-label" for="phone" mediTranslate="global.form.phone.label">Teléfono</label>
+          <input type="text" class="form-control" id="phone" name="phone"
+            placeholder="{{ 'global.form.phone.placeholder' | translate }}" formControlName="phone" data-cy="phone" />
+          <!-- Errors -->
+          <div
+            *ngIf="contactInfoForm.get('phone')!.invalid && (contactInfoForm.get('phone')!.dirty || contactInfoForm.get('phone')!.touched)">
+            <small class="form-text text-danger" *ngIf="contactInfoForm.get('phone')?.errors?.required"
+              mediTranslate="register.messages.validate.phone.required">
+              Your phone is required.
+            </small>
+
+            <small class="form-text text-danger" *ngIf="contactInfoForm.get('phone')?.errors?.pattern"
+              mediTranslate="register.messages.validate.login.pattern">
+              Your phone can only contain letters and digits.
+            </small>
+          </div>
+        </div>
+        
+        <!-- email -->
+        <div class="form-group">
+          <label class="form-control-label" for="email" mediTranslate="global.form.email.label">Correo
+            electrónico</label>
+          <input type="email" class="form-control" id="email" name="email"
+            placeholder="{{ 'global.form.email.placeholder' | translate }}" formControlName="email" data-cy="email" />
+
+        </div>
+</form>

@@ -2,7 +2,9 @@
   "register": {
     "title": "Create account",
     "form": {
-      "button": "Register"
+      "button": "Register",
+      "next": "Next",
+      "previous": "Previous"
     },
     "messages": {
       "validate": {
@@ -11,7 +13,9 @@
           "minlength": "Your identification is required to be at least 9 character.",
           "maxlength": "Your identification cannot be longer than 50 characters.",
           "pattern": "Your identification is invalid."
-        }
+        },
+        "name": {"required": "Your name is required."},
+        "phone": {"required": "Your phone is required."}
       },
       "success": "<strong>Registration saved!</strong> Please check your email for confirmation.",
       "error": {

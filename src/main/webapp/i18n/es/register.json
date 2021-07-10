@@ -2,7 +2,9 @@
   "register": {
     "title": "Crear cuenta",
     "form": {
-      "button": "Registrarse"
+      "button": "Registrarse",
+      "next": "Siguiente",
+      "previous": "Anterior"
     },
     "messages": {
       "validate": {
@@ -11,7 +13,9 @@
           "minlength": "Su identificación debe tener al menos 9 caracter.",
           "maxlength": "Su identificación no puede tener más de 50 caracteres.",
           "pattern": "Su identificación no es válida."
-        }
+        },
+        "name": {"required": "Su nombre es obligatorio."},
+        "phone": {"required": "Su télefono es obligatorio."}
       },
       "success": "<strong>¡Registro guardado!</strong> Por favor, revise su correo electrónico para confirmar.",
       "error": {

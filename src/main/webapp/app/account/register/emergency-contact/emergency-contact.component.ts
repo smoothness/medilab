@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'medi-emergency-contact',
@@ -7,8 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EmergencyContactComponent implements OnInit {
 
+  @Input()  emergencyContactForm : FormGroup = new FormGroup({});
+
   ngOnInit(): string {
-    return "sexo en la playa";
+    return "test";
   }
 
 }

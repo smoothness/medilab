@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'medi-personal-info',
@@ -6,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./personal-info.component.scss']
 })
 export class PersonalInfoComponent implements OnInit {
+  
+  @Input() personalDataForm: FormGroup = new FormGroup({});
 
   ngOnInit(): string{
-    return "sexo en la playa";
+    return "test";
   }
 
 }
