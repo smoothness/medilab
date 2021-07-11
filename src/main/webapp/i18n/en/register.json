@@ -1,6 +1,11 @@
 {
   "register": {
     "title": "Create account",
+    "tabs": {
+      "personalInfo": "Personal information",
+      "contactInfo": "Contact information",
+      "emergencyContact": "Emergency contact"
+    },
     "form": {
       "button": "Register",
       "next": "Next",

@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from './../../config/error.constants';
 import { RegisterService } from './register.service';
+import { User } from './register.model';
 
 @Component({
   selector: 'medi-register',
@@ -14,8 +15,6 @@ import { RegisterService } from './register.service';
 export class RegisterComponent {
   doNotMatch = false;
   error = false;
-  errorEmailExists = false;
-  errorUserExists = false;
   success = false;
   currentStep = 0;
 
@@ -31,7 +30,8 @@ export class RegisterComponent {
       ],
       name: ['', [Validators.required]],
       lastname: ['', [Validators.required]],
-      secondlastname: ['']
+      secondlastname: [''],
+      langKey: [this.translateService.currentLang]
     }),
     contactInfo: this.fb.group({
       phone: ['',[Validators.required]],
@@ -52,7 +52,11 @@ export class RegisterComponent {
     })
   });
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder, 
+    private service: RegisterService,
+    private translateService: TranslateService
+    ) {}
 
   get currentGroup(): any {
     return this.getGroupAt(this.currentStep);
@@ -67,7 +71,12 @@ export class RegisterComponent {
   }
 
   registerUser(): void {
-    this.registerForm
+    const newUser: User = new User(this.registerForm.value);
+    
+    this.service.save(newUser).subscribe(
+      () => (this.success = true),
+      response => this.processError(response)
+    );
   }
 
   private getGroupAt(index: number): FormGroup {
@@ -75,7 +84,6 @@ export class RegisterComponent {
 
     return groups[index];
   }
-
   
 
   // register(): void {
@@ -100,9 +108,9 @@ export class RegisterComponent {
   
   private processError(response: HttpErrorResponse): void {
     if (response.status === 400 && response.error.type === LOGIN_ALREADY_USED_TYPE) {
-      this.errorUserExists = true;
+      // this.errorUserExists = true;
     } else if (response.status === 400 && response.error.type === EMAIL_ALREADY_USED_TYPE) {
-      this.errorEmailExists = true;
+      // this.errorEmailExists = true;
     } else {
       this.error = true;
     }

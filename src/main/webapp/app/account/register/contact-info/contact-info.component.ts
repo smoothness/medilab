@@ -7,7 +7,7 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./contact-info.component.scss']
 })
 export class ContactInfoComponent implements OnInit {
-
+  errorEmailExists = false;
   @Input() contactInfoForm : FormGroup = new FormGroup({});
   
   ngOnInit(): string {

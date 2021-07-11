@@ -7,7 +7,7 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./personal-info.component.scss']
 })
 export class PersonalInfoComponent implements OnInit {
-  
+  errorUserExists = false;
   @Input() personalDataForm: FormGroup = new FormGroup({});
 
   ngOnInit(): string{

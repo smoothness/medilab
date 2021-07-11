@@ -54,6 +54,9 @@ public class PublicUserResource {
         return pageable.getSort().stream().map(Sort.Order::getProperty).allMatch(ALLOWED_ORDERED_PROPERTIES::contains);
     }
 
+
+
+
     /**
      * Gets a list of all roles.
      * @return a string list of all roles.
