@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { errorRoute } from './layouts/error/error.route';
-import { navbarRoute } from './layouts/navbar/navbar.route';
-import { DEBUG_INFO_ENABLED } from 'app/app.constants';
-import { Authority } from 'app/config/authority.constants';
+import { layoutsRoute } from './layouts/layouts.route';
 
-import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
+import { DEBUG_INFO_ENABLED } from './app.constants';
+import { Authority } from './config/authority.constants';
+import { UserRouteAccessService } from './core/auth/user-route-access.service';
 
-const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
+const LAYOUT_ROUTES = [layoutsRoute, ...errorRoute];
 
 @NgModule({
   imports: [

@@ -1,0 +1,9 @@
+@import '../../content/scss/bootstrap-variables';
+
+#layout{
+    background-color: $dark-bgd;
+    color: $white;
+    max-height: 100vh !important;
+    max-width: 100% !important;
+    overflow-y: scroll;
+}
