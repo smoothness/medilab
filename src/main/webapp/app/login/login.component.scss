@@ -1,0 +1,8 @@
+@import '../../content/scss/bootstrap-variables';
+
+.ml-login {
+  > div {
+    background-color: $dark;
+    padding: 3rem;
+  }
+}
