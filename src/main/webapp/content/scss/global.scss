@@ -201,6 +201,16 @@ ui bootstrap tweaks
 }
 
 /** overwrites **/
+a {
+  color: $brand-light;
+}
+
+.table,
+.table-dark {
+  color: $white;
+  font-size: 0.875rem;
+}
+
 .table-dark {
   background-color: $dark-bgd;
 }
@@ -209,10 +219,11 @@ ui bootstrap tweaks
   background-color: $dark;
 }
 
-.table-dark th,
+.table thead th,
+.table-dark thead th,
 .table-dark td,
-.table-dark thead th {
-  border-color: $black;
+.table td {
+  border-color: $gray-900;
 }
 
 .card {
