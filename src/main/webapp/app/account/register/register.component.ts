@@ -73,8 +73,11 @@ export class RegisterComponent {
   registerUser(): void {
     const newUser: User = new User(this.registerForm.value);
     
-    this.service.save(newUser).subscribe(
-      () => (this.success = true),
+    this.service.register(newUser).subscribe(
+      (res) => {
+        this.success = true;
+        res
+      },
       response => this.processError(response)
     );
   }

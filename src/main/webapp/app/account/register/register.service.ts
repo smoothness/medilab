@@ -9,8 +9,29 @@ import { User } from './register.model';
 export class RegisterService {
   constructor(private http: HttpClient, private applicationConfigService: ApplicationConfigService) {}
 
-  save(newUser: User): Observable<{}> {
-    return this.http.post(this.applicationConfigService.getEndpointFor('api/register'), newUser.data);
+  register(newUser: User): Observable<{}> {
+    return new Observable(subscriber => {
+      this.save(newUser).subscribe((registered: any) => {
+        newUser.setId(registered);
+        this.savePatientInfo(newUser).subscribe(() => {
+          subscriber.complete();
+        },
+        err => subscriber.error(err));
+      },
+      err => subscriber.error(err))
+    });
+    
   }
 
+  save(newUser: User): Observable<{}> {
+    return this.http.post(this.getUrl('api/register'), newUser.data);
+  }
+
+  savePatientInfo(newUser: User): Observable<{}> {
+    return this.http.post(this.getUrl('api/patients'), newUser.patientData);
+  }
+
+  private getUrl(url: string): string {
+    return this.applicationConfigService.getEndpointFor(url);
+  }
 }

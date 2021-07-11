@@ -22,6 +22,11 @@ interface registration {
   password: string;
 }
 
+interface patientInfo {
+  secondSurname: string;
+  phone: string;
+}
+
 abstract class PersonalInfo {
   name: string;
   lastname: string;
@@ -51,6 +56,7 @@ export class User extends PersonalInfo {
   phone: string;
   email: string;
   emergencyContact: EmergencyContact[] = [];
+  id: number;
 
   constructor({personalInfo, contactInfo, emergencyContact}: newUserData) {
     super();
@@ -61,6 +67,7 @@ export class User extends PersonalInfo {
     this.langKey= personalInfo.langKey;
     this.phone= contactInfo.phone;
     this.email= contactInfo.email;
+    this.id = -1;
     this.emergencyContact.push(emergencyContact);
   }
 
@@ -73,5 +80,16 @@ export class User extends PersonalInfo {
       email: this.email,
       password: "test"
     }
+  }
+
+  get patientData(): patientInfo {
+    return {
+      secondSurname: this.secondlastname,
+      phone: this.phone
+    }
+  }
+
+  setId({ id }: {id: number}): void {
+    this.id = id;
   }
 }

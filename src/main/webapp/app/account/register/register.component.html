@@ -23,52 +23,29 @@
   <div class="row justify-content-center">
     <div class="col-md-5 ml-register">
       <form name="registerForm" role="form" autocomplete="off" [formGroup]="registerForm">
-        <medi-personal-info 
-          *ngIf="currentStep === 0"
-          [personalDataForm]="currentGroup"
-        >
-      </medi-personal-info>
+        <medi-personal-info *ngIf="currentStep === 0" [personalDataForm]="currentGroup">
+        </medi-personal-info>
 
-        <medi-contact-info 
-          *ngIf="currentStep === 1"
-          [contactInfoForm]="currentGroup"
-        ></medi-contact-info>
+        <medi-contact-info *ngIf="currentStep === 1" [contactInfoForm]="currentGroup"></medi-contact-info>
 
-        <medi-emergency-contact 
-          *ngIf="currentStep === 2"
-          [emergencyContactForm]="currentGroup"
-        ></medi-emergency-contact>
-        
-        <div class="text-center">
-  
-          <button 
-            class="btn btn-secondary" 
-            mediTranslate="register.form.previous" 
-            [disabled]="currentStep===0"
-            (click)="previousStep()"
-            >
+        <medi-emergency-contact *ngIf="currentStep === 2"></medi-emergency-contact>
+
+        <div class="text-center mt-3">
+
+          <button class="btn btn-secondary" mediTranslate="register.form.previous" [disabled]="currentStep===0"
+            (click)="previousStep()">
           </button>
 
-          <button 
-            class="btn btn-primary" 
-            mediTranslate="register.form.next" 
-            *ngIf="currentStep !== 2"
-            [disabled]="currentStep === 2"
-            (click)="nextStep()"
-            >
+          <button class="btn btn-primary" mediTranslate="register.form.next" *ngIf="currentStep !== 2"
+            [disabled]="currentStep === 2" (click)="nextStep()">
           </button>
 
-          <button 
-            class="btn btn-success" 
-            mediTranslate="register.form.button" 
-            *ngIf="currentStep === 2"
-            (click)="registerUser()"
-            >
+          <button class="btn btn-success" mediTranslate="register.form.button" *ngIf="currentStep === 2"
+            (click)="registerUser()">
           </button>
         </div>
-          
-      </form> 
-      <!-- <router-outlet></router-outlet> -->
+
+      </form>
     </div>
   </div>
 </div>

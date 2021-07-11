@@ -7,6 +7,5 @@ export const registerRoute: Route = {
   component: RegisterComponent,
   data: {
     pageTitle: 'register.title',
-  },
-  loadChildren: () => import('./child-routing.module').then(m => m.ChildRoutingModule)
+  }
 };
