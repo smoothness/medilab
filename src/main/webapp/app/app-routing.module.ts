@@ -15,6 +15,10 @@ const LAYOUT_ROUTES = [layoutsRoute, ...errorRoute];
     RouterModule.forRoot(
       [
         {
+          path: '',
+          loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
+        },
+        {
           path: 'admin',
           data: {
             authorities: [Authority.ADMIN],
@@ -23,12 +27,8 @@ const LAYOUT_ROUTES = [layoutsRoute, ...errorRoute];
           loadChildren: () => import('./admin/admin-routing.module').then(m => m.AdminRoutingModule),
         },
         {
-          path: 'account',
+          path: 'main/account',
           loadChildren: () => import('./account/account.module').then(m => m.AccountModule),
-        },
-        {
-          path: 'login',
-          loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
         },
         ...LAYOUT_ROUTES,
       ],
