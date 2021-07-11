@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {HttpResponse} from '@angular/common/http';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs';
+import {finalize, map} from 'rxjs/operators';
 
-import { IInvoice, Invoice } from '../invoice.model';
-import { InvoiceService } from '../service/invoice.service';
-import { IAppointment } from 'app/entities/appointment/appointment.model';
-import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
+import {IInvoice, Invoice} from '../invoice.model';
+import {InvoiceService} from '../service/invoice.service';
+import {IAppointment} from 'app/entities/appointment/appointment.model';
+import {AppointmentService} from 'app/entities/appointment/service/appointment.service';
+import {Status} from "../../enumerations/status.model";
 
 @Component({
   selector: 'medi-invoice-update',
@@ -40,7 +41,6 @@ export class InvoiceUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ invoice }) => {
       this.updateForm(invoice);
-
       this.loadRelationshipsOptions();
     });
   }
@@ -55,6 +55,8 @@ export class InvoiceUpdateComponent implements OnInit {
     if (invoice.id !== undefined) {
       this.subscribeToSaveResponse(this.invoiceService.update(invoice));
     } else {
+      //Al ser una factura nueva el status por defecto debe ser PENDING
+      invoice.status = Status.PENDING;
       this.subscribeToSaveResponse(this.invoiceService.create(invoice));
     }
   }
