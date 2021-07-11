@@ -12,12 +12,12 @@ $brand-dark: #345042 !default;
 $brand-light: #a9cabf !default;
 $highlight: #e74c3c !default;
 
-$primary: $highlight;
+$primary: $brand;
 $secondary: $brand-dark;
 $success: #28a745;
-$info: #17a2b8;
+$info: $brand-dark;
 $warning: #ffc107;
-$danger: #dc3545;
+$danger: $highlight;
 
 // Options:
 // Quickly modify global styling by enabling or disabling optional features.
