@@ -9,6 +9,7 @@ import {IInvoice, Invoice} from '../invoice.model';
 import {InvoiceService} from '../service/invoice.service';
 import {IAppointment} from 'app/entities/appointment/appointment.model';
 import {AppointmentService} from 'app/entities/appointment/service/appointment.service';
+import {LineCommentService} from 'app/entities/line-comment/service/line-comment.service';
 import {Status} from "../../enumerations/status.model";
 import * as dayjs from 'dayjs';
 
@@ -23,7 +24,7 @@ export class InvoiceUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    date: [null, [Validators.required]],
+    date: [],
     subtotal: [],
     taxes: [],
     discount: [],
@@ -36,7 +37,8 @@ export class InvoiceUpdateComponent implements OnInit {
     protected invoiceService: InvoiceService,
     protected appointmentService: AppointmentService,
     protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
+    protected linecommentService: LineCommentService
   ) {}
 
   ngOnInit(): void {
@@ -56,20 +58,36 @@ export class InvoiceUpdateComponent implements OnInit {
     if (invoice.id !== undefined) {
       this.subscribeToSaveResponse(this.invoiceService.update(invoice));
     } else {
-      //Al ser una factura nueva el status por defecto debe ser PENDING
+
+      //La fecha por defecto es la del sistema a la hora de crear la factura
       const now = dayjs();
       invoice.date = now;
+
+      //al ser una factura nueva el status por defecto debe ser PENDING
       invoice.status = Status.PENDING;
       this.subscribeToSaveResponse(this.invoiceService.create(invoice));
-
     }
   }
 
   trackAppointmentById(index: number, item: IAppointment): number {
     return item.id!;
   }
+/*
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IInvoice>>): void {
+    result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
+      () => this.onSaveSuccess(),
+      () => this.onSaveError()
+    );
+  }*/
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IInvoice>>): void {
+    result.subscribe(data => {
+      // eslint-disable-next-line no-console
+      console.log({data})
+      // eslint-disable-next-line no-console
+      console.log(data.body?.id)
+    })
+
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
       () => this.onSaveSuccess(),
       () => this.onSaveError()

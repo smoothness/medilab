@@ -9,4 +9,8 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface InvoiceRepository extends JpaRepository<Invoice, Long> {}
+public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
+
+    int findTopByOrderByIdDesc();
+
+}

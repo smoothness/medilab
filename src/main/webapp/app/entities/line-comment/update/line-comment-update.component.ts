@@ -9,29 +9,37 @@ import { ILineComment, LineComment } from '../line-comment.model';
 import { LineCommentService } from '../service/line-comment.service';
 import { IInvoice } from 'app/entities/invoice/invoice.model';
 import { InvoiceService } from 'app/entities/invoice/service/invoice.service';
+import * as dayjs from "dayjs";
+import {Status} from "../../enumerations/status.model";
 
 @Component({
   selector: 'medi-line-comment-update',
   templateUrl: './line-comment-update.component.html',
 })
+
+
 export class LineCommentUpdateComponent implements OnInit {
+
+    invoice: IInvoice = {} as IInvoice;
+
   isSaving = false;
 
   invoicesSharedCollection: IInvoice[] = [];
 
-  editForm = this.fb.group({
+  editCoomentForm = this.fb.group({
     id: [],
     description: [],
     quantity: [],
     unitPrice: [],
     invoiceCode: [],
   });
+  private invoiceData: IInvoice | null | undefined;
 
   constructor(
     protected lineCommentService: LineCommentService,
     protected invoiceService: InvoiceService,
     protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
   ) {}
 
   ngOnInit(): void {
@@ -46,12 +54,31 @@ export class LineCommentUpdateComponent implements OnInit {
     window.history.back();
   }
 
-  save(): void {
+  saveComment(): void {
+
     this.isSaving = true;
     const lineComment = this.createFromForm();
     if (lineComment.id !== undefined) {
       this.subscribeToSaveResponse(this.lineCommentService.update(lineComment));
     } else {
+      //La fecha por defecto es la del sistema a la hora de crear la factura
+      const now = dayjs();
+      this.invoice.date = now;
+      //al ser una factura nueva el status por defecto debe ser PENDING
+      this.invoice.status = Status.PENDING;
+      if (lineComment.unitPrice && lineComment.quantity !== undefined){
+        this.invoice.subtotal = (lineComment.quantity * lineComment.unitPrice);
+        this.invoice.taxes = (this.invoice.subtotal*0.13);
+        this.invoice.total = (this.invoice.taxes + this.invoice.subtotal);
+        this.invoice.discount = 0;
+      }
+
+
+       lineComment.invoiceCode = this.createInvoice(this.invoice)
+
+       //eslint-disable-next-line no-console
+      console.log(lineComment.invoiceCode)
+
       this.subscribeToSaveResponse(this.lineCommentService.create(lineComment));
     }
   }
@@ -60,7 +87,33 @@ export class LineCommentUpdateComponent implements OnInit {
     return item.id!;
   }
 
+  protected createInvoice(invoice: IInvoice) : IInvoice{
+    this.invoice = invoice;
+    this.subscribeToSaveResponseInvoice(this.invoiceService.create(this.invoice));
+
+    return this.invoice;
+  }
+
+  protected subscribeToSaveResponseInvoice(result: Observable<HttpResponse<IInvoice>>): IInvoice | null | undefined {
+    result.subscribe(data => {
+      // eslint-disable-next-line no-console
+      console.log({data})
+      // eslint-disable-next-line no-console
+      console.log(data.body?.id)
+      this.invoiceData = data.body;
+    });
+
+    return this.invoiceData;
+  }
+
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ILineComment>>): void {
+  /*  result.subscribe(data => {
+      // eslint-disable-next-line no-console
+      console.log({data})
+      // eslint-disable-next-line no-console
+      console.log(data.body?.id)
+    })
+*/
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
       () => this.onSaveSuccess(),
       () => this.onSaveError()
@@ -80,7 +133,7 @@ export class LineCommentUpdateComponent implements OnInit {
   }
 
   protected updateForm(lineComment: ILineComment): void {
-    this.editForm.patchValue({
+    this.editCoomentForm.patchValue({
       id: lineComment.id,
       description: lineComment.description,
       quantity: lineComment.quantity,
@@ -100,7 +153,7 @@ export class LineCommentUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<IInvoice[]>) => res.body ?? []))
       .pipe(
         map((invoices: IInvoice[]) =>
-          this.invoiceService.addInvoiceToCollectionIfMissing(invoices, this.editForm.get('invoiceCode')!.value)
+          this.invoiceService.addInvoiceToCollectionIfMissing(invoices, this.editCoomentForm.get('invoiceCode')!.value)
         )
       )
       .subscribe((invoices: IInvoice[]) => (this.invoicesSharedCollection = invoices));
@@ -109,11 +162,11 @@ export class LineCommentUpdateComponent implements OnInit {
   protected createFromForm(): ILineComment {
     return {
       ...new LineComment(),
-      id: this.editForm.get(['id'])!.value,
-      description: this.editForm.get(['description'])!.value,
-      quantity: this.editForm.get(['quantity'])!.value,
-      unitPrice: this.editForm.get(['unitPrice'])!.value,
-      invoiceCode: this.editForm.get(['invoiceCode'])!.value,
+      id: this.editCoomentForm.get(['id'])!.value,
+      description: this.editCoomentForm.get(['description'])!.value,
+      quantity: this.editCoomentForm.get(['quantity'])!.value,
+      unitPrice: this.editCoomentForm.get(['unitPrice'])!.value,
+      invoiceCode: this.editCoomentForm.get(['invoiceCode'])!.value,
     };
   }
 }

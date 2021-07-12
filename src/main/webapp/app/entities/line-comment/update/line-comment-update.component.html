@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
   <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <form name="editCoomentForm" role="form" novalidate (ngSubmit)="saveComment()" [formGroup]="editCoomentForm">
       <h2
         id="medi-line-comment-heading"
         data-cy="LineCommentCreateUpdateHeading"
@@ -12,7 +12,7 @@
       <div>
         <medi-alert-error></medi-alert-error>
 
-        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+        <div class="form-group" [hidden]="editCoomentForm.get('id')!.value == null">
           <label class="form-control-label" mediTranslate="global.field.id" for="field_id">ID</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div>
@@ -38,7 +38,7 @@
           <label class="form-control-label" mediTranslate="medilabApp.lineComment.unitPrice" for="field_unitPrice">Unit Price</label>
           <input type="number" class="form-control" name="unitPrice" id="field_unitPrice" data-cy="unitPrice" formControlName="unitPrice" />
         </div>
-
+  <!--
         <div class="form-group">
           <label class="form-control-label" mediTranslate="medilabApp.lineComment.invoiceCode" for="field_invoiceCode">Invoice Code</label>
           <select class="form-control" id="field_invoiceCode" data-cy="invoiceCode" name="invoiceCode" formControlName="invoiceCode">
@@ -50,7 +50,7 @@
               {{ invoiceOption.id }}
             </option>
           </select>
-        </div>
+        </div> -->
       </div>
 
       <div>
@@ -62,7 +62,7 @@
           type="submit"
           id="save-entity"
           data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
+          [disabled]="editCoomentForm.invalid || isSaving"
           class="btn btn-primary"
         >
           <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
