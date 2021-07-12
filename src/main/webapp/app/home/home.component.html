@@ -4,26 +4,37 @@
       <div class="card bg-dark">
         <div class="card-body">
           <div>
-            <img src="../../content/images/avatar.png" width="100" alt="test" />
-            <p ngIf="userService.currentUser.type_id == Patient">
-              {{account.firstName}} {{account.lastName}} {{patientdetails.secondSurname}}
+            <img src="../../content/images/avatar.png" width="100" alt="test"/>
+            <p *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
+              {{account?.firstName}} {{account?.lastName}}
             </p>
-            <p ngIf="userService.currentUser.type_id != Patient">
-              {{account.firstName}} {{account.lastName}}
+            <p *ngIf="account?.authorities?.includes('ROLE_ADMIN') ||
+                account?.authorities?.includes('ROLE_USER')">
+              {{account?.firstName}} {{account?.lastName}}
             </p>
           </div>
         </div>
-        <div>
+        <div class="ml-profile-stats">
           <div class="card-header">
             <p>Datos</p>
           </div>
-          <div class="card-body">
+          <div class="card-body" *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
             <p><b>Ultima cita:</b> 08 de Diciembre de 2020</p>
             <p><b>Hora:</b> 4:00 P.M.</p>
             <p><b>Atendido por:</b> Dr. Julían Castro Fallas</p>
             <p><b>Especialidad:</b> Ortopedia</p>
-            <br />
-            <a href="#" class="btn btn-secondary">Ver última cita</a>
+            <br/>
+            <a target="_blank" class="btn btn-secondary"
+               href="https://wa.me/50688885353?text=Solicito%20una%20cita%20con%20el%20doctor"
+            >Solicitar una cita</a
+            >
+          </div>
+          <div class="card-body" *ngIf="account?.authorities?.includes('ROLE_USER')">
+            <p><b>Ultima cita:</b> 08 de Diciembre de 2020</p>
+            <p><b>Hora:</b> 4:00 P.M.</p>
+            <p><b>Paciente:</b>Julían Castro Fallas</p>
+            <p><b>Area:</b> Ortopedia </p>
+            <br/>
           </div>
         </div>
       </div>
@@ -31,43 +42,24 @@
       <div class="card bg-dark">
         <h5 class="card-header">Información personal</h5>
         <div class="card-body">
-          <div ngIf="userService.currentUser.type_id != Admin">
+          <div *ngIf="account?.authorities?.includes('ROLE_USER')">
             <p class="info-title">Especialidad</p>
-            <p>{{doctordetails.specialty}}</p>
-            <p class="info-title">Puntuación</p>
-            <p>{{doctordetails.ratingUsers}}</p>
+            <p>Dermatología</p>
+            <p class="info-title">Calificación </p>
+            <p>5</p>
           </div>
-          <div>
           <p class="info-title">Número de identificación</p>
-          <p>{{account.login}}</p>
+          <p> {{account?.login}} </p>
           <p class="info-title">Teléfono</p>
-          <p>{{patientdetails.phone}}</p>
+          <p>8765-2323</p>
           <p class="info-title">Correo electrónico</p>
-          <p>{{account.email}}</p>
-          </div>
-        </div>
-      </div>
-
-
-    </div>
-    <div>
-    <div class="card bg-dark mt-3" ngIf="userService.currentUser.type_id == Patient">
-      <h5 class="card-header">Contactos en caso de una emergencia</h5>
-      <div class="card-body">
-        <div>
-          <div class="card-body">
-            <ul class="list-group">
-              <li class="list-group-item" aria-current="true">Nombre: 1234-5678</li>
-              <li class="list-group-item">Nombre: 1234-5678</li>
-              <li class="list-group-item">Nombre: 1234-5678</li>
-              <li class="list-group-item">Nombre: 1234-5678</li>
-            </ul>
-          </div>
+          <p> {{account?.email}} </p>
         </div>
       </div>
     </div>
-    <div class="card bg-dark mt-3" ngIf="userService.currentUser.type_id == Admin">
-      <h5 class="card-header" >Médicos en plataforma</h5>
+
+    <div class="card bg-dark mt-3" *ngIf="!account?.authorities?.includes('ROLE_ADMIN')">
+      <h5 class="card-header">Próximas citas</h5>
       <div class="card-body">
         <ul class="list-group">
           <li class="list-group-item" aria-current="true">An active item</li>
@@ -78,8 +70,9 @@
         </ul>
       </div>
     </div>
-    <div class="card bg-dark mt-3" ngIf="userService.currentUser.type_id == Admin">
-      <h5 class="card-header" >Pacientes por padecimiento</h5>
+
+    <div class="card bg-dark mt-3" *ngIf="account?.authorities?.includes('ROLE_USER')">
+      <h5 class="card-header">Medicamentos recetados</h5>
       <div class="card-body">
         <ul class="list-group">
           <li class="list-group-item" aria-current="true">An active item</li>
@@ -90,8 +83,9 @@
         </ul>
       </div>
     </div>
-    <div class="card bg-dark mt-3" ngIf="userService.currentUser.type_id == Admin">
-      <h5 class="card-header" >Médicos con más citas canceladas</h5>
+
+    <div class="card bg-dark mt-3" *ngIf="account?.authorities?.includes('ROLE_ADMIN')">
+      <h5 class="card-header">Médicos en plataforma</h5>
       <div class="card-body">
         <ul class="list-group">
           <li class="list-group-item" aria-current="true">An active item</li>
@@ -102,6 +96,31 @@
         </ul>
       </div>
     </div>
+
+    <div class="card bg-dark mt-3" *ngIf="account?.authorities?.includes('ROLE_ADMIN')">
+      <h5 class="card-header">Pacientes por padecimiento</h5>
+      <div class="card-body">
+        <ul class="list-group">
+          <li class="list-group-item" aria-current="true">An active item</li>
+          <li class="list-group-item">A second item</li>
+          <li class="list-group-item">A third item</li>
+          <li class="list-group-item">A fourth item</li>
+          <li class="list-group-item">And a fifth one</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card bg-dark mt-3" *ngIf="account?.authorities?.includes('ROLE_ADMIN')">
+      <h5 class="card-header">Médicos con más citas canceladas</h5>
+      <div class="card-body">
+        <ul class="list-group">
+          <li class="list-group-item" aria-current="true">An active item</li>
+          <li class="list-group-item">A second item</li>
+          <li class="list-group-item">A third item</li>
+          <li class="list-group-item">A fourth item</li>
+          <li class="list-group-item">And a fifth one</li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
