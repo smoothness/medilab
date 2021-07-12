@@ -1,40 +1,26 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { errorRoute } from './layouts/error/error.route';
-import { layoutsRoute } from './layouts/layouts.route';
 
 import { DEBUG_INFO_ENABLED } from './app.constants';
-import { Authority } from './config/authority.constants';
-import { UserRouteAccessService } from './core/auth/user-route-access.service';
+import { LayoutsRoutesModule } from './layouts/layouts-routes.module';
 
-const LAYOUT_ROUTES = [layoutsRoute, ...errorRoute];
+const mainRoutes: Routes = [
+  {
+    path: '',
+    loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
+  },
+  ...errorRoute,
+];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(
-      [
-        {
-          path: '',
-          loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
-        },
-        {
-          path: 'admin',
-          data: {
-            authorities: [Authority.ADMIN],
-          },
-          canActivate: [UserRouteAccessService],
-          loadChildren: () => import('./admin/admin-routing.module').then(m => m.AdminRoutingModule),
-        },
-        {
-          path: 'main/account',
-          loadChildren: () => import('./account/account.module').then(m => m.AccountModule),
-        },
-        ...LAYOUT_ROUTES,
-      ],
-      { enableTracing: DEBUG_INFO_ENABLED }
-    ),
+    RouterModule.forRoot( mainRoutes, { enableTracing: DEBUG_INFO_ENABLED }),
+    LayoutsRoutesModule
   ],
-  exports: [RouterModule],
+  exports: [
+    RouterModule
+  ],
 })
 export class AppRoutingModule {}

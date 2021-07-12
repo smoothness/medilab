@@ -15,8 +15,6 @@ import { ApplicationConfigService } from './core/config/application-config.servi
 import './config/dayjs';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
-import { HomeModule } from './home/home.module';
-import { EntityRoutingModule } from './entities/entity-routing.module';
 import { LayoutsModule } from "./layouts/layouts.module";
 
 // jhipster-needle-angular-add-module-import JHipster will add new module here
@@ -31,10 +29,8 @@ import { LayoutsComponent } from "./layouts/layouts.component";
   imports: [
     BrowserModule,
     SharedModule,
-    HomeModule,
     LayoutsModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
-    EntityRoutingModule,
     AppRoutingModule,
     // Set this to true to enable service worker (PWA)
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),

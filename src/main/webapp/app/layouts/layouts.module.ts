@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { SharedModule } from "./../shared/shared.module";
+import { LayoutsRoutesModule } from "./layouts-routes.module";
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
@@ -31,7 +32,7 @@ import { MainComponent } from './main/main.component';
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule
+    LayoutsRoutesModule,
   ]
 })
 export class LayoutsModule { }
