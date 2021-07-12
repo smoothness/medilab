@@ -18,9 +18,37 @@
             <p><b>Atendido por:</b> Dr. Julían Castro Fallas</p>
             <p><b>Especialidad:</b> Ortopedia</p>
             <br />
-            <a target="_blank" class="btn btn-secondary" href="https://wa.me/50688885353?text=Solicito%20una%20cita%20con%20el%20doctor"
-              >Solicitar una cita</a
+
+            <!-- NO BORRAR + SECCION DE CREAR CITAS + MAURICIO -->
+            <div *ngIf="account?.login === 'user'">
+              <a
+                href="#"
+                class="btn btn-secondary"
+                mediTranslate="medilabApp.appointment.home.viewLastAppointment"
+                [routerLink]="['/appointment/1/view']"
+              >
+                Ver última cita
+              </a>
+              <a
+                target="_blank"
+                class="btn btn-secondary"
+                mediTranslate="medilabApp.appointment.home.requestAppointment"
+                href="https://wa.me/50688885353?text=Solicito%20una%20cita%20con%20el%20doctor"
+              >
+                Solicitar una cita
+              </a>
+            </div>
+            <button
+              *ngIf="account?.login === 'admin'"
+              id="jh-create-entity"
+              data-cy="entityCreateButton"
+              class="btn btn-primary jh-create-entity create-appointment"
+              [routerLink]="['/appointment/new']"
             >
+              <fa-icon icon="plus"></fa-icon>
+              <span mediTranslate="medilabApp.appointment.home.createNewAppointment"></span>
+            </button>
+            <!-- NO BORRAR + SECCION DE CREAR CITAS + MAURICIO -->
           </div>
         </div>
       </div>

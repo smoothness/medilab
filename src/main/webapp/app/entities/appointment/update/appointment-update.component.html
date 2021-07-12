@@ -4,9 +4,9 @@
       <h2
         id="medi-appointment-heading"
         data-cy="AppointmentCreateUpdateHeading"
-        mediTranslate="medilabApp.appointment.home.createOrEditLabel"
+        mediTranslate="medilabApp.appointment.home.createOrEditAppointment"
       >
-        Create or edit a Appointment
+        Crear o editar una cita
       </h2>
 
       <div>
@@ -38,8 +38,8 @@
 
         <div class="form-group">
           <label class="form-control-label" mediTranslate="medilabApp.appointment.status" for="field_status">Status</label>
-          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
-            <option [ngValue]="null">{{ 'medilabApp.Status.null' | translate }}</option>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status" ngModel="PENDING">
+            <!-- <option [ngValue]="null">{{ 'medilabApp.Status.null' | translate }}</option> -->
             <option value="CANCELED">{{ 'medilabApp.Status.CANCELED' | translate }}</option>
             <option value="PENDING">{{ 'medilabApp.Status.PENDING' | translate }}</option>
             <option value="PAID">{{ 'medilabApp.Status.PAID' | translate }}</option>
