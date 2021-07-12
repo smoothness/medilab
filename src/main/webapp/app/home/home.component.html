@@ -4,9 +4,9 @@
       <div class="card bg-dark">
         <div class="card-body">
           <div>
-            <img src="../../content/images/avatar.png" width="100" alt="test"/>
+            <img src='{{account?.imageUrl}}' width="100" alt="test"/>
             <p *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
-              {{account?.firstName}} {{account?.lastName}}
+              {{account?.firstName}} {{patient?.secondSurname}} {{account?.lastName}}
             </p>
             <p *ngIf="account?.authorities?.includes('ROLE_ADMIN') ||
                 account?.authorities?.includes('ROLE_USER')">
@@ -32,9 +32,11 @@
           <div class="card-body" *ngIf="account?.authorities?.includes('ROLE_USER')">
             <p><b>Ultima cita:</b> 08 de Diciembre de 2020</p>
             <p><b>Hora:</b> 4:00 P.M.</p>
-            <p><b>Paciente:</b>Julían Castro Fallas</p>
-            <p><b>Area:</b> Ortopedia </p>
+            <p><b>Paciente:</b> Julían Castro Fallas</p>
             <br/>
+            <a target="_blank" class="btn btn-secondary"
+                >Ver expediente</a
+            >
           </div>
         </div>
       </div>
@@ -44,17 +46,32 @@
         <div class="card-body">
           <div *ngIf="account?.authorities?.includes('ROLE_USER')">
             <p class="info-title">Especialidad</p>
-            <p>Dermatología</p>
+            <p>{{doctor?.specialty}}</p>
             <p class="info-title">Calificación </p>
-            <p>5</p>
+            <p>{{doctor?.ratingUsers}}</p>
           </div>
           <p class="info-title">Número de identificación</p>
           <p> {{account?.login}} </p>
           <p class="info-title">Teléfono</p>
-          <p>8765-2323</p>
+          <p> {{patient?.phone}} </p>
           <p class="info-title">Correo electrónico</p>
           <p> {{account?.email}} </p>
+
+
         </div>
+      </div>
+    </div>
+
+    <div class="card bg-dark mt-3" *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
+      <h5 class="card-header">Teléfono en caso de una emergencia</h5>
+      <div class="card-body">
+        <ul class="list-group">
+          <li class="list-group-item" aria-current="true">An active item</li>
+          <li class="list-group-item">A second item</li>
+          <li class="list-group-item">A third item</li>
+          <li class="list-group-item">A fourth item</li>
+          <li class="list-group-item">And a fifth one</li>
+        </ul>
       </div>
     </div>
 

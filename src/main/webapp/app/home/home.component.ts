@@ -1,10 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Router} from '@angular/router';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
-import { AccountService } from 'app/core/auth/account.service';
-import { Account } from 'app/core/auth/account.model';
+import {AccountService} from 'app/core/auth/account.service';
+import {Account} from 'app/core/auth/account.model';
+
+import {PatientService} from 'app/entities/patient/service/patient.service';
+import {Patient} from 'app/entities/patient/patient.model';
+
+import {DoctorService} from 'app/entities/doctor/service/doctor.service';
+import {Doctor} from 'app/entities/doctor/doctor.model';
+
+import {EmergencyContactService} from 'app/entities/emergency-contact/service/emergency-contact.service';
+import {EmergencyContact, IEmergencyContact} from 'app/entities/emergency-contact/emergency-contact.model';
 
 @Component({
   selector: 'medi-home',
@@ -13,17 +22,47 @@ import { Account } from 'app/core/auth/account.model';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
-
+  patient: Patient | null = null;
+  doctor: Doctor | null = null;
+  emergencyContacts: IEmergencyContact | null = null;
+  emergencyContact: EmergencyContact | null = null;
   private readonly destroy$ = new Subject<void>();
 
   constructor(private accountService: AccountService,
-              private router: Router) {}
+              private patientService: PatientService,
+              private doctorService: DoctorService,
+              private emergencyContactService: EmergencyContactService,
+              private router: Router) {
+  }
 
   ngOnInit(): void {
     this.accountService
       .getAuthenticationState()
       .pipe(takeUntil(this.destroy$))
       .subscribe(account => (this.account = account));
+
+    this.patientService
+      .find(2)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(patient => {
+          this.patient = patient.body;
+        }
+      );
+
+    this.doctorService
+      .find(2)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(doctor => {
+          this.doctor = doctor.body;
+        }
+      );
+    this.emergencyContactService
+      .find(3)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(emergencyContact => {
+          this.emergencyContacts = emergencyContact.body;
+        }
+      );
   }
 
   login(): void {
