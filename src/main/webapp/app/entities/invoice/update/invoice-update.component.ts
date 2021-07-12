@@ -10,6 +10,7 @@ import {InvoiceService} from '../service/invoice.service';
 import {IAppointment} from 'app/entities/appointment/appointment.model';
 import {AppointmentService} from 'app/entities/appointment/service/appointment.service';
 import {Status} from "../../enumerations/status.model";
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'medi-invoice-update',
@@ -56,8 +57,11 @@ export class InvoiceUpdateComponent implements OnInit {
       this.subscribeToSaveResponse(this.invoiceService.update(invoice));
     } else {
       //Al ser una factura nueva el status por defecto debe ser PENDING
+      const now = dayjs();
+      invoice.date = now;
       invoice.status = Status.PENDING;
       this.subscribeToSaveResponse(this.invoiceService.create(invoice));
+
     }
   }
 
