@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe(account => (this.account = account));
 
     this.patientService
-      .find(2)
+      .find(Number(this.account?.login))
       .pipe(takeUntil(this.destroy$))
       .subscribe(patient => {
           this.patient = patient.body;
@@ -50,14 +50,14 @@ export class HomeComponent implements OnInit, OnDestroy {
       );
 
     this.doctorService
-      .find(2)
+      .find(Number(this.account?.login))
       .pipe(takeUntil(this.destroy$))
       .subscribe(doctor => {
           this.doctor = doctor.body;
         }
       );
     this.emergencyContactService
-      .find(3)
+      .find(Number(this.account?.login))
       .pipe(takeUntil(this.destroy$))
       .subscribe(emergencyContact => {
           this.emergencyContacts = emergencyContact.body;
