@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AccountService } from 'app/core/auth/account.service';
+import { AccountService } from './../../core/auth/account.service';
 import { Session } from './session.model';
 import { SessionsService } from './sessions.service';
-import { Account } from 'app/core/auth/account.model';
+import { Account } from './../../core/auth/account.model';
 
 @Component({
   selector: 'medi-sessions',

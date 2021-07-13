@@ -8,10 +8,10 @@ import { TestBed } from '@angular/core/testing';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxWebstorageModule, SessionStorageService } from 'ngx-webstorage';
 
-import { Account } from 'app/core/auth/account.model';
-import { Authority } from 'app/config/authority.constants';
-import { StateStorageService } from 'app/core/auth/state-storage.service';
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { Account } from './../../core/auth/account.model';
+import { Authority } from './../../config/authority.constants';
+import { StateStorageService } from './../../core/auth/state-storage.service';
+import { ApplicationConfigService } from './../../core/config/application-config.service';
 
 import { AccountService } from './account.service';
 
