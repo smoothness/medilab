@@ -3,12 +3,12 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SessionStorageService } from 'ngx-webstorage';
 
-import { VERSION } from 'app/app.constants';
-import { LANGUAGES } from 'app/config/language.constants';
-import { Account } from 'app/core/auth/account.model';
-import { AccountService } from 'app/core/auth/account.service';
-import { LoginService } from 'app/login/login.service';
-import { ProfileService } from 'app/layouts/profiles/profile.service';
+import { VERSION } from './../../app.constants';
+import { LANGUAGES } from './../../config/language.constants';
+import { Account } from './../../core/auth/account.model';
+import { AccountService } from './../../core/auth/account.service';
+import { LoginService } from './../../login/login.service';
+import { ProfileService } from './../../layouts/profiles/profile.service';
 
 @Component({
   selector: 'medi-navbar',
@@ -54,13 +54,13 @@ export class NavbarComponent implements OnInit {
   }
 
   login(): void {
-    this.router.navigate(['/login']);
+    this.router.navigate(['']);
   }
 
   logout(): void {
     this.collapseNavbar();
     this.loginService.logout();
-    this.router.navigate(['']);
+    window.location.assign('/');
   }
 
   toggleNavbar(): void {
