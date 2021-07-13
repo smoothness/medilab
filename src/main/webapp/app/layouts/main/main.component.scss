@@ -5,15 +5,10 @@
 }
 
 .ml-nav {
-  flex: 0 0 20%;
   height: 100vh;
 }
 
 .ml-main {
-  background-color: $dark-bgd;
   color: $white;
-  flex: 0 0 80%;
-  height: 100vh;
-  overflow: auto;
   padding: 2rem;
 }

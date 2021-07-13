@@ -21,7 +21,11 @@ export class SettingsComponent implements OnInit {
     langKey: [undefined],
   });
 
-  constructor(private accountService: AccountService, private fb: FormBuilder, private translateService: TranslateService) {}
+  constructor(
+    private accountService: AccountService, 
+    private fb: FormBuilder, 
+    private translateService: TranslateService
+    ) {}
 
   ngOnInit(): void {
     this.accountService.identity().subscribe(account => {

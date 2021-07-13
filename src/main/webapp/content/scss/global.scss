@@ -7,7 +7,11 @@
 Bootstrap tweaks
 ===============================================================*/
 
-body,
+body{
+  font-weight: 300;
+  background: $dark-bgd !important;
+}
+
 h1,
 h2,
 h3,
