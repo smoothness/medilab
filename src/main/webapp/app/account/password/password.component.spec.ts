@@ -6,7 +6,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormBuilder } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 
-import { AccountService } from 'app/core/auth/account.service';
+import { AccountService } from './../../core/auth/account.service';
 
 import { PasswordComponent } from './password.component';
 import { PasswordService } from './password.service';

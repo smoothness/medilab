@@ -12,10 +12,12 @@
                 account?.authorities?.includes('ROLE_USER')">
               {{account?.firstName}} {{account?.lastName}}
             </p>
+
           </div>
         </div>
         <div class="ml-profile-stats">
           <div class="card-header">
+
             <p>Datos</p>
           </div>
           <div class="card-body" *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
@@ -56,8 +58,6 @@
           <p> {{patient?.phone}} </p>
           <p class="info-title">Correo electrónico</p>
           <p> {{account?.email}} </p>
-
-
         </div>
       </div>
     </div>
@@ -77,6 +77,7 @@
 
     <div class="card bg-dark mt-3" *ngIf="!account?.authorities?.includes('ROLE_ADMIN')">
       <h5 class="card-header">Próximas citas</h5>
+
       <div class="card-body">
         <ul class="list-group">
           <li class="list-group-item" aria-current="true">An active item</li>

@@ -7,7 +7,11 @@
 Bootstrap tweaks
 ===============================================================*/
 
-body,
+body{
+  font-weight: 300;
+  background: $dark-bgd !important;
+}
+
 h1,
 h2,
 h3,
@@ -250,6 +254,10 @@ a {
 
 .dropdown-menu a {
   color: $white;
+}
+
+.ngb-dp-content {
+  background-color: #ccc;
 }
 
 .list-group-item {

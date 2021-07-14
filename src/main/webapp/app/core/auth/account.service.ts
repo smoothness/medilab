@@ -6,9 +6,9 @@ import { SessionStorageService } from 'ngx-webstorage';
 import { Observable, ReplaySubject, of } from 'rxjs';
 import { shareReplay, tap, catchError } from 'rxjs/operators';
 
-import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { StateStorageService } from './../../core/auth/state-storage.service';
 import { ApplicationConfigService } from '../config/application-config.service';
-import { Account } from 'app/core/auth/account.model';
+import { Account } from './../../core/auth/account.model';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
