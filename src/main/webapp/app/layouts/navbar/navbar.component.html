@@ -66,6 +66,18 @@
           </span>
         </a>
       </li>
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a
+          class="nav-link"
+          routerLink="treatment"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="collapseNavbar()"
+        >
+          <fa-icon icon="plus" [fixedWidth]="true"></fa-icon>
+          <span>Tratamientos</span>
+        </a>
+      </li>
       <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
       <li
         *ngSwitchCase="true"
@@ -380,7 +392,7 @@
             </a>
           </li>
           <!-- <li *ngSwitchCase="true">
-            
+
           </li> -->
           <li *ngSwitchCase="false">
             <a class="dropdown-item" (click)="login()" id="login" data-cy="login">

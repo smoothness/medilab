@@ -36,6 +36,10 @@ export class TreatmentService {
     return this.http.get<ITreatment>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  findByTreatmentAndAppointment(id_treatment: number, id_appointment: number): Observable<EntityResponseType> {
+    return this.http.get<ITreatment>(`${this.resourceUrl}/${id_treatment}`, { observe: 'response' });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<ITreatment[]>(this.resourceUrl, { params: options, observe: 'response' });
