@@ -1,7 +1,4 @@
 import { NgModule } from '@angular/core';
-import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-
-import { fontAwesomeIcons } from './../config/font-awesome-icons';
 
 import { SharedLibsModule } from './shared-libs.module';
 import { FindLanguageFromKeyPipe } from './language/find-language-from-key.pipe';
@@ -52,8 +49,4 @@ import { ConfirmPasswordComponent } from './confirm-password/confirm-password.co
     ConfirmPasswordComponent,
   ],
 })
-export class SharedModule {
-  constructor(iconLibrary: FaIconLibrary) {
-    iconLibrary.addIcons(...fontAwesomeIcons);
-  }
-}
+export class SharedModule {}

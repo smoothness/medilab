@@ -11,21 +11,16 @@ export class RegisterService {
 
   register(newUser: User): Observable<{}> {
     return new Observable(subscriber => {
-      this.save(newUser).subscribe(
-        (registered: any) => {
-          newUser.setId(registered);
-          this.savePatientInfo(newUser).subscribe(
-            (patient: any) => {
-              console.log(patient);
-
-              subscriber.complete();
-            },
-            err => subscriber.error(err)
-          );
+      this.save(newUser).subscribe((registered: any) => {
+        newUser.setId(registered);
+        this.savePatientInfo(newUser).subscribe(() => {
+          subscriber.complete();
         },
-        err => subscriber.error(err)
-      );
+        err => subscriber.error(err));
+      },
+      err => subscriber.error(err))
     });
+    
   }
 
   save(newUser: User): Observable<{}> {
@@ -33,7 +28,7 @@ export class RegisterService {
   }
 
   savePatientInfo(newUser: User): Observable<{}> {
-    return this.http.post(this.getUrl(`api/patients/${newUser.id}`), newUser.patientData);
+    return this.http.post(this.getUrl('api/patients'), newUser.patientData);
   }
 
   private getUrl(url: string): string {

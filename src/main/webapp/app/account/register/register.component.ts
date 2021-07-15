@@ -20,8 +20,7 @@ export class RegisterComponent {
 
   registerForm = this.fb.group({
     personalInfo: this.fb.group({
-      login: [
-        '',
+      login: ['',
         [
           Validators.required,
           Validators.minLength(1),
@@ -32,27 +31,36 @@ export class RegisterComponent {
       name: ['', [Validators.required]],
       lastname: ['', [Validators.required]],
       secondlastname: [''],
-      langKey: [this.translateService.currentLang],
+      langKey: [this.translateService.currentLang]
     }),
     contactInfo: this.fb.group({
-      phone: ['', [Validators.required]],
-      email: ['', [Validators.required]],
+      phone: ['',[Validators.required]],
+      email: ['', [
+      Validators.required
+    ],]
     }),
     emergencyContact: this.fb.group({
       name: ['', [Validators.required]],
       lastname: ['', [Validators.required]],
       secondlastname: [''],
-      phone: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      relationship: ['', [Validators.required]],
-    }),
+      phone: ['',[Validators.required]],
+      email: ['', [
+        Validators.required
+        ],
+      ],
+      relationship: ['',[Validators.required]]
+    })
   });
 
-  constructor(private fb: FormBuilder, private service: RegisterService, private translateService: TranslateService) {}
+  constructor(
+    private fb: FormBuilder, 
+    private service: RegisterService,
+    private translateService: TranslateService
+    ) {}
 
   get currentGroup(): any {
     return this.getGroupAt(this.currentStep);
-  }
+  } 
 
   previousStep(): void {
     this.currentStep--;
@@ -64,20 +72,22 @@ export class RegisterComponent {
 
   registerUser(): void {
     const newUser: User = new User(this.registerForm.value);
-
+    
     this.service.register(newUser).subscribe(
-      res => {
+      (res) => {
         this.success = true;
+        res
       },
       response => this.processError(response)
     );
   }
 
   private getGroupAt(index: number): FormGroup {
-    const groups = Object.keys(this.registerForm.controls).map(groupName => this.registerForm.get(groupName)) as FormGroup[];
+    const groups = Object.keys(this.registerForm.controls).map((groupName) => this.registerForm.get(groupName)) as FormGroup[];
 
     return groups[index];
   }
+  
 
   // register(): void {
   //   this.doNotMatch = false;
@@ -98,6 +108,7 @@ export class RegisterComponent {
   //   }
   // }
 
+  
   private processError(response: HttpErrorResponse): void {
     if (response.status === 400 && response.error.type === LOGIN_ALREADY_USED_TYPE) {
       // this.errorUserExists = true;

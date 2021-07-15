@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SessionStorageService } from 'ngx-webstorage';
@@ -29,8 +29,7 @@ export class NavbarComponent implements OnInit {
     private sessionStorageService: SessionStorageService,
     private accountService: AccountService,
     private profileService: ProfileService,
-    private router: Router,
-    private ngZone: NgZone
+    private router: Router
   ) {
     if (VERSION) {
       this.version = VERSION.toLowerCase().startsWith('v') ? VERSION : 'v' + VERSION;
@@ -61,7 +60,6 @@ export class NavbarComponent implements OnInit {
   logout(): void {
     this.collapseNavbar();
     this.loginService.logout();
-
     window.location.assign('/');
   }
 
