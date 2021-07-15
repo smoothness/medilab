@@ -48,8 +48,8 @@
       "language": "Language"
     },
     "form": {
-      "username.label": "Username",
-      "username.placeholder": "Your username",
+      "identification.label": "Identification",
+      "identification.placeholder": "Your identification",
       "currentpassword.label": "Current password",
       "currentpassword.placeholder": "Current password",
       "newpassword.label": "New password",
@@ -57,7 +57,15 @@
       "confirmpassword.label": "New password confirmation",
       "confirmpassword.placeholder": "Confirm the new password",
       "email.label": "Email",
-      "email.placeholder": "Your email"
+      "email.placeholder": "Your email",
+      "name.label": "Name",
+      "name.placeholder": "Your name",
+      "lastname.label": "Lastname",
+      "lastname.placeholder": "Your lastname",
+      "secondlastname.label": "Second lastname",
+      "secondlastname.placeholder": "Your second lastname",
+      "phone.label": "Phone",
+      "phone.placeholder": "Your phone"
     },
     "messages": {
       "info": {

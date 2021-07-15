@@ -30,8 +30,8 @@
         "password": "Contraseña",
         "sessions": "Sesiones",
         "login": "Iniciar sesión",
-        "logout": "Cerrar la sesión",
-        "register": "Crear una cuenta"
+        "logout": "Cerrar sesión",
+        "register": "Crear cuenta"
       },
       "admin": {
         "main": "Administración",
@@ -48,8 +48,8 @@
       "language": "Idioma"
     },
     "form": {
-      "username.label": "Usuario",
-      "username.placeholder": "Nombre de usuario",
+      "identification.label": "Identificación",
+      "identification.placeholder": "Su cédula de identidad",
       "currentpassword.label": "Contraseña actual",
       "currentpassword.placeholder": "Contraseña actual",
       "newpassword.label": "Nueva contraseña",
@@ -57,7 +57,15 @@
       "confirmpassword.label": "Confirmación de la nueva contraseña",
       "confirmpassword.placeholder": "Confirmación de la nueva contraseña",
       "email.label": "Correo electrónico",
-      "email.placeholder": "Su correo electrónico"
+      "email.placeholder": "Su correo electrónico",
+      "name.label": "Nombre",
+      "name.placeholder": "Su nombre",
+      "lastname.label": "Apellido",
+      "lastname.placeholder": "Su apellido",
+      "secondlastname.label": "Segundo apellido",
+      "secondlastname.placeholder": "Su segundo apellido",
+      "phone.label": "Teléfono",
+      "phone.placeholder": "Su teléfono"
     },
     "messages": {
       "info": {

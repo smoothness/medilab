@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { ApplicationConfigService } from '../config/application-config.service';
-import { Login } from 'app/login/login.model';
+import { Login } from './../../login/login.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthServerProvider {
