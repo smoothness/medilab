@@ -13,6 +13,7 @@ import { SortByDirective } from './sort/sort-by.directive';
 import { SortDirective } from './sort/sort.directive';
 import { ItemCountComponent } from './pagination/item-count.component';
 import { HeaderComponent } from './header/header.component';
+import { ConfirmPasswordComponent } from './confirm-password/confirm-password.component';
 
 @NgModule({
   imports: [SharedLibsModule],
@@ -28,7 +29,8 @@ import { HeaderComponent } from './header/header.component';
     SortByDirective,
     SortDirective,
     ItemCountComponent,
-    HeaderComponent
+    HeaderComponent,
+    ConfirmPasswordComponent,
   ],
   exports: [
     SharedLibsModule,
@@ -43,7 +45,8 @@ import { HeaderComponent } from './header/header.component';
     SortByDirective,
     SortDirective,
     ItemCountComponent,
-    HeaderComponent
+    HeaderComponent,
+    ConfirmPasswordComponent,
   ],
 })
 export class SharedModule {}
