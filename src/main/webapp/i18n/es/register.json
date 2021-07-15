@@ -14,13 +14,16 @@
     "messages": {
       "validate": {
         "login": {
-          "required": "Su identificación es obligatoria.",
-          "minlength": "Su identificación debe tener al menos 9 caracter.",
-          "maxlength": "Su identificación no puede tener más de 50 caracteres.",
-          "pattern": "Su identificación no es válida."
+          "required": "Se requiere la identificación.",
+          "minlength": "La identificación debe tener al menos 9 caracter.",
+          "maxlength": "La identificación no puede tener más de 50 caracteres.",
+          "pattern": "La identificación no es válida."
         },
-        "name": {"required": "Su nombre es obligatorio."},
-        "phone": {"required": "Su télefono es obligatorio."}
+        "name": { "required": "Se requiere un nombre." },
+        "lastName": { "required": "Se requiere un apellido." },
+        "phone": { "required": "Se requiere un número teléfonico." },
+        "email": { "required": "Se requiere un correo electrónico." },
+        "relationship": { "required": "Se requiere un parentesco." }
       },
       "success": "<strong>¡Registro guardado!</strong> Por favor, revise su correo electrónico para confirmar.",
       "error": {
