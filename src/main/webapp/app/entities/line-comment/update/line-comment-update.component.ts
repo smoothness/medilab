@@ -73,8 +73,11 @@ export class LineCommentUpdateComponent implements OnInit {
         this.invoice.discount = 0;
       }
 
+    
+      
+      this.subscribeToSaveResponseInvoice(this.invoiceService.create(this.invoice));
 
-       lineComment.invoiceCode = this.createInvoice(this.invoice)
+       lineComment.invoiceCode = this.invoiceData;
 
        //eslint-disable-next-line no-console
       console.log(lineComment.invoiceCode)
@@ -87,24 +90,20 @@ export class LineCommentUpdateComponent implements OnInit {
     return item.id!;
   }
 
-  protected createInvoice(invoice: IInvoice) : IInvoice{
-    this.invoice = invoice;
-    this.subscribeToSaveResponseInvoice(this.invoiceService.create(this.invoice));
-
-    return this.invoice;
-  }
 
   protected subscribeToSaveResponseInvoice(result: Observable<HttpResponse<IInvoice>>): IInvoice | null | undefined {
     result.subscribe(data => {
-      // eslint-disable-next-line no-console
-      console.log({data})
-      // eslint-disable-next-line no-console
-      console.log(data.body?.id)
       this.invoiceData = data.body;
     });
 
     return this.invoiceData;
   }
+
+  protected SaveInvoice(){
+        .subscribe(this.invoice => {
+            this.costs = costs;
+        });
+      }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ILineComment>>): void {
   /*  result.subscribe(data => {
@@ -170,3 +169,7 @@ export class LineCommentUpdateComponent implements OnInit {
     };
   }
 }
+function subscribe(arg0: (costs: any) => void) {
+  throw new Error('Function not implemented.');
+}
+
