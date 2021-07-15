@@ -47,16 +47,26 @@
         <h5 class="card-header">Información personal</h5>
         <div class="card-body">
           <div *ngIf="account?.authorities?.includes('ROLE_USER')">
-            <p class="info-title">Especialidad</p>
+            <p class="info-title"
+               mediTranslate="home.profile.specialty">
+              Especialidad</p>
             <p>{{doctor?.specialty}}</p>
-            <p class="info-title">Calificación </p>
+            <p class="info-title"
+               mediTranslate="home.profile.rating">
+              Calificación </p>
             <p>{{doctor?.ratingUsers}}</p>
           </div>
-          <p class="info-title">Identificación</p>
+          <p class="info-title"
+             mediTranslate="home.profile.identification">
+            Identificación</p>
           <p> {{account?.login}} </p>
-          <p class="info-title">Teléfono</p>
+          <p class="info-title"
+             mediTranslate="home.profile.phone">
+            Teléfono</p>
           <p> {{patient?.phone}} </p>
-          <p class="info-title">Correo electrónico</p>
+          <p class="info-title"
+             mediTranslate="home.profile.email">
+            Correo electrónico</p>
           <p> {{account?.email}} </p>
         </div>
       </div>
