@@ -1,27 +1,18 @@
-import { 
-  Component,
-  ComponentFactoryResolver,
-  ViewContainerRef,
-  OnInit, 
-  ComponentFactory,
-  ComponentRef,
-  ViewChild
-} from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewContainerRef, OnInit, ComponentFactory, ComponentRef } from '@angular/core';
 import { EmergencyFormComponent } from './emergency-form/emergency-form.component';
 
 @Component({
   selector: 'medi-emergency-contact',
   templateUrl: './emergency-contact.component.html',
-  styleUrls: ['./emergency-contact.component.scss']
+  styleUrls: ['./emergency-contact.component.scss'],
 })
 export class EmergencyContactComponent implements OnInit {
-  //@ViewChild('viewContainerRef', { read: ViewContainerRef }) vcr!: ViewContainerRef;
   public formContacts: EmergencyFormComponent[] = [];
 
   constructor(private formCreator: ComponentFactoryResolver, public vcr: ViewContainerRef) {}
 
   get contacts(): {}[] {
-    const contacts: {}[] = Array.from(this.formContacts, el => (<{}>el.emergencyContactForm.value));
+    const contacts: {}[] = Array.from(this.formContacts, el => <{}>el.emergencyContactForm.value);
     return contacts;
   }
 
@@ -37,21 +28,20 @@ export class EmergencyContactComponent implements OnInit {
     this.createComponent();
   }
 
-  createComponent(): void { 
+  createComponent(): void {
     const formComponent = this.formComponentRef.instance;
-    formComponent.setInitData(this, this.formContacts.length)
+    formComponent.setInitData(this, this.formContacts.length);
     this.formContacts.push(formComponent);
   }
 
   removeForm(pIndex: number): void {
     for (let i = 0; i < this.formContacts.length; i++) {
       const currentContact = this.formContacts[i];
-      
+
       if (i === pIndex) {
         this.vcr.remove(pIndex);
         this.formContacts.splice(pIndex, 1);
       }
     }
   }
-
 }

@@ -1,8 +1,8 @@
 <div>
   <div class="row justify-content-center">
-    <div class="col-md-8">
+    <div class="col-md-8 text-center">
       <h1 mediTranslate="register.title" data-cy="registerTitle">Registration</h1>
-      <div class="alert alert-success" *ngIf="success" mediTranslate="register.messages.success">
+      <!-- <div class="alert alert-success" *ngIf="success" mediTranslate="register.messages.success">
         <strong>Registration saved!</strong> Please check your email for confirmation.
       </div>
       <div class="alert alert-danger" *ngIf="error" mediTranslate="register.messages.error.fail">
@@ -16,325 +16,39 @@
       </div>
       <div class="alert alert-danger" *ngIf="doNotMatch" mediTranslate="global.messages.error.dontmatch">
         The password and its confirmation do not match!
-      </div>
+      </div> -->
     </div>
   </div>
 
   <div class="row justify-content-center">
-    <div class="col-md-8 ml-register">
-      <form name="form" role="form" (ngSubmit)="register()" [formGroup]="registerForm" *ngIf="!success" autocomplete="off">
-        <!-- Id -->
-        <div class="form-group">
-          <label class="form-control-label" for="identification" mediTranslate="global.form.identification.label">Username</label>
-          <input
-            type="text"
-            class="form-control"
-            id="identification"
-            name="identification"
-            placeholder="{{ 'global.form.identification.placeholder' | translate }}"
-            formControlName="login"
-            data-cy="identification"
-            #login
-          />
+    <div class="col-md-5 ml-register">
+      <form name="registerForm" role="form" autocomplete="off" [formGroup]="registerForm">
+        <medi-personal-info *ngIf="currentStep === 0" [personalDataForm]="currentGroup"> </medi-personal-info>
 
-          <div *ngIf="registerForm.get('login')!.invalid && (registerForm.get('login')!.dirty || registerForm.get('login')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('login')?.errors?.required"
-              mediTranslate="register.messages.validate.login.required"
-            >
-              Your username is required.
-            </small>
+        <medi-contact-info *ngIf="currentStep === 1" [contactInfoForm]="currentGroup"></medi-contact-info>
 
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('login')?.errors?.minlength"
-              mediTranslate="register.messages.validate.login.minlength"
-            >
-              Your username is required to be at least 1 character.
-            </small>
+        <medi-emergency-contact *ngIf="currentStep === 2"></medi-emergency-contact>
 
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('login')?.errors?.maxlength"
-              mediTranslate="register.messages.validate.login.maxlength"
-            >
-              Your username cannot be longer than 50 characters.
-            </small>
+        <div class="text-center">
+          <button
+            class="btn btn-secondary"
+            mediTranslate="register.form.previous"
+            [disabled]="currentStep === 0"
+            (click)="previousStep()"
+          ></button>
 
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('login')?.errors?.pattern"
-              mediTranslate="register.messages.validate.login.pattern"
-            >
-              Your username can only contain letters and digits.
-            </small>
-          </div>
+          <button
+            class="btn btn-primary"
+            mediTranslate="register.form.next"
+            *ngIf="currentStep !== 2"
+            [disabled]="currentStep === 2"
+            (click)="nextStep()"
+          ></button>
+
+          <button class="btn btn-success" mediTranslate="register.form.button" *ngIf="currentStep === 2" (click)="registerUser()"></button>
         </div>
-
-        <!-- Name -->
-        <div class="form-group">
-          <label class="form-control-label" for="name" mediTranslate="global.form.name.label">Nombre</label>
-          <input
-            type="text"
-            class="form-control"
-            id="name"
-            name="name"
-            placeholder="{{ 'global.form.name.placeholder' | translate }}"
-            formControlName="name"
-            data-cy="name"
-            #login
-          />
-
-          <div *ngIf="registerForm.get('name')!.invalid && (registerForm.get('name')!.dirty || registerForm.get('name')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('name')?.errors?.required"
-              mediTranslate="register.messages.validate.login.required"
-            >
-              Your name is required.
-            </small>
-
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('name')?.errors?.minlength"
-              mediTranslate="register.messages.validate.login.minlength"
-            >
-              Your name is required to be at least 1 character.
-            </small>
-
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('name')?.errors?.maxlength"
-              mediTranslate="register.messages.validate.login.maxlength"
-            >
-              Your username cannot be longer than 50 characters.
-            </small>
-
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('name')?.errors?.pattern"
-              mediTranslate="register.messages.validate.login.pattern"
-            >
-              Your name can only contain letters and digits.
-            </small>
-          </div>
-        </div>
-
-        <!-- Lastname -->
-        <div class="form-group">
-          <label class="form-control-label" for="lastname" mediTranslate="global.form.lastname.label">Apellido</label>
-          <input
-            type="text"
-            class="form-control"
-            id="name"
-            name="name"
-            placeholder="{{ 'global.form.lastname.placeholder' | translate }}"
-            formControlName="lastname"
-            data-cy="lastname"
-            #login
-          />
-
-          <div *ngIf="registerForm.get('lastname')!.invalid && (registerForm.get('lastname')!.dirty || registerForm.get('lastname')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('lastname')?.errors?.required"
-              mediTranslate="register.messages.validate.login.required"
-            >
-              Your name is required.
-            </small>
-
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('name')?.errors?.minlength"
-              mediTranslate="register.messages.validate.login.minlength"
-            >
-              Your lastname is required to be at least 1 character.
-            </small>
-
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('name')?.errors?.maxlength"
-              mediTranslate="register.messages.validate.login.maxlength"
-            >
-              Your lastname cannot be longer than 50 characters.
-            </small>
-
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('name')?.errors?.pattern"
-              mediTranslate="register.messages.validate.login.pattern"
-            >
-              Your lastname can only contain letters and digits.
-            </small>
-          </div>
-        </div>
-
-        <!-- second lastname -->
-        <div class="form-group">
-          <label class="form-control-label" for="secondLastname" mediTranslate="global.form.secondlastname.label">Segundo apellido</label>
-          <input
-            type="text"
-            class="form-control"
-            id="secondlastname"
-            name="secondlastname"
-            placeholder="{{ 'global.form.secondlastname.placeholder' | translate }}"
-            formControlName="secondlastname"
-            data-cy="secondlastname"
-          />
-
-          <div *ngIf="registerForm.get('lastname')!.invalid && (registerForm.get('lastname')!.dirty || registerForm.get('lastname')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('lastname')?.errors?.required"
-              mediTranslate="register.messages.validate.login.required"
-            >
-              Your name is required.
-            </small>
-
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('name')?.errors?.minlength"
-              mediTranslate="register.messages.validate.login.minlength"
-            >
-              Your lastname is required to be at least 1 character.
-            </small>
-
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('name')?.errors?.maxlength"
-              mediTranslate="register.messages.validate.login.maxlength"
-            >
-              Your lastname cannot be longer than 50 characters.
-            </small>
-
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('name')?.errors?.pattern"
-              mediTranslate="register.messages.validate.login.pattern"
-            >
-              Your lastname can only contain letters and digits.
-            </small>
-          </div>
-        </div>
-
-        <!-- phone -->
-        <div class="form-group">
-          <label class="form-control-label" for="phone" mediTranslate="global.form.lastname.label">Teléfono</label>
-          <input
-            type="text"
-            class="form-control"
-            id="phone"
-            name="phone"
-            placeholder="{{ 'global.form.phone.placeholder' | translate }}"
-            formControlName="phone"
-            data-cy="phone"
-          />
-
-          <div *ngIf="registerForm.get('lastname')!.invalid && (registerForm.get('lastname')!.dirty || registerForm.get('lastname')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('lastname')?.errors?.required"
-              mediTranslate="register.messages.validate.login.required"
-            >
-              Your name is required.
-            </small>
-
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('name')?.errors?.minlength"
-              mediTranslate="register.messages.validate.login.minlength"
-            >
-              Your lastname is required to be at least 1 character.
-            </small>
-
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('name')?.errors?.maxlength"
-              mediTranslate="register.messages.validate.login.maxlength"
-            >
-              Your lastname cannot be longer than 50 characters.
-            </small>
-
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('name')?.errors?.pattern"
-              mediTranslate="register.messages.validate.login.pattern"
-            >
-              Your lastname can only contain letters and digits.
-            </small>
-          </div>
-        </div>
-
-        <!-- email -->
-        <div class="form-group">
-          <label class="form-control-label" for="email" mediTranslate="global.form.email.label">Correo electrónico</label>
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            name="email"
-            placeholder="{{ 'global.form.email.placeholder' | translate }}"
-            formControlName="email"
-            data-cy="email"
-          />
-
-          <div *ngIf="registerForm.get('email')!.invalid && (registerForm.get('email')!.dirty || registerForm.get('email')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('email')?.errors?.required"
-              mediTranslate="global.messages.validate.email.required"
-            >
-              Your email is required.
-            </small>
-
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('email')?.errors?.invalid"
-              mediTranslate="global.messages.validate.email.invalid"
-            >
-              Your email is invalid.
-            </small>
-
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('email')?.errors?.minlength"
-              mediTranslate="global.messages.validate.email.minlength"
-            >
-              Your email is required to be at least 5 characters.
-            </small>
-
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('email')?.errors?.maxlength"
-              mediTranslate="global.messages.validate.email.maxlength"
-            >
-              Your email cannot be longer than 100 characters.
-            </small>
-          </div>
-        </div>
-
-       
-
-        <button
-          type="submit"
-          [disabled]="registerForm.invalid"
-          class="btn btn-primary"
-          mediTranslate="register.form.button"
-          data-cy="submit"
-        >
-          Register
-        </button>
       </form>
-
-      <!-- <div class="mt-3 alert alert-warning">
-        <span mediTranslate="global.messages.info.authenticated.prefix">If you want to </span>
-        <a class="alert-link" routerLink="/login" mediTranslate="global.messages.info.authenticated.link">sign in</a
-        ><span mediTranslate="global.messages.info.authenticated.suffix"
-          >, you can try the default accounts:<br />- Administrator (login="admin" and password="admin") <br />- User (login="user" and
-          password="user").</span
-        >
-      </div> -->
+      <!-- <router-outlet></router-outlet> -->
     </div>
   </div>
 </div>

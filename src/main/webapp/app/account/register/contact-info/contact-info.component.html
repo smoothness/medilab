@@ -47,15 +47,5 @@
       formControlName="email"
       data-cy="email"
     />
-
-    <div *ngIf="contactInfoForm.get('email')!.invalid && (contactInfoForm.get('email')!.dirty || contactInfoForm.get('email')!.touched)">
-      <small
-        class="form-text text-danger"
-        *ngIf="contactInfoForm.get('phone')?.errors?.required"
-        mediTranslate="register.messages.validate.email.required"
-      >
-        Your phone is required.
-      </small>
-    </div>
   </div>
 </form>
