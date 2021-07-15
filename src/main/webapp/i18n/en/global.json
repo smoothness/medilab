@@ -65,7 +65,8 @@
       "secondlastname.label": "Second lastname",
       "secondlastname.placeholder": "Your second lastname",
       "phone.label": "Phone",
-      "phone.placeholder": "Your phone"
+      "phone.placeholder": "Your phone",
+      "relationship": "Relationship"
     },
     "messages": {
       "info": {
