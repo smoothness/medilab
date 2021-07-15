@@ -20,7 +20,7 @@
             <br />
 
             <!-- NO BORRAR + SECCION DE CREAR CITAS + MAURICIO -->
-            <div *ngIf="account?.login === 'user'">
+            <div *ngIf="authority === 'ROLE_PATIENT'">
               <a
                 href="#"
                 class="btn btn-secondary"
@@ -39,7 +39,7 @@
               </a>
             </div>
             <button
-              *ngIf="account?.login === 'admin'"
+              *ngIf="authority === 'ROLE_USER'"
               id="jh-create-entity"
               data-cy="entityCreateButton"
               class="btn btn-primary jh-create-entity create-appointment"

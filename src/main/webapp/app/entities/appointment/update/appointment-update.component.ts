@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
 import { IAppointment, Appointment } from '../appointment.model';
+import { AccountService } from 'app/core/auth/account.service';
 import { AppointmentService } from '../service/appointment.service';
 import { IPatient } from 'app/entities/patient/patient.model';
 import { PatientService } from 'app/entities/patient/service/patient.service';
@@ -18,7 +19,7 @@ import { DoctorService } from 'app/entities/doctor/service/doctor.service';
 })
 export class AppointmentUpdateComponent implements OnInit {
   isSaving = false;
-
+  doctor: any;
   patientsSharedCollection: IPatient[] = [];
   doctorsSharedCollection: IDoctor[] = [];
 
@@ -31,6 +32,7 @@ export class AppointmentUpdateComponent implements OnInit {
   });
 
   constructor(
+    protected accountService: AccountService,
     protected appointmentService: AppointmentService,
     protected patientService: PatientService,
     protected doctorService: DoctorService,
@@ -43,6 +45,10 @@ export class AppointmentUpdateComponent implements OnInit {
       this.updateForm(appointment);
 
       this.loadRelationshipsOptions();
+    });
+
+    this.accountService.getAuthenticationState().subscribe(account => {
+      this.doctor = account;
     });
   }
 
@@ -60,11 +66,13 @@ export class AppointmentUpdateComponent implements OnInit {
     }
   }
 
-  trackPatientById(index: number, item: IPatient): number {
-    return item.id!;
+  trackPatientById(index: number, item: IPatient): string {
+    // console.log('trackPatientById: ', item)
+    return item.secondSurname!;
   }
 
   trackDoctorById(index: number, item: IDoctor): number {
+    // console.log('trackDoctorById: ', item)
     return item.id!;
   }
 
@@ -93,11 +101,11 @@ export class AppointmentUpdateComponent implements OnInit {
       date: appointment.date,
       status: appointment.status,
       patient: appointment.patient,
-      doctor: appointment.doctor,
+      doctor: this.doctor.id,
     });
 
-    this.patientsSharedCollection = this.patientService.addPatientToCollectionIfMissing(this.patientsSharedCollection, appointment.patient);
-    this.doctorsSharedCollection = this.doctorService.addDoctorToCollectionIfMissing(this.doctorsSharedCollection, appointment.doctor);
+    // this.patientsSharedCollection = this.patientService.addPatientToCollectionIfMissing(this.patientsSharedCollection, appointment.patient);
+    // this.doctorsSharedCollection = this.doctorService.addDoctorToCollectionIfMissing(this.doctorsSharedCollection, appointment.doctor);
   }
 
   protected loadRelationshipsOptions(): void {
@@ -117,6 +125,8 @@ export class AppointmentUpdateComponent implements OnInit {
   }
 
   protected createFromForm(): IAppointment {
+    console.log('create apppint');
+
     return {
       ...new Appointment(),
       id: this.editForm.get(['id'])!.value,

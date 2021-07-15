@@ -13,6 +13,7 @@ import { Account } from 'app/core/auth/account.model';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
+  authority: string | undefined;
 
   private readonly destroy$ = new Subject<void>();
 
@@ -24,7 +25,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(account => {
         this.account = account;
-        // eslint-disable-next-line no-console
+        this.authority = account?.authorities[0];
+
         console.log('type: ', this.account);
       });
   }
