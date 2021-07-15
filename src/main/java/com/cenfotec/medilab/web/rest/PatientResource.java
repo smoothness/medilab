@@ -1,7 +1,9 @@
 package com.cenfotec.medilab.web.rest;
 
 import com.cenfotec.medilab.domain.Patient;
+import com.cenfotec.medilab.domain.User;
 import com.cenfotec.medilab.repository.PatientRepository;
+import com.cenfotec.medilab.repository.UserRepository;
 import com.cenfotec.medilab.service.PatientService;
 import com.cenfotec.medilab.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -11,11 +13,15 @@ import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
+
+import javax.validation.Valid;
 
 /**
  * REST controller for managing {@link com.cenfotec.medilab.domain.Patient}.
@@ -27,6 +33,9 @@ public class PatientResource {
     private final Logger log = LoggerFactory.getLogger(PatientResource.class);
 
     private static final String ENTITY_NAME = "patient";
+
+    @Autowired
+    UserRepository userRepository;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
@@ -53,11 +62,16 @@ public class PatientResource {
         if (patient.getId() != null) {
             throw new BadRequestAlertException("A new patient cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        Optional<User> thisUser = userRepository.findById(patient.getInternalUser().getId());
+
+        if(thisUser == null){
+            throw new BadRequestAlertException("User dont exist", "User", "idexists");
+        }
+
+        patient.setInternalUser(thisUser.get());
         Patient result = patientService.save(patient);
-        return ResponseEntity
-            .created(new URI("/api/patients/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok(result);
     }
 
     /**

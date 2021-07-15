@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 
 import { SharedLibsModule } from './shared-libs.module';
 import { FindLanguageFromKeyPipe } from './language/find-language-from-key.pipe';
@@ -13,6 +14,8 @@ import { SortByDirective } from './sort/sort-by.directive';
 import { SortDirective } from './sort/sort.directive';
 import { ItemCountComponent } from './pagination/item-count.component';
 import { HeaderComponent } from './header/header.component';
+import { fontAwesomeIcons } from './../config/font-awesome-icons';
+
 
 @NgModule({
   imports: [SharedLibsModule],
@@ -46,4 +49,8 @@ import { HeaderComponent } from './header/header.component';
     HeaderComponent
   ],
 })
-export class SharedModule {}
+export class SharedModule {
+  constructor(iconLibrary: FaIconLibrary){
+    iconLibrary.addIcons(...fontAwesomeIcons);
+  }
+}

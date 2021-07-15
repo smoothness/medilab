@@ -77,8 +77,7 @@ public class AccountResource {
             throw new InvalidPasswordException();
         }
         User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
-
-        return ResponseEntity.ok(user);
+       return ResponseEntity.ok(user);
     }
 
     /**

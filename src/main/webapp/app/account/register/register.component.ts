@@ -76,7 +76,6 @@ export class RegisterComponent {
     this.service.register(newUser).subscribe(
       (res) => {
         this.success = true;
-        res
       },
       response => this.processError(response)
     );

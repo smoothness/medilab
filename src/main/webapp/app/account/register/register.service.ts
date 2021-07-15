@@ -13,7 +13,9 @@ export class RegisterService {
     return new Observable(subscriber => {
       this.save(newUser).subscribe((registered: any) => {
         newUser.setId(registered);
-        this.savePatientInfo(newUser).subscribe(() => {
+        this.savePatientInfo(newUser).subscribe((patient: any) => {
+        console.log(patient);
+          
           subscriber.complete();
         },
         err => subscriber.error(err));
@@ -28,7 +30,7 @@ export class RegisterService {
   }
 
   savePatientInfo(newUser: User): Observable<{}> {
-    return this.http.post(this.getUrl('api/patients'), newUser.patientData);
+    return this.http.post(this.getUrl(`api/patients/${newUser.id}`), newUser.patientData);
   }
 
   private getUrl(url: string): string {
