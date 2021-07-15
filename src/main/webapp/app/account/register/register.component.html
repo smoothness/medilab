@@ -1,7 +1,17 @@
-<div>
-  <div class="row justify-content-center">
-    <div class="col-md-8 text-center">
+<medi-header></medi-header>
+
+<main>
+  <!-- Title -->
+  <section class="row p-0 m-0 my-3">
+    <div class="col-md-12 text-center">
       <h1 mediTranslate="register.title" data-cy="registerTitle">Registration</h1>
+      <p class="text-muted">Página {{ currentStep + 1 }} de 3</p>
+    </div>
+  </section>
+
+  <!-- Errors -->
+  <section class="row p-0 m-0">
+    <div class="col-12 text-center">
       <!-- <div class="alert alert-success" *ngIf="success" mediTranslate="register.messages.success">
         <strong>Registration saved!</strong> Please check your email for confirmation.
       </div>
@@ -18,37 +28,51 @@
         The password and its confirmation do not match!
       </div> -->
     </div>
-  </div>
+  </section>
 
-  <div class="row justify-content-center">
-    <div class="col-md-5 ml-register">
-      <form name="registerForm" role="form" autocomplete="off" [formGroup]="registerForm">
-        <medi-personal-info *ngIf="currentStep === 0" [personalDataForm]="currentGroup"> </medi-personal-info>
+  <!-- Wizard form -->
+  <section class="row p-0 m-0">
+    <div id="ml-register" class="card col-md-5 mx-auto my-4">
+      <div id="formContainer" class="card-body">
+        <form name="registerForm" role="form" autocomplete="off" [formGroup]="registerForm">
+          <div id="formContainer">
+            <medi-personal-info *ngIf="currentStep === 0" [personalDataForm]="currentGroup"> </medi-personal-info>
 
-        <medi-contact-info *ngIf="currentStep === 1" [contactInfoForm]="currentGroup"></medi-contact-info>
+            <medi-contact-info *ngIf="currentStep === 1" [contactInfoForm]="currentGroup"> </medi-contact-info>
 
-        <medi-emergency-contact *ngIf="currentStep === 2"></medi-emergency-contact>
+            <medi-confirm-password *ngIf="currentStep === 1" (password)="validatePassword($event)"> </medi-confirm-password>
 
-        <div class="text-center">
+            <medi-emergency-contact *ngIf="currentStep === 2" [emergencyContacts]="emergencyContacts"> </medi-emergency-contact>
+          </div>
+        </form>
+      </div>
+
+      <!-- Buttons -->
+      <div class="card-footer">
+        <div class="row m-0 p-0 justify-content-center align-middle">
           <button
-            class="btn btn-secondary"
+            class="btn btn-secondary col-4 m-2"
             mediTranslate="register.form.previous"
             [disabled]="currentStep === 0"
             (click)="previousStep()"
           ></button>
 
           <button
-            class="btn btn-primary"
+            class="btn btn-primary col-4 m-2"
             mediTranslate="register.form.next"
             *ngIf="currentStep !== 2"
             [disabled]="currentStep === 2"
             (click)="nextStep()"
           ></button>
 
-          <button class="btn btn-success" mediTranslate="register.form.button" *ngIf="currentStep === 2" (click)="registerUser()"></button>
+          <button
+            class="btn btn-success col-4 m-2"
+            mediTranslate="register.form.button"
+            *ngIf="currentStep === 2"
+            (click)="registerUser()"
+          ></button>
         </div>
-      </form>
-      <!-- <router-outlet></router-outlet> -->
+      </div>
     </div>
-  </div>
-</div>
+  </section>
+</main>

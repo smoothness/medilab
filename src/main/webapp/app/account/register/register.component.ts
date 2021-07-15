@@ -17,7 +17,7 @@ export class RegisterComponent {
   error = false;
   success = false;
   currentStep = 0;
-
+  emergencyContacts: any[] = [];
   registerForm = this.fb.group({
     personalInfo: this.fb.group({
       login: [
@@ -71,6 +71,10 @@ export class RegisterComponent {
       },
       response => this.processError(response)
     );
+  }
+
+  validatePassword(password: string): void {
+    console.log('password: ', password);
   }
 
   private getGroupAt(index: number): FormGroup {

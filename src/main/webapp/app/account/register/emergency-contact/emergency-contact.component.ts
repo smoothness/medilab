@@ -1,4 +1,13 @@
-import { Component, ComponentFactoryResolver, ViewContainerRef, OnInit, ComponentFactory, ComponentRef } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  ViewContainerRef,
+  OnInit,
+  ComponentFactory,
+  ComponentRef,
+  ViewChild,
+  Input,
+} from '@angular/core';
 import { EmergencyFormComponent } from './emergency-form/emergency-form.component';
 
 @Component({
@@ -7,17 +16,20 @@ import { EmergencyFormComponent } from './emergency-form/emergency-form.componen
   styleUrls: ['./emergency-contact.component.scss'],
 })
 export class EmergencyContactComponent implements OnInit {
-  public formContacts: EmergencyFormComponent[] = [];
+  @ViewChild('containerElement', { static: true, read: ViewContainerRef })
+  public container!: ViewContainerRef;
+  @Input() emergencyContacts: any[] = [];
+  public formContacts: ComponentRef<EmergencyFormComponent>[] = [];
 
-  constructor(private formCreator: ComponentFactoryResolver, public vcr: ViewContainerRef) {}
+  constructor(private formCreator: ComponentFactoryResolver) {}
 
   get contacts(): {}[] {
-    const contacts: {}[] = Array.from(this.formContacts, el => <{}>el.emergencyContactForm.value);
+    const contacts: {}[] = Array.from(this.formContacts, el => <{}>el.instance.emergencyContactForm.value);
     return contacts;
   }
 
   get formComponentRef(): ComponentRef<EmergencyFormComponent> {
-    return this.vcr.createComponent(this.formFactory);
+    return this.container.createComponent(this.formFactory);
   }
 
   get formFactory(): ComponentFactory<EmergencyFormComponent> {
@@ -29,15 +41,16 @@ export class EmergencyContactComponent implements OnInit {
   }
 
   createComponent(): void {
-    const formComponent = this.formComponentRef.instance;
-    formComponent.setInitData(this, this.formContacts.length);
+    const formComponent = this.container.createComponent(this.formFactory);
+    formComponent.instance.setInitData(this, this.formContacts.length);
     this.formContacts.push(formComponent);
   }
 
   removeForm(pIndex: number): void {
     for (let i = 0; i < this.formContacts.length; i++) {
+      const currentEl = this.formContacts[i];
       if (i === pIndex) {
-        this.vcr.remove(pIndex);
+        currentEl.destroy();
         this.formContacts.splice(pIndex, 1);
       }
     }

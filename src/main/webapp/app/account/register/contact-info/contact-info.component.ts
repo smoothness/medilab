@@ -13,8 +13,4 @@ export class ContactInfoComponent implements OnInit {
   ngOnInit(): string {
     return 'test';
   }
-
-  validatePassword(password: string): void {
-    console.log('password: ', password);
-  }
 }
