@@ -36,8 +36,6 @@ export class EmergencyContactComponent implements OnInit {
 
   removeForm(pIndex: number): void {
     for (let i = 0; i < this.formContacts.length; i++) {
-      const currentContact = this.formContacts[i];
-
       if (i === pIndex) {
         this.vcr.remove(pIndex);
         this.formContacts.splice(pIndex, 1);

@@ -1,25 +1,24 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { EmergencyContactComponent } from '../emergency-contact.component';
 
 @Component({
   selector: 'medi-emergency-form',
   templateUrl: './emergency-form.component.html',
-  styleUrls: ['./emergency-form.component.scss']
+  styleUrls: ['./emergency-form.component.scss'],
 })
 export class EmergencyFormComponent {
   public index = 0;
   public emergencyContactForm = this.fb.group({
-    name: [ '', [ Validators.required ] ],
-    lastname: [ '', [ Validators.required ] ],
-    secondlastname: [ '' ],
-    phone: [ '',[ Validators.required ]  ],
-    email: [ '', [ Validators.required ] ],
-    relationship: [ '',[Validators.required ] ]
+    name: ['', [Validators.required]],
+    lastname: ['', [Validators.required]],
+    secondlastname: [''],
+    phone: ['', [Validators.required]],
+    email: ['', [Validators.required]],
+    relationship: ['', [Validators.required]],
   });
   public parentReference: any;
 
-  constructor(private fb: FormBuilder) { 
+  constructor(private fb: FormBuilder) {
     this.parentReference = '';
   }
 
@@ -27,10 +26,8 @@ export class EmergencyFormComponent {
     this.parentReference.removeForm(this.index);
   }
 
-
   setInitData(parent: any, pIndex: number): void {
     this.index = pIndex;
     this.parentReference = parent;
-
   }
 }
