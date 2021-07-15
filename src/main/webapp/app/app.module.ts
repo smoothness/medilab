@@ -4,7 +4,6 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import locale from '@angular/common/locales/es';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { TranslateModule, TranslateService, TranslateLoader, MissingTranslationHandler } from '@ngx-translate/core';
 import { NgxWebstorageModule, SessionStorageService } from 'ngx-webstorage';
 import * as dayjs from 'dayjs';
@@ -15,15 +14,14 @@ import { ApplicationConfigService } from './core/config/application-config.servi
 import './config/dayjs';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
-import { LayoutsModule } from "./layouts/layouts.module";
+import { LayoutsModule } from './layouts/layouts.module';
 
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { NgbDateDayjsAdapter } from './config/datepicker-adapter';
-import { fontAwesomeIcons } from './config/font-awesome-icons';
 import { httpInterceptorProviders } from './core/interceptor/index';
 import { translatePartialLoader, missingTranslationHandler } from './config/translation.config';
 
-import { LayoutsComponent } from "./layouts/layouts.component";
+import { LayoutsComponent } from './layouts/layouts.component';
 
 @NgModule({
   imports: [
@@ -54,22 +52,18 @@ import { LayoutsComponent } from "./layouts/layouts.component";
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
     httpInterceptorProviders,
   ],
-  declarations: [
-    LayoutsComponent
-  ],
+  declarations: [LayoutsComponent],
   bootstrap: [LayoutsComponent],
 })
 export class AppModule {
   constructor(
     applicationConfigService: ApplicationConfigService,
-    iconLibrary: FaIconLibrary,
     dpConfig: NgbDatepickerConfig,
     translateService: TranslateService,
     sessionStorageService: SessionStorageService
   ) {
     applicationConfigService.setEndpointPrefix(SERVER_API_URL);
     registerLocaleData(locale);
-    iconLibrary.addIcons(...fontAwesomeIcons);
     dpConfig.minDate = { year: dayjs().subtract(100, 'year').year(), month: 1, day: 1 };
     translateService.setDefaultLang('es');
     // if user have changed language and navigates away from the application and back to the application then use previously choosed language

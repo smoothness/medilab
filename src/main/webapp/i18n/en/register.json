@@ -14,13 +14,16 @@
     "messages": {
       "validate": {
         "login": {
-          "required": "Your identification is required.",
-          "minlength": "Your identification is required to be at least 9 character.",
-          "maxlength": "Your identification cannot be longer than 50 characters.",
-          "pattern": "Your identification is invalid."
+          "required": "Identification is required.",
+          "minlength": "Identification is required to be at least 9 character.",
+          "maxlength": "Identification cannot be longer than 50 characters.",
+          "pattern": "Identification is invalid."
         },
-        "name": {"required": "Your name is required."},
-        "phone": {"required": "Your phone is required."}
+        "name": { "required": "The name is required." },
+        "lastName": { "required": "The lastName is required." },
+        "phone": { "required": "The phone is required." },
+        "email": { "required": "The email is required." },
+        "relationship": { "required": "The relationship is required." }
       },
       "success": "<strong>Registration saved!</strong> Please check your email for confirmation.",
       "error": {
