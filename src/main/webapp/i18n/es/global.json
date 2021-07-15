@@ -65,8 +65,7 @@
       "secondlastname.label": "Segundo apellido",
       "secondlastname.placeholder": "Su segundo apellido",
       "phone.label": "Teléfono",
-      "phone.placeholder": "Su teléfono",
-      "relationship.label": "Parentesco"
+      "phone.placeholder": "Su teléfono"
     },
     "messages": {
       "info": {
