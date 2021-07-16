@@ -4,25 +4,25 @@
       "home": {
         "title": "Tratamientos",
         "refreshListLabel": "Refrescar lista",
-        "createLabel": "Crear nuevo Treatment",
-        "createOrEditLabel": "Crear o editar Treatment",
-        "notFound": "Ningún Treatments encontrado"
+        "createLabel": "Crear nuevo tratamiento",
+        "createOrEditLabel": "Crear o editar tratamiento",
+        "notFound": "Ningún tratamiento encontrado"
       },
-      "created": "Un nuevo Treatment ha sido creado con el identificador {{ param }}",
-      "updated": "Un Treatment ha sido actualizado con el identificador {{ param }}",
-      "deleted": "Un Treatment ha sido eliminado con el identificador {{ param }}",
+      "created": "Un nuevo tratamiento ha sido creado con el identificador {{ param }}",
+      "updated": "Un tratamiento ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un tratamiento ha sido eliminado con el identificador {{ param }}",
       "delete": {
-        "question": "¿Seguro que quiere eliminar Treatment {{ id }}?"
+        "question": "¿Seguro que quiere eliminar tratamiento {{ id }}?"
       },
       "detail": {
-        "title": "Treatment"
+        "title": "tratamiento"
       },
       "id": "ID",
-      "specifications": "Specifications",
-      "medicines": "Medicines",
-      "duration": "Duration",
-      "removed": "Removed",
-      "appointmentTreatmentAilment": "Appointment Treatment Ailment"
+      "specifications": "Especificaciones",
+      "medicines": "Medicinas",
+      "duration": "Duración",
+      "removed": "Removido",
+      "appointmentTreatmentAilment": "Cita tratamiento Padecimiento"
     }
   }
 }
