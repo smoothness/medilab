@@ -2,7 +2,7 @@
   "medilabApp": {
     "treatment": {
       "home": {
-        "title": "Treatments",
+        "title": "Tratamientos",
         "refreshListLabel": "Refrescar lista",
         "createLabel": "Crear nuevo Treatment",
         "createOrEditLabel": "Crear o editar Treatment",
