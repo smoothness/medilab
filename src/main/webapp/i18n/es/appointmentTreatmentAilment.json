@@ -2,27 +2,27 @@
   "medilabApp": {
     "appointmentTreatmentAilment": {
       "home": {
-        "title": "Appointment Treatment Ailments",
+        "title": "Cita Tratamiento Padecimientos",
         "refreshListLabel": "Refrescar lista",
-        "createLabel": "Crear nuevo Appointment Treatment Ailment",
-        "createOrEditLabel": "Crear o editar Appointment Treatment Ailment",
-        "notFound": "Ningún Appointment Treatment Ailments encontrado"
+        "createLabel": "Crear nuevo Cita Tratamiento Padecimientos",
+        "createOrEditLabel": "Crear o editar Cita Tratamiento Padecimientos",
+        "notFound": "Ningún Cita Tratamiento Padecimientoss encontrado"
       },
-      "created": "Un nuevo Appointment Treatment Ailment ha sido creado con el identificador {{ param }}",
-      "updated": "Un Appointment Treatment Ailment ha sido actualizado con el identificador {{ param }}",
-      "deleted": "Un Appointment Treatment Ailment ha sido eliminado con el identificador {{ param }}",
+      "created": "Un nuevo Cita Tratamiento Padecimientos ha sido creado con el identificador {{ param }}",
+      "updated": "Un Cita Tratamiento Padecimientos ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Cita Tratamiento Padecimientos ha sido eliminado con el identificador {{ param }}",
       "delete": {
-        "question": "¿Seguro que quiere eliminar Appointment Treatment Ailment {{ id }}?"
+        "question": "¿Seguro que quiere eliminar Cita Tratamiento Padecimientos {{ id }}?"
       },
       "detail": {
-        "title": "Appointment Treatment Ailment"
+        "title": "Cita Tratamiento Padecimientos"
       },
       "id": "ID",
-      "description": "Description",
-      "removed": "Removed",
-      "ailment": "Ailment",
-      "treatment": "Treatment",
-      "appointment": "Appointment"
+      "description": "Descripción",
+      "removed": "Removido",
+      "ailment": "Padecimiento",
+      "treatment": "Tratamiento",
+      "appointment": "Cita"
     }
   }
 }
