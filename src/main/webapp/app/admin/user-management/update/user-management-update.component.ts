@@ -1,20 +1,44 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { LANGUAGES } from 'app/config/language.constants';
 import { User } from '../user-management.model';
 import { UserManagementService } from '../service/user-management.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'medi-user-mgmt-update',
   templateUrl: './user-management-update.component.html',
 })
 export class UserManagementUpdateComponent implements OnInit {
+  currentStep = 0;
   user!: User;
   languages = LANGUAGES;
   authorities: string[] = [];
   isSaving = false;
+
+  formUpdate = this.fb.group({
+    personalInfo: this.fb.group({
+      login: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(50),
+          Validators.pattern('^[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$'),
+        ],
+      ],
+      name: ['', [Validators.required]],
+      lastname: ['', [Validators.required]],
+      secondlastname: [''],
+      langKey: [this.translateService.currentLang],
+    }),
+    contactInfo: this.fb.group({
+      phone: ['', [Validators.required]],
+      email: ['', [Validators.required]],
+    }),
+  });
 
   editForm = this.fb.group({
     id: [],
@@ -35,7 +59,16 @@ export class UserManagementUpdateComponent implements OnInit {
     authorities: [],
   });
 
-  constructor(private userService: UserManagementService, private route: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    private userService: UserManagementService,
+    private route: ActivatedRoute,
+    private fb: FormBuilder,
+    private translateService: TranslateService
+  ) {}
+
+  get currentGroup(): any {
+    return this.getGroupAt(this.currentStep);
+  }
 
   ngOnInit(): void {
     this.route.data.subscribe(({ user }) => {
@@ -48,6 +81,14 @@ export class UserManagementUpdateComponent implements OnInit {
       }
     });
     this.userService.authorities().subscribe(authorities => (this.authorities = authorities));
+  }
+
+  previousStep(): void {
+    this.currentStep--;
+  }
+
+  nextStep(): void {
+    this.currentStep++;
   }
 
   previousState(): void {
@@ -68,6 +109,12 @@ export class UserManagementUpdateComponent implements OnInit {
         () => this.onSaveError()
       );
     }
+  }
+
+  private getGroupAt(index: number): FormGroup {
+    const groups = Object.keys(this.formUpdate.controls).map(groupName => this.formUpdate.get(groupName)) as FormGroup[];
+
+    return groups[index];
   }
 
   private updateForm(user: User): void {

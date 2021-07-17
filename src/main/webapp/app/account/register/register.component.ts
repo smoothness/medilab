@@ -38,14 +38,6 @@ export class RegisterComponent {
       phone: ['', [Validators.required]],
       email: ['', [Validators.required]],
     }),
-    emergencyContact: this.fb.group({
-      name: ['', [Validators.required]],
-      lastname: ['', [Validators.required]],
-      secondlastname: [''],
-      phone: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      relationship: ['', [Validators.required]],
-    }),
   });
 
   constructor(private fb: FormBuilder, private service: RegisterService, private translateService: TranslateService) {}
