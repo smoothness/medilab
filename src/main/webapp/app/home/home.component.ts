@@ -49,8 +49,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.patientService
       .find(Number(this.account?.login))
       .pipe(takeUntil(this.destroy$))
-      .subscribe(patient => {
-          this.patient = patient.body;
+      .subscribe(patientNew => {
+          this.patient = patientNew.body;
         }
       );
 
@@ -106,17 +106,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       (res: HttpResponse<IEmergencyContact[]>) => {
         this.isLoadingEmergencyContact = false;
         this.emergencyContacts = res.body ?? [];
-        this.filter();
       },
       () => {
         this.isLoadingEmergencyContact = false;
       }
     );
-  }
-
-  filter(): void {
-    console.log(this.emergencyContacts);
-    // this.emergencyContacts = this.emergencyContacts?.filter((emergencyContacts) =>
-    // emergencyContacts.patient?.id === this.account?.login);
   }
 }
