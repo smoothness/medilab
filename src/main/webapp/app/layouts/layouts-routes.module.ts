@@ -8,16 +8,12 @@ const routes: Routes = [
   {
     path: 'main',
     component: MainComponent,
-    children: appRoutes
-  }
+    children: appRoutes,
+  },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(routes),
-  ],
-  exports: [
-    RouterModule,
-  ]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class LayoutsRoutesModule { }
+export class LayoutsRoutesModule {}

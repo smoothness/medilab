@@ -1,17 +1,29 @@
 {
   "register": {
-    "title": "Registro",
+    "title": "Crear cuenta",
+    "tabs": {
+      "personalInfo": "Información personal",
+      "contactInfo": "Información de contacto",
+      "emergencyContact": "Contacto de emergencia"
+    },
     "form": {
-      "button": "Crear la cuenta"
+      "button": "Registrarse",
+      "next": "Siguiente",
+      "previous": "Anterior"
     },
     "messages": {
       "validate": {
         "login": {
-          "required": "Su nombre de usuario es obligatorio.",
-          "minlength": "Su nombre de usuario debe tener al menos 1 caracter.",
-          "maxlength": "Su nombre de usuario no puede tener más de 50 caracteres.",
-          "pattern": "Su nombre de usuario no es válido."
-        }
+          "required": "Se requiere la identificación.",
+          "minlength": "La identificación debe tener al menos 9 caracter.",
+          "maxlength": "La identificación no puede tener más de 50 caracteres.",
+          "pattern": "La identificación no es válida."
+        },
+        "name": { "required": "Se requiere un nombre." },
+        "lastName": { "required": "Se requiere un apellido." },
+        "phone": { "required": "Se requiere un número teléfonico." },
+        "email": { "required": "Se requiere un correo electrónico." },
+        "relationship": { "required": "Se requiere un parentesco." }
       },
       "success": "<strong>¡Registro guardado!</strong> Por favor, revise su correo electrónico para confirmar.",
       "error": {

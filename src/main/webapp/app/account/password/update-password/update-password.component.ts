@@ -4,13 +4,13 @@ import { Observable } from 'rxjs';
 
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
-import { PasswordService } from './password.service';
+import { PasswordService } from '../password.service';
 
 @Component({
   selector: 'medi-password',
-  templateUrl: './password.component.html',
+  templateUrl: './update-password.component.html',
 })
-export class PasswordComponent implements OnInit {
+export class UpdatePasswordComponent implements OnInit {
   doNotMatch = false;
   error = false;
   success = false;
