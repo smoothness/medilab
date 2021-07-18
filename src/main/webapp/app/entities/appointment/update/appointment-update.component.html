@@ -53,9 +53,9 @@
             <option [ngValue]="null"></option>
             <option
               [ngValue]="patientOption.id === editForm.get('patient')!.value?.id ? editForm.get('patient')!.value : patientOption"
-              *ngFor="let patientOption of patientsSharedCollection; trackBy: trackPatientById"
+              *ngFor="let patientOption of patientsCollection; trackBy: trackPatientById"
             >
-              {{ patientOption.id }}
+              {{ patientOption.secondSurname }}
             </option>
           </select>
         </div>
