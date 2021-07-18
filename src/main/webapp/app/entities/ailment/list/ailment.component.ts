@@ -6,15 +6,17 @@ import { IAilment } from '../ailment.model';
 import { AilmentService } from '../service/ailment.service';
 import { AilmentDeleteDialogComponent } from '../delete/ailment-delete-dialog.component';
 
+
 @Component({
   selector: 'medi-ailment',
   templateUrl: './ailment.component.html',
 })
-export class AilmentComponent implements OnInit {
+export class AilmentComponent implements OnInit  {
   ailments?: IAilment[];
   isLoading = false;
 
   constructor(protected ailmentService: AilmentService, protected modalService: NgbModal) {}
+
 
   loadAll(): void {
     this.isLoading = true;
@@ -48,4 +50,6 @@ export class AilmentComponent implements OnInit {
       }
     });
   }
+
+  
 }

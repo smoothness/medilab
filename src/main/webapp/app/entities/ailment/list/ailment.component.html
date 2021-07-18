@@ -1,80 +1,65 @@
 <div>
-  <h2 id="page-heading" data-cy="AilmentHeading">
-    <span mediTranslate="medilabApp.ailment.home.title">Ailments</span>
+    <h2 id="page-heading" data-cy="AilmentHeading">
+        <span mediTranslate="medilabApp.ailment.home.title">Ailments</span>
 
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span mediTranslate="medilabApp.ailment.home.refreshListLabel">Refresh List</span>
       </button>
 
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-ailment"
-        [routerLink]="['/ailment/new']"
-      >
+            <button id="jh-create-entity" data-cy="entityCreateButton" class="btn btn-primary jh-create-entity create-ailment" [routerLink]="['/ailment/new']">
         <fa-icon icon="plus"></fa-icon>
         <span mediTranslate="medilabApp.ailment.home.createLabel"> Create a new Ailment </span>
       </button>
+        </div>
+    </h2>
+
+    <medi-alert-error></medi-alert-error>
+
+    <medi-alert></medi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="ailments?.length === 0">
+        <span mediTranslate="medilabApp.ailment.home.notFound">No ailments found</span>
     </div>
-  </h2>
 
-  <medi-alert-error></medi-alert-error>
-
-  <medi-alert></medi-alert>
-
-  <div class="alert alert-warning" id="no-result" *ngIf="ailments?.length === 0">
-    <span mediTranslate="medilabApp.ailment.home.notFound">No ailments found</span>
-  </div>
-
-  <div class="table-responsive" id="entities" *ngIf="ailments && ailments.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
-      <thead>
-        <tr>
-          <th scope="col"><span mediTranslate="global.field.id">ID</span></th>
-          <th scope="col"><span mediTranslate="medilabApp.ailment.name">Name</span></th>
-          <th scope="col"><span mediTranslate="medilabApp.ailment.removed">Removed</span></th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let ailment of ailments; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/ailment', ailment.id, 'view']">{{ ailment.id }}</a>
-          </td>
-          <td>{{ ailment.name }}</td>
-          <td>{{ ailment.removed }}</td>
-          <td class="text-right">
-            <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/ailment', ailment.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
+    <div class="table-responsive" id="entities" *ngIf="ailments && ailments.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr>
+                    <th scope="col"><span mediTranslate="global.field.id">ID</span></th>
+                    <th scope="col"><span mediTranslate="medilabApp.ailment.name">Name</span></th>
+                    <th scope="col"><span mediTranslate="medilabApp.ailment.removed">Removed</span></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let ailment of ailments; trackBy: trackId" data-cy="entityTable">
+                    <td>
+                        <a [routerLink]="['/ailment', ailment.id, 'view']">{{ ailment.id }}</a>
+                    </td>
+                    <td>{{ ailment.name }}</td>
+                    <td>{{ ailment.removed | truefalse}}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit" [routerLink]="['/ailment', ailment.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline" mediTranslate="entity.action.view">View</span>
               </button>
 
-              <button
-                type="submit"
-                [routerLink]="['/ailment', ailment.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
+                            <button type="submit" [routerLink]="['/ailment', ailment.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" mediTranslate="entity.action.edit">Edit</span>
               </button>
 
-              <button type="submit" (click)="delete(ailment)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                            <button type="submit" (click)="delete(ailment)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
               </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
