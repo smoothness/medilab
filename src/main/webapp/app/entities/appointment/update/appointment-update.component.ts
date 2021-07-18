@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -11,12 +11,16 @@ import { AppointmentService } from '../service/appointment.service';
 import { IPatient } from 'app/entities/patient/patient.model';
 import { PatientService } from 'app/entities/patient/service/patient.service';
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'medi-appointment-update',
   templateUrl: './appointment-update.component.html',
 })
 export class AppointmentUpdateComponent implements OnInit {
+  @ViewChild('addedAppointment')
+  public readonly addedAppointment!: SwalComponent;
+
   isSaving = false;
   doctor: any;
   patientsCollection: IPatient[] | null = [];
@@ -46,7 +50,6 @@ export class AppointmentUpdateComponent implements OnInit {
 
     this.accountService.getAuthenticationState().subscribe(account => {
       this.doctor = account;
-      console.log('caca 3', account);
     });
 
     this.patientService.query().subscribe(data => {
@@ -73,6 +76,10 @@ export class AppointmentUpdateComponent implements OnInit {
     return item.id!;
   }
 
+  public confirmClose(): void {
+    this.previousState();
+  }
+
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IAppointment>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
       () => this.onSaveSuccess(),
@@ -81,7 +88,7 @@ export class AppointmentUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(): void {
-    this.previousState();
+    this.addedAppointment.fire();
   }
 
   protected onSaveError(): void {
