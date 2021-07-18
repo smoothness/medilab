@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { Authority } from 'app/config/authority.constants';
 
 const routes: Routes = [
   {
@@ -29,7 +30,7 @@ const routes: Routes = [
   },
   {
     path: 'ailment',
-    data: { pageTitle: 'medilabApp.ailment.home.title' },
+    data: { authorities: [Authority.ADMIN] , pageTitle: 'medilabApp.ailment.home.title' },
     loadChildren: () => import('./ailment/ailment.module').then(m => m.AilmentModule),
   },
   {
