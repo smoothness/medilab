@@ -46,7 +46,6 @@ export class AppointmentUpdateComponent implements OnInit {
 
     this.accountService.getAuthenticationState().subscribe(account => {
       this.doctor = account;
-      console.log('caca 3', account);
     });
 
     this.patientService.query().subscribe(data => {
