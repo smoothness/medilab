@@ -4,8 +4,10 @@
       "home": {
         "title": "Appointments",
         "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Appointment",
-        "createOrEditLabel": "Create or edit a Appointment",
+        "viewLastAppointment": "Check last appointment",
+        "requestAppointment": "Request an appointment",
+        "createNewAppointment": "Create a new appointment",
+        "createOrEditAppointment": "Create or edit an appointment",
         "notFound": "No Appointments found"
       },
       "created": "A new Appointment is created with identifier {{ param }}",

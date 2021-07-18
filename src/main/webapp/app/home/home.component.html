@@ -24,20 +24,40 @@
             <p><b>Hora:</b> 4:00 P.M.</p>
             <p><b>Atendido por:</b> Dr. Julían Castro Fallas</p>
             <p><b>Especialidad:</b> Ortopedia</p>
-            <br/>
-            <a target="_blank" class="btn btn-secondary"
-               href="https://wa.me/50688885353?text=Solicito%20una%20cita%20con%20el%20doctor"
-            >Solicitar una cita</a
+
+            <br />
+
+            <!-- NO BORRAR + SECCION DE CREAR CITAS + MAURICIO -->
+            <div *ngIf="authority === 'ROLE_PATIENT'">
+              <a
+                href="#"
+                class="btn btn-secondary"
+                mediTranslate="medilabApp.appointment.home.viewLastAppointment"
+                [routerLink]="['/appointment/1/view']"
+              >
+                Ver última cita
+              </a>
+              <a
+                target="_blank"
+                class="btn btn-secondary"
+                mediTranslate="medilabApp.appointment.home.requestAppointment"
+                href="https://wa.me/50688885353?text=Solicito%20una%20cita%20con%20el%20doctor"
+              >
+                Solicitar una cita
+              </a>
+            </div>
+            <button
+              *ngIf="authority === 'ROLE_USER'"
+              id="jh-create-entity"
+              data-cy="entityCreateButton"
+              class="btn btn-primary jh-create-entity create-appointment"
+              [routerLink]="['/appointment/new']"
+
             >
-          </div>
-          <div class="card-body" *ngIf="account?.authorities?.includes('ROLE_USER')">
-            <p><b>Ultima cita:</b> 08 de Diciembre de 2020</p>
-            <p><b>Hora:</b> 4:00 P.M.</p>
-            <p><b>Paciente:</b> Julían Castro Fallas</p>
-            <br/>
-            <a target="_blank" class="btn btn-secondary"
-            >Ver expediente</a
-            >
+              <fa-icon icon="plus"></fa-icon>
+              <span mediTranslate="medilabApp.appointment.home.createNewAppointment"></span>
+            </button>
+            <!-- NO BORRAR + SECCION DE CREAR CITAS + MAURICIO -->
           </div>
         </div>
       </div>

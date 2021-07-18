@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   emergencyContacts: IEmergencyContact[] | null = null;
   emergencyContact: EmergencyContact | null = null;
   isLoadingEmergencyContact = false;
+  authority: string | undefined;
   private readonly destroy$ = new Subject<void>();
 
   constructor(private accountService: AccountService,
@@ -77,6 +78,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   trackId(index: number, item: IEmergencyContact): number {
     return item.id!;
+
+      .subscribe(account => {
+        this.account = account;
+        this.authority = account?.authorities[0];
+
+        console.log('type: ', this.account);
+      });
   }
 
   login(): void {
@@ -106,17 +114,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       (res: HttpResponse<IEmergencyContact[]>) => {
         this.isLoadingEmergencyContact = false;
         this.emergencyContacts = res.body ?? [];
-        this.filter();
       },
       () => {
         this.isLoadingEmergencyContact = false;
       }
     );
-  }
-
-  filter(): void {
-    console.log(this.emergencyContacts);
-    // this.emergencyContacts = this.emergencyContacts?.filter((emergencyContacts) =>
-    // emergencyContacts.patient?.id === this.account?.login);
   }
 }
