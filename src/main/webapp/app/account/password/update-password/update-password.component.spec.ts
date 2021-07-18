@@ -6,31 +6,31 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormBuilder } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 
-import { AccountService } from 'app/core/auth/account.service';
+import { AccountService } from '../../../core/auth/account.service';
 
-import { PasswordComponent } from './password.component';
-import { PasswordService } from './password.service';
+import { UpdatePasswordComponent } from './update-password.component';
+import { PasswordService } from '../password.service';
 
 describe('Component Tests', () => {
-  describe('PasswordComponent', () => {
-    let comp: PasswordComponent;
-    let fixture: ComponentFixture<PasswordComponent>;
+  describe('UpdatePasswordComponent', () => {
+    let comp: UpdatePasswordComponent;
+    let fixture: ComponentFixture<UpdatePasswordComponent>;
     let service: PasswordService;
 
     beforeEach(
       waitForAsync(() => {
         TestBed.configureTestingModule({
           imports: [HttpClientTestingModule],
-          declarations: [PasswordComponent],
+          declarations: [UpdatePasswordComponent],
           providers: [FormBuilder, AccountService],
         })
-          .overrideTemplate(PasswordComponent, '')
+          .overrideTemplate(UpdatePasswordComponent, '')
           .compileComponents();
       })
     );
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(PasswordComponent);
+      fixture = TestBed.createComponent(UpdatePasswordComponent);
       comp = fixture.componentInstance;
       service = TestBed.inject(PasswordService);
     });

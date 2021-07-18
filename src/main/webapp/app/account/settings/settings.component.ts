@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
-import { AccountService } from 'app/core/auth/account.service';
-import { Account } from 'app/core/auth/account.model';
-import { LANGUAGES } from 'app/config/language.constants';
+import { AccountService } from './../../core/auth/account.service';
+import { Account } from './../../core/auth/account.model';
+import { LANGUAGES } from './../../config/language.constants';
 
 @Component({
   selector: 'medi-settings',

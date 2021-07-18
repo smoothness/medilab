@@ -2,8 +2,8 @@ import { Component, ViewChild, OnInit, AfterViewInit, ElementRef } from '@angula
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { LoginService } from 'app/login/login.service';
-import { AccountService } from 'app/core/auth/account.service';
+import { LoginService } from './../login/login.service';
+import { AccountService } from './../core/auth/account.service';
 
 @Component({
   selector: 'medi-login',
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     // if already authenticated then navigate to home page
     this.accountService.identity().subscribe(() => {
       if (this.accountService.isAuthenticated()) {
-        this.router.navigate(['']);
+        this.router.navigate(['/main']);
       }
     });
   }
@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.authenticationError = false;
           if (!this.router.getCurrentNavigation()) {
             // There were no routing during login (eg from navigationToStoredUrl)
-            this.router.navigate(['']);
+            this.router.navigate(['/main']);
           }
         },
         () => (this.authenticationError = true)
