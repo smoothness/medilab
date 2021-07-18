@@ -14,6 +14,9 @@ import {Doctor} from 'app/entities/doctor/doctor.model';
 
 import {EmergencyContactService} from 'app/entities/emergency-contact/service/emergency-contact.service';
 import {EmergencyContact, IEmergencyContact} from 'app/entities/emergency-contact/emergency-contact.model';
+import {EmergencyContactDeleteDialogComponent} from "../entities/emergency-contact/delete/emergency-contact-delete-dialog.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {HttpResponse} from "@angular/common/http";
 
 @Component({
   selector: 'medi-home',
@@ -24,15 +27,17 @@ export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
   patient: Patient | null = null;
   doctor: Doctor | null = null;
-  emergencyContacts: IEmergencyContact | null = null;
+  emergencyContacts: IEmergencyContact[] | null = null;
   emergencyContact: EmergencyContact | null = null;
+  isLoadingEmergencyContact = false;
   private readonly destroy$ = new Subject<void>();
 
   constructor(private accountService: AccountService,
               private patientService: PatientService,
               private doctorService: DoctorService,
               private emergencyContactService: EmergencyContactService,
-              private router: Router) {
+              private router: Router,
+              protected modalService: NgbModal) {
   }
 
   ngOnInit(): void {
@@ -56,13 +61,22 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.doctor = doctor.body;
         }
       );
+
     this.emergencyContactService
       .find(Number(this.account?.login))
       .pipe(takeUntil(this.destroy$))
-      .subscribe(emergencyContact => {
-          this.emergencyContacts = emergencyContact.body;
+      .subscribe(emergencyContactNew => {
+          if (emergencyContactNew.body?.id === this.account?.login) {
+            this.emergencyContact = emergencyContactNew.body;
+            console.log({emergencyContactNew});
+          }
         }
       );
+    this.loadAllEmergencyContact();
+  }
+
+  trackId(index: number, item: IEmergencyContact): number {
+    return item.id!;
   }
 
   login(): void {
@@ -72,5 +86,37 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  deleteEmergencyContact(emergencyContact: IEmergencyContact): void {
+    const modalRef = this.modalService.open(EmergencyContactDeleteDialogComponent, {size: 'lg', backdrop: 'static'});
+    modalRef.componentInstance.emergencyContact = emergencyContact;
+    // unsubscribe not needed because closed completes on modal close
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'deleted') {
+        this.loadAllEmergencyContact();
+      }
+    });
+  }
+
+  loadAllEmergencyContact(): void {
+    this.isLoadingEmergencyContact = true;
+
+    this.emergencyContactService.query().subscribe(
+      (res: HttpResponse<IEmergencyContact[]>) => {
+        this.isLoadingEmergencyContact = false;
+        this.emergencyContacts = res.body ?? [];
+        this.filter();
+      },
+      () => {
+        this.isLoadingEmergencyContact = false;
+      }
+    );
+  }
+
+  filter(): void {
+    console.log(this.emergencyContacts);
+    // this.emergencyContacts = this.emergencyContacts?.filter((emergencyContacts) =>
+    // emergencyContacts.patient?.id === this.account?.login);
   }
 }

@@ -12,7 +12,6 @@
                 account?.authorities?.includes('ROLE_USER')">
               {{account?.firstName}} {{account?.lastName}}
             </p>
-
           </div>
         </div>
         <div class="ml-profile-stats">
@@ -37,7 +36,7 @@
             <p><b>Paciente:</b> Julían Castro Fallas</p>
             <br/>
             <a target="_blank" class="btn btn-secondary"
-                >Ver expediente</a
+            >Ver expediente</a
             >
           </div>
         </div>
@@ -73,15 +72,56 @@
     </div>
 
     <div class="card bg-dark mt-3" *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
-      <h5 class="card-header">Teléfono en caso de una emergencia</h5>
+      <h5 class="card-header"
+          mediTranslate="medilabApp.emergencyContact.home.title">
+        Contact(s) en caso de una emergencia
+      </h5>
       <div class="card-body">
-        <ul class="list-group">
-          <li class="list-group-item" aria-current="true">An active item</li>
-          <li class="list-group-item">A second item</li>
-          <li class="list-group-item">A third item</li>
-          <li class="list-group-item">A fourth item</li>
-          <li class="list-group-item">And a fifth one</li>
-        </ul>
+        <div class="alert alert-warning" id="no-result" *ngIf="emergencyContacts?.length === 0">
+          <span mediTranslate="medilabApp.emergencyContact.home.notFound">No emergencyContacts found</span>
+        </div>
+
+        <div class="table-responsive" id="entities" *ngIf="emergencyContacts && emergencyContacts.length > 0">
+          <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+            <tr>
+              <th scope="col"><span mediTranslate="medilabApp.emergencyContact.name">Name</span></th>
+              <th scope="col"><span mediTranslate="medilabApp.emergencyContact.phone">Phone</span></th>
+              <th scope="col"><span mediTranslate="medilabApp.emergencyContact.email">Email</span></th>
+              <th scope="col"><span mediTranslate="medilabApp.emergencyContact.relationShip">Relation Ship</span></th>
+              <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let emergencyContact of emergencyContacts; trackBy: trackId" data-cy="entityTable">
+              <td *ngIf="emergencyContact.patient">{{ emergencyContact.name }}</td>
+              <td *ngIf="emergencyContact.patient">{{ emergencyContact.phone }}</td>
+              <td *ngIf="emergencyContact.patient">{{ emergencyContact.email }}</td>
+              <td *ngIf="emergencyContact.patient">{{ emergencyContact.relationShip }}</td>
+              <td class="text-right" *ngIf="emergencyContact.patient">
+                <div class="btn-group">
+
+                  <button
+                    type="submit"
+                    [routerLink]="['./emergency-contact/', emergencyContact.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" mediTranslate="entity.action.edit">Edit</span>
+                  </button>
+
+                  <button type="submit" (click)="deleteEmergencyContact(emergencyContact)"
+                          class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
