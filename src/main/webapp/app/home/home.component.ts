@@ -13,6 +13,7 @@ import { Account } from 'app/core/auth/account.model';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
+  authority: string | undefined;
 
   private readonly destroy$ = new Subject<void>();
 
@@ -22,7 +23,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.accountService
       .getAuthenticationState()
       .pipe(takeUntil(this.destroy$))
-      .subscribe(account => (this.account = account));
+      .subscribe(account => {
+        this.account = account;
+        this.authority = account?.authorities[0];
+
+        console.log('type: ', this.account);
+      });
   }
 
   login(): void {

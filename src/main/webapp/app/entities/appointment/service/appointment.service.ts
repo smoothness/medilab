@@ -21,6 +21,7 @@ export class AppointmentService {
 
   create(appointment: IAppointment): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(appointment);
+
     return this.http
       .post<IAppointment>(this.resourceUrl, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
