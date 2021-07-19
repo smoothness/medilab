@@ -1,6 +1,7 @@
 <!-- Wizard form -->
-<section class="row p-0 m-0">
+<section class="row p-0 m-0 mt-5">
   <div id="ml-register" class="card col-md-7 mx-auto my-4">
+    <!-- Form -->
     <div id="formContainer" class="card-body">
       <form name="registerForm" role="form" autocomplete="off" [formGroup]="registerForm">
         <div id="formContainer">
@@ -8,7 +9,44 @@
 
           <medi-contact-info *ngIf="currentStep === 1" [contactInfoForm]="currentGroup"> </medi-contact-info>
 
-          <select name="userType" id="userType" formControlName="userType"></select>
+          <div *ngIf="currentStep === 1">
+            <label class="form-control-label" for="userType" mediTranslate="global.form.userType">Tipo de usuario</label>
+            <select name="userType" id="userType" class="form-control" formControlName="userType" (change)="validateUser()">
+              <option *ngFor="let rol of roles" [ngValue]="rol.abbrev">
+                {{ rol.name | translate }}
+              </option>
+            </select>
+          </div>
+
+          <div class="mt-3" *ngIf="isUser && currentStep === 1">
+            <!-- Doctor Code -->
+            <div class="form-group">
+              <label class="form-control-label" for="code" mediTranslate="global.form.phone.label">Código de medico</label>
+              <input
+                type="text"
+                class="form-control"
+                id="code"
+                name="phone"
+                placeholder="{{ 'global.form.phone.placeholder' | translate }}"
+                formControlName="doctorCode"
+                data-cy="doctorCode"
+              />
+            </div>
+
+            <!-- Specialty -->
+            <div class="form-group">
+              <label class="form-control-label" for="specialty" mediTranslate="global.form.email.label">Specialty</label>
+              <input
+                type="text"
+                class="form-control"
+                id="specialty"
+                name="specialty"
+                placeholder="{{ 'global.form.email.placeholder' | translate }}"
+                formControlName="specialty"
+                data-cy="specialty"
+              />
+            </div>
+          </div>
         </div>
       </form>
     </div>

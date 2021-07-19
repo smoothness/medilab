@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { SweetAlertServiceService } from './../../shared/services/sweet-alert-service.service';
 
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from './../../config/error.constants';
 import { RegisterService } from './register.service';
@@ -40,7 +41,12 @@ export class RegisterComponent {
     }),
   });
 
-  constructor(private fb: FormBuilder, private service: RegisterService, private translateService: TranslateService) {}
+  constructor(
+    private fb: FormBuilder,
+    private service: RegisterService,
+    private translateService: TranslateService,
+    private sweetAlertService: SweetAlertServiceService
+  ) {}
 
   get currentGroup(): any {
     return this.getGroupAt(this.currentStep);
