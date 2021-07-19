@@ -63,11 +63,11 @@ export class EmergencyContact extends PersonalInfo {
     this.relationship = relationship;
   }
 
-  get fullName() {
+  get fullName(): string {
     return `${this.name} ${this.lastname} ${this.secondlastname}`;
   }
 
-  get registerData() {
+  get registerData(): { name: string; phone: string; email: string; relationship: string } {
     return {
       name: this.fullName,
       phone: this.phone,
