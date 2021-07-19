@@ -13,6 +13,15 @@ interface newUserData {
   emergencyContact: EmergencyContact;
 }
 
+interface fromContactData {
+  name: string;
+  lastname: string;
+  secondLastname: string;
+  phone: string;
+  email: string;
+  relationship: string;
+}
+
 interface registration {
   login: string;
   firstName: string;
@@ -39,14 +48,32 @@ abstract class PersonalInfo {
   }
 }
 
-class EmergencyContact extends PersonalInfo {
+export class EmergencyContact extends PersonalInfo {
   phone: string;
   email: string;
+  relationship: string;
 
-  constructor() {
+  constructor({ name, lastname, secondLastname, phone, email, relationship }: fromContactData) {
     super();
-    this.phone = '';
-    this.email = '';
+    this.name = name;
+    this.lastname = lastname;
+    this.secondlastname = secondLastname;
+    this.phone = phone;
+    this.email = email;
+    this.relationship = relationship;
+  }
+
+  get fullName() {
+    return `${this.name} ${this.lastname} ${this.secondlastname}`;
+  }
+
+  get registerData() {
+    return {
+      name: this.fullName,
+      phone: this.phone,
+      email: this.email,
+      relationship: this.relationship,
+    };
   }
 }
 
