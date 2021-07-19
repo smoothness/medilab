@@ -8,7 +8,6 @@
       >
         Crear o editar una cita
       </h2>
-
       <div>
         <medi-alert-error></medi-alert-error>
 
@@ -77,5 +76,14 @@
         </button>
       </div>
     </form>
+    <swal
+      #addedAppointment
+      title="Cita creada con éxito"
+      text="La cita ha sido creada y agregada a su calendario."
+      icon="question"
+      (confirm)="confirmClose()"
+      [showCancelButton]="false"
+    >
+    </swal>
   </div>
 </div>
