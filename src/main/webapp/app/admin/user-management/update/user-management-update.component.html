@@ -3,10 +3,6 @@
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 id="myUserLabel" mediTranslate="userManagement.home.createOrEditLabel">Create or edit a User</h2>
 
-      <medi-personal-info *ngIf="currentStep === 0" [personalDataForm]="currentGroup"> </medi-personal-info>
-
-      <medi-contact-info *ngIf="currentStep === 1" [contactInfoForm]="currentGroup"> </medi-contact-info>
-
       <div *ngIf="user">
         <medi-alert-error></medi-alert-error>
 

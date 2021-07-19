@@ -1,0 +1,43 @@
+<!-- Wizard form -->
+<section class="row p-0 m-0">
+  <div id="ml-register" class="card col-md-7 mx-auto my-4">
+    <div id="formContainer" class="card-body">
+      <form name="registerForm" role="form" autocomplete="off" [formGroup]="registerForm">
+        <div id="formContainer">
+          <medi-personal-info *ngIf="currentStep === 0" [personalDataForm]="currentGroup"> </medi-personal-info>
+
+          <medi-contact-info *ngIf="currentStep === 1" [contactInfoForm]="currentGroup"> </medi-contact-info>
+
+          <select name="userType" id="userType" formControlName="userType"></select>
+        </div>
+      </form>
+    </div>
+
+    <!-- Buttons -->
+    <div class="card-footer">
+      <div class="row m-0 p-0 justify-content-center align-middle">
+        <button
+          class="btn btn-secondary col-4 m-2"
+          mediTranslate="register.form.previous"
+          [disabled]="currentStep === 0"
+          (click)="previousStep()"
+        ></button>
+
+        <button
+          class="btn btn-primary col-4 m-2"
+          mediTranslate="register.form.next"
+          *ngIf="currentStep !== 1"
+          [disabled]="currentStep === 1"
+          (click)="nextStep()"
+        ></button>
+
+        <button
+          class="btn btn-success col-4 m-2"
+          mediTranslate="register.form.button"
+          *ngIf="currentStep === 1"
+          (click)="registerUser()"
+        ></button>
+      </div>
+    </div>
+  </div>
+</section>

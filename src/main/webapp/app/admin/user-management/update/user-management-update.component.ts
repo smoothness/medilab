@@ -12,33 +12,10 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './user-management-update.component.html',
 })
 export class UserManagementUpdateComponent implements OnInit {
-  currentStep = 0;
   user!: User;
   languages = LANGUAGES;
   authorities: string[] = [];
   isSaving = false;
-
-  formUpdate = this.fb.group({
-    personalInfo: this.fb.group({
-      login: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(1),
-          Validators.maxLength(50),
-          Validators.pattern('^[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$'),
-        ],
-      ],
-      name: ['', [Validators.required]],
-      lastname: ['', [Validators.required]],
-      secondlastname: [''],
-      langKey: [this.translateService.currentLang],
-    }),
-    contactInfo: this.fb.group({
-      phone: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-    }),
-  });
 
   editForm = this.fb.group({
     id: [],
@@ -66,10 +43,6 @@ export class UserManagementUpdateComponent implements OnInit {
     private translateService: TranslateService
   ) {}
 
-  get currentGroup(): any {
-    return this.getGroupAt(this.currentStep);
-  }
-
   ngOnInit(): void {
     this.route.data.subscribe(({ user }) => {
       if (user) {
@@ -81,14 +54,6 @@ export class UserManagementUpdateComponent implements OnInit {
       }
     });
     this.userService.authorities().subscribe(authorities => (this.authorities = authorities));
-  }
-
-  previousStep(): void {
-    this.currentStep--;
-  }
-
-  nextStep(): void {
-    this.currentStep++;
   }
 
   previousState(): void {
@@ -109,12 +74,6 @@ export class UserManagementUpdateComponent implements OnInit {
         () => this.onSaveError()
       );
     }
-  }
-
-  private getGroupAt(index: number): FormGroup {
-    const groups = Object.keys(this.formUpdate.controls).map(groupName => this.formUpdate.get(groupName)) as FormGroup[];
-
-    return groups[index];
   }
 
   private updateForm(user: User): void {
