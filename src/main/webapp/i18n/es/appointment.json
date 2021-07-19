@@ -2,27 +2,29 @@
   "medilabApp": {
     "appointment": {
       "home": {
-        "title": "Appointments",
+        "title": "Citas",
         "refreshListLabel": "Refrescar lista",
-        "createLabel": "Crear nuevo Appointment",
-        "createOrEditLabel": "Crear o editar Appointment",
-        "notFound": "Ningún Appointments encontrado"
+        "viewLastAppointment": "Ver última cita",
+        "requestAppointment": "Solicitar una cita",
+        "createNewAppointment": "Crear una nueva cita",
+        "createOrEditAppointment": "Crear o editar una cita",
+        "notFound": "Ningúna cita encontrada"
       },
-      "created": "Un nuevo Appointment ha sido creado con el identificador {{ param }}",
-      "updated": "Un Appointment ha sido actualizado con el identificador {{ param }}",
-      "deleted": "Un Appointment ha sido eliminado con el identificador {{ param }}",
+      "created": "Una nuevo cita ha sido creada con el identificador {{ param }}",
+      "updated": "Una cita ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Una cita ha sido eliminada con el identificador {{ param }}",
       "delete": {
-        "question": "¿Seguro que quiere eliminar Appointment {{ id }}?"
+        "question": "¿Seguro que quiere eliminar la cita {{ id }}?"
       },
       "detail": {
-        "title": "Appointment"
+        "title": "Cita"
       },
       "id": "ID",
-      "date": "Date",
+      "date": "Fecha",
       "status": "Status",
-      "appointmentTreatmentAilment": "Appointment Treatment Ailment",
-      "medicalExams": "Medical Exams",
-      "patient": "Patient",
+      "appointmentTreatmentAilment": "Dolencia, tratamiento",
+      "medicalExams": "Exámenes médicos",
+      "patient": "Paciente",
       "doctor": "Doctor"
     }
   }

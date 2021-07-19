@@ -80,11 +80,9 @@ const routes: Routes = [
     loadChildren: () => import('./comment-user/comment-user.module').then(m => m.CommentUserModule),
   },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
-]
+];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(routes),
-  ],
+  imports: [RouterModule.forChild(routes)],
 })
 export class EntityRoutingModule {}

@@ -2,6 +2,13 @@
   "home": {
     "title": "¡Bienvenido, Java Hipster!",
     "subtitle": "Esta es su página de inicio",
+    "profile": {
+      "identification": "Identificación",
+      "phone": "Teléfono",
+      "email": "Correo electrónico",
+      "specialty": "Especialidad",
+      "rating": "Clasificación"
+    },
     "logged": {
       "message": "Está conectado como \"{{username}}\"."
     },

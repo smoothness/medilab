@@ -5,12 +5,12 @@ interface newUserData {
     lastname: string;
     secondlastname: string;
     langKey: string;
-  },
+  };
   contactInfo: {
     phone: string;
     email: string;
-  },
-  emergencyContact: EmergencyContact 
+  };
+  emergencyContact: EmergencyContact;
 }
 
 interface registration {
@@ -43,7 +43,7 @@ class EmergencyContact extends PersonalInfo {
   phone: string;
   email: string;
 
-  constructor(){
+  constructor() {
     super();
     this.phone = '';
     this.email = '';
@@ -58,15 +58,15 @@ export class User extends PersonalInfo {
   emergencyContact: EmergencyContact[] = [];
   id: number;
 
-  constructor({personalInfo, contactInfo, emergencyContact}: newUserData) {
+  constructor({ personalInfo, contactInfo, emergencyContact }: newUserData) {
     super();
     this.login = personalInfo.login;
     this.name = personalInfo.name;
-    this.lastname= personalInfo.lastname;
-    this.secondlastname= personalInfo.secondlastname;
-    this.langKey= personalInfo.langKey;
-    this.phone= contactInfo.phone;
-    this.email= contactInfo.email;
+    this.lastname = personalInfo.lastname;
+    this.secondlastname = personalInfo.secondlastname;
+    this.langKey = personalInfo.langKey;
+    this.phone = contactInfo.phone;
+    this.email = contactInfo.email;
     this.id = -1;
     this.emergencyContact.push(emergencyContact);
   }
@@ -78,18 +78,18 @@ export class User extends PersonalInfo {
       lastName: this.lastname,
       langKey: this.langKey,
       email: this.email,
-      password: "test"
-    }
+      password: 'test',
+    };
   }
 
   get patientData(): patientInfo {
     return {
       secondSurname: this.secondlastname,
-      phone: this.phone
-    }
+      phone: this.phone,
+    };
   }
 
-  setId({ id }: {id: number}): void {
+  setId({ id }: { id: number }): void {
     this.id = id;
   }
 }
