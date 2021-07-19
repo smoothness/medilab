@@ -26,9 +26,7 @@
             <p><b>Especialidad:</b> Ortopedia</p>
 
             <br />
-
-            <!-- NO BORRAR + SECCION DE CREAR CITAS + MAURICIO -->
-            <div *ngIf="authority === 'ROLE_PATIENT'">
+            <div>
               <a
                 href="#"
                 class="btn btn-secondary"
@@ -46,8 +44,9 @@
                 Solicitar una cita
               </a>
             </div>
+          </div>
+          <div *ngIf="authority === 'ROLE_USER'">
             <button
-              *ngIf="authority === 'ROLE_USER'"
               id="jh-create-entity"
               data-cy="entityCreateButton"
               class="btn btn-primary jh-create-entity create-appointment"
@@ -57,8 +56,8 @@
               <fa-icon icon="plus"></fa-icon>
               <span mediTranslate="medilabApp.appointment.home.createNewAppointment"></span>
             </button>
-            <!-- NO BORRAR + SECCION DE CREAR CITAS + MAURICIO -->
           </div>
+
         </div>
       </div>
 

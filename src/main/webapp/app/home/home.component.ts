@@ -45,7 +45,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.accountService
       .getAuthenticationState()
       .pipe(takeUntil(this.destroy$))
-      .subscribe(account => (this.account = account));
+      .subscribe(account => {
+        this.account = account;
+        this.authority = account?.authorities[0];
+        console.log('Autority: ', this.authority);
+        }
+      );
 
     this.patientService
       .find(Number(this.account?.login))
@@ -78,6 +83,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   trackId(index: number, item: IEmergencyContact): number {
     return item.id!;
+
   }
 
   login(): void {
