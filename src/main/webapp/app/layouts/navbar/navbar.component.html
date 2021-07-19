@@ -66,20 +66,6 @@
           </span>
         </a>
       </li>
-
-      <li class="nav-item"
-          routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-          *ngIf="account?.authorities?.includes('ROLE_PATIENT')
-          || account?.authorities?.includes('ROLE_USER')">
-        <a class="nav-link"
-           routerLink="appointment"
-           (click)="collapseNavbar()">
-          <span>
-            <fa-icon icon="th-list"></fa-icon>
-            <span mediTranslate="global.menu.AppointmentHistory">Appointment History</span>
-          </span>
-        </a>
-      </li>
       <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
       <li
         *ngSwitchCase="true"
@@ -394,7 +380,7 @@
             </a>
           </li>
           <!-- <li *ngSwitchCase="true">
-
+            
           </li> -->
           <li *ngSwitchCase="false">
             <a class="dropdown-item" (click)="login()" id="login" data-cy="login">

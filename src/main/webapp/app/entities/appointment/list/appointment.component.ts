@@ -6,30 +6,17 @@ import { IAppointment } from '../appointment.model';
 import { AppointmentService } from '../service/appointment.service';
 import { AppointmentDeleteDialogComponent } from '../delete/appointment-delete-dialog.component';
 
-import {AccountService} from 'app/core/auth/account.service';
-import {Account} from 'app/core/auth/account.model';
-
 @Component({
   selector: 'medi-appointment',
   templateUrl: './appointment.component.html',
 })
 export class AppointmentComponent implements OnInit {
-  account: Account | null = null;
   appointments?: IAppointment[];
   isLoading = false;
 
-  constructor(protected appointmentService: AppointmentService,
-              protected modalService: NgbModal,
-              private accountService: AccountService) {}
+  constructor(protected appointmentService: AppointmentService, protected modalService: NgbModal) {}
 
   loadAll(): void {
-    this.accountService
-      .getAuthenticationState()
-      .subscribe(account => {
-          this.account = account;
-        }
-      );
-
     this.isLoading = true;
 
     this.appointmentService.query().subscribe(
