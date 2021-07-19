@@ -78,13 +78,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   trackId(index: number, item: IEmergencyContact): number {
     return item.id!;
-
-      .subscribe(account => {
-        this.account = account;
-        this.authority = account?.authorities[0];
-
-        console.log('type: ', this.account);
-      });
   }
 
   login(): void {
