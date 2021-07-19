@@ -4,11 +4,10 @@
       <h2
         id="medi-appointment-heading"
         data-cy="AppointmentCreateUpdateHeading"
-        mediTranslate="medilabApp.appointment.home.createOrEditLabel"
+        mediTranslate="medilabApp.appointment.home.createOrEditAppointment"
       >
-        Create or edit a Appointment
+        Crear o editar una cita
       </h2>
-
       <div>
         <medi-alert-error></medi-alert-error>
 
@@ -38,8 +37,8 @@
 
         <div class="form-group">
           <label class="form-control-label" mediTranslate="medilabApp.appointment.status" for="field_status">Status</label>
-          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
-            <option [ngValue]="null">{{ 'medilabApp.Status.null' | translate }}</option>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status" ngModel="PENDING">
+            <!-- <option [ngValue]="null">{{ 'medilabApp.Status.null' | translate }}</option> -->
             <option value="CANCELED">{{ 'medilabApp.Status.CANCELED' | translate }}</option>
             <option value="PENDING">{{ 'medilabApp.Status.PENDING' | translate }}</option>
             <option value="PAID">{{ 'medilabApp.Status.PAID' | translate }}</option>
@@ -53,22 +52,9 @@
             <option [ngValue]="null"></option>
             <option
               [ngValue]="patientOption.id === editForm.get('patient')!.value?.id ? editForm.get('patient')!.value : patientOption"
-              *ngFor="let patientOption of patientsSharedCollection; trackBy: trackPatientById"
+              *ngFor="let patientOption of patientsCollection; trackBy: trackPatientById"
             >
-              {{ patientOption.id }}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" mediTranslate="medilabApp.appointment.doctor" for="field_doctor">Doctor</label>
-          <select class="form-control" id="field_doctor" data-cy="doctor" name="doctor" formControlName="doctor">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="doctorOption.id === editForm.get('doctor')!.value?.id ? editForm.get('doctor')!.value : doctorOption"
-              *ngFor="let doctorOption of doctorsSharedCollection; trackBy: trackDoctorById"
-            >
-              {{ doctorOption.id }}
+              {{ patientOption.secondSurname }}
             </option>
           </select>
         </div>
@@ -90,5 +76,14 @@
         </button>
       </div>
     </form>
+    <swal
+      #addedAppointment
+      title="Cita creada con éxito"
+      text="La cita ha sido creada y agregada a su calendario."
+      icon="question"
+      (confirm)="confirmClose()"
+      [showCancelButton]="false"
+    >
+    </swal>
   </div>
 </div>

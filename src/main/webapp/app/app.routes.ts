@@ -18,10 +18,10 @@ export const appRoutes: Routes = [
   },
   {
     path: 'admin',
-    // data: {
-    //     authorities: [Authority.ADMIN],
-    // },
-    // canActivate: [UserRouteAccessService],
+    data: {
+      authorities: [Authority.ADMIN],
+    },
+    canActivate: [UserRouteAccessService],
     loadChildren: () => import('./admin/admin-routing.module').then(m => m.AdminRoutingModule),
   },
 ];

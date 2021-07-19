@@ -2,6 +2,13 @@
   "home": {
     "title": "Welcome, Java Hipster!",
     "subtitle": "This is your homepage",
+    "profile": {
+      "identification": "Identification",
+      "phone": "Phone",
+      "email": "Email",
+      "specialty": "Specialty",
+      "rating": "Rating"
+    },
     "logged": {
       "message": "You are logged in as user \"{{username}}\"."
     },
