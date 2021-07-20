@@ -7,9 +7,14 @@
       "emergencyContact": "Emergency contact"
     },
     "form": {
+      "step": "Step",
+      "of": "of",
       "button": "Register",
       "next": "Next",
-      "previous": "Previous"
+      "previous": "Previous",
+      "contact": "Contact",
+      "addContact": "Add emergency contact",
+      "delContact": "Delete contact"
     },
     "messages": {
       "validate": {

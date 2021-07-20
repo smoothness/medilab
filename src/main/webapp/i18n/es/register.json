@@ -7,9 +7,14 @@
       "emergencyContact": "Contacto de emergencia"
     },
     "form": {
+      "step": "Paso",
+      "of": "de",
       "button": "Registrarse",
       "next": "Siguiente",
-      "previous": "Anterior"
+      "previous": "Anterior",
+      "contact": "Contacto",
+      "addContact": "Añadir contacto de emergencia",
+      "delContact": "Eliminar contacto"
     },
     "messages": {
       "validate": {
