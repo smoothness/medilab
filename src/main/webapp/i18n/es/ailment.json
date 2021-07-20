@@ -2,17 +2,17 @@
     "medilabApp": {
         "ailment": {
             "home": {
-                "title": "Ailments",
+                "title": "Padecimientos",
                 "refreshListLabel": "Refrescar lista",
-                "createLabel": "Crear nuevo Ailment",
-                "createOrEditLabel": "Crear o editar Ailment",
+                "createLabel": "Crear nuevo Padecimiento",
+                "createOrEditLabel": "Crear o editar Padecimiento",
                 "notFound": "Ningún Ailments encontrado"
             },
-            "created": "Un nuevo Ailment ha sido creado con el identificador {{ param }}",
-            "updated": "Un Ailment ha sido actualizado con el identificador {{ param }}",
-            "deleted": "Un Ailment ha sido eliminado con el identificador {{ param }}",
+            "created": "Un nuevo Padecimiento ha sido creado con el identificador {{ param }}",
+            "updated": "Un Padecimiento ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Padecimiento ha sido eliminado con el identificador {{ param }}",
             "delete": {
-                "question": "¿Seguro que quiere eliminar Ailment {{ id }}?"
+                "question": "¿Seguro que quiere eliminar Padecimiento {{ id }}?"
             },
             "detail": {
                 "title": "Ailment"
@@ -20,7 +20,11 @@
             "id": "ID",
             "name": "Nombre",
             "removed": "Activo",
-            "appointmentTreatmentAilment": "Appointment Treatment Ailment"
+            "appointmentTreatmentAilment": "Appointment Treatment Ailment",
+            "active": "Sí",
+            "inactive": "No",
+            "activate": "Activar",
+            "deactivate": "Desactivar"
         }
     }
 }
