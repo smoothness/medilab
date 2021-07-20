@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { EmergencyContact } from './../../register.model';
-
 @Component({
   selector: 'medi-emergency-form',
   templateUrl: './emergency-form.component.html',

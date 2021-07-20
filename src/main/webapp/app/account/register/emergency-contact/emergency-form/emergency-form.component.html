@@ -1,6 +1,6 @@
 <form name="emergencyContactForm" class="border-bottom py-3" role="form" autocomplete="on" [formGroup]="emergencyContactForm">
   <div class="text-center">
-    <h3 class="text-primary"> <span mediTranslate="register.form.contact">Contact</span>  {{ index + 1 }}</h3>
+    <h3 class="text-primary"><span mediTranslate="register.form.contact">Contact</span> {{ index + 1 }}</h3>
   </div>
 
   <!-- Name & LastName -->
@@ -198,6 +198,8 @@
   </div>
 
   <div class="text-center">
-    <button class="btn btn-danger" (click)="removeContact()" mediTranslate="register.form.delContact">Delete contact</button>
+    <button class="btn btn-danger" (click)="removeContact()" mediTranslate="register.form.delContact" *ngIf="index !== 0">
+      Delete contact
+    </button>
   </div>
 </form>

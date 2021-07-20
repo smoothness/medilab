@@ -1,13 +1,14 @@
-import {Component, ViewChild} from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { SweetAlertServiceService } from './../../shared/services/sweet-alert-service.service';
 
+import { EmergencyContactComponent } from './emergency-contact/emergency-contact.component';
+
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from './../../config/error.constants';
 import { RegisterService } from './register.service';
 import { User } from './register.model';
-import {EmergencyContactComponent} from "./emergency-contact/emergency-contact.component";
 
 @Component({
   selector: 'medi-register',
@@ -16,10 +17,8 @@ import {EmergencyContactComponent} from "./emergency-contact/emergency-contact.c
 })
 export class RegisterComponent {
   @ViewChild(EmergencyContactComponent) emergencyContact?: any;
-
   doNotMatch = false;
   error = false;
-  success = false;
   currentStep = 0;
   emergencyContacts: any[] = [];
   registerForm = this.fb.group({
@@ -41,7 +40,8 @@ export class RegisterComponent {
     contactInfo: this.fb.group({
       phone: ['', [Validators.required]],
       email: ['', [Validators.required]],
-    })
+    }),
+    password: [''],
   });
 
   constructor(
@@ -51,58 +51,38 @@ export class RegisterComponent {
     private sweetAlertService: SweetAlertServiceService
   ) {}
 
-  get currentGroup(): any {
+  public get currentGroup(): any {
     return this.getGroupAt(this.currentStep);
   }
 
-  previousStep(): void {
-    this.currentStep--;
-  }
-
-  nextStep(): void {
+  public nextStep(): void {
     this.currentStep++;
   }
 
-  registerUser(newEmergencyContacts: any): void {
+  public previousStep(): void {
+    this.currentStep--;
+  }
+
+  public registerUser(newEmergencyContacts: any): void {
     const newUser: User = new User(this.registerForm.value);
     newUser.emergencyContact = newEmergencyContacts.contacts;
 
     this.service.register(newUser).subscribe(
       () => {
-        this.success = true;
+        this.sweetAlertService.showRegisterSuccess();
       },
       response => this.processError(response)
     );
   }
 
-  validatePassword(password: string): void {
-    console.log('password: ', password);
+  public validatePassword(password: string): void {
+    this.registerForm.patchValue({ password });
   }
 
   private getGroupAt(index: number): FormGroup {
     const groups = Object.keys(this.registerForm.controls).map(groupName => this.registerForm.get(groupName)) as FormGroup[];
-
     return groups[index];
   }
-
-  // register(): void {
-  //   this.doNotMatch = false;
-  //   this.error = false;
-  //   this.errorEmailExists = false;
-  //   this.errorUserExists = false;
-
-  //   const password = this.registerForm.get(['password'])!.value;
-  //   if (password !== this.registerForm.get(['confirmPassword'])!.value) {
-  //     this.doNotMatch = true;
-  //   } else {
-  //     const login = this.registerForm.get(['login'])!.value;
-  //     const email = this.registerForm.get(['email'])!.value;
-  //     this.registerService.save({ login, email, password, langKey: this.translateService.currentLang }).subscribe(
-  //       () => (this.success = true),
-  //       response => this.processError(response)
-  //     );
-  //   }
-  // }
 
   private processError(response: HttpErrorResponse): void {
     if (response.status === 400 && response.error.type === LOGIN_ALREADY_USED_TYPE) {
