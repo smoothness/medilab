@@ -42,7 +42,7 @@
 
             <medi-confirm-password *ngIf="currentStep === 1" (password)="validatePassword($event)"> </medi-confirm-password>
 
-            <medi-emergency-contact *ngIf="currentStep === 2" [emergencyContacts]="emergencyContacts"> </medi-emergency-contact>
+            <medi-emergency-contact *ngIf="currentStep === 2" #emergencyContact> </medi-emergency-contact>
           </div>
         </form>
       </div>
@@ -69,7 +69,7 @@
             class="btn btn-success col-4 m-2"
             mediTranslate="register.form.button"
             *ngIf="currentStep === 2"
-            (click)="registerUser()"
+            (click)="registerUser(emergencyContact)"
           ></button>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -7,6 +7,7 @@ import { SweetAlertServiceService } from './../../shared/services/sweet-alert-se
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from './../../config/error.constants';
 import { RegisterService } from './register.service';
 import { User } from './register.model';
+import {EmergencyContactComponent} from "./emergency-contact/emergency-contact.component";
 
 @Component({
   selector: 'medi-register',
@@ -14,6 +15,8 @@ import { User } from './register.model';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
+  @ViewChild(EmergencyContactComponent) emergencyContact?: any;
+
   doNotMatch = false;
   error = false;
   success = false;
@@ -38,7 +41,7 @@ export class RegisterComponent {
     contactInfo: this.fb.group({
       phone: ['', [Validators.required]],
       email: ['', [Validators.required]],
-    }),
+    })
   });
 
   constructor(
@@ -60,8 +63,9 @@ export class RegisterComponent {
     this.currentStep++;
   }
 
-  registerUser(): void {
+  registerUser(newEmergencyContacts: any): void {
     const newUser: User = new User(this.registerForm.value);
+    newUser.emergencyContact = newEmergencyContacts.contacts;
 
     this.service.register(newUser).subscribe(
       () => {

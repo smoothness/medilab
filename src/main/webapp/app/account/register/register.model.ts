@@ -32,6 +32,7 @@ interface registration {
 }
 
 interface patientInfo {
+  internalUser: {id: number};
   secondSurname: string;
   phone: string;
 }
@@ -49,15 +50,17 @@ abstract class PersonalInfo {
 }
 
 export class EmergencyContact extends PersonalInfo {
+  patient: number;
   phone: string;
   email: string;
   relationship: string;
 
   constructor({ name, lastname, secondLastname, phone, email, relationship }: fromContactData) {
     super();
+    this.patient = -1;
     this.name = name;
     this.lastname = lastname;
-    this.secondlastname = secondLastname;
+    this.secondlastname = secondLastname || "";
     this.phone = phone;
     this.email = email;
     this.relationship = relationship;
@@ -67,14 +70,19 @@ export class EmergencyContact extends PersonalInfo {
     return `${this.name} ${this.lastname} ${this.secondlastname}`;
   }
 
-  get registerData(): { name: string; phone: string; email: string; relationship: string } {
+  get registerContact(): { name: string; phone: string; email: string; relationShip: string, patient: {id: number} } {
     return {
       name: this.fullName,
       phone: this.phone,
       email: this.email,
-      relationship: this.relationship,
+      relationShip: this.relationship,
+      patient: {
+        id: this.patient
+      }
     };
   }
+
+
 }
 
 export class User extends PersonalInfo {
@@ -113,10 +121,16 @@ export class User extends PersonalInfo {
     return {
       secondSurname: this.secondlastname,
       phone: this.phone,
+      internalUser: {
+        id: this.id
+      },
     };
   }
 
   setId({ id }: { id: number }): void {
     this.id = id;
+    for (const contact of this.emergencyContact) {
+      contact.patient = this.id;
+    }
   }
 }
