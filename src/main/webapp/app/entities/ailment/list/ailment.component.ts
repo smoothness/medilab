@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IAilment } from '../ailment.model';
 import { AilmentService } from '../service/ailment.service';
@@ -15,7 +14,7 @@ export class AilmentComponent implements OnInit  {
   ailments?: IAilment[];
   isLoading = false;
 
-  constructor(protected ailmentService: AilmentService, protected modalService: NgbModal) {}
+  constructor(protected ailmentService: AilmentService) {}
 
 
   loadAll(): void {
@@ -46,7 +45,7 @@ export class AilmentComponent implements OnInit  {
 
     ailment.removed = true;
     this.ailmentService.update(ailment).subscribe(
-    ()=>{
+    () => {
       Swal.fire({
         title : 'Se ha activado el padecimiento',
         text : 'El padecimiento ha sido activado exitosamente',
@@ -60,7 +59,7 @@ export class AilmentComponent implements OnInit  {
 
       ailment.removed = false;
       this.ailmentService.update(ailment).subscribe(
-        ()=>{
+        () => {
           Swal.fire({
             title : 'Se ha desactivado el padecimiento',
             text : 'El padecimiento ha sido desactivado con éxito',
