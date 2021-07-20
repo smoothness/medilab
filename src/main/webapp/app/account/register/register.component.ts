@@ -69,7 +69,7 @@ export class RegisterComponent {
 
     this.service.register(newUser).subscribe(
       () => {
-        this.sweetAlertService.showRegisterSuccess();
+        this.sweetAlertService.showMsjSuccess('', '');
       },
       response => this.processError(response)
     );
@@ -86,11 +86,11 @@ export class RegisterComponent {
 
   private processError(response: HttpErrorResponse): void {
     if (response.status === 400 && response.error.type === LOGIN_ALREADY_USED_TYPE) {
-      // this.errorUserExists = true;
+      this.sweetAlertService.showMsjError('', '');
     } else if (response.status === 400 && response.error.type === EMAIL_ALREADY_USED_TYPE) {
-      // this.errorEmailExists = true;
+      this.sweetAlertService.showMsjError('', '');
     } else {
-      this.error = true;
+      this.sweetAlertService.showMsjError('', '');
     }
   }
 }
