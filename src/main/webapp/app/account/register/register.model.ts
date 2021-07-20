@@ -112,7 +112,7 @@ class User extends PersonalInfo {
       lastName: this.lastname,
       langKey: this.langKey,
       email: this.email,
-      password: 'test',
+      password: this.password,
     };
   }
 

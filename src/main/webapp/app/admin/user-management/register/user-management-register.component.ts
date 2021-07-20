@@ -36,7 +36,7 @@ export class UserManagementRegisterComponent {
     specialty: [''],
   });
   roles = [
-    { name: 'register.form.previous', abbrev: '' },
+    { name: 'Seleccione un tipo de usuario', abbrev: '' },
     { name: 'Médico', abbrev: 'ROLE_USER' },
     { name: 'Paciente', abbrev: 'ROLE_PATIENT' },
   ];
@@ -48,39 +48,36 @@ export class UserManagementRegisterComponent {
     private sweetAlertService: SweetAlertServiceService
   ) {}
 
-  get isUser(): boolean {
+  public get isUser(): boolean {
     let isUser = false;
-
     if (this.registerForm.value.userType === 'ROLE_USER') {
       isUser = true;
     }
-
     return isUser;
   }
 
-  get currentGroup(): any {
+  public get currentGroup(): any {
     return this.getGroupAt(this.currentStep);
   }
 
-  previousStep(): void {
-    this.currentStep--;
-  }
-
-  nextStep(): void {
+  public nextStep(): void {
     this.currentStep++;
   }
 
-  registerUser(): void {
+  public previousStep(): void {
+    this.currentStep--;
+  }
+
+  public registerUser(): void {
     console.log(this.registerForm.value);
   }
 
-  validateUser(): void {
+  public validateUser(): void {
     console.log(this.registerForm.value);
   }
 
   private getGroupAt(index: number): FormGroup {
     const groups = Object.keys(this.registerForm.controls).map(groupName => this.registerForm.get(groupName)) as FormGroup[];
-
     return groups[index];
   }
 }
