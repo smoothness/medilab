@@ -39,6 +39,7 @@ export class AilmentUpdateComponent implements OnInit {
     if (ailment.id !== undefined) {
       this.subscribeToSaveResponse(this.ailmentService.update(ailment));
     } else {
+      ailment.removed = true;
       this.subscribeToSaveResponse(this.ailmentService.create(ailment));
     }
   }

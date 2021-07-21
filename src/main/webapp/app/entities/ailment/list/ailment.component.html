@@ -8,12 +8,8 @@
         <span mediTranslate="medilabApp.ailment.home.refreshListLabel">Refresh List</span>
       </button>
 
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-ailment"
-        [routerLink]="['/ailment/new']"
-      >
+      <button id="jh-create-entity" data-cy="entityCreateButton" class="btn btn-primary jh-create-entity create-ailment"
+        [routerLink]="['/main/ailment/new']">
         <fa-icon icon="plus"></fa-icon>
         <span mediTranslate="medilabApp.ailment.home.createLabel"> Create a new Ailment </span>
       </button>
@@ -21,8 +17,6 @@
   </h2>
 
   <medi-alert-error></medi-alert-error>
-
-  <medi-alert></medi-alert>
 
   <div class="alert alert-warning" id="no-result" *ngIf="ailments?.length === 0">
     <span mediTranslate="medilabApp.ailment.home.notFound">No ailments found</span>
@@ -44,32 +38,30 @@
             <a [routerLink]="['/ailment', ailment.id, 'view']">{{ ailment.id }}</a>
           </td>
           <td>{{ ailment.name }}</td>
-          <td>{{ ailment.removed }}</td>
+          <td>{{ ailment.removed | truefalse }}</td>
           <td class="text-right">
             <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/ailment', ailment.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
+              <!--<button type="submit" [routerLink]="['/main/ailment', ailment.id, 'view']" class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton">
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline" mediTranslate="entity.action.view">View</span>
-              </button>
+              </button> -->
 
-              <button
-                type="submit"
-                [routerLink]="['/ailment', ailment.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
+              <button type="submit" [routerLink]="['/main/ailment', ailment.id, 'edit']" class="btn btn-primary btn-sm"
+                data-cy="entityEditButton">
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" mediTranslate="entity.action.edit">Edit</span>
               </button>
 
-              <button type="submit" (click)="delete(ailment)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button *ngIf="ailment.removed == true" type="submit" (click)="removed(ailment)"
+                class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
+                <span class="d-none d-md-inline" mediTranslate="medilabApp.ailment.deactivate">Desactivar</span>
+              </button>
+              <button *ngIf="ailment.removed == false" type="submit" (click)="removed(ailment)"
+                class="btn btn-success btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="check"></fa-icon>
+                <span class="d-none d-md-inline" mediTranslate="medilabApp.ailment.activate">Activar</span>
               </button>
             </div>
           </td>
