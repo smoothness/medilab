@@ -161,5 +161,6 @@
       "not.image": "Se esperaba que el fichero fuera una imagen pero se encontro \"{{ fileType }}\""
     }
   },
+  "swalBtn": "Aceptar",
   "footer": "Pie de página"
 }

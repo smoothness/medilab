@@ -14,7 +14,8 @@
       "previous": "Previous",
       "contact": "Contact",
       "addContact": "Add emergency contact",
-      "delContact": "Delete contact"
+      "delContact": "Delete contact",
+      "specialty": "Specialty"
     },
     "messages": {
       "validate": {
@@ -30,11 +31,14 @@
         "email": { "required": "The email is required." },
         "relationship": { "required": "The relationship is required." }
       },
-      "success": "<strong>Registration saved!</strong> Please check your email for confirmation.",
+      "success": "Registration saved!",
+      "emailConfirm": "Please check your email for confirmation.",
+      "successInternal": "",
       "error": {
-        "fail": "<strong>Registration failed!</strong> Please try again later.",
-        "userexists": "<strong>Login name already registered!</strong> Please choose another one.",
-        "emailexists": "<strong>Email is already in use!</strong> Please choose another one."
+        "error": "An error has occurred.",
+        "fail": "Registration failed! Please try again later.",
+        "userexists": "Identification already exists!",
+        "emailexists": "Email is already in use! Please choose another one."
       }
     }
   }

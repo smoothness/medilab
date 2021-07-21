@@ -3,6 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { SweetAlertServiceService } from './../../shared/services/sweet-alert-service.service';
+import {Router} from "@angular/router";
 
 import { EmergencyContactComponent } from './emergency-contact/emergency-contact.component';
 
@@ -48,7 +49,8 @@ export class RegisterComponent {
     private fb: FormBuilder,
     private service: RegisterService,
     private translateService: TranslateService,
-    private sweetAlertService: SweetAlertServiceService
+    private sweetAlertService: SweetAlertServiceService,
+    private router: Router
   ) {}
 
   public get currentGroup(): any {
@@ -69,7 +71,12 @@ export class RegisterComponent {
 
     this.service.register(newUser).subscribe(
       () => {
-        this.sweetAlertService.showMsjSuccess('', '');
+        this.sweetAlertService.showMsjSuccess('register.messages.success', 'register.messages.emailConfirm').
+        then((res) =>{
+          this.registerForm.reset();
+          this.emergencyContact.resetComponent();
+          window.location.assign('/');
+        });;
       },
       response => this.processError(response)
     );
@@ -86,11 +93,11 @@ export class RegisterComponent {
 
   private processError(response: HttpErrorResponse): void {
     if (response.status === 400 && response.error.type === LOGIN_ALREADY_USED_TYPE) {
-      this.sweetAlertService.showMsjError('', '');
+      this.sweetAlertService.showMsjError('register.messages.error.error', 'register.messages.error.userexists');
     } else if (response.status === 400 && response.error.type === EMAIL_ALREADY_USED_TYPE) {
-      this.sweetAlertService.showMsjError('', '');
+      this.sweetAlertService.showMsjError('register.messages.error.error', 'register.messages.error.emailexists');
     } else {
-      this.sweetAlertService.showMsjError('', '');
+      this.sweetAlertService.showMsjError('register.messages.error.error', 'register.messages.error.fail');
     }
   }
 }

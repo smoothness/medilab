@@ -162,5 +162,6 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     }
   },
+  "swalBtn": "Ok",
   "footer": "This is your footer"
 }

@@ -1,5 +1,5 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
-import { registerLocaleData } from '@angular/common';
+import {CommonModule, registerLocaleData} from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import locale from '@angular/common/locales/es';
 import { BrowserModule, Title } from '@angular/platform-browser';
@@ -25,6 +25,7 @@ import { LayoutsComponent } from './layouts/layouts.component';
 
 @NgModule({
   imports: [
+    CommonModule,
     BrowserModule,
     SharedModule,
     LayoutsModule,

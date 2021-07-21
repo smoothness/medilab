@@ -1,8 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { SweetAlertServiceService } from './../../../shared/services/sweet-alert-service.service';
 import { UserManagementService } from './../service/user-management.service';
+import { User } from './user.model';
+import {EmergencyFormComponent} from "../../../account/register/emergency-contact/emergency-form/emergency-form.component";
+import {EmergencyContact} from "../../../account/register/register.model";
+import {HttpErrorResponse} from "@angular/common/http";
+import {EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE} from "../../../config/error.constants";
 
 @Component({
   selector: 'medi-register',
@@ -10,6 +15,7 @@ import { UserManagementService } from './../service/user-management.service';
   styleUrls: ['./user-management-register.component.scss'],
 })
 export class UserManagementRegisterComponent {
+  @ViewChild(EmergencyFormComponent) contact?: any;
   currentStep = 0;
   registerForm = this.fb.group({
     personalInfo: this.fb.group({
@@ -31,14 +37,15 @@ export class UserManagementRegisterComponent {
       phone: ['', [Validators.required]],
       email: ['', [Validators.required]],
     }),
-    userType: ['', [Validators.required]],
-    doctorCode: [''],
+    role: ['', [Validators.required]],
+    // doctorCode: [''],
     specialty: [''],
   });
   roles = [
-    { name: 'Seleccione un tipo de usuario', abbrev: '' },
-    { name: 'Médico', abbrev: 'ROLE_USER' },
-    { name: 'Paciente', abbrev: 'ROLE_PATIENT' },
+    { name: 'userManagement.selectRole', abbrev: '' },
+    { name: 'userManagement.roleDoctor', abbrev: 'ROLE_USER' },
+    { name: 'userManagement.rolePatient', abbrev: 'ROLE_PATIENT' },
+    { name: 'userManagement.roleAdmin', abbrev: 'ROLE_ADMIN'}
   ];
 
   constructor(
@@ -50,10 +57,18 @@ export class UserManagementRegisterComponent {
 
   public get isUser(): boolean {
     let isUser = false;
-    if (this.registerForm.value.userType === 'ROLE_USER') {
+    if (this.registerForm.value.role === 'ROLE_USER') {
       isUser = true;
     }
     return isUser;
+  }
+
+  public get isPatient(): boolean {
+    let isPatient = false;
+    if (this.registerForm.value.role === 'ROLE_PATIENT') {
+      isPatient = true;
+    }
+    return isPatient;
   }
 
   public get currentGroup(): any {
@@ -68,16 +83,46 @@ export class UserManagementRegisterComponent {
     this.currentStep--;
   }
 
-  public registerUser(): void {
-    console.log(this.registerForm.value);
+  public registerUser(newUser: User): void {
+    this.userService.registerUser(newUser).subscribe(
+      () => {
+        this.sweetAlertService.showMsjSuccess('register.messages.success', 'register.messages.successInternal').
+        then((res) =>{
+          this.registerForm.reset();
+          this.contact.clearForm();
+        });
+      },
+      response => this.processError(response)
+    )
   }
 
   public validateUser(): void {
     console.log(this.registerForm.value);
   }
 
+  validateUserData(contact: any): void {
+    const newUser: User = new User(this.registerForm.value);
+
+    if(this.registerForm.value.role === 'ROLE_PATIENT') {
+      newUser.emergencyContact = new EmergencyContact(contact.emergencyContactForm.value);
+    }
+
+    this.registerUser(newUser);
+  }
+
   private getGroupAt(index: number): FormGroup {
     const groups = Object.keys(this.registerForm.controls).map(groupName => this.registerForm.get(groupName)) as FormGroup[];
     return groups[index];
   }
+
+  private processError(response: HttpErrorResponse): void {
+    if (response.status === 400 && response.error.type === LOGIN_ALREADY_USED_TYPE) {
+      this.sweetAlertService.showMsjError('register.messages.error.error', 'register.messages.error.userexists');
+    } else if (response.status === 400 && response.error.type === EMAIL_ALREADY_USED_TYPE) {
+      this.sweetAlertService.showMsjError('register.messages.error.error', 'register.messages.error.emailexists');
+    } else {
+      this.sweetAlertService.showMsjError('register.messages.error.error', 'register.messages.error.fail');
+    }
+  }
+
 }

@@ -30,4 +30,8 @@ export class EmergencyFormComponent {
     this.index = pIndex;
     this.parentReference = parent;
   }
+
+  clearForm(): void{
+    this.emergencyContactForm.reset();
+  }
 }

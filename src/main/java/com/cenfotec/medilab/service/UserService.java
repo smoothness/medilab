@@ -110,7 +110,7 @@ public class UserService {
             .findOneByLogin(userDTO.getLogin().toLowerCase())
             .ifPresent(
                 existingUser -> {
-                    boolean removed = removeNonActivatedUser(existingUser);
+                    boolean removed = false;
                     if (!removed) {
                         throw new UsernameAlreadyUsedException();
                     }
@@ -120,7 +120,7 @@ public class UserService {
             .findOneByEmailIgnoreCase(userDTO.getEmail())
             .ifPresent(
                 existingUser -> {
-                    boolean removed = removeNonActivatedUser(existingUser);
+                    boolean removed = false;
                     if (!removed) {
                         throw new EmailAlreadyUsedException();
                     }

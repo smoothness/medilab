@@ -11,43 +11,48 @@ import Swal from 'sweetalert2';
 export class SweetAlertServiceService {
   constructor(private translateService: TranslateService) {}
 
-  public showMsjError(title: string, msj: string): void {
-    this.showAlert({
+  public showMsjError(title: string, msj: string): Promise<boolean> {
+    return this.showAlert({
       icon: 'error',
       title,
       text: msj,
     });
   }
 
-  public showInfoWarning(title: string, msj: string): void {
-    this.showAlert({
+  public showInfoWarning(title: string, msj: string): Promise<boolean> {
+    return this.showAlert({
       icon: 'info',
       title,
       text: msj,
     });
   }
 
-  public showMsjSuccess(title: string, msj: string): void {
-    this.showAlert({
+  public showMsjSuccess(title: string, msj: string): Promise<boolean> {
+    return this.showAlert({
       icon: 'success',
       title,
       text: msj,
     });
   }
 
-  public showMsjWarning(title: string, msj: string): void {
-    this.showAlert({
+  public showMsjWarning(title: string, msj: string): Promise<boolean> {
+    return this.showAlert({
       icon: 'warning',
       title,
       text: msj,
     });
   }
 
-  private showAlert({ icon, title, text }: msjConfig): void {
-    Swal.fire(<any>{
-      icon,
-      title: this.translateService.instant(title),
-      text: this.translateService.instant(text),
-    });
+  private showAlert({ icon, title, text }: msjConfig): Promise<boolean> {
+   return new Promise((resolve) => {
+     Swal.fire(<any>{
+       icon,
+       title: this.translateService.instant(title),
+       text: this.translateService.instant(text),
+       confirmButton: this.translateService.instant('global.swalBtn')
+     }).then(() => {
+       resolve(true);
+     });
+   })
   }
 }

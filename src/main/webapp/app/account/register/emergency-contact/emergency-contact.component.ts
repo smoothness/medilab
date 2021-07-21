@@ -56,4 +56,10 @@ export class EmergencyContactComponent implements OnInit {
       }
     }
   }
+
+  resetComponent(): void {
+    this.formContacts[0].instance.clearForm();
+    this.removeForm(1);
+    this.removeForm(2);
+  }
 }

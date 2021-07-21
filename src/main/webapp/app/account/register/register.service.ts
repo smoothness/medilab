@@ -24,6 +24,7 @@ export class RegisterService {
                     subscriber.next();
                   }
                 ))
+              subscriber.next();
               subscriber.complete();
             },
             err => subscriber.error(err)
