@@ -61,7 +61,7 @@
     "rememberMeKey": "d50075cd0ed4f7d8ae40d3bfbbd0a33d954ee1182e138bcf46652fb8c8324dfd0f7355a71bd00605f532907c193f91228d13",
     "devServerPort": 4200,
     "lastLiquibaseTimestamp": 1625615110000,
-    "herokuAppName": null,
+    "herokuAppName": "medilablogeek",
     "herokuDeployType": "git",
     "herokuJavaVersion": "11"
   }
