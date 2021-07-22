@@ -1,5 +1,6 @@
 {
   "reset": {
+    "done": "",
     "request": {
       "title": "Restablecer su contraseña",
       "form": {

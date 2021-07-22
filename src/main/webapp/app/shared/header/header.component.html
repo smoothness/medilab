@@ -10,7 +10,8 @@
         </a>
         <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesnavBarDropdown">
           <li *ngFor="let language of languages">
-            <a class="dropdown-item" href="javascript:void(0);" (click)="changeLanguage(language); collapseNavbar()">{{
+            <a class="dropdown-item" href="javascript:void(0);" (click)="changeLanguage(language);
+            collapseNavbar()">{{
               language | findLanguageFromKey
             }}</a>
           </li>

@@ -1,5 +1,6 @@
 {
   "reset": {
+    "done": "",
     "request": {
       "title": "Reset your password",
       "form": {
