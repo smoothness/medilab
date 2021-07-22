@@ -32,11 +32,6 @@ interface patientInfo {
   phone: string;
 }
 
-interface doctorInfo {
-  internalUser: { id: number };
-  specialty?: string;
-}
-
 abstract class PersonalInfo {
   name = '';
   lastname = '';
@@ -85,7 +80,6 @@ class User extends PersonalInfo {
   public get doctorData(): { specialty: string | null | undefined; internalUser: { id: number } } {
     return {
       specialty: this.specialty,
-      // doctorCode: this.doctorCode,
       internalUser: {
         id: this.id,
       },

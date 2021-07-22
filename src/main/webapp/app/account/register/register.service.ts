@@ -20,7 +20,7 @@ export class RegisterService {
               newUser.setId(patient);
               newUser.emergencyContact.forEach(
                 newContact => this.saveEmergencyContacts(newContact.registerContact).subscribe(
-                  (contact: any) => {
+                  () => {
                     subscriber.next();
                   }
                 ))

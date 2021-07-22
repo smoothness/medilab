@@ -72,7 +72,7 @@ export class RegisterComponent {
     this.service.register(newUser).subscribe(
       () => {
         this.sweetAlertService.showMsjSuccess('register.messages.success', 'register.messages.emailConfirm').
-        then((res) =>{
+        then(() =>{
           this.registerForm.reset();
           this.emergencyContact.resetComponent();
           window.location.assign('/');
