@@ -1,6 +1,6 @@
 <div>
   <h2 id="page-heading" data-cy="AppointmentHeading">
-    <span id="appointmentHistory" mediTranslate="global.menu.AppointmentHistory">Appointments</span>
+    <span id="appointmentHistory" mediTranslate="global.menu.reports.appointmentHistory">Appointments</span>
   </h2>
   <medi-alert-error></medi-alert-error>
 
@@ -42,16 +42,15 @@
           {{ appointment.status }}
         </td>
 
-        <td *ngIf="(((appointment.patient?.id)?.toString() === account?.login)
-          || ((appointment.doctor?.id)?.toString() === account?.login))
+
+        <td *ngIf="((appointment.doctor?.id)?.toString() === account?.login)
           && (account?.authorities?.includes('ROLE_USER'))">
           <div *ngIf="appointment.patient">
             <a [routerLink]="['/patient', appointment.patient?.id, 'view']">{{ appointment.patient?.id }}</a>
           </div>
         </td>
 
-        <td *ngIf="(((appointment.patient?.id)?.toString() === account?.login)
-          || ((appointment.doctor?.id)?.toString() === account?.login))
+        <td *ngIf="((appointment.patient?.id)?.toString() === account?.login)
           && (account?.authorities?.includes('ROLE_PATIENT'))">
           <div *ngIf="appointment.doctor">
             <a [routerLink]="['/doctor', appointment.doctor?.id, 'view']">{{ appointment.doctor?.id }}</a>

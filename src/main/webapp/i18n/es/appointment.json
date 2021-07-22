@@ -21,7 +21,7 @@
       },
       "id": "ID",
       "date": "Fecha",
-      "status": "Status",
+      "status": "Estatus",
       "appointmentTreatmentAilment": "Dolencia, tratamiento",
       "medicalExams": "Exámenes médicos",
       "patient": "Paciente",
