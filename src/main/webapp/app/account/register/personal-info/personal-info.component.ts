@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -6,11 +6,7 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './personal-info.component.html',
   styleUrls: ['./personal-info.component.scss'],
 })
-export class PersonalInfoComponent implements OnInit {
+export class PersonalInfoComponent {
   errorUserExists = false;
   @Input() personalDataForm: FormGroup = new FormGroup({});
-
-  ngOnInit(): string {
-    return 'test';
-  }
 }

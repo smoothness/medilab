@@ -5,7 +5,8 @@
       "password": "Contraseña",
       "password.placeholder": "Su contraseña",
       "rememberme": "Recuérdame",
-      "button": "Iniciar sesión"
+      "button": "Iniciar sesión",
+      "idEmail": "Identificación o correo electrónico"
     },
     "messages": {
       "error": {

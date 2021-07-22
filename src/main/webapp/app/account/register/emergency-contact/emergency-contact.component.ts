@@ -9,6 +9,7 @@ import {
   Input,
 } from '@angular/core';
 import { EmergencyFormComponent } from './emergency-form/emergency-form.component';
+import { EmergencyContact } from './../register.model';
 
 @Component({
   selector: 'medi-emergency-contact',
@@ -24,7 +25,7 @@ export class EmergencyContactComponent implements OnInit {
   constructor(private formCreator: ComponentFactoryResolver) {}
 
   get contacts(): {}[] {
-    const contacts: {}[] = Array.from(this.formContacts, el => <{}>el.instance.emergencyContactForm.value);
+    const contacts: {}[] = Array.from(this.formContacts, el => new EmergencyContact(el.instance.emergencyContactForm.value));
     return contacts;
   }
 
@@ -54,5 +55,11 @@ export class EmergencyContactComponent implements OnInit {
         this.formContacts.splice(pIndex, 1);
       }
     }
+  }
+
+  resetComponent(): void {
+    this.formContacts[0].instance.clearForm();
+    this.removeForm(1);
+    this.removeForm(2);
   }
 }

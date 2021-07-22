@@ -66,7 +66,8 @@
       "secondlastname.placeholder": "Your second lastname",
       "phone.label": "Phone",
       "phone.placeholder": "Your phone",
-      "relationship": "Relationship"
+      "relationship": "Relationship",
+      "userType": "Type of user"
     },
     "messages": {
       "info": {
@@ -161,5 +162,6 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     }
   },
+  "swalBtn": "Ok",
   "footer": "This is your footer"
 }

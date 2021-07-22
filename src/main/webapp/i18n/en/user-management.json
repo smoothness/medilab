@@ -26,6 +26,10 @@
     "createdBy": "Created by",
     "createdDate": "Created date",
     "lastModifiedBy": "Modified by",
-    "lastModifiedDate": "Modified date"
+    "lastModifiedDate": "Modified date",
+    "selectRole": "Select a user type",
+    "roleDoctor": "Doctor",
+    "rolePatient": "Patient",
+    "roleAdmin": "Admin"
   }
 }

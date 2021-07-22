@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { ApplicationConfigService } from './../../core/config/application-config.service';
 import { User } from './register.model';
+import {EmergencyContact} from "../../entities/emergency-contact/emergency-contact.model";
 
 @Injectable({ providedIn: 'root' })
 export class RegisterService {
@@ -16,8 +17,14 @@ export class RegisterService {
           newUser.setId(registered);
           this.savePatientInfo(newUser).subscribe(
             (patient: any) => {
-              console.log(patient);
-
+              newUser.setId(patient);
+              newUser.emergencyContact.forEach(
+                newContact => this.saveEmergencyContacts(newContact.registerContact).subscribe(
+                  () => {
+                    subscriber.next();
+                  }
+                ))
+              subscriber.next();
               subscriber.complete();
             },
             err => subscriber.error(err)
@@ -33,7 +40,11 @@ export class RegisterService {
   }
 
   savePatientInfo(newUser: User): Observable<{}> {
-    return this.http.post(this.getUrl(`api/patients/${newUser.id}`), newUser.patientData);
+    return this.http.post(this.getUrl(`api/patients`), newUser.patientData);
+  }
+
+  saveEmergencyContacts(newContact: EmergencyContact): Observable<{}> {
+    return this.http.post(this.getUrl('api/emergency-contacts'), newContact);
   }
 
   private getUrl(url: string): string {

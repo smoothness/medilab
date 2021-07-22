@@ -210,6 +210,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.persistentTokens = persistentTokens;
     }
 
+    public String getCompleteName(){
+        return this.firstName + " "
+            + this.lastName + " ";
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
