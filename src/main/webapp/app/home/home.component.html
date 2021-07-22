@@ -4,19 +4,17 @@
       <div class="card bg-dark">
         <div class="card-body">
           <div>
-            <img src='{{account?.imageUrl}}' width="100" alt="test"/>
+            <img src="{{ account?.imageUrl }}" width="100" alt="test" />
             <p *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
-              {{account?.firstName}} {{patient?.secondSurname}} {{account?.lastName}}
+              {{ account?.firstName }} {{ patient?.secondSurname }} {{ account?.lastName }}
             </p>
-            <p *ngIf="account?.authorities?.includes('ROLE_ADMIN') ||
-                account?.authorities?.includes('ROLE_USER')">
-              {{account?.firstName}} {{account?.lastName}}
+            <p *ngIf="account?.authorities?.includes('ROLE_ADMIN') || account?.authorities?.includes('ROLE_USER')">
+              {{ account?.firstName }} {{ account?.lastName }}
             </p>
           </div>
         </div>
         <div class="ml-profile-stats">
           <div class="card-header">
-
             <p>Datos</p>
           </div>
           <div class="card-body" *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
@@ -51,13 +49,11 @@
               data-cy="entityCreateButton"
               class="btn btn-primary jh-create-entity create-appointment"
               [routerLink]="['/appointment/new']"
-
             >
               <fa-icon icon="plus"></fa-icon>
               <span mediTranslate="medilabApp.appointment.home.createNewAppointment"></span>
             </button>
           </div>
-
         </div>
       </div>
 
@@ -65,36 +61,23 @@
         <h5 class="card-header">Información personal</h5>
         <div class="card-body">
           <div *ngIf="account?.authorities?.includes('ROLE_USER')">
-            <p class="info-title"
-               mediTranslate="home.profile.specialty">
-              Especialidad</p>
-            <p>{{doctor?.specialty}}</p>
-            <p class="info-title"
-               mediTranslate="home.profile.rating">
-              Calificación </p>
-            <p>{{doctor?.ratingUsers}}</p>
+            <p class="info-title" mediTranslate="home.profile.specialty">Especialidad</p>
+            <p>{{ doctor?.specialty }}</p>
+            <p class="info-title" mediTranslate="home.profile.rating">Calificación</p>
+            <p>{{ doctor?.ratingUsers }}</p>
           </div>
-          <p class="info-title"
-             mediTranslate="home.profile.identification">
-            Identificación</p>
-          <p> {{account?.login}} </p>
-          <p class="info-title"
-             mediTranslate="home.profile.phone">
-            Teléfono</p>
-          <p> {{patient?.phone}} </p>
-          <p class="info-title"
-             mediTranslate="home.profile.email">
-            Correo electrónico</p>
-          <p> {{account?.email}} </p>
+          <p class="info-title" mediTranslate="home.profile.identification">Identificación</p>
+          <p>{{ account?.login }}</p>
+          <p class="info-title" mediTranslate="home.profile.phone">Teléfono</p>
+          <p>{{ patient?.phone }}</p>
+          <p class="info-title" mediTranslate="home.profile.email">Correo electrónico</p>
+          <p>{{ account?.email }}</p>
         </div>
       </div>
     </div>
 
     <div class="card bg-dark mt-3" *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
-      <h5 class="card-header"
-          mediTranslate="medilabApp.emergencyContact.home.title">
-        Contact(s) en caso de una emergencia
-      </h5>
+      <h5 class="card-header" mediTranslate="medilabApp.emergencyContact.home.title">Contact(s) en caso de una emergencia</h5>
       <div class="card-body">
         <div class="alert alert-warning" id="no-result" *ngIf="emergencyContacts?.length === 0">
           <span mediTranslate="medilabApp.emergencyContact.home.notFound">No emergencyContacts found</span>
@@ -103,41 +86,44 @@
         <div class="table-responsive" id="entities" *ngIf="emergencyContacts && emergencyContacts.length > 0">
           <table class="table table-striped" aria-describedby="page-heading">
             <thead>
-            <tr>
-              <th scope="col"><span mediTranslate="medilabApp.emergencyContact.name">Name</span></th>
-              <th scope="col"><span mediTranslate="medilabApp.emergencyContact.phone">Phone</span></th>
-              <th scope="col"><span mediTranslate="medilabApp.emergencyContact.email">Email</span></th>
-              <th scope="col"><span mediTranslate="medilabApp.emergencyContact.relationShip">Relation Ship</span></th>
-              <th scope="col"></th>
-            </tr>
+              <tr>
+                <th scope="col"><span mediTranslate="medilabApp.emergencyContact.name">Name</span></th>
+                <th scope="col"><span mediTranslate="medilabApp.emergencyContact.phone">Phone</span></th>
+                <th scope="col"><span mediTranslate="medilabApp.emergencyContact.email">Email</span></th>
+                <th scope="col"><span mediTranslate="medilabApp.emergencyContact.relationShip">Relation Ship</span></th>
+                <th scope="col"></th>
+              </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let emergencyContact of emergencyContacts; trackBy: trackId" data-cy="entityTable">
-              <td *ngIf="emergencyContact.patient">{{ emergencyContact.name }}</td>
-              <td *ngIf="emergencyContact.patient">{{ emergencyContact.phone }}</td>
-              <td *ngIf="emergencyContact.patient">{{ emergencyContact.email }}</td>
-              <td *ngIf="emergencyContact.patient">{{ emergencyContact.relationShip }}</td>
-              <td class="text-right" *ngIf="emergencyContact.patient">
-                <div class="btn-group">
+              <tr *ngFor="let emergencyContact of emergencyContacts; trackBy: trackId" data-cy="entityTable">
+                <td *ngIf="emergencyContact.patient">{{ emergencyContact.name }}</td>
+                <td *ngIf="emergencyContact.patient">{{ emergencyContact.phone }}</td>
+                <td *ngIf="emergencyContact.patient">{{ emergencyContact.email }}</td>
+                <td *ngIf="emergencyContact.patient">{{ emergencyContact.relationShip }}</td>
+                <td class="text-right" *ngIf="emergencyContact.patient">
+                  <div class="btn-group">
+                    <button
+                      type="submit"
+                      [routerLink]="['./emergency-contact/', emergencyContact.id, 'edit']"
+                      class="btn btn-primary btn-sm"
+                      data-cy="entityEditButton"
+                    >
+                      <fa-icon icon="pencil-alt"></fa-icon>
+                      <span class="d-none d-md-inline" mediTranslate="entity.action.edit">Edit</span>
+                    </button>
 
-                  <button
-                    type="submit"
-                    [routerLink]="['./emergency-contact/', emergencyContact.id, 'edit']"
-                    class="btn btn-primary btn-sm"
-                    data-cy="entityEditButton"
-                  >
-                    <fa-icon icon="pencil-alt"></fa-icon>
-                    <span class="d-none d-md-inline" mediTranslate="entity.action.edit">Edit</span>
-                  </button>
-
-                  <button type="submit" (click)="deleteEmergencyContact(emergencyContact)"
-                          class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                    <fa-icon icon="times"></fa-icon>
-                    <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
-                  </button>
-                </div>
-              </td>
-            </tr>
+                    <button
+                      type="submit"
+                      (click)="deleteEmergencyContact(emergencyContact)"
+                      class="btn btn-danger btn-sm"
+                      data-cy="entityDeleteButton"
+                    >
+                      <fa-icon icon="times"></fa-icon>
+                      <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>

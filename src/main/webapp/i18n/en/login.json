@@ -5,7 +5,8 @@
       "password": "Password",
       "password.placeholder": "Your password",
       "rememberme": "Remember me",
-      "button": "Sign in"
+      "button": "Sign in",
+      "idEmail": "Identification or email"
     },
     "messages": {
       "error": {

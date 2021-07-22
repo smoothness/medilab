@@ -11,8 +11,24 @@ import { ActiveMenuDirective } from './navbar/active-menu.directive';
 import { MainComponent } from './main/main.component';
 
 @NgModule({
-  declarations: [ActiveMenuDirective, FooterComponent, NavbarComponent, MainComponent, PageRibbonComponent],
-  exports: [ActiveMenuDirective, FooterComponent, NavbarComponent, MainComponent, PageRibbonComponent],
-  imports: [CommonModule, SharedModule, LayoutsRoutesModule],
+  declarations: [
+    ActiveMenuDirective,
+    FooterComponent,
+    NavbarComponent,
+    MainComponent,
+    PageRibbonComponent
+  ],
+  exports: [
+    ActiveMenuDirective,
+    FooterComponent,
+    NavbarComponent,
+    MainComponent,
+    PageRibbonComponent
+  ],
+  imports: [
+    CommonModule,
+    SharedModule,
+    LayoutsRoutesModule
+  ],
 })
 export class LayoutsModule {}

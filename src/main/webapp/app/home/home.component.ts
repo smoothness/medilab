@@ -1,22 +1,22 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {Router} from '@angular/router';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
-import {AccountService} from 'app/core/auth/account.service';
-import {Account} from 'app/core/auth/account.model';
+import { AccountService } from 'app/core/auth/account.service';
+import { Account } from 'app/core/auth/account.model';
 
-import {PatientService} from 'app/entities/patient/service/patient.service';
-import {Patient} from 'app/entities/patient/patient.model';
+import { PatientService } from 'app/entities/patient/service/patient.service';
+import { Patient } from 'app/entities/patient/patient.model';
 
-import {DoctorService} from 'app/entities/doctor/service/doctor.service';
-import {Doctor} from 'app/entities/doctor/doctor.model';
+import { DoctorService } from 'app/entities/doctor/service/doctor.service';
+import { Doctor } from 'app/entities/doctor/doctor.model';
 
-import {EmergencyContactService} from 'app/entities/emergency-contact/service/emergency-contact.service';
-import {EmergencyContact, IEmergencyContact} from 'app/entities/emergency-contact/emergency-contact.model';
-import {EmergencyContactDeleteDialogComponent} from "../entities/emergency-contact/delete/emergency-contact-delete-dialog.component";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {HttpResponse} from "@angular/common/http";
+import { EmergencyContactService } from 'app/entities/emergency-contact/service/emergency-contact.service';
+import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
+import { EmergencyContactDeleteDialogComponent } from '../entities/emergency-contact/delete/emergency-contact-delete-dialog.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'medi-home',
@@ -33,13 +33,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   authority: string | undefined;
   private readonly destroy$ = new Subject<void>();
 
-  constructor(private accountService: AccountService,
-              private patientService: PatientService,
-              private doctorService: DoctorService,
-              private emergencyContactService: EmergencyContactService,
-              private router: Router,
-              protected modalService: NgbModal) {
-  }
+  constructor(
+    private accountService: AccountService,
+    private patientService: PatientService,
+    private doctorService: DoctorService,
+    private emergencyContactService: EmergencyContactService,
+    private router: Router,
+    protected modalService: NgbModal
+  ) {}
 
   ngOnInit(): void {
     this.accountService
@@ -49,41 +50,36 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.account = account;
         this.authority = account?.authorities[0];
         console.log('Autority: ', this.authority);
-        }
-      );
+      });
 
     this.patientService
       .find(Number(this.account?.login))
       .pipe(takeUntil(this.destroy$))
       .subscribe(patientNew => {
-          this.patient = patientNew.body;
-        }
-      );
+        this.patient = patientNew.body;
+      });
 
     this.doctorService
       .find(Number(this.account?.login))
       .pipe(takeUntil(this.destroy$))
       .subscribe(doctor => {
-          this.doctor = doctor.body;
-        }
-      );
+        this.doctor = doctor.body;
+      });
 
     this.emergencyContactService
       .find(Number(this.account?.login))
       .pipe(takeUntil(this.destroy$))
       .subscribe(emergencyContactNew => {
-          if (emergencyContactNew.body?.id === this.account?.login) {
-            this.emergencyContact = emergencyContactNew.body;
-            console.log({emergencyContactNew});
-          }
+        if (emergencyContactNew.body?.id === this.account?.login) {
+          this.emergencyContact = emergencyContactNew.body;
+          console.log({ emergencyContactNew });
         }
-      );
+      });
     this.loadAllEmergencyContact();
   }
 
   trackId(index: number, item: IEmergencyContact): number {
     return item.id!;
-
   }
 
   login(): void {
@@ -96,7 +92,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   deleteEmergencyContact(emergencyContact: IEmergencyContact): void {
-    const modalRef = this.modalService.open(EmergencyContactDeleteDialogComponent, {size: 'lg', backdrop: 'static'});
+    const modalRef = this.modalService.open(EmergencyContactDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.emergencyContact = emergencyContact;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe(reason => {

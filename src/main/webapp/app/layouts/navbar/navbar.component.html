@@ -1,5 +1,5 @@
 <nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md bg-dark ml-navbar m-0">
-  <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
+  <a class="navbar-brand logo" routerLink="/main" (click)="collapseNavbar()">
     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="50" viewBox="0 0 383 460">
       <defs>
         <clipPath id="b"><rect width="383" height="460" /></clipPath>
@@ -131,6 +131,8 @@
               <span mediTranslate="global.menu.entities.appointment">Appointment</span>
             </a>
           </li>
+
+
           <li>
             <a
               class="dropdown-item"
@@ -369,7 +371,13 @@
         </a>
         <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
           <li *ngSwitchCase="true">
-            <a class="dropdown-item" routerLink="account/settings" routerLinkActive="active" (click)="collapseNavbar()" data-cy="settings">
+            <a
+              class="dropdown-item"
+              routerLink="account/settings"
+              routerLinkActive="active"
+              (click)="collapseNavbar()"
+              data-cy="settings"
+            >
               <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
               <span mediTranslate="global.menu.account.settings">Settings</span>
             </a>
@@ -402,7 +410,13 @@
             </a>
           </li>
           <li *ngSwitchCase="false">
-            <a class="dropdown-item" routerLink="account/register" routerLinkActive="active" (click)="collapseNavbar()" data-cy="register">
+            <a
+              class="dropdown-item"
+              routerLink="account/register"
+              routerLinkActive="active"
+              (click)="collapseNavbar()"
+              data-cy="register"
+            >
               <fa-icon icon="user-plus" [fixedWidth]="true"></fa-icon>
               <span mediTranslate="global.menu.account.register">Register</span>
             </a>

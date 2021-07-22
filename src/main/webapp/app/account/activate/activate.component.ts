@@ -4,6 +4,7 @@ import { mergeMap } from 'rxjs/operators';
 
 import { ActivateService } from './activate.service';
 
+
 @Component({
   selector: 'medi-activate',
   templateUrl: './activate.component.html',
@@ -16,8 +17,10 @@ export class ActivateComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.pipe(mergeMap(params => this.activateService.get(params.key))).subscribe(
-      () => (this.success = true),
-      () => (this.error = true)
+      () => {
+        this.success = true
+      },
+      () => {this.error = true}
     );
   }
 }

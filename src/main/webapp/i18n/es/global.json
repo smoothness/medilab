@@ -69,7 +69,8 @@
       "secondlastname.placeholder": "Su segundo apellido",
       "phone.label": "Teléfono",
       "phone.placeholder": "Su teléfono",
-      "relationship": "Parentesco"
+      "relationship": "Parentesco",
+      "userType": "Tipo de usuario"
     },
     "messages": {
       "info": {
@@ -163,5 +164,6 @@
       "not.image": "Se esperaba que el fichero fuera una imagen pero se encontro \"{{ fileType }}\""
     }
   },
+  "swalBtn": "Aceptar",
   "footer": "Pie de página"
 }
