@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { LoginService } from './../login/login.service';
 import { AccountService } from './../core/auth/account.service';
-import { SweetAlertServiceService } from "../shared/services/sweet-alert-service.service";
+import { SweetAlertService } from "../shared/services/sweet-alert.service";
 
 @Component({
   selector: 'medi-login',
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private loginService: LoginService,
     private router: Router,
     private fb: FormBuilder,
-    private sweetAlert: SweetAlertServiceService
+    private sweetAlert: SweetAlertService
   ) {}
 
   ngOnInit(): void {
