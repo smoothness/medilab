@@ -45,7 +45,7 @@ export class UpdatePasswordComponent implements OnInit {
 
   public changePassword(): void {
     if (this.newPassword !== this.confirmPassword) {
-      this.swalService.showInfoWarning("global.messages.error.dontmatch", "password.messages.done")
+      this.swalService.showInfoWarning("register.messages.error.error", "global.messages.error.dontmatch")
     } else {
       this.passwordService.save(this.newPassword, this.currentPassword).subscribe(
         () => {
@@ -54,7 +54,7 @@ export class UpdatePasswordComponent implements OnInit {
           });
         },
         () => {
-          this.swalService.showMsjError("password.messages.error", "password.messages.done");
+          this.swalService.showMsjError("register.messages.error.error", "password.messages.error");
         }
       );
     }
