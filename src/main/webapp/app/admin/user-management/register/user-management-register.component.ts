@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { SweetAlertServiceService } from './../../../shared/services/sweet-alert-service.service';
+import { SweetAlertService } from '../../../shared/services/sweet-alert.service';
 import { UserManagementService } from './../service/user-management.service';
 import { User } from './user.model';
 import {EmergencyFormComponent} from "../../../account/register/emergency-contact/emergency-form/emergency-form.component";
@@ -52,7 +52,7 @@ export class UserManagementRegisterComponent {
     private userService: UserManagementService,
     private fb: FormBuilder,
     private translateService: TranslateService,
-    private sweetAlertService: SweetAlertServiceService
+    private sweetAlertService: SweetAlertService
   ) {}
 
   public get isUser(): boolean {
