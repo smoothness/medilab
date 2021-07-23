@@ -39,7 +39,7 @@ export class PasswordResetInitComponent implements AfterViewInit {
 
   public requestReset(): void {
     this.passwordResetInitService.save(this.emailRecover).subscribe(() => {
-      this.sweetAlertService.showMsjSuccess('reset.request.messages.success', 'reset.done').then(() => {
+      this.sweetAlertService.showMsjSuccess('reset.done', 'reset.request.messages.success').then(() => {
         this.resetRequestForm.reset();
         this.router.navigate(['/']);
       })

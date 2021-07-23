@@ -42,7 +42,7 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
       if (params['key']) {
         this.key = params['key'];
       } else {
-        this.sweetAlertService.showMsjError('reset.finish.messages.keymissing', 'reset.done').then(() => {
+        this.sweetAlertService.showMsjError('register.messages.error.error', 'reset.finish.messages.keymissing').then(() => {
           this.router.navigate(['']);
         });
       }
@@ -59,18 +59,16 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
     this.doNotMatch = false;
 
     if (this.newPasswordForm !== this.confirmPasswordForm) {
-      this.sweetAlertService.showMsjWarning('global.messages.error.dontmatch', 'reset.done');
+      this.sweetAlertService.showMsjWarning('reset.done', 'global.messages.error.dontmatch');
     } else {
       this.passwordResetFinishService.save(this.key, this.newPasswordForm).subscribe(
         () => {
-          this.sweetAlertService.showMsjSuccess('reset.finish.messages.success', 'reset.done').then(() => {
+          this.sweetAlertService.showMsjSuccess('reset.done', 'reset.finish.messages.success').then(() => {
             this.router.navigate(['']);
           });
         },
         () => {
-          this.sweetAlertService.showMsjError('reset.finish.messages.error', 'reset.done').then(() => {
-            this.router.navigate(['']);
-          });
+          this.sweetAlertService.showMsjError('register.messages.error.error', 'reset.finish.messages.error');
         }
       );
     }
