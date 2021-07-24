@@ -12,6 +12,9 @@ import { Patient } from 'app/entities/patient/patient.model';
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
 import { Doctor } from 'app/entities/doctor/doctor.model';
 
+import { AppointmentTreatmentAilmentService } from 'app/entities/appointment-treatment-ailment/service/appointment-treatment-ailment.service';
+import { IAppointmentTreatmentAilment } from 'app/entities/appointment-treatment-ailment/appointment-treatment-ailment.model';
+
 import { EmergencyContactService } from 'app/entities/emergency-contact/service/emergency-contact.service';
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactDeleteDialogComponent } from '../entities/emergency-contact/delete/emergency-contact-delete-dialog.component';
@@ -30,14 +33,18 @@ export class HomeComponent implements OnInit, OnDestroy {
   emergencyContacts: IEmergencyContact[] | null = null;
   emergencyContact: EmergencyContact | null = null;
   isLoadingEmergencyContact = false;
+  isLoadingAppointmentTreatmentAilment = false;
+  appointmentTreatmentAilmentNew: IAppointmentTreatmentAilment[] | null = null;
   authority: string | undefined;
   private readonly destroy$ = new Subject<void>();
+  
 
   constructor(
     private accountService: AccountService,
     private patientService: PatientService,
     private doctorService: DoctorService,
     private emergencyContactService: EmergencyContactService,
+    private appointmentTreatmentAilmentService : AppointmentTreatmentAilmentService,
     private router: Router,
     protected modalService: NgbModal
   ) {}
@@ -53,10 +60,17 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
 
     this.patientService
-      .find(Number(this.account?.login))
+      .find(Number(this.account?.id))
       .pipe(takeUntil(this.destroy$))
       .subscribe(patientNew => {
         this.patient = patientNew.body;
+      });
+
+      this.patientService.findByInternalUser(3).pipe(takeUntil(this.destroy$))
+      .subscribe(patient => {
+        this.patient = patient.body;
+        console.log("Paciente");
+        console.log(this.patient);
       });
 
     this.doctorService
@@ -76,6 +90,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       });
     this.loadAllEmergencyContact();
+    this.loadAllAppoiments();
+
+    console.log("Prueba");
+    console.log(this.account);
+    console.log(this.patient);
   }
 
   trackId(index: number, item: IEmergencyContact): number {
@@ -115,4 +134,23 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     );
   }
+
+  loadAllAppoiments(): void {
+    this.isLoadingAppointmentTreatmentAilment = true;
+
+    this.appointmentTreatmentAilmentService.query().subscribe(
+      (res: HttpResponse<IAppointmentTreatmentAilment[]>) => {
+        this.isLoadingAppointmentTreatmentAilment = false;
+        this.appointmentTreatmentAilmentNew = res.body ?? [];
+        console.log("Pedro Capo");
+        console.log(this.appointmentTreatmentAilmentNew);
+        
+      },
+      () => {
+        this.isLoadingAppointmentTreatmentAilment = false;
+      }
+    );
+  }
 }
+
+
