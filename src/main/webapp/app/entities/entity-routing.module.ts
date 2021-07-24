@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { Authority } from 'app/config/authority.constants';
 
 const routes: Routes = [
   {
@@ -29,7 +30,7 @@ const routes: Routes = [
   },
   {
     path: 'ailment',
-    data: { pageTitle: 'medilabApp.ailment.home.title' },
+    data: { authorities: [Authority.ADMIN] , pageTitle: 'medilabApp.ailment.home.title' },
     loadChildren: () => import('./ailment/ailment.module').then(m => m.AilmentModule),
   },
   {
@@ -79,11 +80,9 @@ const routes: Routes = [
     loadChildren: () => import('./comment-user/comment-user.module').then(m => m.CommentUserModule),
   },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
-]
+];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(routes),
-  ],
+  imports: [RouterModule.forChild(routes)],
 })
 export class EntityRoutingModule {}

@@ -2,10 +2,12 @@
 
 <main>
   <!-- Title -->
-  <section class="row p-0 m-0 my-3">
+  <section class="row p-0 m-0 mt-2">
     <div class="col-md-12 text-center">
       <h1 mediTranslate="register.title" data-cy="registerTitle">Registration</h1>
-      <p class="text-muted">Página {{ currentStep + 1 }} de 3</p>
+      <p class="text-muted">
+        <span mediTranslate="register.form.step"> Step</span> {{ currentStep + 1 }} <span mediTranslate="register.form.of">of</span> 3
+      </p>
     </div>
   </section>
 
@@ -32,7 +34,7 @@
 
   <!-- Wizard form -->
   <section class="row p-0 m-0">
-    <div id="ml-register" class="card col-md-5 mx-auto my-4">
+    <div id="ml-register" class="card col-md-5 mx-auto my-2">
       <div id="formContainer" class="card-body">
         <form name="registerForm" role="form" autocomplete="off" [formGroup]="registerForm">
           <div id="formContainer">
@@ -42,7 +44,7 @@
 
             <medi-confirm-password *ngIf="currentStep === 1" (password)="validatePassword($event)"> </medi-confirm-password>
 
-            <medi-emergency-contact *ngIf="currentStep === 2" [emergencyContacts]="emergencyContacts"> </medi-emergency-contact>
+            <medi-emergency-contact *ngIf="currentStep === 2" #emergencyContact> </medi-emergency-contact>
           </div>
         </form>
       </div>
@@ -69,7 +71,8 @@
             class="btn btn-success col-4 m-2"
             mediTranslate="register.form.button"
             *ngIf="currentStep === 2"
-            (click)="registerUser()"
+            (click)="registerUser(emergencyContact)"
+            [disabled]="registerForm.invalid"
           ></button>
         </div>
       </div>

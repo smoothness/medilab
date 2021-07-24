@@ -6,12 +6,79 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import { Pagination } from 'app/core/request/request.model';
 import { IUser } from '../user-management.model';
+import { User as RegisterUser } from './../register/user.model';
+import { User } from './../../../account/register/register.model';
+
 
 @Injectable({ providedIn: 'root' })
 export class UserManagementService {
   private resourceUrl = this.applicationConfigService.getEndpointFor('api/admin/users');
 
   constructor(private http: HttpClient, private applicationConfigService: ApplicationConfigService) {}
+
+  registerUser(newUser: RegisterUser): Observable<RegisterUser>{
+    return new Observable( subscriber => {
+      if(newUser.role === "ROLE_ADMIN") {
+        this.saveUser(newUser.data).subscribe(
+          () => {
+            subscriber.next();
+            subscriber.complete();
+          },
+          err => subscriber.error(err)
+        )
+      }else{
+        this.saveUser(newUser.data).subscribe(
+          (userRegistered: any) => {
+            newUser.setId(userRegistered);
+
+            if(newUser.role === "ROLE_USER") {
+              this.saveDoctorInfo(newUser).subscribe(
+                () => {
+                  subscriber.next();
+                  subscriber.complete();
+                },
+                err => subscriber.error(err)
+              )
+            } else {
+              this.savePatientInfo(newUser).subscribe(
+                (patientRegistered: any) => {
+                  newUser.setId(patientRegistered);
+                  newUser.setEmergencyConctacId();
+
+                  this.saveEmergencyContacts(newUser.emergencyContact).subscribe(
+                    () => {
+                      subscriber.next();
+                      subscriber.complete();
+                    },
+                    err => subscriber.error(err)
+                  );
+                },
+                err => subscriber.error(err)
+              )
+            }
+          },
+          err => subscriber.error(err)
+        )
+      }
+
+    });
+  }
+
+  savePatientInfo(newUser: RegisterUser): Observable<{}> {
+    return this.http.post(this.getUrl(`api/patients`), newUser.patientData);
+  }
+
+  saveDoctorInfo(newUser: RegisterUser): Observable<{}> {
+    return this.http.post(this.getUrl(`api/doctors`), newUser.doctorData);
+  }
+
+  saveEmergencyContacts(newContact: any): Observable<{}> {
+    return this.http.post(this.getUrl('api/emergency-contacts'), newContact.registerContact);
+  }
+
+  saveUser(newUser: any): Observable<User>{
+    return this.http.post<User>(this.resourceUrl, newUser);
+  }
 
   create(user: IUser): Observable<IUser> {
     return this.http.post<IUser>(this.resourceUrl, user);
@@ -36,5 +103,9 @@ export class UserManagementService {
 
   authorities(): Observable<string[]> {
     return this.http.get<string[]>(this.applicationConfigService.getEndpointFor('api/authorities'));
+  }
+
+  private getUrl(url: string): string {
+    return this.applicationConfigService.getEndpointFor(url);
   }
 }

@@ -1,5 +1,5 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
-import { registerLocaleData } from '@angular/common';
+import {CommonModule, registerLocaleData} from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import locale from '@angular/common/locales/es';
 import { BrowserModule, Title } from '@angular/platform-browser';
@@ -7,15 +7,15 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { TranslateModule, TranslateService, TranslateLoader, MissingTranslationHandler } from '@ngx-translate/core';
 import { NgxWebstorageModule, SessionStorageService } from 'ngx-webstorage';
 import * as dayjs from 'dayjs';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { NgbDateAdapter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 
 import { SERVER_API_URL } from './app.constants';
 import { ApplicationConfigService } from './core/config/application-config.service';
-import './config/dayjs';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { LayoutsModule } from './layouts/layouts.module';
-
+import './config/dayjs';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { NgbDateDayjsAdapter } from './config/datepicker-adapter';
 import { httpInterceptorProviders } from './core/interceptor/index';
@@ -25,6 +25,7 @@ import { LayoutsComponent } from './layouts/layouts.component';
 
 @NgModule({
   imports: [
+    CommonModule,
     BrowserModule,
     SharedModule,
     LayoutsModule,
@@ -45,6 +46,7 @@ import { LayoutsComponent } from './layouts/layouts.component';
         useFactory: missingTranslationHandler,
       },
     }),
+    SweetAlert2Module.forRoot(),
   ],
   providers: [
     Title,

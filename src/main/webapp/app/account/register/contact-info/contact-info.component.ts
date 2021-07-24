@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -6,11 +6,7 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './contact-info.component.html',
   styleUrls: ['./contact-info.component.scss'],
 })
-export class ContactInfoComponent implements OnInit {
+export class ContactInfoComponent {
   errorEmailExists = false;
   @Input() contactInfoForm: FormGroup = new FormGroup({});
-
-  ngOnInit(): string {
-    return 'test';
-  }
 }

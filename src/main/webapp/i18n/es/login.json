@@ -5,11 +5,13 @@
       "password": "Contraseña",
       "password.placeholder": "Su contraseña",
       "rememberme": "Recuérdame",
-      "button": "Iniciar sesión"
+      "button": "Iniciar sesión",
+      "idEmail": "Identificación o correo electrónico"
     },
     "messages": {
       "error": {
-        "authentication": "<strong>¡El inicio de sesión ha fallado!</strong> Por favor, revise las credenciales e intente de nuevo."
+        "fail": "El inicio de sesión ha fallado",
+        "authentication": "Por favor, revise las credenciales e intente de nuevo."
       }
     },
     "password": {

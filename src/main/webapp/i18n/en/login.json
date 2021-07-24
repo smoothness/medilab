@@ -5,11 +5,13 @@
       "password": "Password",
       "password.placeholder": "Your password",
       "rememberme": "Remember me",
-      "button": "Sign in"
+      "button": "Sign in",
+      "idEmail": "Identification or email"
     },
     "messages": {
       "error": {
-        "authentication": "<strong>Failed to sign in!</strong> Please check your credentials and try again."
+        "fail": "Failed to sign in!",
+        "authentication": "Please check your credentials and try again."
       }
     },
     "password": {
