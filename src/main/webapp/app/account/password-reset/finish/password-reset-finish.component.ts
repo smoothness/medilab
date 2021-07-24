@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 
 import { PasswordResetFinishService } from './password-reset-finish.service';
-import {SweetAlertServiceService} from "../../../shared/services/sweet-alert-service.service";
+import {SweetAlertService} from "../../../shared/services/sweet-alert.service";
 
 @Component({
   selector: 'medi-password-reset-finish',
@@ -26,7 +26,7 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
-    private sweetAlertService: SweetAlertServiceService
+    private sweetAlertService: SweetAlertService
   ) {}
 
   public get confirmPasswordForm(): string {

@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { PasswordResetInitService } from './password-reset-init.service';
-import { SweetAlertServiceService } from "../../../shared/services/sweet-alert-service.service";
+import { SweetAlertService } from "../../../shared/services/sweet-alert.service";
 
 
 @Component({
@@ -24,7 +24,7 @@ export class PasswordResetInitComponent implements AfterViewInit {
     private fb: FormBuilder,
     private router: Router,
     private passwordResetInitService: PasswordResetInitService,
-    private sweetAlertService: SweetAlertServiceService,
+    private sweetAlertService: SweetAlertService,
   ) {}
 
   public get emailRecover(): string {
