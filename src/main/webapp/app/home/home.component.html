@@ -1,199 +1,142 @@
 <div class="ml-profile">
-  <div class="mb-4">
-    <div class="ml-profile-top">
-      <div class="card bg-dark">
-        <div class="card-body">
-          <div>
-            <img src="{{ account?.imageUrl }}" width="100" alt="test" />
-            <p *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
-              {{ account?.firstName }} {{ patient?.secondSurname }} {{ account?.lastName }}
-            </p>
-            <p *ngIf="account?.authorities?.includes('ROLE_ADMIN') || account?.authorities?.includes('ROLE_USER')">
-              {{ account?.firstName }} {{ account?.lastName }}
-            </p>
-          </div>
-        </div>
-        <div class="ml-profile-stats">
-          <div class="card-header">
-            <p>Datos</p>
-          </div>
-          <div class="card-body" *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
-            <p><b>Ultima cita:</b> 08 de Diciembre de 2020</p>
-            <p><b>Hora:</b> 4:00 P.M.</p>
-            <p><b>Atendido por:</b> Dr. Julían Castro Fallas</p>
-            <p><b>Especialidad:</b> Ortopedia</p>
-
-            <br />
-            <div>
-              <a
-                href="#"
-                class="btn btn-secondary"
-                mediTranslate="medilabApp.appointment.home.viewLastAppointment"
-                [routerLink]="['/appointment/1/view']"
-              >
+  <div class="container">
+    <div class="mb-4">
+      <!-- open profile top section -->
+      <section class="ml-profile__top">
+        <!-- open top left card -->
+        <div class="card bg-dark">
+          <h5 class="card-header" *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
+            <span mediTranslate="home.welcome">Bienvenido: </span>
+            <span class="ml-profile__user-text">{{ account?.firstName }} {{ patient?.secondSurname }} {{ account?.lastName }}</span>
+          </h5>
+          <h5 class="card-header" *ngIf="account?.authorities?.includes('ROLE_ADMIN') || account?.authorities?.includes('ROLE_USER')">
+            <span mediTranslate="home.welcome">Bienvenido: </span>
+            <span class="ml-profile__user-text">{{ account?.firstName }} {{ account?.lastName }}</span>
+          </h5>
+          <div class="card-body">
+            <!-- START Top left card / Patient Block -->
+            <div *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
+              <a href="#" class="btn btn-secondary" mediTranslate="home.viewLastAppointment" [routerLink]="['/appointment/1/view']">
                 Ver última cita
               </a>
               <a
                 target="_blank"
                 class="btn btn-secondary"
-                mediTranslate="medilabApp.appointment.home.requestAppointment"
+                mediTranslate="home.requestAppointment"
                 href="https://wa.me/50688885353?text=Solicito%20una%20cita%20con%20el%20doctor"
               >
                 Solicitar una cita
               </a>
             </div>
+            <!-- END Top left card / Patient Block -->
+            <!-- START Top left card / Doctor Block -->
+            <div *ngIf="account?.authorities?.includes('ROLE_USER')">
+              <button
+                id="jh-create-entity"
+                data-cy="entityCreateButton"
+                class="btn btn-primary jh-create-entity create-appointment"
+                [routerLink]="['/appointment/new']"
+              >
+                <fa-icon icon="plus"></fa-icon>
+                <span mediTranslate="home.createNewAppointment">Crear una nueva cita</span>
+              </button>
+            </div>
+            <!-- END Top left card / Doctor Block -->
           </div>
-          <div *ngIf="authority === 'ROLE_USER'">
-            <button
-              id="jh-create-entity"
-              data-cy="entityCreateButton"
-              class="btn btn-primary jh-create-entity create-appointment"
-              [routerLink]="['/appointment/new']"
-            >
-              <fa-icon icon="plus"></fa-icon>
-              <span mediTranslate="medilabApp.appointment.home.createNewAppointment"></span>
-            </button>
+          <!-- close card body -->
+        </div>
+        <!-- close top left card -->
+        <!-- open top right card -->
+        <div class="card bg-dark">
+          <h5 class="card-header">Información personal</h5>
+          <div class="card-body">
+            <div *ngIf="account?.authorities?.includes('ROLE_USER')">
+              <p class="info-title" mediTranslate="home.profile.specialty">Especialidad</p>
+              <p>{{ doctor?.specialty }}</p>
+              <p class="info-title" mediTranslate="home.profile.rating">Calificación</p>
+              <p>{{ doctor?.ratingUsers }}</p>
+            </div>
+            <p class="info-title" mediTranslate="home.profile.identification">Identificación</p>
+            <p>{{ account?.login }}</p>
+            <p class="info-title" mediTranslate="home.profile.phone">Teléfono</p>
+            <p>{{ patient?.phone }}</p>
+            <p class="info-title" mediTranslate="home.profile.email">Correo electrónico</p>
+            <p>{{ account?.email }}</p>
           </div>
         </div>
-      </div>
-
-      <div class="card bg-dark">
-        <h5 class="card-header">Información personal</h5>
-        <div class="card-body">
-          <div *ngIf="account?.authorities?.includes('ROLE_USER')">
-            <p class="info-title" mediTranslate="home.profile.specialty">Especialidad</p>
-            <p>{{ doctor?.specialty }}</p>
-            <p class="info-title" mediTranslate="home.profile.rating">Calificación</p>
-            <p>{{ doctor?.ratingUsers }}</p>
+      </section>
+      <!-- close profile top section -->
+      <!-- open profile bottom or body section -->
+      <section class="ml-profile__bottom">
+        <!-- START body patient Block -->
+        <div class="card bg-dark mt-3" *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
+          <h5 class="card-header" mediTranslate="medilabApp.emergencyContact.home.title">Contact(s) en caso de una emergencia</h5>
+          <div class="card-body">
+            <div class="alert alert-warning" id="no-result" *ngIf="emergencyContacts?.length === 0">
+              <span mediTranslate="medilabApp.emergencyContact.home.notFound">No emergencyContacts found</span>
+            </div>
+            <div class="table-responsive" id="entities" *ngIf="emergencyContacts && emergencyContacts.length > 0">
+              <table class="table table-striped" aria-describedby="page-heading">
+                <thead>
+                  <tr>
+                    <th scope="col"><span mediTranslate="medilabApp.emergencyContact.name">Name</span></th>
+                    <th scope="col"><span mediTranslate="medilabApp.emergencyContact.phone">Phone</span></th>
+                    <th scope="col"><span mediTranslate="medilabApp.emergencyContact.email">Email</span></th>
+                    <th scope="col"><span mediTranslate="medilabApp.emergencyContact.relationShip">Relation Ship</span></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let emergencyContact of emergencyContacts; trackBy: trackId" data-cy="entityTable">
+                    <td *ngIf="emergencyContact.patient">{{ emergencyContact.name }}</td>
+                    <td *ngIf="emergencyContact.patient">{{ emergencyContact.phone }}</td>
+                    <td *ngIf="emergencyContact.patient">{{ emergencyContact.email }}</td>
+                    <td *ngIf="emergencyContact.patient">{{ emergencyContact.relationShip }}</td>
+                    <td class="text-right" *ngIf="emergencyContact.patient">
+                      <div class="btn-group">
+                        <button
+                          type="submit"
+                          [routerLink]="['./emergency-contact/', emergencyContact.id, 'edit']"
+                          class="btn btn-primary btn-sm"
+                          data-cy="entityEditButton"
+                        >
+                          <fa-icon icon="pencil-alt"></fa-icon>
+                          <span class="d-none d-md-inline" mediTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button
+                          type="submit"
+                          (click)="deleteEmergencyContact(emergencyContact)"
+                          class="btn btn-danger btn-sm"
+                          data-cy="entityDeleteButton"
+                        >
+                          <fa-icon icon="times"></fa-icon>
+                          <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-          <p class="info-title" mediTranslate="home.profile.identification">Identificación</p>
-          <p>{{ account?.login }}</p>
-          <p class="info-title" mediTranslate="home.profile.phone">Teléfono</p>
-          <p>{{ patient?.phone }}</p>
-          <p class="info-title" mediTranslate="home.profile.email">Correo electrónico</p>
-          <p>{{ account?.email }}</p>
         </div>
-      </div>
-    </div>
-
-    <div class="card bg-dark mt-3" *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
-      <h5 class="card-header" mediTranslate="medilabApp.emergencyContact.home.title">Contact(s) en caso de una emergencia</h5>
-      <div class="card-body">
-        <div class="alert alert-warning" id="no-result" *ngIf="emergencyContacts?.length === 0">
-          <span mediTranslate="medilabApp.emergencyContact.home.notFound">No emergencyContacts found</span>
+        <!-- END body patient Block -->
+        <!-- START body doctor Block -->
+        <div class="card bg-dark mt-3" *ngIf="account?.authorities?.includes('ROLE_USER')">
+          <h5 class="card-header">Próximas citas</h5>
+          <div class="card-body">
+            <ul class="list-group">
+              <li class="list-group-item" aria-current="true">An active item</li>
+              <li class="list-group-item">A second item</li>
+              <li class="list-group-item">A third item</li>
+              <li class="list-group-item">A fourth item</li>
+              <li class="list-group-item">And a fifth one</li>
+            </ul>
+          </div>
         </div>
-
-        <div class="table-responsive" id="entities" *ngIf="emergencyContacts && emergencyContacts.length > 0">
-          <table class="table table-striped" aria-describedby="page-heading">
-            <thead>
-              <tr>
-                <th scope="col"><span mediTranslate="medilabApp.emergencyContact.name">Name</span></th>
-                <th scope="col"><span mediTranslate="medilabApp.emergencyContact.phone">Phone</span></th>
-                <th scope="col"><span mediTranslate="medilabApp.emergencyContact.email">Email</span></th>
-                <th scope="col"><span mediTranslate="medilabApp.emergencyContact.relationShip">Relation Ship</span></th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let emergencyContact of emergencyContacts; trackBy: trackId" data-cy="entityTable">
-                <td *ngIf="emergencyContact.patient">{{ emergencyContact.name }}</td>
-                <td *ngIf="emergencyContact.patient">{{ emergencyContact.phone }}</td>
-                <td *ngIf="emergencyContact.patient">{{ emergencyContact.email }}</td>
-                <td *ngIf="emergencyContact.patient">{{ emergencyContact.relationShip }}</td>
-                <td class="text-right" *ngIf="emergencyContact.patient">
-                  <div class="btn-group">
-                    <button
-                      type="submit"
-                      [routerLink]="['./emergency-contact/', emergencyContact.id, 'edit']"
-                      class="btn btn-primary btn-sm"
-                      data-cy="entityEditButton"
-                    >
-                      <fa-icon icon="pencil-alt"></fa-icon>
-                      <span class="d-none d-md-inline" mediTranslate="entity.action.edit">Edit</span>
-                    </button>
-
-                    <button
-                      type="submit"
-                      (click)="deleteEmergencyContact(emergencyContact)"
-                      class="btn btn-danger btn-sm"
-                      data-cy="entityDeleteButton"
-                    >
-                      <fa-icon icon="times"></fa-icon>
-                      <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="card bg-dark mt-3" *ngIf="!account?.authorities?.includes('ROLE_ADMIN')">
-      <h5 class="card-header">Próximas citas</h5>
-
-      <div class="card-body">
-        <ul class="list-group">
-          <li class="list-group-item" aria-current="true">An active item</li>
-          <li class="list-group-item">A second item</li>
-          <li class="list-group-item">A third item</li>
-          <li class="list-group-item">A fourth item</li>
-          <li class="list-group-item">And a fifth one</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="card bg-dark mt-3" *ngIf="account?.authorities?.includes('ROLE_USER')">
-      <h5 class="card-header">Medicamentos recetados</h5>
-      <div class="card-body">
-        <ul class="list-group">
-          <li class="list-group-item" aria-current="true">An active item</li>
-          <li class="list-group-item">A second item</li>
-          <li class="list-group-item">A third item</li>
-          <li class="list-group-item">A fourth item</li>
-          <li class="list-group-item">And a fifth one</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="card bg-dark mt-3" *ngIf="account?.authorities?.includes('ROLE_ADMIN')">
-      <h5 class="card-header">Médicos en plataforma</h5>
-      <div class="card-body">
-        <ul class="list-group">
-          <li class="list-group-item" aria-current="true">An active item</li>
-          <li class="list-group-item">A second item</li>
-          <li class="list-group-item">A third item</li>
-          <li class="list-group-item">A fourth item</li>
-          <li class="list-group-item">And a fifth one</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="card bg-dark mt-3" *ngIf="account?.authorities?.includes('ROLE_ADMIN')">
-      <h5 class="card-header">Pacientes por padecimiento</h5>
-      <div class="card-body">
-        <ul class="list-group">
-          <li class="list-group-item" aria-current="true">An active item</li>
-          <li class="list-group-item">A second item</li>
-          <li class="list-group-item">A third item</li>
-          <li class="list-group-item">A fourth item</li>
-          <li class="list-group-item">And a fifth one</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="card bg-dark mt-3" *ngIf="account?.authorities?.includes('ROLE_ADMIN')">
-      <h5 class="card-header">Médicos con más citas canceladas</h5>
-      <div class="card-body">
-        <ul class="list-group">
-          <li class="list-group-item" aria-current="true">An active item</li>
-          <li class="list-group-item">A second item</li>
-          <li class="list-group-item">A third item</li>
-          <li class="list-group-item">A fourth item</li>
-          <li class="list-group-item">And a fifth one</li>
-        </ul>
-      </div>
+        <!-- END body doctor Block -->
+      </section>
     </div>
   </div>
+  <!-- closes bootstrap container -->
 </div>

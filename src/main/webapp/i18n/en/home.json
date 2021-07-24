@@ -2,6 +2,10 @@
   "home": {
     "title": "Welcome, Java Hipster!",
     "subtitle": "This is your homepage",
+    "welcome": "Welcome: ",
+    "viewLastAppointment": "View last appointment",
+    "requestAppointment": "Request an appointment",
+    "createNewAppointment": "Create a new appointment",
     "profile": {
       "identification": "Identification",
       "phone": "Phone",
