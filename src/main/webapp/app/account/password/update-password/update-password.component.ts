@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
 import { PasswordService } from '../password.service';
-import {SweetAlertServiceService} from "../../../shared/services/sweet-alert-service.service";
+import {SweetAlertService} from "../../../shared/services/sweet-alert.service";
 
 @Component({
   selector: 'medi-password',
@@ -24,7 +24,7 @@ export class UpdatePasswordComponent implements OnInit {
     private passwordService: PasswordService,
     private accountService: AccountService,
     private fb: FormBuilder,
-    private swalService: SweetAlertServiceService
+    private swalService: SweetAlertService
   ) {}
 
   public get confirmPassword(): string {
@@ -45,7 +45,7 @@ export class UpdatePasswordComponent implements OnInit {
 
   public changePassword(): void {
     if (this.newPassword !== this.confirmPassword) {
-      this.swalService.showInfoWarning("register.messages.error.error", "global.messages.error.dontmatch")
+      this.swalService.showMsjInfo("register.messages.error.error", "global.messages.error.dontmatch")
     } else {
       this.passwordService.save(this.newPassword, this.currentPassword).subscribe(
         () => {
