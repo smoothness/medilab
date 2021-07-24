@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 @Injectable({
   providedIn: 'root',
 })
-export class SweetAlertServiceService {
+export class SweetAlertService {
   constructor(private translateService: TranslateService) {}
 
   public showMsjError(title: string, msj: string): Promise<boolean> {
@@ -19,7 +19,7 @@ export class SweetAlertServiceService {
     });
   }
 
-  public showInfoWarning(title: string, msj: string): Promise<boolean> {
+  public showMsjInfo(title: string, msj: string): Promise<boolean> {
     return this.showAlert({
       icon: 'info',
       title,
