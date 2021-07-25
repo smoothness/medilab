@@ -29,6 +29,7 @@
     },
     "like": "Si te gusta JHipster, danos una estrella en",
     "github": "GitHub",
+    "ailments": "Padecimientos",
     "messages": {
       "cancelAppointmentTitle": "Cita cancelada",
       "cancelAppointmentMsj": "Esta cita ha sido cancelada, será removida del calendario."

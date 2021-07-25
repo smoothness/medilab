@@ -11,12 +11,17 @@ import { PatientService } from 'app/entities/patient/service/patient.service';
 import { Patient } from 'app/entities/patient/patient.model';
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
 import { Doctor } from 'app/entities/doctor/doctor.model';
+
+import { AppointmentTreatmentAilmentService } from 'app/entities/appointment-treatment-ailment/service/appointment-treatment-ailment.service';
+import { IAppointmentTreatmentAilment } from 'app/entities/appointment-treatment-ailment/appointment-treatment-ailment.model';
+
 import { IAppointment } from 'app/entities/appointment/appointment.model';
 import { Status } from 'app/entities/enumerations/status.model';
 import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
 import { EmergencyContactService } from 'app/entities/emergency-contact/service/emergency-contact.service';
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactDeleteDialogComponent } from '../entities/emergency-contact/delete/emergency-contact-delete-dialog.component';
+import { IAilment } from 'app/entities/ailment/ailment.model';
 import { UserService } from 'app/entities/user/user.service';
 
 @Component({
@@ -33,10 +38,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   emergencyContacts: IEmergencyContact[] | null = null;
   emergencyContact: EmergencyContact | null = null;
   isLoadingEmergencyContact = false;
+  isLoadingAppointmentTreatmentAilment = false;
+  appointmentTreatmentAilmentNew: IAppointmentTreatmentAilment[] | null = null;
+  authority: string | undefined;
   // authority: string | undefined;
   appointmentsDoctor: any[] | undefined = [];
   appointmentsPatient: any[] | undefined = [];
+  ailmentsPatient : any[] | undefined = [];
   private readonly destroy$ = new Subject<void>();
+
 
   constructor(
     private sweetAlertService: SweetAlertService,
@@ -46,6 +56,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private doctorService: DoctorService,
     private appointmentService: AppointmentService,
     private emergencyContactService: EmergencyContactService,
+    private appointmentTreatmentAilmentService : AppointmentTreatmentAilmentService,
     private router: Router,
     protected modalService: NgbModal
   ) {}
@@ -96,10 +107,15 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.thePatient = res.body?.find(patient => patient.internalUser?.id === account.id);
       this.appointmentService.query().subscribe(data => {
         this.appointmentsPatient = data.body?.filter(appointment => appointment.patient?.id === this.thePatient?.id);
+        this.getAilmentsPatient();
       });
     });
-  }
 
+
+    this.loadAllEmergencyContact();
+    this.loadAllAppoiments();
+
+  }
   mergeAccountWithDoctor(account: Account): void {
     this.doctorService.query().subscribe(res => {
       this.theDoctor = res.body?.find(doctor => doctor.internalUser?.id === account.id);
@@ -116,6 +132,25 @@ export class HomeComponent implements OnInit, OnDestroy {
         });
       });
     });
+  }
+
+  getAilmentsPatient(): void{
+  this.appointmentTreatmentAilmentService.query()
+  .subscribe(data => {
+    this.appointmentsPatient?.forEach(appointment => {
+
+      if (data.body !== null){
+        data.body.forEach(element => {
+          if(element.appointment?.id === appointment.id){
+            this.ailmentsPatient?.push(element);
+          }
+        });
+      }
+
+    });
+
+  })
+
   }
 
   trackId(index: number, item: IEmergencyContact): number {
@@ -159,6 +194,21 @@ export class HomeComponent implements OnInit, OnDestroy {
       },
       () => {
         this.isLoadingEmergencyContact = false;
+      }
+    );
+  }
+
+  loadAllAppoiments(): void {
+    this.isLoadingAppointmentTreatmentAilment = true;
+
+    this.appointmentTreatmentAilmentService.query().subscribe(
+      (res: HttpResponse<IAppointmentTreatmentAilment[]>) => {
+        this.isLoadingAppointmentTreatmentAilment = false;
+        this.appointmentTreatmentAilmentNew = res.body ?? [];
+
+      },
+      () => {
+        this.isLoadingAppointmentTreatmentAilment = false;
       }
     );
   }
