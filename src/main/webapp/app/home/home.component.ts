@@ -20,6 +20,7 @@ import { AppointmentService } from 'app/entities/appointment/service/appointment
 import { EmergencyContactService } from 'app/entities/emergency-contact/service/emergency-contact.service';
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactDeleteDialogComponent } from '../entities/emergency-contact/delete/emergency-contact-delete-dialog.component';
+import { IAilment } from 'app/entities/ailment/ailment.model';
 
 @Component({
   selector: 'medi-home',
@@ -41,6 +42,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   // authority: string | undefined;
   appointmentsDoctor: IAppointment[] | undefined = [];
   appointmentsPatient: IAppointment[] | undefined = [];
+  ailmentsPatient : any[] | undefined = [];
   private readonly destroy$ = new Subject<void>();
 
 
@@ -109,16 +111,15 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.appointmentService.query().subscribe(data => {
         console.log('appointments: ', data);
         this.appointmentsPatient = data.body?.filter(appointment => appointment.patient?.id === this.thePatient?.id);
+        this.getAilmentsPatient();
       });
     });
-  }
+  
 
     this.loadAllEmergencyContact();
     this.loadAllAppoiments();
 
-    console.log("Prueba");
-    console.log(this.account);
-    console.log(this.patient);
+  }
   mergeAccountWithDoctor(account: Account): void {
     this.doctorService.query().subscribe(res => {
       this.theDoctor = res.body?.find(doctor => doctor.internalUser?.id === account.id);
@@ -127,6 +128,27 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.appointmentsDoctor = data.body?.filter(appointment => appointment.doctor?.id === this.theDoctor?.id);
       });
     });
+  }
+
+  getAilmentsPatient(): void{
+  this.appointmentTreatmentAilmentService.query()
+  .subscribe(data => {
+    console.log('appointmentTreatmentAilmentService: ', data);
+    this.appointmentsPatient?.forEach(appointment => {
+      
+      if (data.body !== null){
+        data.body.forEach(element => {
+          if(element.appointment?.id === appointment.id){
+            this.ailmentsPatient?.push(element);
+          }
+        });
+      }
+      
+    });
+    console.log('ailmentsPatient: ', this.ailmentsPatient);
+
+  })
+
   }
 
   trackId(index: number, item: IEmergencyContact): number {
