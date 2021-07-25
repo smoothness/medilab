@@ -28,6 +28,10 @@
       "follow": "contacto @jhipster en Twitter"
     },
     "like": "Si te gusta JHipster, danos una estrella en",
-    "github": "GitHub"
+    "github": "GitHub",
+    "messages": {
+      "cancelAppointmentTitle": "Cita cancelada",
+      "cancelAppointmentMsj": "Esta cita ha sido cancelada, será removida del calendario."
+    }
   }
 }

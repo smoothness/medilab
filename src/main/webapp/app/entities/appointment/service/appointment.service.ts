@@ -20,14 +20,12 @@ export class AppointmentService {
 
   create(appointment: IAppointment): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(appointment);
-
     return this.http
       .post<IAppointment>(this.resourceUrl, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   update(appointment: IAppointment): Observable<EntityResponseType> {
-    console.log('from service: ', appointment);
     const copy = this.convertDateFromClient(appointment);
     return this.http
       .put<IAppointment>(`${this.resourceUrl}/${getAppointmentIdentifier(appointment) as number}`, copy, { observe: 'response' })
@@ -36,7 +34,6 @@ export class AppointmentService {
 
   partialUpdate(appointment: IAppointment): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(appointment);
-    console.log('del service', copy);
     return this.http
       .patch<IAppointment>(`${this.resourceUrl}/${getAppointmentIdentifier(appointment) as number}`, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));

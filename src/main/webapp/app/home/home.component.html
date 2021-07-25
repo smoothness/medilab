@@ -35,7 +35,7 @@
                 id="jh-create-entity"
                 data-cy="entityCreateButton"
                 class="btn btn-primary jh-create-entity create-appointment"
-                [routerLink]="['/appointment/new']"
+                [routerLink]="['/main/appointment/new']"
               >
                 <fa-icon icon="plus"></fa-icon>
                 <span mediTranslate="home.createNewAppointment">Crear una nueva cita</span>
@@ -89,7 +89,10 @@
                   </svg>
                   <div class="ml-profile__agenda-data">
                     <time>{{ appointment.date }}</time>
-                    <b>{{ appointment.patient?.secondSurname }}</b>
+                    <div class="ml-profile__appointment-doctor-info">
+                      <b class="mr-2">Nombre del Doctor Aquí</b>
+                      <span class="badge bg-primary">{{ appointment.doctor?.specialty }}</span>
+                    </div>
                   </div>
                   <a
                     class="btn btn-secondary btn-sm mr-1"
@@ -98,14 +101,11 @@
                   >
                     Detalle
                   </a>
-                  <button class="btn btn-danger btn-sm" mediTranslate="home.appointmentDelete" (click)="cancelAppointment(appointment)">
-                    Eliminar
-                  </button>
                 </li>
               </ul>
             </div>
           </div>
-
+          <!-- contactos de emergencia -->
           <div class="card bg-dark">
             <h5 class="card-header" mediTranslate="medilabApp.emergencyContact.home.title">Contact(s) en caso de una emergencia</h5>
             <div class="card-body">
@@ -164,6 +164,7 @@
         <div class="card bg-dark mt-3" *ngIf="account?.authorities?.includes('ROLE_USER')">
           <h5 class="card-header" mediTranslate="home.upcomingAppointments">Próximas citas</h5>
           <div class="card-body">
+            <pre><code style="color: yellowgreen">{{ appointmentsDoctor | json }}</code></pre>
             <ul class="list-group ml-profile__agenda">
               <li class="list-group-item" *ngFor="let appointment of appointmentsDoctor; let i = index">
                 <svg
@@ -180,7 +181,25 @@
                 </svg>
                 <div class="ml-profile__agenda-data">
                   <time>{{ appointment.date }}</time>
-                  <b>{{ appointment.patient?.secondSurname }}</b>
+                  <div class="ml-profile__appointment-patient-info">
+                    <b class="mr-4">{{ appointment.patient?.completeName }} {{ appointment.patient?.secondSurname }}</b>
+                    <span class="badge bg-secondary">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-phone"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"
+                        />
+                        <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+                      </svg>
+                      {{ appointment.patient?.phone }}
+                    </span>
+                  </div>
                 </div>
                 <a
                   class="btn btn-secondary btn-sm mr-1"
@@ -190,7 +209,7 @@
                   Detalle
                 </a>
                 <button class="btn btn-danger btn-sm" mediTranslate="home.appointmentDelete" (click)="cancelAppointment(appointment)">
-                  Eliminar
+                  Cancelar cita
                 </button>
               </li>
             </ul>

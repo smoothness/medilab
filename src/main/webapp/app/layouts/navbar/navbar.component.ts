@@ -43,16 +43,12 @@ export class NavbarComponent implements OnInit {
       this.openAPIEnabled = profileInfo.openAPIEnabled;
     });
     this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
-
-    
   }
 
   changeLanguage(languageKey: string): void {
     this.sessionStorageService.store('locale', languageKey);
     this.translateService.use(languageKey);
   }
-
-  
 
   collapseNavbar(): void {
     this.isNavbarCollapsed = true;
@@ -63,7 +59,6 @@ export class NavbarComponent implements OnInit {
   }
 
   logout(): void {
-    console.log(window.location.href);
     this.collapseNavbar();
     this.loginService.logout();
     window.location.assign('/');
