@@ -16,7 +16,7 @@ import { User } from './register.model';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent {
+export class RegisterComponent{
   @ViewChild(EmergencyContactComponent) emergencyContact?: any;
   doNotMatch = false;
   error = false;

@@ -191,6 +191,7 @@ public class UserResource {
         return ResponseUtil.wrapOrNotFound(userService.getUserWithAuthoritiesByLogin(login).map(AdminUserDTO::new));
     }
 
+
     /**
      * {@code DELETE /admin/users/:login} : delete the "login" User.
      *
