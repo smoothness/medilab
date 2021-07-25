@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { SweetAlertServiceService } from './../../shared/services/sweet-alert-service.service';
+import { SweetAlertService } from '../../shared/services/sweet-alert.service';
 import {Router} from "@angular/router";
 
 import { EmergencyContactComponent } from './emergency-contact/emergency-contact.component';
@@ -16,7 +16,7 @@ import { User } from './register.model';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent {
+export class RegisterComponent{
   @ViewChild(EmergencyContactComponent) emergencyContact?: any;
   doNotMatch = false;
   error = false;
@@ -49,7 +49,7 @@ export class RegisterComponent {
     private fb: FormBuilder,
     private service: RegisterService,
     private translateService: TranslateService,
-    private sweetAlertService: SweetAlertServiceService,
+    private sweetAlertService: SweetAlertService,
     private router: Router
   ) {}
 

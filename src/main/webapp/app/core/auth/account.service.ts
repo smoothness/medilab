@@ -76,6 +76,14 @@ export class AccountService {
     return this.authenticationState.asObservable();
   }
 
+  retrieveUserById(): Observable<{}>{
+    return this.http.get(this.getUrl('api/user/'));
+  }
+
+  private getUrl(url: string): string {
+    return this.applicationConfigService.getEndpointFor(url);
+  }
+
   private fetch(): Observable<Account> {
     return this.http.get<Account>(this.applicationConfigService.getEndpointFor('api/account'));
   }
