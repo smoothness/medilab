@@ -6,11 +6,15 @@ import { registerRoute } from './account/register/register.route';
 
 import { DEBUG_INFO_ENABLED } from './app.constants';
 import { LayoutsRoutesModule } from './layouts/layouts-routes.module';
-import { activateRoute } from "./account/activate/activate.route";
-import { passwordResetFinishRoute } from "./account/password-reset/finish/password-reset-finish.route";
-import { passwordResetInitRoute } from "./account/password-reset/init/password-reset-init.route";
+import { activateRoute } from './account/activate/activate.route';
+import { passwordResetFinishRoute } from './account/password-reset/finish/password-reset-finish.route';
+import { passwordResetInitRoute } from './account/password-reset/init/password-reset-init.route';
 
 const mainRoutes: Routes = [
+  {
+    path: 'home',
+    loadChildren: () => import('./landing/landing.module').then(m => m.LandingModule),
+  },
   {
     path: '',
     loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
