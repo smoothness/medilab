@@ -27,6 +27,31 @@ Main page styles
   &__user-text {
     color: $brand-light;
   }
+
+  &__agenda {
+    li {
+      align-items: center;
+      display: flex;
+
+      div {
+        display: flex;
+        flex-direction: column;
+
+        time {
+          color: $brand;
+          font-size: 0.75rem;
+        }
+      }
+
+      svg {
+        margin-right: 1rem;
+      }
+
+      a {
+        margin-left: auto;
+      }
+    }
+  }
 }
 
 .card-body {

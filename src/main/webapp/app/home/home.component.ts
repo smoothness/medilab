@@ -1,22 +1,21 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { HttpResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
-
 import { PatientService } from 'app/entities/patient/service/patient.service';
 import { Patient } from 'app/entities/patient/patient.model';
-
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
 import { Doctor } from 'app/entities/doctor/doctor.model';
-
+import { IAppointment } from 'app/entities/appointment/appointment.model';
+import { Status } from 'app/entities/enumerations/status.model';
+import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
 import { EmergencyContactService } from 'app/entities/emergency-contact/service/emergency-contact.service';
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactDeleteDialogComponent } from '../entities/emergency-contact/delete/emergency-contact-delete-dialog.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'medi-home',
@@ -31,12 +30,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   emergencyContact: EmergencyContact | null = null;
   isLoadingEmergencyContact = false;
   authority: string | undefined;
+  appointments: IAppointment[] | undefined = [];
   private readonly destroy$ = new Subject<void>();
 
   constructor(
     private accountService: AccountService,
     private patientService: PatientService,
     private doctorService: DoctorService,
+    private appointmentService: AppointmentService,
     private emergencyContactService: EmergencyContactService,
     private router: Router,
     protected modalService: NgbModal
@@ -72,9 +73,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe(emergencyContactNew => {
         if (emergencyContactNew.body?.id === this.account?.login) {
           this.emergencyContact = emergencyContactNew.body;
-          console.log({ emergencyContactNew });
         }
       });
+
+    this.appointmentService.query().subscribe(data => {
+      this.appointments = data.body?.filter(app => app.doctor?.id === this.account?.id);
+    });
+
     this.loadAllEmergencyContact();
   }
 
@@ -84,6 +89,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   login(): void {
     this.router.navigate(['/login']);
+  }
+
+  cancelAppointment(appointment: IAppointment): void {
+    appointment.status = Status.CANCELED;
+    this.appointmentService.update(appointment).subscribe(function (response) {
+      console.log('response of server:', response);
+    });
   }
 
   ngOnDestroy(): void {
@@ -104,7 +116,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   loadAllEmergencyContact(): void {
     this.isLoadingEmergencyContact = true;
-
     this.emergencyContactService.query().subscribe(
       (res: HttpResponse<IEmergencyContact[]>) => {
         this.isLoadingEmergencyContact = false;

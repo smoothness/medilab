@@ -123,14 +123,37 @@
         <!-- END body patient Block -->
         <!-- START body doctor Block -->
         <div class="card bg-dark mt-3" *ngIf="account?.authorities?.includes('ROLE_USER')">
-          <h5 class="card-header">Próximas citas</h5>
+          <h5 class="card-header" mediTranslate="home.upcomingAppointments">Próximas citas</h5>
           <div class="card-body">
-            <ul class="list-group">
-              <li class="list-group-item" aria-current="true">An active item</li>
-              <li class="list-group-item">A second item</li>
-              <li class="list-group-item">A third item</li>
-              <li class="list-group-item">A fourth item</li>
-              <li class="list-group-item">And a fifth one</li>
+            <ul class="list-group ml-profile__agenda">
+              <li class="list-group-item" *ngFor="let appointment of appointments; let i = index">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-calendar"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"
+                  />
+                </svg>
+                <div class="ml-profile__agenda-data">
+                  <time>{{ appointment.date }}</time>
+                  <b>{{ appointment.patient?.secondSurname }}</b>
+                </div>
+                <a
+                  class="btn btn-secondary btn-sm mr-1"
+                  mediTranslate="home.appointmentDetail"
+                  [routerLink]="['/main/appointment', appointment.id, 'view']"
+                >
+                  Detalle
+                </a>
+                <button class="btn btn-danger btn-sm" mediTranslate="home.appointmentDelete" (click)="cancelAppointment(appointment)">
+                  Eliminar
+                </button>
+              </li>
             </ul>
           </div>
         </div>
