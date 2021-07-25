@@ -1,22 +1,23 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { HttpResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-
+// import { takeUntil } from 'rxjs/operators';
+import { SweetAlertService } from 'app/shared/services/sweet-alert.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
-
 import { PatientService } from 'app/entities/patient/service/patient.service';
 import { Patient } from 'app/entities/patient/patient.model';
-
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
 import { Doctor } from 'app/entities/doctor/doctor.model';
-
+import { IAppointment } from 'app/entities/appointment/appointment.model';
+import { Status } from 'app/entities/enumerations/status.model';
+import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
 import { EmergencyContactService } from 'app/entities/emergency-contact/service/emergency-contact.service';
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactDeleteDialogComponent } from '../entities/emergency-contact/delete/emergency-contact-delete-dialog.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpResponse } from '@angular/common/http';
+import { UserService } from 'app/entities/user/user.service';
 
 @Component({
   selector: 'medi-home',
@@ -27,60 +28,94 @@ export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
   patient: Patient | null = null;
   doctor: Doctor | null = null;
+  thePatient: any;
+  theDoctor: any;
   emergencyContacts: IEmergencyContact[] | null = null;
   emergencyContact: EmergencyContact | null = null;
   isLoadingEmergencyContact = false;
-  authority: string | undefined;
+  // authority: string | undefined;
+  appointmentsDoctor: any[] | undefined = [];
+  appointmentsPatient: any[] | undefined = [];
   private readonly destroy$ = new Subject<void>();
 
   constructor(
+    private sweetAlertService: SweetAlertService,
     private accountService: AccountService,
+    private userService: UserService,
     private patientService: PatientService,
     private doctorService: DoctorService,
+    private appointmentService: AppointmentService,
     private emergencyContactService: EmergencyContactService,
     private router: Router,
     protected modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
-    this.accountService.retrieveUserById().subscribe(
-      (res) => {
-        console.log(res);
-      }
-    )
     this.accountService
       .getAuthenticationState()
-      .pipe(takeUntil(this.destroy$))
+      // .pipe(takeUntil(this.destroy$))
       .subscribe(account => {
         this.account = account;
-        this.authority = account?.authorities[0];
-        console.log('Autority: ', this.authority);
-      });
+        if (this.account?.authorities[0] === 'ROLE_PATIENT') {
+          this.mergeAccountWithPatient(this.account);
+        }
 
-    this.patientService
-      .find(Number(this.account?.login))
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(patientNew => {
-        this.patient = patientNew.body;
-      });
-
-    this.doctorService
-      .find(Number(this.account?.login))
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(doctor => {
-        this.doctor = doctor.body;
-      });
-
-    this.emergencyContactService
-      .find(Number(this.account?.login))
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(emergencyContactNew => {
-        if (emergencyContactNew.body?.id === this.account?.login) {
-          this.emergencyContact = emergencyContactNew.body;
-          console.log({ emergencyContactNew });
+        if (this.account?.authorities[0] === 'ROLE_USER') {
+          this.mergeAccountWithDoctor(this.account);
         }
       });
-    this.loadAllEmergencyContact();
+
+    // this.patientService
+    //   .find(Number(this.account?.login))
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe(patientNew => {
+    //     this.patient = patientNew.body;
+    //   });
+
+    // this.doctorService
+    //   .find(Number(this.account?.login))
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe(doctor => {
+    //     this.doctor = doctor.body;
+    //   });
+
+    // this.emergencyContactService
+    //   .find(Number(this.account?.login))
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe(emergencyContactNew => {
+    //     if (emergencyContactNew.body?.id === this.account?.login) {
+    //       this.emergencyContact = emergencyContactNew.body;
+    //     }
+    //   });
+
+    // this.loadAllEmergencyContact();
+  }
+
+  mergeAccountWithPatient(account: Account): void {
+    this.patientService.query().subscribe(res => {
+      this.thePatient = res.body?.find(patient => patient.internalUser?.id === account.id);
+      this.appointmentService.query().subscribe(data => {
+        this.appointmentsPatient = data.body?.filter(appointment => appointment.patient?.id === this.thePatient?.id);
+      });
+    });
+  }
+
+  mergeAccountWithDoctor(account: Account): void {
+    this.doctorService.query().subscribe(res => {
+      this.theDoctor = res.body?.find(doctor => doctor.internalUser?.id === account.id);
+      this.appointmentService.query().subscribe(data => {
+        this.appointmentsDoctor = data.body?.filter(appointment => {
+          // the information returned from the server of the doctor is incorrect
+          // it is based on the doctor id, not the internal user id
+          // same with the patient, that's why it is needed the patient internal user id
+          // to query with the internal user id for the actual patient
+          this.accountService.retrieveUserById(Number(appointment.patient?.id)).subscribe(user => {
+            Object.assign(appointment.patient, user);
+          });
+          return appointment.doctor?.id === this.theDoctor?.internalUser.id && appointment.status !== 'CANCELED';
+        });
+      });
+    });
   }
 
   trackId(index: number, item: IEmergencyContact): number {
@@ -89,6 +124,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   login(): void {
     this.router.navigate(['/login']);
+  }
+
+  cancelAppointment(appointment: IAppointment): void {
+    appointment.status = Status.CANCELED;
+    this.appointmentService.update(appointment).subscribe(() => {
+      this.sweetAlertService.showMsjInfo('home.messages.cancelAppointmentTitle', 'home.messages.cancelAppointmentMsj');
+      this.ngOnInit();
+    });
   }
 
   ngOnDestroy(): void {
@@ -109,7 +152,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   loadAllEmergencyContact(): void {
     this.isLoadingEmergencyContact = true;
-
     this.emergencyContactService.query().subscribe(
       (res: HttpResponse<IEmergencyContact[]>) => {
         this.isLoadingEmergencyContact = false;
