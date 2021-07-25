@@ -43,6 +43,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.accountService.retrieveUserById().subscribe(
+      (res) => {
+        console.log(res);
+      }
+    )
     this.accountService
       .getAuthenticationState()
       .pipe(takeUntil(this.destroy$))
