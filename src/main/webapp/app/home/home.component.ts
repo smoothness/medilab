@@ -26,11 +26,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
   patient: Patient | null = null;
   doctor: Doctor | null = null;
+  thePatient: any;
+  theDoctor: any;
   emergencyContacts: IEmergencyContact[] | null = null;
   emergencyContact: EmergencyContact | null = null;
   isLoadingEmergencyContact = false;
-  authority: string | undefined;
-  appointments: IAppointment[] | undefined = [];
+  // authority: string | undefined;
+  appointmentsDoctor: IAppointment[] | undefined = [];
+  appointmentsPatient: IAppointment[] | undefined = [];
   private readonly destroy$ = new Subject<void>();
 
   constructor(
@@ -49,8 +52,14 @@ export class HomeComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(account => {
         this.account = account;
-        this.authority = account?.authorities[0];
-        console.log('Autority: ', this.authority);
+
+        if (this.account?.authorities[0] === 'ROLE_PATIENT') {
+          this.mergeAccountWithPatient(this.account);
+        }
+
+        if (this.account?.authorities[0] === 'ROLE_USER') {
+          this.mergeAccountWithDoctor(this.account);
+        }
       });
 
     this.patientService
@@ -75,12 +84,27 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.emergencyContact = emergencyContactNew.body;
         }
       });
-
-    this.appointmentService.query().subscribe(data => {
-      this.appointments = data.body?.filter(app => app.doctor?.id === this.account?.id);
-    });
-
     this.loadAllEmergencyContact();
+  }
+
+  mergeAccountWithPatient(account: Account): void {
+    this.patientService.query().subscribe(res => {
+      this.thePatient = res.body?.find(patient => patient.internalUser?.id === account.id);
+      this.appointmentService.query().subscribe(data => {
+        console.log('appointments: ', data);
+        this.appointmentsPatient = data.body?.filter(appointment => appointment.patient?.id === this.thePatient?.id);
+      });
+    });
+  }
+
+  mergeAccountWithDoctor(account: Account): void {
+    this.doctorService.query().subscribe(res => {
+      this.theDoctor = res.body?.find(doctor => doctor.internalUser?.id === account.id);
+      this.appointmentService.query().subscribe(data => {
+        console.log('appointments: ', data);
+        this.appointmentsDoctor = data.body?.filter(appointment => appointment.doctor?.id === this.theDoctor?.id);
+      });
+    });
   }
 
   trackId(index: number, item: IEmergencyContact): number {
@@ -93,7 +117,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   cancelAppointment(appointment: IAppointment): void {
     appointment.status = Status.CANCELED;
-    this.appointmentService.update(appointment).subscribe(function (response) {
+    this.appointmentService.update(appointment).subscribe(response => {
       console.log('response of server:', response);
     });
   }
