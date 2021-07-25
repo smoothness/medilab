@@ -1,25 +1,25 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { HttpResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
-
 import { PatientService } from 'app/entities/patient/service/patient.service';
 import { Patient } from 'app/entities/patient/patient.model';
-
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
 import { Doctor } from 'app/entities/doctor/doctor.model';
 
 import { AppointmentTreatmentAilmentService } from 'app/entities/appointment-treatment-ailment/service/appointment-treatment-ailment.service';
 import { IAppointmentTreatmentAilment } from 'app/entities/appointment-treatment-ailment/appointment-treatment-ailment.model';
 
+import { IAppointment } from 'app/entities/appointment/appointment.model';
+import { Status } from 'app/entities/enumerations/status.model';
+import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
 import { EmergencyContactService } from 'app/entities/emergency-contact/service/emergency-contact.service';
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactDeleteDialogComponent } from '../entities/emergency-contact/delete/emergency-contact-delete-dialog.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'medi-home',
@@ -36,13 +36,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   isLoadingAppointmentTreatmentAilment = false;
   appointmentTreatmentAilmentNew: IAppointmentTreatmentAilment[] | null = null;
   authority: string | undefined;
+  appointments: IAppointment[] | undefined = [];
   private readonly destroy$ = new Subject<void>();
-  
+
 
   constructor(
     private accountService: AccountService,
     private patientService: PatientService,
     private doctorService: DoctorService,
+    private appointmentService: AppointmentService,
     private emergencyContactService: EmergencyContactService,
     private appointmentTreatmentAilmentService : AppointmentTreatmentAilmentService,
     private router: Router,
@@ -86,9 +88,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe(emergencyContactNew => {
         if (emergencyContactNew.body?.id === this.account?.login) {
           this.emergencyContact = emergencyContactNew.body;
-          console.log({ emergencyContactNew });
         }
       });
+
+    this.appointmentService.query().subscribe(data => {
+      this.appointments = data.body?.filter(app => app.doctor?.id === this.account?.id);
+    });
+
     this.loadAllEmergencyContact();
     this.loadAllAppoiments();
 
@@ -103,6 +109,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   login(): void {
     this.router.navigate(['/login']);
+  }
+
+  cancelAppointment(appointment: IAppointment): void {
+    appointment.status = Status.CANCELED;
+    this.appointmentService.update(appointment).subscribe(function (response) {
+      console.log('response of server:', response);
+    });
   }
 
   ngOnDestroy(): void {
@@ -123,7 +136,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   loadAllEmergencyContact(): void {
     this.isLoadingEmergencyContact = true;
-
     this.emergencyContactService.query().subscribe(
       (res: HttpResponse<IEmergencyContact[]>) => {
         this.isLoadingEmergencyContact = false;
@@ -144,7 +156,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.appointmentTreatmentAilmentNew = res.body ?? [];
         console.log("Pedro Capo");
         console.log(this.appointmentTreatmentAilmentNew);
-        
+
       },
       () => {
         this.isLoadingAppointmentTreatmentAilment = false;
@@ -152,5 +164,3 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
 }
-
-

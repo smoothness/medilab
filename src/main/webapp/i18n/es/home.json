@@ -2,6 +2,13 @@
   "home": {
     "title": "¡Bienvenido, Java Hipster!",
     "subtitle": "Esta es su página de inicio",
+    "welcome": "Bienvenido",
+    "viewLastAppointment": "Ver última cita",
+    "requestAppointment": "Solicitar una cita",
+    "createNewAppointment": "Crear una nueva cita",
+    "upcomingAppointments": "Próximas citas",
+    "appointmentDetail": "Detalle",
+    "appointmentDelete": "Cancelar cita",
     "profile": {
       "identification": "Identificación",
       "phone": "Teléfono",

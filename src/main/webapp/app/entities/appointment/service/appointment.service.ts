@@ -3,7 +3,6 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as dayjs from 'dayjs';
-
 import { isPresent } from 'app/core/util/operators';
 import { DATE_FORMAT } from 'app/config/input.constants';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
@@ -28,6 +27,7 @@ export class AppointmentService {
   }
 
   update(appointment: IAppointment): Observable<EntityResponseType> {
+    console.log('from service: ', appointment);
     const copy = this.convertDateFromClient(appointment);
     return this.http
       .put<IAppointment>(`${this.resourceUrl}/${getAppointmentIdentifier(appointment) as number}`, copy, { observe: 'response' })
@@ -36,6 +36,7 @@ export class AppointmentService {
 
   partialUpdate(appointment: IAppointment): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(appointment);
+    console.log('del service', copy);
     return this.http
       .patch<IAppointment>(`${this.resourceUrl}/${getAppointmentIdentifier(appointment) as number}`, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
