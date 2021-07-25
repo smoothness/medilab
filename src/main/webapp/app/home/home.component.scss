@@ -33,7 +33,7 @@ Main page styles
       align-items: center;
       display: flex;
 
-      div {
+      > div {
         display: flex;
         flex-direction: column;
 
@@ -43,7 +43,7 @@ Main page styles
         }
       }
 
-      svg {
+      > svg {
         margin-right: 1rem;
       }
 
@@ -51,6 +51,12 @@ Main page styles
         margin-left: auto;
       }
     }
+  }
+
+  &__appointment-patient-info,
+  &__appointment-doctor-info {
+    align-items: center;
+    display: flex;
   }
 }
 

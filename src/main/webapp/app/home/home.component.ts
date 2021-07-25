@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+// import { takeUntil } from 'rxjs/operators';
+import { SweetAlertService } from 'app/shared/services/sweet-alert.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
 import { PatientService } from 'app/entities/patient/service/patient.service';
@@ -21,6 +22,7 @@ import { EmergencyContactService } from 'app/entities/emergency-contact/service/
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactDeleteDialogComponent } from '../entities/emergency-contact/delete/emergency-contact-delete-dialog.component';
 import { IAilment } from 'app/entities/ailment/ailment.model';
+import { UserService } from 'app/entities/user/user.service';
 
 @Component({
   selector: 'medi-home',
@@ -40,14 +42,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   appointmentTreatmentAilmentNew: IAppointmentTreatmentAilment[] | null = null;
   authority: string | undefined;
   // authority: string | undefined;
-  appointmentsDoctor: IAppointment[] | undefined = [];
-  appointmentsPatient: IAppointment[] | undefined = [];
+  appointmentsDoctor: any[] | undefined = [];
+  appointmentsPatient: any[] | undefined = [];
   ailmentsPatient : any[] | undefined = [];
   private readonly destroy$ = new Subject<void>();
 
 
   constructor(
+    private sweetAlertService: SweetAlertService,
     private accountService: AccountService,
+    private userService: UserService,
     private patientService: PatientService,
     private doctorService: DoctorService,
     private appointmentService: AppointmentService,
@@ -58,17 +62,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.accountService.retrieveUserById().subscribe(
-      (res) => {
-        console.log(res);
-      }
-    )
     this.accountService
       .getAuthenticationState()
-      .pipe(takeUntil(this.destroy$))
+      // .pipe(takeUntil(this.destroy$))
       .subscribe(account => {
         this.account = account;
-
         if (this.account?.authorities[0] === 'ROLE_PATIENT') {
           this.mergeAccountWithPatient(this.account);
         }
@@ -78,34 +76,30 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.patientService
-      .find(Number(this.account?.id))
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(patientNew => {
-        this.patient = patientNew.body;
-      });
+    // this.patientService
+    //   .find(Number(this.account?.login))
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe(patientNew => {
+    //     this.patient = patientNew.body;
+    //   });
 
-      this.patientService.findByInternalUser(3).pipe(takeUntil(this.destroy$))
-      .subscribe(patient => {
-        this.patient = patient.body;
-      });
+    // this.doctorService
+    //   .find(Number(this.account?.login))
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe(doctor => {
+    //     this.doctor = doctor.body;
+    //   });
 
-    this.doctorService
-      .find(Number(this.account?.login))
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(doctor => {
-        this.doctor = doctor.body;
-      });
+    // this.emergencyContactService
+    //   .find(Number(this.account?.login))
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe(emergencyContactNew => {
+    //     if (emergencyContactNew.body?.id === this.account?.login) {
+    //       this.emergencyContact = emergencyContactNew.body;
+    //     }
+    //   });
 
-    this.emergencyContactService
-      .find(Number(this.account?.login))
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(emergencyContactNew => {
-        if (emergencyContactNew.body?.id === this.account?.login) {
-          this.emergencyContact = emergencyContactNew.body;
-        }
-      });
-    this.loadAllEmergencyContact();
+    // this.loadAllEmergencyContact();
   }
 
   mergeAccountWithPatient(account: Account): void {
@@ -116,7 +110,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.getAilmentsPatient();
       });
     });
-  
+
 
     this.loadAllEmergencyContact();
     this.loadAllAppoiments();
@@ -126,7 +120,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.doctorService.query().subscribe(res => {
       this.theDoctor = res.body?.find(doctor => doctor.internalUser?.id === account.id);
       this.appointmentService.query().subscribe(data => {
-        this.appointmentsDoctor = data.body?.filter(appointment => appointment.doctor?.id === this.theDoctor?.id);
+        this.appointmentsDoctor = data.body?.filter(appointment => {
+          // the information returned from the server of the doctor is incorrect
+          // it is based on the doctor id, not the internal user id
+          // same with the patient, that's why it is needed the patient internal user id
+          // to query with the internal user id for the actual patient
+          this.accountService.retrieveUserById(Number(appointment.patient?.id)).subscribe(user => {
+            Object.assign(appointment.patient, user);
+          });
+          return appointment.doctor?.id === this.theDoctor?.internalUser.id && appointment.status !== 'CANCELED';
+        });
       });
     });
   }
@@ -135,7 +138,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   this.appointmentTreatmentAilmentService.query()
   .subscribe(data => {
     this.appointmentsPatient?.forEach(appointment => {
-      
+
       if (data.body !== null){
         data.body.forEach(element => {
           if(element.appointment?.id === appointment.id){
@@ -143,7 +146,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           }
         });
       }
-      
+
     });
 
   })
@@ -160,8 +163,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   cancelAppointment(appointment: IAppointment): void {
     appointment.status = Status.CANCELED;
-    this.appointmentService.update(appointment).subscribe(response => {
-      console.log('response of server:', response);
+    this.appointmentService.update(appointment).subscribe(() => {
+      this.sweetAlertService.showMsjInfo('home.messages.cancelAppointmentTitle', 'home.messages.cancelAppointmentMsj');
+      this.ngOnInit();
     });
   }
 
