@@ -99,11 +99,6 @@ export class LineCommentUpdateComponent implements OnInit {
     return this.invoiceData;
   }
 
-  protected SaveInvoice(){
-        .subscribe(this.invoice => {
-            this.costs = costs;
-        });
-      }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ILineComment>>): void {
   /*  result.subscribe(data => {
@@ -168,8 +163,5 @@ export class LineCommentUpdateComponent implements OnInit {
       invoiceCode: this.editCoomentForm.get(['invoiceCode'])!.value,
     };
   }
-}
-function subscribe(arg0: (costs: any) => void) {
-  throw new Error('Function not implemented.');
 }
 

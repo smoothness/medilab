@@ -1,4 +1,4 @@
-<div>
+<div class="container">
   <h2 id="page-heading" data-cy="InvoiceHeading">
     <span mediTranslate="medilabApp.invoice.home.title">Invoices</span>
 
@@ -12,7 +12,7 @@
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-invoice"
-        [routerLink]="['/invoice/new']"
+        [routerLink]="['main/invoice/new']"
       >
         <fa-icon icon="plus"></fa-icon>
         <span mediTranslate="medilabApp.invoice.home.createLabel"> Create a new Invoice </span>
@@ -21,7 +21,7 @@
         id="jh-create-Prueba"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-invoice"
-        [routerLink]="['/line-comment/new']"
+        [routerLink]="['/main/line-comment/new']"
       >
         <fa-icon icon="plus"></fa-icon>
         <span mediTranslate="medilabApp.invoice.home.createLabel"> Crear Factura Prueba </span>
