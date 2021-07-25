@@ -2,9 +2,6 @@
 
 <main id="ml-login" class="row d-flex m-0 p-0 my-5">
   <section class="col-lg-4 col-md-6 col-sm-8 mx-auto my-5">
-    <div class="alert alert-danger" *ngIf="authenticationError" mediTranslate="login.messages.error.authentication" data-cy="loginError">
-      <strong>Failed to sign in!</strong> Please check your credentials and try again.
-    </div>
 
     <div class="text-center d-flex justify-content-center">
       <a class="navbar-brand logo" routerLink="/">
@@ -110,7 +107,7 @@
             <div class="pl-3">
               <a
                 class="text-primary ml-5 pl-4"
-                routerLink="/account/reset/request"
+                routerLink="/reset/request"
                 mediTranslate="login.password.forgot"
                 data-cy="forgetYourPasswordSelector"
                 >Here.</a

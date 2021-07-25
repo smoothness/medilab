@@ -10,7 +10,8 @@
     },
     "messages": {
       "error": {
-        "authentication": "<strong>¡El inicio de sesión ha fallado!</strong> Por favor, revise las credenciales e intente de nuevo."
+        "fail": "El inicio de sesión ha fallado",
+        "authentication": "Por favor, revise las credenciales e intente de nuevo."
       }
     },
     "password": {
