@@ -83,8 +83,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.patientService.findByInternalUser(3).pipe(takeUntil(this.destroy$))
       .subscribe(patient => {
         this.patient = patient.body;
-        console.log("Paciente");
-        console.log(this.patient);
       });
 
     this.doctorService
@@ -109,7 +107,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.patientService.query().subscribe(res => {
       this.thePatient = res.body?.find(patient => patient.internalUser?.id === account.id);
       this.appointmentService.query().subscribe(data => {
-        console.log('appointments: ', data);
         this.appointmentsPatient = data.body?.filter(appointment => appointment.patient?.id === this.thePatient?.id);
         this.getAilmentsPatient();
       });
@@ -124,7 +121,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.doctorService.query().subscribe(res => {
       this.theDoctor = res.body?.find(doctor => doctor.internalUser?.id === account.id);
       this.appointmentService.query().subscribe(data => {
-        console.log('appointments: ', data);
         this.appointmentsDoctor = data.body?.filter(appointment => appointment.doctor?.id === this.theDoctor?.id);
       });
     });
@@ -133,7 +129,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   getAilmentsPatient(): void{
   this.appointmentTreatmentAilmentService.query()
   .subscribe(data => {
-    console.log('appointmentTreatmentAilmentService: ', data);
     this.appointmentsPatient?.forEach(appointment => {
       
       if (data.body !== null){
@@ -145,7 +140,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
       
     });
-    console.log('ailmentsPatient: ', this.ailmentsPatient);
 
   })
 
@@ -202,8 +196,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       (res: HttpResponse<IAppointmentTreatmentAilment[]>) => {
         this.isLoadingAppointmentTreatmentAilment = false;
         this.appointmentTreatmentAilmentNew = res.body ?? [];
-        console.log("Pedro Capo");
-        console.log(this.appointmentTreatmentAilmentNew);
 
       },
       () => {
