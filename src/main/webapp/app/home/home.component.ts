@@ -116,11 +116,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.thePatient = res.body?.find(patient => patient.internalUser?.id === account.id);
       this.appointmentService.query().subscribe(data => {
         this.appointmentsPatient = data.body?.filter(appointment => appointment.patient?.id === this.thePatient?.id);
-        this.getAilmentsPatient();
+        
       });
     });
 
-
+    this.getAilmentsPatient();
     this.loadAllEmergencyContact();
     this.loadAllAppoiments();
 
