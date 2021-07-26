@@ -6,6 +6,7 @@ import { AppointmentTreatmentAilmentComponent } from '../list/appointment-treatm
 import { AppointmentTreatmentAilmentDetailComponent } from '../detail/appointment-treatment-ailment-detail.component';
 import { AppointmentTreatmentAilmentUpdateComponent } from '../update/appointment-treatment-ailment-update.component';
 import { AppointmentTreatmentAilmentRoutingResolveService } from './appointment-treatment-ailment-routing-resolve.service';
+import { DiagnosisDetailComponent } from '../diagnosis-detail/diagnosis-detail.component';
 
 const appointmentTreatmentAilmentRoute: Routes = [
   {
@@ -32,6 +33,14 @@ const appointmentTreatmentAilmentRoute: Routes = [
   {
     path: ':id/edit',
     component: AppointmentTreatmentAilmentUpdateComponent,
+    resolve: {
+      appointmentTreatmentAilment: AppointmentTreatmentAilmentRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'detailview/:id',
+    component: DiagnosisDetailComponent,
     resolve: {
       appointmentTreatmentAilment: AppointmentTreatmentAilmentRoutingResolveService,
     },

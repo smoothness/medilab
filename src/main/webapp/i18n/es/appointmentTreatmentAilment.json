@@ -20,9 +20,13 @@
       "id": "ID",
       "description": "Description",
       "removed": "Removed",
-      "ailment": "Ailment",
-      "treatment": "Treatment",
-      "appointment": "Appointment"
+      "ailment": "Padecimiento",
+      "treatment": "Tratamiento",
+      "appointment": "Appointment",
+      "diagnosis": "Diagnóstico detallado",
+      "date": "Fecha",
+      "duration": "Duración",
+      "specification": "Especificación"
     }
   }
 }

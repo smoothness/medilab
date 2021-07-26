@@ -22,7 +22,11 @@
       "removed": "Removed",
       "ailment": "Ailment",
       "treatment": "Treatment",
-      "appointment": "Appointment"
+      "appointment": "Appointment",
+      "diagnosis": "Diagnóstico detallado",
+      "date": "Date",
+      "duration": "Duration",
+      "specification": "Specification"
     }
   }
 }

@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalOptions, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
 // import { takeUntil } from 'rxjs/operators';
@@ -24,10 +24,13 @@ import { EmergencyContactDeleteDialogComponent } from '../entities/emergency-con
 import { IAilment } from 'app/entities/ailment/ailment.model';
 import { UserService } from 'app/entities/user/user.service';
 
+import { NgModule } from '@angular/core';
+
 @Component({
   selector: 'medi-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
@@ -45,6 +48,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   appointmentsDoctor: any[] | undefined = [];
   appointmentsPatient: any[] | undefined = [];
   ailmentsPatient : any[] | undefined = [];
+  closeModal: string | undefined;
+  ailment : any;
   private readonly destroy$ = new Subject<void>();
 
 
@@ -101,6 +106,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     // this.loadAllEmergencyContact();
   }
+
+ 
+
+
 
   mergeAccountWithPatient(account: Account): void {
     this.patientService.query().subscribe(res => {
@@ -212,4 +221,16 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     );
   }
+
+  open(content : any, ailment : any): void {
+   this.modalService.open(content, {
+     windowClass: 'elementoPrueba'
+    }
+    )
+   console.log("Pedrito" , ailment )
+   this.ailment = ailment;
+  }
+  
 }
+
+

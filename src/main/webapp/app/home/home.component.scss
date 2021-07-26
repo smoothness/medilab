@@ -50,6 +50,10 @@ Main page styles
       a {
         margin-left: auto;
       }
+
+      button {
+        margin-left: auto;
+      }
     }
   }
 
@@ -73,3 +77,86 @@ Main page styles
     margin: 0;
   }
 }
+
+
+
+
+.modal-content{
+  margin-top:  6rem;
+  display: flex;
+    padding-top: rem;
+}
+
+
+.modal-content
+{
+  
+  background-color: #101010 !important;
+  &__top {
+    display: flex;
+    padding-top: rem;
+
+    > div {
+      flex: 0 0 calc(50% - 0.5rem);
+
+      &:first-child {
+        margin-right: 1rem;
+
+        p {
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  &__user-text {
+    color: $brand-light;
+  }
+
+  &__agenda {
+    li {
+      align-items: center;
+      display: flex;
+
+      > div {
+        display: flex;
+        flex-direction: column;
+
+        time {
+          color: $brand;
+          font-size: 0.75rem;
+        }
+      }
+
+      > svg {
+        margin-right: 1rem;
+      }
+
+      a {
+        margin-left: auto;
+      }
+
+      button {
+        margin-left: auto;
+      }
+    }
+  }
+
+  &__appointment-patient-info,
+  &__appointment-doctor-info {
+    align-items: center;
+    display: flex;
+    color: #fff;
+  }
+}
+
+.card-header, .mr-2{
+  color: #fff;
+}
+
+#details{
+  margin-left: auto;
+  color: #fff;
+}
+
+

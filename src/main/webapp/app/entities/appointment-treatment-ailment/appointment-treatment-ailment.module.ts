@@ -5,6 +5,7 @@ import { AppointmentTreatmentAilmentDetailComponent } from './detail/appointment
 import { AppointmentTreatmentAilmentUpdateComponent } from './update/appointment-treatment-ailment-update.component';
 import { AppointmentTreatmentAilmentDeleteDialogComponent } from './delete/appointment-treatment-ailment-delete-dialog.component';
 import { AppointmentTreatmentAilmentRoutingModule } from './route/appointment-treatment-ailment-routing.module';
+import { DiagnosisDetailComponent } from './diagnosis-detail/diagnosis-detail.component';
 
 @NgModule({
   imports: [SharedModule, AppointmentTreatmentAilmentRoutingModule],
@@ -13,6 +14,7 @@ import { AppointmentTreatmentAilmentRoutingModule } from './route/appointment-tr
     AppointmentTreatmentAilmentDetailComponent,
     AppointmentTreatmentAilmentUpdateComponent,
     AppointmentTreatmentAilmentDeleteDialogComponent,
+    DiagnosisDetailComponent,
   ],
   entryComponents: [AppointmentTreatmentAilmentDeleteDialogComponent],
 })
