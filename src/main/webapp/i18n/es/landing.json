@@ -8,12 +8,12 @@
     },
     "cards": {
       "title": "Servicios",
-      "firstTitle": "Solicite su cita",
-      "fistDesc": "Con Medilab usted puede solicitar su cita con su médico mediante un contacto directo.",
-      "secondTitle": "Control de tratamientos",
-      "secondDesc": "Tenga un control de sus tratamientos siempre a mano.",
-      "thirdTitle": "Evalúe su experiencia",
-      "thirdDesc": "En Medilab, usted puede evaluar a nuestros medicos, de tal forma que nuestro servicio siempre sea lo mejor para usted."
+      "firstTitle": "Citas con su médico",
+      "fistDesc": "Con Medilab usted puede escoger el médico de su preferencia.",
+      "secondTitle": "Controle sus tratamientos",
+      "secondDesc": "Siempre conozca sus tratamientos con sus nombres.",
+      "thirdTitle": "Historial de padecimietos",
+      "thirdDesc": "Tenga acceso continuo a su historial de padecimientos."
     },
     "slider": {
       "firstTitle": "Solicite su cita",
