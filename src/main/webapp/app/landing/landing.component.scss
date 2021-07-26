@@ -5,3 +5,17 @@
   -webkit-user-select: none;
   -o-user-select: none;
 }
+
+.imageSlider {
+  filter: brightness(50%);
+}
+
+.text-black {
+  color: #000;
+}
+
+.cardImage {
+  height: 225px;
+  width: 100%;
+  display: block;
+}
