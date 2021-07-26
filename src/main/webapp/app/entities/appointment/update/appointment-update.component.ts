@@ -4,7 +4,6 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-
 import { IAppointment, Appointment } from '../appointment.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { AppointmentService } from '../service/appointment.service';
@@ -20,7 +19,6 @@ import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 export class AppointmentUpdateComponent implements OnInit {
   @ViewChild('addedAppointment')
   public readonly addedAppointment!: SwalComponent;
-
   isSaving = false;
   doctor: any;
   patientsCollection: IPatient[] | null = [];
@@ -100,13 +98,14 @@ export class AppointmentUpdateComponent implements OnInit {
   }
 
   protected updateForm(appointment: IAppointment): void {
-    this.editForm.patchValue({
-      id: appointment.id,
-      date: appointment.date,
-      status: appointment.status,
-      patient: appointment.patient,
-      doctor: this.doctor.id,
-    });
+    console.log('appont from update ', appointment);
+    // this.editForm.patchValue({
+    //   id: appointment.id,
+    //   date: appointment.date,
+    //   status: appointment.status,
+    //   patient: appointment.patient,
+    //   doctor: this.doctor.id,
+    // });
   }
 
   protected createFromForm(): IAppointment {
