@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 
 import { fontAwesomeIcons } from './../config/font-awesome-icons';
@@ -18,7 +19,7 @@ import { ItemCountComponent } from './pagination/item-count.component';
 import { HeaderComponent } from './header/header.component';
 
 @NgModule({
-  imports: [SharedLibsModule],
+  imports: [RouterModule, SharedLibsModule],
   declarations: [
     FindLanguageFromKeyPipe,
     TranslateDirective,
