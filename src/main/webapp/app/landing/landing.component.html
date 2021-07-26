@@ -1,16 +1,52 @@
 <header class="fixed-top">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" routerLink="/home">Medilab</a>
+    <a class="navbar-brand" routerLink="/home">
+      <img src="./content/images/logo.png" width="30" class="d-inline-block p-0 m-0" />
+      Medilab
+    </a>
 
     <button class="navbar-toggler" type="button" (click)="collapse()">&#9776;</button>
 
     <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse justify-content-end">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link font-weight-normal" routerLink="/register">Registrese</a>
+          <a class="nav-link font-weight-normal" mediTranslate="landing.menu.service" href="javascript:void(0);">Services</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link font-weight-normal" routerLink="/">Iniciar sesión</a>
+          <a class="nav-link font-weight-normal" mediTranslate="landing.menu.about" href="javascript:void(0);">About</a>
+        </li>
+        <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" *ngIf="languages && languages.length > 1">
+          <a class="nav-link font-weight-normal dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
+            <span>
+              <fa-icon icon="flag"></fa-icon>
+              <span mediTranslate="global.menu.language">Language</span>
+            </span>
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesnavBarDropdown">
+            <li *ngFor="let language of languages">
+              <a class="dropdown-item" href="javascript:void(0);" (click)="changeLanguage(language)">{{
+                language | findLanguageFromKey
+              }}</a>
+            </li>
+          </ul>
+        </li>
+
+        <li ngbDropdown class="nav-item dropdown pointer" display="dynamic">
+          <a class="nav-link font-weight-normal dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
+            <span>
+              <fa-icon icon="user"></fa-icon>
+              <span mediTranslate="landing.menu.account">Account</span>
+            </span>
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu>
+            <li>
+              <a class="dropdown-item" routerLink="/register" mediTranslate="landing.menu.register"> Register </a>
+            </li>
+
+            <li>
+              <a class="dropdown-item" routerLink="/" mediTranslate="landing.menu.login"> Log in </a>
+            </li>
+          </ul>
         </li>
       </ul>
     </div>
@@ -21,31 +57,13 @@
   <!-- Slider Section -->
   <section class="col-12 p-0 m-0">
     <ngb-carousel>
-      <ng-template ngbSlide>
+      <ng-template ngbSlide *ngFor="let slider of sliderData">
         <div>
-          <img src="content/images/landing/slider/first.jpg" class="w-100 img-fluid" alt="Random first slide" />
+          <img src="{{ slider.img }}" class="w-100 img-fluid imageSlider" />
         </div>
-        <div class="carousel-caption">
-          <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-        </div>
-      </ng-template>
-      <ng-template ngbSlide>
-        <div>
-          <img src="content/images/landing/slider/second.jpg" class="w-100 img-fluid" alt="Random second slide" />
-        </div>
-        <div class="carousel-caption">
-          <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-      </ng-template>
-      <ng-template ngbSlide>
-        <div>
-          <img src="content/images/landing/slider/third.jpg" class="w-100 img-fluid" alt="Random third slide" />
-        </div>
-        <div class="carousel-caption">
-          <h3>Third slide label</h3>
-          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+        <div class="carousel-caption font-weight-normal">
+          <h2>{{ slider.title | translate }}</h2>
+          <p>{{ slider.desc | translate }}</p>
         </div>
       </ng-template>
     </ngb-carousel>
@@ -53,64 +71,18 @@
 
   <!-- Services -->
   <section class="col-12 p-0 m-0">
-    <div class="container mt-4">
+    <div class="container mt-4 pb-5 border-bottom">
       <div class="row">
         <div class="col-12 text-center my-5">
-          <h2>Servicios</h2>
+          <h2 mediTranslate="landing.cards.title">Services</h2>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-4" *ngFor="let card of cardsServices">
           <div class="card mb-4 bg-dark box-shadow">
-            <img
-              class="card-img-top"
-              alt="Thumbnail [100%x225]"
-              src="content/images/landing/cards/first.jpg"
-              data-holder-rendered="true"
-              style="height: 225px; width: 100%; display: block"
-            />
+            <img class="card-img-top cardImage" src="{{ card.img }}" />
             <div class="card-body">
-              <p class="card-text text-justify">
-                This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit
-                longer.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="card mb-4 bg-dark box-shadow">
-            <img
-              class="card-img-top"
-              data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
-              alt="Thumbnail [100%x225]"
-              src="content/images/landing/cards/second.jpg"
-              data-holder-rendered="true"
-              style="height: 225px; width: 100%; display: block"
-            />
-            <div class="card-body">
-              <p class="card-text text-justify">
-                This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit
-                longer.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="card mb-4 bg-dark box-shadow">
-            <img
-              class="card-img-top"
-              data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
-              alt="Thumbnail [100%x225]"
-              src="content/images/landing/cards/third.jpg"
-              data-holder-rendered="true"
-              style="height: 225px; width: 100%; display: block"
-            />
-            <div class="card-body">
-              <p class="card-text text-justify">
-                This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit
-                longer.
-              </p>
+              <h5 class="card-title">{{ card.title | translate }}</h5>
+              <p class="card-text text-justify">{{ card.desc | translate }}</p>
             </div>
           </div>
         </div>
@@ -123,29 +95,21 @@
   <section class="col-12 mb-5">
     <div class="row">
       <div class="col-12 text-center my-5">
-        <h2>About</h2>
+        <h2 mediTranslate="landing.about.title">About</h2>
       </div>
 
       <div class="row p-0 m-0 w-75 mx-auto">
-        <div class="col-md-7 pt-5">
-          <h2 class="mb-5">
-            Lleve su control de citas.
-            <span class="text-muted">siempre a mano.</span>
-          </h2>
-          <p class="lead text-justify">
-            Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus
-            magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.
-          </p>
+        <div class="col-md-7 pt-4">
+          <div class="mb-3">
+            <h2 mediTranslate="landing.about.headLine"></h2>
+            <h2 class="text-muted" mediTranslate="landing.about.headLine2"></h2>
+          </div>
+
+          <p class="lead text-justify" mediTranslate="landing.about.text"></p>
         </div>
 
         <div class="col-md-5">
-          <img
-            class="featurette-image img-fluid mx-auto"
-            data-src="holder.js/500x500/auto"
-            alt="500x500"
-            src="content/images/landing/info.jpg"
-            data-holder-rendered="true"
-          />
+          <img class="img-fluid mx-auto" src="./content/images/landing/info.jpg" />
         </div>
       </div>
     </div>
@@ -155,41 +119,25 @@
 <footer class="container py-5 mt-5 border-top">
   <div class="row">
     <div class="col-12 col-md">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="d-block mb-2"
-      >
-        <circle cx="12" cy="12" r="10"></circle>
-        <line x1="14.31" y1="8" x2="20.05" y2="17.94"></line>
-        <line x1="9.69" y1="8" x2="21.17" y2="8"></line>
-        <line x1="7.38" y1="12" x2="13.12" y2="2.06"></line>
-        <line x1="9.69" y1="16" x2="3.95" y2="6.06"></line>
-        <line x1="14.31" y1="16" x2="2.83" y2="16"></line>
-        <line x1="16.62" y1="12" x2="10.88" y2="21.94"></line>
-      </svg>
-      <small class="d-block mb-3 text-muted">© 2021</small>
+      <a href="https://landinglogeek.000webhostapp.com" target="_blank">
+        <img src="./content/images/logeek.png" alt="" width="25" />
+
+        <small class="d-block mb-3 text-muted">2021</small>
+      </a>
     </div>
 
     <ul class="nav justify-content-end">
       <li class="nav-item">
-        <a class="nav-link active" href="#">Servicios</a>
+        <a class="nav-link" mediTranslate="landing.menu.service" href="javascript:void(0);"></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">About</a>
+        <a class="nav-link" mediTranslate="landing.menu.about" href="javascript:void(0);"></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Registrese</a>
+        <a class="nav-link" mediTranslate="landing.menu.register" routerLink="/register"></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Iniciar sesión</a>
+        <a class="nav-link" mediTranslate="landing.menu.login" routerLink="/"></a>
       </li>
     </ul>
   </div>

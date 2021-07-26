@@ -1,6 +1,17 @@
 <header class="mb-3">
   <nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" routerLink="/home">
+      <img src="./content/images/logo.png" width="30" class="d-inline-block p-0 m-0" />
+      Medilab
+    </a>
+
     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ml-auto">
+      <li class="nav-item">
+        <a class="nav-link font-weight-normal" mediTranslate="landing.menu.login" routerLink="/register" routerLinkActive="active"></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link font-weight-normal" mediTranslate="landing.menu.register" routerLink="/" routerLinkActive="active"></a>
+      </li>
       <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" *ngIf="languages && languages.length > 1">
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
           <span>
@@ -10,8 +21,7 @@
         </a>
         <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesnavBarDropdown">
           <li *ngFor="let language of languages">
-            <a class="dropdown-item" href="javascript:void(0);" (click)="changeLanguage(language);
-            collapseNavbar()">{{
+            <a class="dropdown-item" href="javascript:void(0);" (click)="changeLanguage(language); collapseNavbar()">{{
               language | findLanguageFromKey
             }}</a>
           </li>
