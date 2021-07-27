@@ -2,7 +2,7 @@
   "medilabApp": {
     "doctor": {
       "home": {
-        "title": "Doctors",
+        "title": "Lista de médicos",
         "refreshListLabel": "Refrescar lista",
         "createLabel": "Crear nuevo Doctor",
         "createOrEditLabel": "Crear o editar Doctor",

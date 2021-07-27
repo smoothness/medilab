@@ -8,7 +8,7 @@
       "entities": {
         "main": "Entidades",
         "patient": "Patient",
-        "doctor": "Doctor",
+        "doctor": "Lista de médicos",
         "appointment": "Appointment",
         "emergencyContact": "Emergency Contact",
         "treatment": "Treatment",

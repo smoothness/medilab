@@ -39,6 +39,8 @@ public interface EmergencyContactService {
      */
     Optional<EmergencyContact> findOne(Long id);
 
+    List<EmergencyContact> findByPatientId(Long id);
+
     /**
      * Delete the "id" emergencyContact.
      *
