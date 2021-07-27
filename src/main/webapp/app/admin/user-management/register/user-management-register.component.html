@@ -12,7 +12,7 @@
 
           <div *ngIf="currentStep === 1">
             <label class="form-control-label" for="userType" mediTranslate="global.form.userType">Tipo de usuario</label>
-            <select name="userType" id="userType" class="form-control" formControlName="role" (change)="validateUser()">
+            <select name="userType" id="userType" class="form-control" formControlName="role">
               <option *ngFor="let rol of roles" [ngValue]="rol.abbrev">
                 {{ rol.name | translate }}
               </option>
