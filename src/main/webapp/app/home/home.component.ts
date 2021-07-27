@@ -14,8 +14,8 @@ import { Doctor } from 'app/entities/doctor/doctor.model';
 
 import { AppointmentTreatmentAilmentService } from 'app/entities/appointment-treatment-ailment/service/appointment-treatment-ailment.service';
 import { IAppointmentTreatmentAilment } from 'app/entities/appointment-treatment-ailment/appointment-treatment-ailment.model';
-
 import { IAppointment } from 'app/entities/appointment/appointment.model';
+
 import { Status } from 'app/entities/enumerations/status.model';
 import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
 import { EmergencyContactService } from 'app/entities/emergency-contact/service/emergency-contact.service';
@@ -48,7 +48,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   ailmentsPatient : any[] | undefined = [];
   closeModal: string | undefined;
   ailment : any;
-  ailmentsPatient: any[] | undefined = [];
   private readonly destroy$ = new Subject<void>();
 
   constructor(
@@ -155,6 +154,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
 
     });
+  });
   }
 
   trackId(index: number, item: IEmergencyContact): number {
