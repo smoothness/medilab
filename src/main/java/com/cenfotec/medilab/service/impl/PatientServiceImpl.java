@@ -73,6 +73,13 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Patient findByInternalUser(Long id){
+        return patientRepository.findByInternalUser(id);
+    }
+
+
+    @Override
     public void delete(Long id) {
         log.debug("Request to delete Patient : {}", id);
         patientRepository.deleteById(id);
