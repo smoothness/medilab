@@ -21,8 +21,10 @@
       "name": "Name",
       "phone": "Phone",
       "email": "Email",
-      "relationShip": "Relation Ship",
-      "patient": "Patient"
+      "relationShip": "Relationship",
+      "patient": "Patient",
+      "success": "Contact updated successfully.",
+      "error": "The contact could not be modified."
     }
   }
 }

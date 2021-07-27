@@ -22,6 +22,7 @@ import { EmergencyContactService } from 'app/entities/emergency-contact/service/
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactDeleteDialogComponent } from '../entities/emergency-contact/delete/emergency-contact-delete-dialog.component';
 import { UserService } from 'app/entities/user/user.service';
+import {EmergencyContactUpdateComponent} from "../entities/emergency-contact/update/emergency-contact-update.component";
 
 @Component({
   selector: 'medi-home',
@@ -62,7 +63,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.accountService
       .getAuthenticationState()
-      // .pipe(takeUntil(this.destroy$))
       .subscribe(account => {
         this.account = account;
         if (this.account?.authorities[0] === 'ROLE_PATIENT') {
@@ -107,7 +107,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.appointmentsPatient = data.body?.filter(appointment => {
           this.accountService.retrieveUserById(Number(appointment.doctor?.id)).subscribe(doctor => {
             Object.assign(appointment.doctor, doctor);
-            console.log('doctor', doctor);
           });
           return appointment.patient?.id === this.thePatient?.id;
         });
@@ -123,10 +122,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.theDoctor = res.body?.find(doctor => doctor.internalUser?.id === account.id);
       this.appointmentService.query().subscribe(data => {
         this.appointmentsDoctor = data.body?.filter(appointment => {
-          // the information returned from the server of the doctor is incorrect
+          /** the information returned from the server of the doctor is incorrect
           // it is based on the doctor id, not the internal user id
           // same with the patient, that's why it is needed the patient internal user id
-          // to query with the internal user id for the actual patient
+          // to query with the internal user id for the actual patient*/
           this.patientService.find(Number(appointment.patient?.id)).subscribe(patient => {
             Object.assign(appointment.patient, patient.body);
           });
@@ -184,15 +183,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   loadAllEmergencyContact(): void {
     this.isLoadingEmergencyContact = true;
-    this.emergencyContactService.query().subscribe(
-      (res: HttpResponse<IEmergencyContact[]>) => {
-        this.isLoadingEmergencyContact = false;
-        this.emergencyContacts = res.body ?? [];
-      },
-      () => {
-        this.isLoadingEmergencyContact = false;
-      }
-    );
+    this.patientService.findOneByInternalUser(<number>this.account?.id).subscribe((patient) => {
+      this.emergencyContactService.findByPatientId(<number>patient.body?.id).subscribe((res: any) => {
+        this.emergencyContacts = res.body;
+      });
+    });
   }
 
   loadAllAppoiments(): void {
@@ -207,5 +202,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.isLoadingAppointmentTreatmentAilment = false;
       }
     );
+  }
+
+  showModifyContactModal(emergencyContact: IEmergencyContact): void {
+    const modalRef = this.modalService.open(EmergencyContactUpdateComponent);
+    modalRef.componentInstance.setEmergencyContactData(emergencyContact);
   }
 }

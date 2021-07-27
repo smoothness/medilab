@@ -1,80 +1,23 @@
-<div class="row justify-content-center">
-  <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="medi-emergency-contact-heading"
-        data-cy="EmergencyContactCreateUpdateHeading"
-        mediTranslate="medilabApp.emergencyContact.home.createOrEditLabel"
-      >
-        Create or edit a Emergency Contact
-      </h2>
-
-      <div>
-        <medi-alert-error></medi-alert-error>
-
-        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
-          <label class="form-control-label" mediTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" mediTranslate="medilabApp.emergencyContact.name" for="field_name">Name</label>
-          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" mediTranslate="medilabApp.emergencyContact.phone" for="field_phone">Phone</label>
-          <input type="text" class="form-control" name="phone" id="field_phone" data-cy="phone" formControlName="phone" />
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" mediTranslate="medilabApp.emergencyContact.email" for="field_email">Email</label>
-          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" mediTranslate="medilabApp.emergencyContact.relationShip" for="field_relationShip"
-            >Relation Ship</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="relationShip"
-            id="field_relationShip"
-            data-cy="relationShip"
-            formControlName="relationShip"
-          />
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" mediTranslate="medilabApp.emergencyContact.patient" for="field_patient">Patient</label>
-          <select class="form-control" id="field_patient" data-cy="patient" name="patient" formControlName="patient">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="patientOption.id === editForm.get('patient')!.value?.id ? editForm.get('patient')!.value : patientOption"
-              *ngFor="let patientOption of patientsSharedCollection; trackBy: trackPatientById"
-            >
-              {{ patientOption.id }}
-            </option>
-          </select>
-        </div>
-      </div>
-
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span mediTranslate="entity.action.cancel">Cancel</span>
-        </button>
-
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
-        </button>
-      </div>
-    </form>
+<div id="ml-modify" class="card mx-auto my-auto">
+  <div class="card-header bg-dark">
+    <button type="button" class="close text-white" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
+
+  <div class="card-body">
+    <medi-emergency-form #formElement></medi-emergency-form>
+    <div class="text-center">
+      <button
+        type="submit"
+        id="save-entity"
+        data-cy="entityCreateSaveButton"
+        class="btn btn-lg btn-primary col-12"
+        (click)="save()"
+      >
+        <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
+      </button>
+    </div>
+  </div>
+
 </div>

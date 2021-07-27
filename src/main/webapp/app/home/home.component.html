@@ -148,7 +148,7 @@
                       <th scope="col"><span mediTranslate="medilabApp.emergencyContact.name">Name</span></th>
                       <th scope="col"><span mediTranslate="medilabApp.emergencyContact.phone">Phone</span></th>
                       <th scope="col"><span mediTranslate="medilabApp.emergencyContact.email">Email</span></th>
-                      <th scope="col"><span mediTranslate="medilabApp.emergencyContact.relationShip">Relation Ship</span></th>
+                      <th scope="col"><span mediTranslate="medilabApp.emergencyContact.relationShip">Relationship</span></th>
                       <th scope="col"></th>
                     </tr>
                   </thead>
@@ -162,7 +162,7 @@
                         <div class="btn-group">
                           <button
                             type="submit"
-                            [routerLink]="['./emergency-contact/', emergencyContact.id, 'edit']"
+                            (click)="showModifyContactModal(emergencyContact)"
                             class="btn btn-primary btn-sm"
                             data-cy="entityEditButton"
                           >

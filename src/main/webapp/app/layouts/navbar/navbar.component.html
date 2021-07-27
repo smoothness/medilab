@@ -66,6 +66,16 @@
           </span>
         </a>
       </li>
+      <li>
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="doctor" (click)="collapseNavbar()">
+          <span>
+            <fa-icon icon="clinic-medical" [fixedWidth]="true"></fa-icon>
+            <span mediTranslate="global.menu.entities.doctor">Doctor</span>
+          </span>
+        </a>
+      </li>
+
       <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
       <li
         *ngSwitchCase="true"
@@ -75,6 +85,7 @@
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
       >
+
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
           <span>
             <fa-icon icon="th-list"></fa-icon>
@@ -94,18 +105,7 @@
               <span mediTranslate="global.menu.entities.patient">Patient</span>
             </a>
           </li>
-          <li>
-            <a
-              class="dropdown-item"
-              routerLink="doctor"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              (click)="collapseNavbar()"
-            >
-              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-              <span mediTranslate="global.menu.entities.doctor">Doctor</span>
-            </a>
-          </li>
+
           <li>
             <a
               class="dropdown-item"
