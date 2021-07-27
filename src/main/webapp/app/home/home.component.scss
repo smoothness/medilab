@@ -160,3 +160,23 @@ Main page styles
 }
 
 
+/* Ailments */
+
+.ml-ailment{
+  margin-top: 1em;
+
+  svg {
+    margin-right: 1rem;
+  }
+
+  button {
+    margin-left: auto;
+  }
+
+  li {
+    align-items: center;
+    display: flex;
+  }
+  
+}
+

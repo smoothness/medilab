@@ -98,7 +98,7 @@
           <div class="card bg-dark mb-3">
             <h5 class="card-header" mediTranslate="home.ailments">Padecimientos</h5>
             <div class="card-body">
-              <ul class="list-group ml-profile__agenda">
+              <ul class="list-group ml-ailment">
                 <li class="list-group-item" *ngFor="let ailment of ailmentsPatient; let i = index">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-bag-plus" viewBox="0 0 16 16">
@@ -107,7 +107,7 @@
                     <path
                       d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
                   </svg>
-                  <div class="ml-profile__agenda-data">
+                  <div class="ml-ailment-data">
                     <b>{{ ailment.ailment.name }}</b>
                   </div>
                   <button class="btn btn-secondary btn-sm mr-1" (click)="open(mymodal , ailment)">Detalle</button>
@@ -218,7 +218,7 @@
 
 
 <ng-template #mymodal let-modal >
-<div class="container2">
+<div class="container">
   <!-- START body patient Block -->
   <div class="mt-3">
       <div class="card bg-dark mb-3">

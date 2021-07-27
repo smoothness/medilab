@@ -105,10 +105,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     // this.loadAllEmergencyContact();
   }
 
- 
-
-
-
   mergeAccountWithPatient(account: Account): void {
     this.patientService.query().subscribe(res => {
       this.thePatient = res.body?.find(patient => patient.internalUser?.id === account.id);
