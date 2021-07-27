@@ -41,6 +41,10 @@ export class PatientService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  findByInternalUser(internalUser : number): Observable<EntityResponseType> {
+    return this.http.get<IPatient>(`${this.resourceUrl}/${internalUser}`, { observe: 'response' });
+  }
+
   addPatientToCollectionIfMissing(patientCollection: IPatient[], ...patientsToCheck: (IPatient | null | undefined)[]): IPatient[] {
     const patients: IPatient[] = patientsToCheck.filter(isPresent);
     if (patients.length > 0) {
