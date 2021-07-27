@@ -61,6 +61,10 @@ abstract class PersonalData {
       langKey: this.langKey
     };
   }
+
+  get fullName(): string {
+    return `${this.firstName} ${this.lastName}`
+  }
 }
 
 class Patient extends PersonalData {

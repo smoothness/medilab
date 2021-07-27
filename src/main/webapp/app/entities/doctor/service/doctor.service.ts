@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators'
 
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
@@ -44,6 +45,23 @@ export class DoctorService {
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IDoctor[]>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+
+  getCompleteDoctor(): Observable<{}>{
+    return new Observable<{}>(
+      (subscriber) => {
+        this.http.get(this.resourceUrl)
+          .subscribe( (doctors: any) => {
+            for (let i = 0; i < doctors.length; i++) {
+              const formatted = new Doctor(doctors[i]);
+              doctors[i] = formatted;
+            }
+            console.log(doctors)
+          subscriber.next(doctors);
+          subscriber.complete();
+        });
+      }
+    );
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {
