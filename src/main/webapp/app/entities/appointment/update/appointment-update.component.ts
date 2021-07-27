@@ -21,7 +21,7 @@ export class AppointmentUpdateComponent implements OnInit {
   public readonly addedAppointment!: SwalComponent;
   isSaving = false;
   doctor: any;
-  patientsCollection: IPatient[] | null = [];
+  patientsCollection: any[] | null = [];
 
   editForm = this.fb.group({
     id: [],
@@ -99,13 +99,13 @@ export class AppointmentUpdateComponent implements OnInit {
 
   protected updateForm(appointment: IAppointment): void {
     console.log('appont from update ', appointment);
-    // this.editForm.patchValue({
-    //   id: appointment.id,
-    //   date: appointment.date,
-    //   status: appointment.status,
-    //   patient: appointment.patient,
-    //   doctor: this.doctor.id,
-    // });
+    this.editForm.patchValue({
+      id: appointment.id,
+      date: appointment.date,
+      status: appointment.status,
+      patient: appointment.patient,
+      doctor: this.doctor.id,
+    });
   }
 
   protected createFromForm(): IAppointment {
