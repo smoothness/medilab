@@ -39,6 +39,12 @@ public interface EmergencyContactService {
      */
     Optional<EmergencyContact> findOne(Long id);
 
+    /**
+     * Get the list emergencyContact for a patient.
+     *
+     * @param id the id of the patient.
+     * @return the emergency contact list.
+     */
     List<EmergencyContact> findByPatientId(Long id);
 
     /**

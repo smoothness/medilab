@@ -78,7 +78,6 @@ export class AccountService {
         (account) => {
           if(account?.authorities[0] === "ROLE_PATIENT"){
             this.patientService.findOneByInternalUser(account.id).subscribe((res: any) => {
-              console.log("JUAN PEREZ", res);
               res.body.internalUser = account;
               subscriber.next(new Patient(res.body));
               subscriber.complete();

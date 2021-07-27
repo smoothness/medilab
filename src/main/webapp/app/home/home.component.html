@@ -7,7 +7,7 @@
         <div class="card bg-dark">
           <h5 class="card-header" *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
             <span mediTranslate="home.welcome">Bienvenido: </span>
-            <span class="ml-profile__user-text">{{ account?.firstName }} {{ patient?.secondSurname }} {{ account?.lastName }}</span>
+            <span class="ml-profile__user-text">{{ account?.firstName }} {{ account?.lastName }} {{ patient?.secondSurname }}</span>
           </h5>
           <h5 class="card-header" *ngIf="account?.authorities?.includes('ROLE_ADMIN') || account?.authorities?.includes('ROLE_USER')">
             <span mediTranslate="home.welcome">Bienvenido: </span>
@@ -48,21 +48,7 @@
         <!-- close top left card -->
         <!-- open top right card -->
         <div class="card bg-dark">
-          <h5 class="card-header">Información personal</h5>
-          <div class="card-body">
-            <div *ngIf="account?.authorities?.includes('ROLE_USER')">
-              <p class="info-title" mediTranslate="home.profile.specialty">Especialidad</p>
-              <p>{{ doctor?.specialty }}</p>
-              <p class="info-title" mediTranslate="home.profile.rating">Calificación</p>
-              <p>{{ doctor?.ratingUsers }}</p>
-            </div>
-            <p class="info-title" mediTranslate="home.profile.identification">Identificación</p>
-            <p>{{ account?.login }}</p>
-            <p class="info-title" mediTranslate="home.profile.phone">Teléfono</p>
-            <p>{{ patient?.phone }}</p>
-            <p class="info-title" mediTranslate="home.profile.email">Correo electrónico</p>
-            <p>{{ account?.email }}</p>
-          </div>
+          <medi-user-profile [user]="currentUser"></medi-user-profile>
         </div>
       </section>
       <!-- close profile top section -->
@@ -136,7 +122,22 @@
           </div>
 
           <div class="card bg-dark">
-            <h5 class="card-header" mediTranslate="medilabApp.emergencyContact.home.title">Contact(s) en caso de una emergencia</h5>
+            <h5 class="card-header">
+                <span mediTranslate="medilabApp.emergencyContact.home.title" class="m-0 p-0">Contact(s) en caso de una emergencia</span>
+
+              <div class="d-flex justify-content-end m-0 p-0">
+                <button
+                  [disabled]="emergencyContactsTotal === 3"
+                  (click)="showCreateContactModal()"
+                  id="createContact"
+                  data-cy="entityCreateButton"
+                  class="btn btn-primary "
+                >
+                  <fa-icon icon="plus"></fa-icon>
+                  <span mediTranslate="home.btnNewContact"> Create a new Ailment </span>
+                </button>
+              </div>
+            </h5>
             <div class="card-body">
               <div class="alert alert-warning" id="no-result" *ngIf="emergencyContacts?.length === 0">
                 <span mediTranslate="medilabApp.emergencyContact.home.notFound">No emergencyContacts found</span>

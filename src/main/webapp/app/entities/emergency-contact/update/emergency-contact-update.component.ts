@@ -4,7 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 import { IEmergencyContact, EmergencyContact } from '../emergency-contact.model';
 import { EmergencyContactService } from '../service/emergency-contact.service';

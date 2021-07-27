@@ -10,29 +10,21 @@
     "appointmentDetail": "Detail",
     "appointmentDelete": "Cancel appointment",
     "profile": {
-      "identification": "Identification",
-      "phone": "Phone",
-      "email": "Email",
-      "specialty": "Specialty",
+      "identification": "Identification:",
+      "phone": "Phone:",
+      "email": "Email:",
+      "specialty": "Specialty:",
       "rating": "Rating"
     },
     "logged": {
       "message": "You are logged in as user \"{{username}}\"."
     },
-    "question": "If you have any question on JHipster:",
-    "link": {
-      "homepage": "JHipster homepage",
-      "stackoverflow": "JHipster on Stack Overflow",
-      "bugtracker": "JHipster bug tracker",
-      "chat": "JHipster public chat room",
-      "follow": "follow @jhipster on Twitter"
-    },
-    "like": "If you like JHipster, don't forget to give us a star on",
-    "github": "GitHub",
     "ailments": "Ailments",
     "messages": {
       "cancelAppointmentTitle": "Appointent canceled",
       "cancelAppointmentMsj": "This appointment has been canceled, it will be removed from the calendar."
-    }
+    },
+    "btnNewContact": "Add new contact",
+    "personalInfo": "Personal Info"
   }
 }

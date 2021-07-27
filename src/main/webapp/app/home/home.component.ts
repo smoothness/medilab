@@ -35,16 +35,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   doctor: Doctor | null = null;
   thePatient: any;
   theDoctor: any;
-  emergencyContacts: IEmergencyContact[] | null = null;
+  emergencyContacts: IEmergencyContact[] = [];
   emergencyContact: EmergencyContact | null = null;
   isLoadingEmergencyContact = false;
   isLoadingAppointmentTreatmentAilment = false;
   appointmentTreatmentAilmentNew: IAppointmentTreatmentAilment[] | null = null;
   authority: string | undefined;
-  // authority: string | undefined;
   appointmentsDoctor: any[] | undefined = [];
   appointmentsPatient: any[] | undefined = [];
   ailmentsPatient: any[] | undefined = [];
+  currentUser: any;
   private readonly destroy$ = new Subject<void>();
 
   constructor(
@@ -60,7 +60,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected modalService: NgbModal
   ) {}
 
+  public get emergencyContactsTotal(): number {
+    return this.emergencyContacts.length;
+  }
+
   ngOnInit(): void {
+    this.autenticatedAccount();
     this.accountService
       .getAuthenticationState()
       .subscribe(account => {
@@ -73,31 +78,12 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.mergeAccountWithDoctor(this.account);
         }
       });
+  }
 
-    // this.patientService
-    //   .find(Number(this.account?.login))
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe(patientNew => {
-    //     this.patient = patientNew.body;
-    //   });
-
-    // this.doctorService
-    //   .find(Number(this.account?.login))
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe(doctor => {
-    //     this.doctor = doctor.body;
-    //   });
-
-    // this.emergencyContactService
-    //   .find(Number(this.account?.login))
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe(emergencyContactNew => {
-    //     if (emergencyContactNew.body?.id === this.account?.login) {
-    //       this.emergencyContact = emergencyContactNew.body;
-    //     }
-    //   });
-
-    // this.loadAllEmergencyContact();
+  public autenticatedAccount(): void {
+    this.accountService.formatUserIdentity().subscribe((user) => {
+      this.currentUser = user;
+    });
   }
 
   mergeAccountWithPatient(account: Account): void {
@@ -181,7 +167,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  loadAllEmergencyContact(): void {
+  public loadAllEmergencyContact(): void {
     this.isLoadingEmergencyContact = true;
     this.patientService.findOneByInternalUser(<number>this.account?.id).subscribe((patient) => {
       this.emergencyContactService.findByPatientId(<number>patient.body?.id).subscribe((res: any) => {
@@ -204,8 +190,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
 
-  showModifyContactModal(emergencyContact: IEmergencyContact): void {
+  public showModifyContactModal(emergencyContact: IEmergencyContact): void {
     const modalRef = this.modalService.open(EmergencyContactUpdateComponent);
     modalRef.componentInstance.setEmergencyContactData(emergencyContact);
+  }
+
+  public showCreateContactModal(): void {
+    const modalRef = this.modalService.open(EmergencyContactUpdateComponent);
   }
 }
