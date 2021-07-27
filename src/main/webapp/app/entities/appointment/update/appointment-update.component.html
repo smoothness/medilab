@@ -35,7 +35,6 @@
               </span>
             </div>
           </div>
-
           <div class="form-group">
             <label class="form-control-label" mediTranslate="medilabApp.appointment.status" for="field_status">Status</label>
             <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status" ngModel="PENDING">
@@ -46,7 +45,6 @@
               <option value="FINISHED">{{ 'medilabApp.Status.FINISHED' | translate }}</option>
             </select>
           </div>
-
           <div class="form-group">
             <label class="form-control-label" mediTranslate="medilabApp.appointment.patient" for="field_patient">Patient</label>
             <select class="form-control" id="field_patient" data-cy="patient" name="patient" formControlName="patient">
@@ -55,7 +53,7 @@
                 [ngValue]="patientOption.id === editForm.get('patient')!.value?.id ? editForm.get('patient')!.value : patientOption"
                 *ngFor="let patientOption of patientsCollection; trackBy: trackPatientById"
               >
-                {{ patientOption.secondSurname }}
+                {{ patientOption?.internalUser?.completeName }} {{ patientOption?.secondSurname }}
               </option>
             </select>
           </div>

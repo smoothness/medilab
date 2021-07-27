@@ -48,8 +48,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   ailmentsPatient : any[] | undefined = [];
   closeModal: string | undefined;
   ailment : any;
+  ailmentsPatient: any[] | undefined = [];
   private readonly destroy$ = new Subject<void>();
-
 
   constructor(
     private sweetAlertService: SweetAlertService,
@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private doctorService: DoctorService,
     private appointmentService: AppointmentService,
     private emergencyContactService: EmergencyContactService,
-    private appointmentTreatmentAilmentService : AppointmentTreatmentAilmentService,
+    private appointmentTreatmentAilmentService: AppointmentTreatmentAilmentService,
     private router: Router,
     protected modalService: NgbModal
   ) {}
@@ -109,17 +109,21 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.patientService.query().subscribe(res => {
       this.thePatient = res.body?.find(patient => patient.internalUser?.id === account.id);
       this.appointmentService.query().subscribe(data => {
-        this.appointmentsPatient = data.body?.filter(appointment => appointment.patient?.id === this.thePatient?.id);
+        this.appointmentsPatient = data.body?.filter(appointment => {
+          this.accountService.retrieveUserById(Number(appointment.doctor?.id)).subscribe(doctor => {
+            Object.assign(appointment.doctor, doctor);
+            console.log('doctor', doctor);
+          });
+          return appointment.patient?.id === this.thePatient?.id;
+        });
         this.getAilmentsPatient();
       });
-      
-    });
 
-    
+    });
     this.loadAllEmergencyContact();
     this.loadAllAppoiments();
-
   }
+
   mergeAccountWithDoctor(account: Account): void {
     this.doctorService.query().subscribe(res => {
       this.theDoctor = res.body?.find(doctor => doctor.internalUser?.id === account.id);
@@ -129,8 +133,8 @@ export class HomeComponent implements OnInit, OnDestroy {
           // it is based on the doctor id, not the internal user id
           // same with the patient, that's why it is needed the patient internal user id
           // to query with the internal user id for the actual patient
-          this.accountService.retrieveUserById(Number(appointment.patient?.id)).subscribe(user => {
-            Object.assign(appointment.patient, user);
+          this.patientService.find(Number(appointment.patient?.id)).subscribe(patient => {
+            Object.assign(appointment.patient, patient.body);
           });
           return appointment.doctor?.id === this.theDoctor?.internalUser.id && appointment.status !== 'CANCELED';
         });
@@ -151,9 +155,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
 
     });
-
-  })
-
   }
 
   trackId(index: number, item: IEmergencyContact): number {
@@ -208,7 +209,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       (res: HttpResponse<IAppointmentTreatmentAilment[]>) => {
         this.isLoadingAppointmentTreatmentAilment = false;
         this.appointmentTreatmentAilmentNew = res.body ?? [];
-
       },
       () => {
         this.isLoadingAppointmentTreatmentAilment = false;
@@ -224,7 +224,5 @@ export class HomeComponent implements OnInit, OnDestroy {
    console.log("Pedrito" , ailment )
    this.ailment = ailment;
   }
-  
+
 }
-
-
