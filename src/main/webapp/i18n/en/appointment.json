@@ -4,8 +4,7 @@
       "home": {
         "title": "Appointments",
         "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Appointment",
-        "createOrEditLabel": "Create or edit a Appointment",
+        "createOrEditAppointment": "Create or edit an appointment",
         "notFound": "No Appointments found"
       },
       "created": "A new Appointment is created with identifier {{ param }}",

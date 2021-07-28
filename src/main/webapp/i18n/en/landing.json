@@ -1,0 +1,34 @@
+{
+  "landing": {
+    "about": {
+      "title": "About",
+      "headLine": "Take your appointment control",
+      "headLine2": "always at hand.",
+      "text": "Our goal is to bring health to your fingertips, in the best possible way and that you always have your health care close by."
+    },
+    "cards": {
+      "title": "Services",
+      "firstTitle": "Appointments with your doctor",
+      "fistDesc": "With Medilab you can choose the doctor of your choice.",
+      "secondTitle": "Monitor your treatments",
+      "secondDesc": "Always know your treatments by their names.",
+      "thirdTitle": "History of illness",
+      "thirdDesc": "Have continuous access to your medical history."
+    },
+    "slider": {
+      "firstTitle": "Request your appointment",
+      "fistDesc": "With Medilab you can request your appointment with your doctor through direct contact.",
+      "secondTitle": "Treatment control",
+      "secondDesc": "Have a control of your treatments always at hand.",
+      "thirdTitle": "Evaluate your experience",
+      "thirdDesc": "At Medilab, you can evaluate our doctors so that our service is always the best for you."
+    },
+    "menu": {
+      "service": "Services",
+      "about": "About",
+      "account": "Account",
+      "register": "Register",
+      "login": "Log in"
+    }
+  }
+}

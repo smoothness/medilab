@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { LoginService } from './../login/login.service';
 import { AccountService } from './../core/auth/account.service';
+import { SweetAlertService } from "../shared/services/sweet-alert.service";
 
 @Component({
   selector: 'medi-login',
@@ -13,8 +14,6 @@ import { AccountService } from './../core/auth/account.service';
 export class LoginComponent implements OnInit, AfterViewInit {
   @ViewChild('username', { static: false })
   username!: ElementRef;
-
-  authenticationError = false;
 
   loginForm = this.fb.group({
     username: [null, [Validators.required]],
@@ -26,7 +25,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private accountService: AccountService,
     private loginService: LoginService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private sweetAlert: SweetAlertService
   ) {}
 
   ngOnInit(): void {
@@ -51,13 +51,14 @@ export class LoginComponent implements OnInit, AfterViewInit {
       })
       .subscribe(
         () => {
-          this.authenticationError = false;
           if (!this.router.getCurrentNavigation()) {
             // There were no routing during login (eg from navigationToStoredUrl)
             this.router.navigate(['/main']);
           }
         },
-        () => (this.authenticationError = true)
+        () => {
+          this.sweetAlert.showMsjError('login.messages.error.fail','login.messages.error.authentication');
+        }
       );
   }
 }

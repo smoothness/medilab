@@ -2,27 +2,31 @@
   "medilabApp": {
     "appointmentTreatmentAilment": {
       "home": {
-        "title": "Appointment Treatment Ailments",
+        "title": "diagnosiss",
         "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Appointment Treatment Ailment",
-        "createOrEditLabel": "Create or edit a Appointment Treatment Ailment",
-        "notFound": "No Appointment Treatment Ailments found"
+        "createLabel": "Create a new diagnosis",
+        "createOrEditLabel": "Create or edit a diagnosis",
+        "notFound": "No diagnosis found"
       },
-      "created": "A new Appointment Treatment Ailment is created with identifier {{ param }}",
-      "updated": "A Appointment Treatment Ailment is updated with identifier {{ param }}",
-      "deleted": "A Appointment Treatment Ailment is deleted with identifier {{ param }}",
+      "created": "A new diagnosis is created with identifier {{ param }}",
+      "updated": "A diagnosis is updated with identifier {{ param }}",
+      "deleted": "A diagnosis is deleted with identifier {{ param }}",
       "delete": {
-        "question": "Are you sure you want to delete Appointment Treatment Ailment {{ id }}?"
+        "question": "Are you sure you want to delete diagnosis {{ id }}?"
       },
       "detail": {
-        "title": "Appointment Treatment Ailment"
+        "title": "diagnosis"
       },
       "id": "ID",
       "description": "Description",
       "removed": "Removed",
       "ailment": "Ailment",
       "treatment": "Treatment",
-      "appointment": "Appointment"
+      "appointment": "Appointment",
+      "diagnosis": "Detailed Diagnosis",
+      "date": "Date",
+      "duration": "Duration",
+      "specification": "Specification"
     }
   }
 }

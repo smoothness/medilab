@@ -1,36 +1,36 @@
 <div class="row justify-content-center">
-  <div class="col-8">
-    <div *ngIf="ailment">
-      <h2 data-cy="ailmentDetailsHeading"><span mediTranslate="medilabApp.ailment.detail.title">Ailment</span></h2>
+    <div class="col-8">
+        <div *ngIf="ailment">
+            <h2 data-cy="ailmentDetailsHeading"><span mediTranslate="medilabApp.ailment.detail.title">Ailment</span></h2>
 
-      <hr />
+            <hr />
 
-      <medi-alert-error></medi-alert-error>
+            <medi-alert-error></medi-alert-error>
 
-      <medi-alert></medi-alert>
+            <medi-alert></medi-alert>
 
-      <dl class="row-md jh-entity-details">
-        <dt><span mediTranslate="global.field.id">ID</span></dt>
-        <dd>
-          <span>{{ ailment.id }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.ailment.name">Name</span></dt>
-        <dd>
-          <span>{{ ailment.name }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.ailment.removed">Removed</span></dt>
-        <dd>
-          <span>{{ ailment.removed }}</span>
-        </dd>
-      </dl>
+            <dl class="row-md jh-entity-details">
+                <dt><span mediTranslate="global.field.id">ID</span></dt>
+                <dd>
+                    <span>{{ ailment.id }}</span>
+                </dd>
+                <dt><span mediTranslate="medilabApp.ailment.name">Name</span></dt>
+                <dd>
+                    <span>{{ ailment.name }}</span>
+                </dd>
+                <dt><span mediTranslate="medilabApp.ailment.removed">Removed</span></dt>
+                <dd>
+                    <span>{{ ailment.removed | truefalse }}</span>
+                </dd>
+            </dl>
 
-      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+            <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span mediTranslate="entity.action.back">Back</span>
       </button>
 
-      <button type="button" [routerLink]="['/ailment', ailment.id, 'edit']" class="btn btn-primary">
+            <button type="button" [routerLink]="['/main/ailment', ailment.id, 'edit']" class="btn btn-primary">
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span mediTranslate="entity.action.edit">Edit</span>
       </button>
+        </div>
     </div>
-  </div>
 </div>

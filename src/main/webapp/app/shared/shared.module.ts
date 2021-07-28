@@ -1,4 +1,8 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+
+import { fontAwesomeIcons } from './../config/font-awesome-icons';
 
 import { SharedLibsModule } from './shared-libs.module';
 import { FindLanguageFromKeyPipe } from './language/find-language-from-key.pipe';
@@ -12,9 +16,10 @@ import { FormatMediumDatePipe } from './date/format-medium-date.pipe';
 import { SortByDirective } from './sort/sort-by.directive';
 import { SortDirective } from './sort/sort.directive';
 import { ItemCountComponent } from './pagination/item-count.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
-  imports: [SharedLibsModule],
+  imports: [RouterModule, SharedLibsModule],
   declarations: [
     FindLanguageFromKeyPipe,
     TranslateDirective,
@@ -27,6 +32,7 @@ import { ItemCountComponent } from './pagination/item-count.component';
     SortByDirective,
     SortDirective,
     ItemCountComponent,
+    HeaderComponent,
   ],
   exports: [
     SharedLibsModule,
@@ -41,6 +47,11 @@ import { ItemCountComponent } from './pagination/item-count.component';
     SortByDirective,
     SortDirective,
     ItemCountComponent,
+    HeaderComponent,
   ],
 })
-export class SharedModule {}
+export class SharedModule {
+  constructor(iconLibrary: FaIconLibrary) {
+    iconLibrary.addIcons(...fontAwesomeIcons);
+  }
+}

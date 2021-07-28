@@ -1,0 +1,144 @@
+<header class="fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" routerLink="/home">
+      <img src="./content/images/logo.png" width="30" class="d-inline-block p-0 m-0" />
+      Medilab
+    </a>
+
+    <button class="navbar-toggler" type="button" (click)="collapse()">&#9776;</button>
+
+    <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse justify-content-end">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link font-weight-normal" mediTranslate="landing.menu.service" href="javascript:void(0);">Services</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link font-weight-normal" mediTranslate="landing.menu.about" href="javascript:void(0);">About</a>
+        </li>
+        <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" *ngIf="languages && languages.length > 1">
+          <a class="nav-link font-weight-normal dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
+            <span>
+              <fa-icon icon="flag"></fa-icon>
+              <span mediTranslate="global.menu.language">Language</span>
+            </span>
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesnavBarDropdown">
+            <li *ngFor="let language of languages">
+              <a class="dropdown-item" href="javascript:void(0);" (click)="changeLanguage(language)">{{
+                language | findLanguageFromKey
+              }}</a>
+            </li>
+          </ul>
+        </li>
+
+        <li ngbDropdown class="nav-item dropdown pointer" display="dynamic">
+          <a class="nav-link font-weight-normal dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
+            <span>
+              <fa-icon icon="user"></fa-icon>
+              <span mediTranslate="landing.menu.account">Account</span>
+            </span>
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu>
+            <li>
+              <a class="dropdown-item" routerLink="/register" mediTranslate="landing.menu.register"> Register </a>
+            </li>
+
+            <li>
+              <a class="dropdown-item" routerLink="/" mediTranslate="landing.menu.login"> Log in </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main class="row p-0 m-0">
+  <!-- Slider Section -->
+  <section class="col-12 p-0 m-0">
+    <ngb-carousel>
+      <ng-template ngbSlide *ngFor="let slider of sliderData">
+        <div>
+          <img src="{{ slider.img }}" class="w-100 img-fluid imageSlider" />
+        </div>
+        <div class="carousel-caption font-weight-normal">
+          <h2>{{ slider.title | translate }}</h2>
+          <p>{{ slider.desc | translate }}</p>
+        </div>
+      </ng-template>
+    </ngb-carousel>
+  </section>
+
+  <!-- Services -->
+  <section class="col-12 p-0 m-0">
+    <div class="container mt-4 pb-5 border-bottom">
+      <div class="row">
+        <div class="col-12 text-center my-5">
+          <h2 mediTranslate="landing.cards.title">Services</h2>
+        </div>
+
+        <div class="col-md-4" *ngFor="let card of cardsServices">
+          <div class="card mb-4 bg-dark box-shadow">
+            <img class="card-img-top cardImage" src="{{ card.img }}" />
+            <div class="card-body">
+              <h5 class="card-title">{{ card.title | translate }}</h5>
+              <p class="card-text text-justify">{{ card.desc | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+
+  <section class="col-12 mb-5">
+    <div class="row">
+      <div class="col-12 text-center my-5">
+        <h2 mediTranslate="landing.about.title">About</h2>
+      </div>
+
+      <div class="row p-0 m-0 w-75 mx-auto">
+        <div class="col-md-7 pt-4">
+          <div class="mb-3">
+            <h2 mediTranslate="landing.about.headLine"></h2>
+            <h2 class="text-muted" mediTranslate="landing.about.headLine2"></h2>
+          </div>
+
+          <p class="lead text-justify" mediTranslate="landing.about.text"></p>
+        </div>
+
+        <div class="col-md-5">
+          <img class="img-fluid mx-auto" src="./content/images/landing/info.jpg" />
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="container py-5 mt-5 border-top">
+  <div class="row">
+    <div class="col-12 col-md">
+      <a href="https://landinglogeek.000webhostapp.com" target="_blank">
+        <img src="./content/images/logeek.png" alt="" width="25" />
+
+        <small class="d-block mb-3 text-muted">2021</small>
+      </a>
+    </div>
+
+    <ul class="nav justify-content-end">
+      <li class="nav-item">
+        <a class="nav-link" mediTranslate="landing.menu.service" href="javascript:void(0);"></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" mediTranslate="landing.menu.about" href="javascript:void(0);"></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" mediTranslate="landing.menu.register" routerLink="/register"></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" mediTranslate="landing.menu.login" routerLink="/"></a>
+      </li>
+    </ul>
+  </div>
+</footer>

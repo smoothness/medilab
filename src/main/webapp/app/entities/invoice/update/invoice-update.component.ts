@@ -64,6 +64,10 @@ export class InvoiceUpdateComponent implements OnInit {
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IInvoice>>): void {
+    result.subscribe(data => {
+      console.log({ data });
+    });
+
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
       () => this.onSaveSuccess(),
       () => this.onSaveError()

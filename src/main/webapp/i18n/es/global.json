@@ -48,8 +48,8 @@
       "language": "Idioma"
     },
     "form": {
-      "username.label": "Usuario",
-      "username.placeholder": "Nombre de usuario",
+      "identification.label": "Identificación",
+      "identification.placeholder": "Su cédula de identidad",
       "currentpassword.label": "Contraseña actual",
       "currentpassword.placeholder": "Contraseña actual",
       "newpassword.label": "Nueva contraseña",
@@ -57,7 +57,17 @@
       "confirmpassword.label": "Confirmación de la nueva contraseña",
       "confirmpassword.placeholder": "Confirmación de la nueva contraseña",
       "email.label": "Correo electrónico",
-      "email.placeholder": "Su correo electrónico"
+      "email.placeholder": "Su correo electrónico",
+      "name.label": "Nombre",
+      "name.placeholder": "Su nombre",
+      "lastname.label": "Apellido",
+      "lastname.placeholder": "Su apellido",
+      "secondlastname.label": "Segundo apellido",
+      "secondlastname.placeholder": "Su segundo apellido",
+      "phone.label": "Teléfono",
+      "phone.placeholder": "Su teléfono",
+      "relationship": "Parentesco",
+      "userType": "Tipo de usuario"
     },
     "messages": {
       "info": {
@@ -151,5 +161,6 @@
       "not.image": "Se esperaba que el fichero fuera una imagen pero se encontro \"{{ fileType }}\""
     }
   },
+  "swalBtn": "Aceptar",
   "footer": "Pie de página"
 }

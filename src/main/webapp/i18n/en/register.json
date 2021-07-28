@@ -1,23 +1,44 @@
 {
   "register": {
-    "title": "Registration",
+    "title": "Create account",
+    "tabs": {
+      "personalInfo": "Personal information",
+      "contactInfo": "Contact information",
+      "emergencyContact": "Emergency contact"
+    },
     "form": {
-      "button": "Register"
+      "step": "Step",
+      "of": "of",
+      "button": "Register",
+      "next": "Next",
+      "previous": "Previous",
+      "contact": "Contact",
+      "addContact": "Add emergency contact",
+      "delContact": "Delete contact",
+      "specialty": "Specialty"
     },
     "messages": {
       "validate": {
         "login": {
-          "required": "Your username is required.",
-          "minlength": "Your username is required to be at least 1 character.",
-          "maxlength": "Your username cannot be longer than 50 characters.",
-          "pattern": "Your username is invalid."
-        }
+          "required": "Identification is required.",
+          "minlength": "Identification is required to be at least 9 character.",
+          "maxlength": "Identification cannot be longer than 50 characters.",
+          "pattern": "Identification is invalid."
+        },
+        "name": { "required": "The name is required." },
+        "lastName": { "required": "The lastName is required." },
+        "phone": { "required": "The phone is required." },
+        "email": { "required": "The email is required." },
+        "relationship": { "required": "The relationship is required." }
       },
-      "success": "<strong>Registration saved!</strong> Please check your email for confirmation.",
+      "success": "Registration saved!",
+      "emailConfirm": "Please check your email for confirmation.",
+      "successInternal": "",
       "error": {
-        "fail": "<strong>Registration failed!</strong> Please try again later.",
-        "userexists": "<strong>Login name already registered!</strong> Please choose another one.",
-        "emailexists": "<strong>Email is already in use!</strong> Please choose another one."
+        "error": "An error has occurred.",
+        "fail": "Registration failed! Please try again later.",
+        "userexists": "Identification already exists!",
+        "emailexists": "Email is already in use! Please choose another one."
       }
     }
   }

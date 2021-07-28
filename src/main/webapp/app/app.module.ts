@@ -1,32 +1,32 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
-import { registerLocaleData } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import locale from '@angular/common/locales/es';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { TranslateModule, TranslateService, TranslateLoader, MissingTranslationHandler } from '@ngx-translate/core';
 import { NgxWebstorageModule, SessionStorageService } from 'ngx-webstorage';
 import * as dayjs from 'dayjs';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { NgbDateAdapter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 
 import { SERVER_API_URL } from './app.constants';
 import { ApplicationConfigService } from './core/config/application-config.service';
-import './config/dayjs';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
-import { LayoutsModule } from "./layouts/layouts.module";
-
+import { LayoutsModule } from './layouts/layouts.module';
+import './config/dayjs';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { NgbDateDayjsAdapter } from './config/datepicker-adapter';
-import { fontAwesomeIcons } from './config/font-awesome-icons';
 import { httpInterceptorProviders } from './core/interceptor/index';
 import { translatePartialLoader, missingTranslationHandler } from './config/translation.config';
+import { FilterNotCancelled } from './shared/pipes/filterNotCancelled.pipe';
 
-import { LayoutsComponent } from "./layouts/layouts.component";
+import { LayoutsComponent } from './layouts/layouts.component';
 
 @NgModule({
   imports: [
+    CommonModule,
     BrowserModule,
     SharedModule,
     LayoutsModule,
@@ -47,6 +47,7 @@ import { LayoutsComponent } from "./layouts/layouts.component";
         useFactory: missingTranslationHandler,
       },
     }),
+    SweetAlert2Module.forRoot(),
   ],
   providers: [
     Title,
@@ -54,22 +55,18 @@ import { LayoutsComponent } from "./layouts/layouts.component";
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
     httpInterceptorProviders,
   ],
-  declarations: [
-    LayoutsComponent
-  ],
+  declarations: [LayoutsComponent, FilterNotCancelled],
   bootstrap: [LayoutsComponent],
 })
 export class AppModule {
   constructor(
     applicationConfigService: ApplicationConfigService,
-    iconLibrary: FaIconLibrary,
     dpConfig: NgbDatepickerConfig,
     translateService: TranslateService,
     sessionStorageService: SessionStorageService
   ) {
     applicationConfigService.setEndpointPrefix(SERVER_API_URL);
     registerLocaleData(locale);
-    iconLibrary.addIcons(...fontAwesomeIcons);
     dpConfig.minDate = { year: dayjs().subtract(100, 'year').year(), month: 1, day: 1 };
     translateService.setDefaultLang('es');
     // if user have changed language and navigates away from the application and back to the application then use previously choosed language

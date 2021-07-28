@@ -7,7 +7,7 @@
 Bootstrap tweaks
 ===============================================================*/
 
-body{
+body {
   font-weight: 300;
   background: $dark-bgd !important;
 }
@@ -205,6 +205,10 @@ ui bootstrap tweaks
 }
 
 /** overwrites **/
+.container {
+  margin-top: 2rem;
+}
+
 a {
   color: $brand-light;
 }

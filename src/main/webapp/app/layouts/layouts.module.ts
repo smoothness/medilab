@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { SharedModule } from "./../shared/shared.module";
-import { LayoutsRoutesModule } from "./layouts-routes.module";
+import { SharedModule } from './../shared/shared.module';
+import { LayoutsRoutesModule } from './layouts-routes.module';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
@@ -16,19 +16,19 @@ import { MainComponent } from './main/main.component';
     FooterComponent,
     NavbarComponent,
     MainComponent,
-    PageRibbonComponent,
+    PageRibbonComponent
   ],
   exports: [
     ActiveMenuDirective,
     FooterComponent,
     NavbarComponent,
     MainComponent,
-    PageRibbonComponent,
+    PageRibbonComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
-    LayoutsRoutesModule,
-  ]
+    LayoutsRoutesModule
+  ],
 })
-export class LayoutsModule { }
+export class LayoutsModule {}
