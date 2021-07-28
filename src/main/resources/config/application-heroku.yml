@@ -26,3 +26,21 @@ spring:
       maximumPoolSize: 8
 server:
   port: ${PORT:8080}
+
+jpa:
+  liquibase:
+    contexts: prod
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: superadmi.medilab@gmail.com
+    password: logeek2021
+    protocol: smtp
+    tls: true
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
+      ssl.trust: smtp.gmail.com
+
+  thymeleaf:
+    cache: true
