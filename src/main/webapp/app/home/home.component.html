@@ -16,9 +16,6 @@
           <div class="card-body">
             <!-- START Top left card / Patient Block -->
             <div *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
-              <!-- <a href="#" class="btn btn-secondary" mediTranslate="home.viewLastAppointment" [routerLink]="['/appointment/1/view']">
-                Ver última cita
-              </a> -->
               <a
                 target="_blank"
                 class="btn btn-secondary"
@@ -35,7 +32,7 @@
                 id="jh-create-entity"
                 data-cy="entityCreateButton"
                 class="btn btn-primary jh-create-entity create-appointment"
-                [routerLink]="['/main/appointment/new']"
+                [routerLink]="['/main/appointment/new', { doctorId: theDoctorId }]"
               >
                 <fa-icon icon="plus"></fa-icon>
                 <span mediTranslate="home.createNewAppointment">Crear una nueva cita</span>
@@ -127,7 +124,6 @@
           <div class="card bg-dark">
             <h5 class="card-header">
               <span mediTranslate="medilabApp.emergencyContact.home.title" class="m-0 p-0">Contact(s) en caso de una emergencia</span>
-
               <div class="d-flex justify-content-end m-0 p-0">
                 <button
                   *ngIf="emergencyContactsTotal < 3"
@@ -243,14 +239,14 @@
                     Detalle
                   </a>
                   <button
-                    class="btn btn-primary btn-sm"
+                    class="btn btn-primary btn-sm mr-1"
                     mediTranslate="home.viewPatient"
                     [routerLink]="['/main/patient', appointment.patient.id, 'view']"
                   >
                     View Patient
                   </button>
                   <button
-                    class="btn btn-warning btn-sm mr-1"
+                    class="btn btn-tertiary btn-sm mr-1"
                     mediTranslate="home.appointmentDateChange"
                     (click)="openChangeDateModal(changeDateModal, i)"
                   >

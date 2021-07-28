@@ -20,7 +20,6 @@ import { Status } from 'app/entities/enumerations/status.model';
 import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
 import { EmergencyContactService } from 'app/entities/emergency-contact/service/emergency-contact.service';
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
-import { UserService } from 'app/entities/user/user.service';
 import { EmergencyContactUpdateComponent } from '../entities/emergency-contact/update/emergency-contact-update.component';
 import { EmergencyContactRegisterComponent } from '../entities/emergency-contact/register/emergency-contact-register.component';
 
@@ -35,7 +34,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   patient: Patient | null = null;
   doctor: Doctor | null = null;
   thePatient: any;
-  theDoctor: any;
+  theDoctorId = 0;
   emergencyContacts: IEmergencyContact[] = [];
   emergencyContact: EmergencyContact | null = null;
   isLoadingEmergencyContact = false;
@@ -55,7 +54,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private sweetAlertService: SweetAlertService,
     private accountService: AccountService,
-    private userService: UserService,
     private patientService: PatientService,
     private doctorService: DoctorService,
     private appointmentService: AppointmentService,
@@ -78,8 +76,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
 
       if (this.account?.authorities[0] === 'ROLE_USER') {
-        this.doctorService.findByInternalUser(this.account.id).subscribe(res => {
-          this.appointmentService.findDoctorAppointments(<number>res.body?.id).subscribe((response: any) => {
+        this.doctorService.findByInternalUser(this.account.id).subscribe((res: any) => {
+          this.theDoctorId = res.body.id;
+          this.appointmentService.findDoctorAppointments(this.theDoctorId).subscribe((response: any) => {
             let index = 0;
             this.appointmentsDoctor = response.body;
             this.formatPatientData(this.appointmentsDoctor).subscribe(data => {
