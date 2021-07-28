@@ -40,6 +40,14 @@ public interface AppointmentService {
     Optional<Appointment> findOne(Long id);
 
     /**
+     * Get the list of appointments.
+     *
+     * @param id the id of the doctor.
+     * @return the list appointments.
+     */
+    List<Appointment> findDoctorAppointments(Long id);
+
+    /**
      * Delete the "id" appointment.
      *
      * @param id the id of the entity.

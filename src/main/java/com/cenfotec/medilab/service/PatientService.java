@@ -39,6 +39,8 @@ public interface PatientService {
      */
     Optional<Patient> findOne(Long id);
 
+    Patient findByInternalUser(Long id);
+
     /**
      * Delete the "id" patient.
      *

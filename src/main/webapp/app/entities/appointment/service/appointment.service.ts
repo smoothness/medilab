@@ -45,6 +45,10 @@ export class AppointmentService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  findDoctorAppointments(doctorId: number): Observable<EntityResponseType> {
+    return this.http.get<IAppointment>(`${this.resourceUrl}-doctor/${doctorId}`, { observe: 'response' });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http

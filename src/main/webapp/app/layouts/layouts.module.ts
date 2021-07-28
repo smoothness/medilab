@@ -9,6 +9,7 @@ import { FooterComponent } from './footer/footer.component';
 import { PageRibbonComponent } from './profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './navbar/active-menu.directive';
 import { MainComponent } from './main/main.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -16,14 +17,16 @@ import { MainComponent } from './main/main.component';
     FooterComponent,
     NavbarComponent,
     MainComponent,
-    PageRibbonComponent
+    PageRibbonComponent,
+    UserProfileComponent
   ],
   exports: [
     ActiveMenuDirective,
     FooterComponent,
     NavbarComponent,
     MainComponent,
-    PageRibbonComponent
+    PageRibbonComponent,
+    UserProfileComponent
   ],
   imports: [
     CommonModule,

@@ -67,7 +67,7 @@ describe('Component Tests', () => {
         activatedRoute.data = of({ emergencyContact });
         comp.ngOnInit();
 
-        expect(comp.editForm.value).toEqual(expect.objectContaining(emergencyContact));
+        expect(comp.emergencyContactForm.value).toEqual(expect.objectContaining(emergencyContact));
         expect(comp.patientsSharedCollection).toContain(patient);
       });
     });

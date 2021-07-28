@@ -2,7 +2,7 @@
   "medilabApp": {
     "doctor": {
       "home": {
-        "title": "Doctors",
+        "title": "Lista de médicos",
         "refreshListLabel": "Refrescar lista",
         "createLabel": "Crear nuevo Doctor",
         "createOrEditLabel": "Crear o editar Doctor",
@@ -18,12 +18,17 @@
         "title": "Doctor"
       },
       "id": "ID",
-      "specialty": "Specialty",
+      "specialty": "Especialidad",
       "active": "Active",
       "internalUser": "Internal User",
       "ratingUser": "Rating User",
       "commentUser": "Comment User",
-      "internalUser": "Internal User"
+      "internalUser": "Internal User",
+      "list": {
+        "completeName": "Nombre del médico",
+        "email": "Correo electrónico",
+        "btnDate": "Solicitar cita"
+      }
     }
   }
 }

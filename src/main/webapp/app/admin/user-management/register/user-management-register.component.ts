@@ -96,10 +96,6 @@ export class UserManagementRegisterComponent {
     )
   }
 
-  public validateUser(): void {
-    console.log(this.registerForm.value);
-  }
-
   validateUserData(contact: any): void {
     const newUser: User = new User(this.registerForm.value);
 

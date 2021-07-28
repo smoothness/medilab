@@ -43,6 +43,25 @@ export class SweetAlertService {
     });
   }
 
+  public showConfirmMsg(messageConfig: any): Promise<boolean> {
+    return new Promise((resolve) => {
+      Swal.fire({
+        title: this.translateService.instant(messageConfig.title),
+        text: this.translateService.instant(messageConfig.text),
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText:this.translateService.instant(messageConfig.cancelButtonText),
+        confirmButtonText: this.translateService.instant(messageConfig.confirmButtonText)
+      }).then((result) => {
+        if (result.isConfirmed) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    });
+  }
+
   private showAlert({ icon, title, text }: msjConfig): Promise<boolean> {
    return new Promise((resolve) => {
      Swal.fire(<any>{
