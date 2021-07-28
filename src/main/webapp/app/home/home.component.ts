@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   isLoadingAppointmentTreatmentAilment = false;
   appointmentTreatmentAilmentNew: IAppointmentTreatmentAilment[] | null = null;
   authority: string | undefined;
-  appointmentsDoctor: any[] | undefined = [];
+  appointmentsDoctor: any[] = [];
   appointmentsPatient: any[] | undefined = [];
   ailmentsPatient: any[] | undefined = [];
   closeModal: string | undefined;
@@ -203,7 +203,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   openChangeDateModal(content: any, clickedElementIndex: any): void {
-    if (this.appointmentsDoctor?.length) {
+    if (this.appointmentsDoctor.length) {
       this.appointmentToChangeDate = this.appointmentsDoctor[clickedElementIndex];
     }
     this.modalService.open(content);

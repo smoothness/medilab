@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Patient } from './../../../core/auth/account.model';
-import { IPatient } from '../patient.model';
 import { AilmentService } from '../../ailment/service/ailment.service';
 import { EmergencyContactService } from '../../emergency-contact/service/emergency-contact.service';
 

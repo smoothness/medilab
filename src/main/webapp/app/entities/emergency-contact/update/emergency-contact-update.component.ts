@@ -6,7 +6,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
-import { IEmergencyContact, EmergencyContact } from '../emergency-contact.model';
+import { IEmergencyContact } from '../emergency-contact.model';
 import { EmergencyContactService } from '../service/emergency-contact.service';
 import { IPatient } from 'app/entities/patient/patient.model';
 import { PatientService } from 'app/entities/patient/service/patient.service';
