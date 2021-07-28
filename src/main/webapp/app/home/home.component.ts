@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse } from '@angular/common/http';
@@ -14,20 +14,21 @@ import { Doctor } from 'app/entities/doctor/doctor.model';
 
 import { AppointmentTreatmentAilmentService } from 'app/entities/appointment-treatment-ailment/service/appointment-treatment-ailment.service';
 import { IAppointmentTreatmentAilment } from 'app/entities/appointment-treatment-ailment/appointment-treatment-ailment.model';
-
 import { IAppointment } from 'app/entities/appointment/appointment.model';
+
 import { Status } from 'app/entities/enumerations/status.model';
 import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
 import { EmergencyContactService } from 'app/entities/emergency-contact/service/emergency-contact.service';
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactDeleteDialogComponent } from '../entities/emergency-contact/delete/emergency-contact-delete-dialog.component';
-import { IAilment } from 'app/entities/ailment/ailment.model';
 import { UserService } from 'app/entities/user/user.service';
+
 
 @Component({
   selector: 'medi-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
@@ -44,7 +45,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   // authority: string | undefined;
   appointmentsDoctor: any[] | undefined = [];
   appointmentsPatient: any[] | undefined = [];
-  ailmentsPatient: any[] | undefined = [];
+  ailmentsPatient : any[] | undefined = [];
+  closeModal: string | undefined;
+  ailment : any;
   private readonly destroy$ = new Subject<void>();
 
   constructor(
@@ -108,12 +111,12 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.appointmentsPatient = data.body?.filter(appointment => {
           this.accountService.retrieveUserById(Number(appointment.doctor?.id)).subscribe(doctor => {
             Object.assign(appointment.doctor, doctor);
-            console.log('doctor', doctor);
           });
           return appointment.patient?.id === this.thePatient?.id;
         });
         this.getAilmentsPatient();
       });
+
     });
     this.loadAllEmergencyContact();
     this.loadAllAppoiments();
@@ -137,18 +140,20 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  getAilmentsPatient(): void {
-    this.appointmentTreatmentAilmentService.query().subscribe(data => {
-      this.appointmentsPatient?.forEach(appointment => {
-        if (data.body !== null) {
-          data.body.forEach(element => {
-            if (element.appointment?.id === appointment.id) {
-              this.ailmentsPatient?.push(element);
-            }
-          });
-        }
-      });
+  getAilmentsPatient(): void{
+  this.appointmentTreatmentAilmentService.query()
+  .subscribe(data => {
+    this.appointmentsPatient?.forEach(appointment => {
+      if (data.body !== null){
+        data.body.forEach(element => {
+          if(element.appointment?.id === appointment.id){
+            this.ailmentsPatient?.push(element);
+          }
+        });
+      }
+
     });
+  });
   }
 
   trackId(index: number, item: IEmergencyContact): number {
@@ -209,4 +214,14 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     );
   }
+
+  open(content : any, ailment : any): void {
+   this.modalService.open(content, {
+     windowClass: 'elementoPrueba'
+    }
+    )
+   console.log("Pedrito" , ailment )
+   this.ailment = ailment;
+  }
+
 }

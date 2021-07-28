@@ -4,25 +4,29 @@
       "home": {
         "title": "Appointment Treatment Ailments",
         "refreshListLabel": "Refrescar lista",
-        "createLabel": "Crear nuevo Appointment Treatment Ailment",
-        "createOrEditLabel": "Crear o editar Appointment Treatment Ailment",
-        "notFound": "Ningún Appointment Treatment Ailments encontrado"
+        "createLabel": "Crear nuevo diagnóstico",
+        "createOrEditLabel": "Crear o editar diagnóstico",
+        "notFound": "Ningún  diagnóstico detectado"
       },
-      "created": "Un nuevo Appointment Treatment Ailment ha sido creado con el identificador {{ param }}",
-      "updated": "Un Appointment Treatment Ailment ha sido actualizado con el identificador {{ param }}",
-      "deleted": "Un Appointment Treatment Ailment ha sido eliminado con el identificador {{ param }}",
+      "created": "Un nuevo diagnóstico ha sido creado con el identificador {{ param }}",
+      "updated": "Un diagnóstico ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un diagnóstico ha sido eliminado con el identificador {{ param }}",
       "delete": {
-        "question": "¿Seguro que quiere eliminar Appointment Treatment Ailment {{ id }}?"
+        "question": "¿Seguro que quiere eliminar diagnóstico {{ id }}?"
       },
       "detail": {
-        "title": "Appointment Treatment Ailment"
+        "title": "Diagnóstico"
       },
       "id": "ID",
-      "description": "Description",
-      "removed": "Removed",
-      "ailment": "Ailment",
-      "treatment": "Treatment",
-      "appointment": "Appointment"
+      "description": "Descripción",
+      "removed": "Removido",
+      "ailment": "Padecimiento",
+      "treatment": "Tratamiento",
+      "appointment": "Cita",
+      "diagnosis": "Diagnóstico detallado",
+      "date": "Fecha",
+      "duration": "Duración",
+      "specification": "Especificación"
     }
   }
 }

@@ -50,6 +50,10 @@ Main page styles
       a {
         margin-left: auto;
       }
+
+      button {
+        margin-left: auto;
+      }
     }
   }
 
@@ -73,3 +77,52 @@ Main page styles
     margin: 0;
   }
 }
+
+
+
+
+
+
+/* Modal */
+
+.modal-content{
+  margin-top:  6rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #101010 !important;
+
+  .card-header, b, span{
+    color: #fff;
+    
+  }
+
+  span{
+    margin-left: auto;
+  }
+
+
+}
+
+
+
+
+/* Ailments */
+
+.ml-ailment{
+  margin-top: 1em;
+
+  svg {
+    margin-right: 1rem;
+  }
+
+  button {
+    margin-left: auto;
+  }
+
+  li {
+    align-items: center;
+    display: flex;
+  }
+  
+}
+
