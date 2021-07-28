@@ -6,6 +6,7 @@ import { EmergencyContactUpdateComponent } from './update/emergency-contact-upda
 import { EmergencyContactDeleteDialogComponent } from './delete/emergency-contact-delete-dialog.component';
 import { EmergencyContactRoutingModule } from './route/emergency-contact-routing.module';
 import { RegisterModule } from "../../account/register/register.module";
+import { EmergencyContactRegisterComponent } from './register/emergency-contact-register.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { RegisterModule } from "../../account/register/register.module";
     EmergencyContactDetailComponent,
     EmergencyContactUpdateComponent,
     EmergencyContactDeleteDialogComponent,
+    EmergencyContactRegisterComponent,
   ],
   entryComponents: [EmergencyContactDeleteDialogComponent],
 })

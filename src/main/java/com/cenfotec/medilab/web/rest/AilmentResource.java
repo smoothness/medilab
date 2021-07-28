@@ -152,6 +152,12 @@ public class AilmentResource {
         return ResponseUtil.wrapOrNotFound(ailment);
     }
 
+    @GetMapping("/ailments-patient/{id}")
+    public ResponseEntity<List<Ailment>> getAilmentsForPatient(@PathVariable Long id) {
+        List<Ailment> ailments = ailmentService.findAllPatientAilments(id);
+        return ResponseEntity.ok(ailments);
+    }
+
     /**
      * {@code DELETE  /ailments/:id} : delete the "id" ailment.
      *

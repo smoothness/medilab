@@ -26,7 +26,8 @@
       "emergencyContact": "Emergency Contact",
       "ratingUser": "Rating User",
       "commentUser": "Comment User",
-      "internalUser": "Internal User"
+      "internalUser": "Internal User",
+      "ailmentName": "Nombre:"
     }
   }
 }

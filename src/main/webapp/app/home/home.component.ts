@@ -22,6 +22,7 @@ import { EmergencyContactService } from 'app/entities/emergency-contact/service/
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { UserService } from 'app/entities/user/user.service';
 import {EmergencyContactUpdateComponent} from "../entities/emergency-contact/update/emergency-contact-update.component";
+import {EmergencyContactRegisterComponent} from "../entities/emergency-contact/register/emergency-contact-register.component";
 
 @Component({
   selector: 'medi-home',
@@ -88,7 +89,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
   }
 
-  formatPatientData(appointments: any): Observable<any> {
+  public formatPatientData(appointments: any): Observable<any> {
     return new Observable(subscriber => {
       for (const appointment of appointments[Symbol.iterator]()) {
         this.patientService.find(appointment.patient.id).subscribe((patient) => {
@@ -97,7 +98,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     });
   }
-
 
   public autenticatedAccount(): void {
     this.accountService.formatUserIdentity().subscribe((user) => {
@@ -121,24 +121,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.loadAllEmergencyContact();
     this.loadAllAppoiments();
   }
-
- /***mergeAccountWithDoctor(account: Account): void {
-    this.doctorService.query().subscribe(res => {
-      this.theDoctor = res.body?.find(doctor => doctor.internalUser?.id === account.id);
-      this.appointmentService.query().subscribe(data => {
-        this.appointmentsDoctor = data.body?.filter(appointment => {
-          /** the information returned from the server of the doctor is incorrect
-          // it is based on the doctor id, not the internal user id
-          // same with the patient, that's why it is needed the patient internal user id
-          // to query with the internal user id for the actual patient
-          this.patientService.find(Number(appointment.patient?.id)).subscribe(patient => {
-            Object.assign(appointment.patient, patient.body);
-          });
-          return appointment.doctor?.id === this.theDoctor?.internalUser.id && appointment.status !== 'CANCELED';
-        });
-      });
-    });
-  }*/
 
   getAilmentsPatient(): void {
     this.appointmentTreatmentAilmentService.query().subscribe(data => {
@@ -175,7 +157,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  deleteEmergencyContact(emergencyContact: IEmergencyContact): void {
+  public deleteEmergencyContact(emergencyContact: IEmergencyContact): void {
     this.sweetAlertService.showConfirmMsg({
       title: 'medilabApp.deleteConfirm.title',
       text: 'medilabApp.deleteConfirm.text',
@@ -221,6 +203,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public showCreateContactModal(): void {
-    //const modalRef = this.modalService.open(EmergencyContactUpdateComponent);
+    const modalRef = this.modalService.open(EmergencyContactRegisterComponent);
+    modalRef.componentInstance.patientId = this.currentUser.patientId;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'register') {
+        this.loadAllEmergencyContact();
+      }
+    });
   }
 }
