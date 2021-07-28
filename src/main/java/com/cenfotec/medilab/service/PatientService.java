@@ -41,6 +41,8 @@ public interface PatientService {
 
     Patient findByInternalUser(Long id);
 
+    Patient findPatientByAppointment( Long id);
+
     /**
      * Delete the "id" patient.
      *

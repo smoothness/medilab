@@ -78,6 +78,11 @@ public class PatientServiceImpl implements PatientService {
         return patientRepository.findByInternalUser(id);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Patient findPatientByAppointment(Long id){
+        return patientRepository.findPatientByAppointment(id);
+    }
 
     @Override
     public void delete(Long id) {
