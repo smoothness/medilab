@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
-// import { takeUntil } from 'rxjs/operators';
 import { SweetAlertService } from 'app/shared/services/sweet-alert.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
@@ -23,12 +23,11 @@ import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-cont
 import { EmergencyContactDeleteDialogComponent } from '../entities/emergency-contact/delete/emergency-contact-delete-dialog.component';
 import { UserService } from 'app/entities/user/user.service';
 
-
 @Component({
   selector: 'medi-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
@@ -42,12 +41,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   isLoadingAppointmentTreatmentAilment = false;
   appointmentTreatmentAilmentNew: IAppointmentTreatmentAilment[] | null = null;
   authority: string | undefined;
-  // authority: string | undefined;
   appointmentsDoctor: any[] | undefined = [];
   appointmentsPatient: any[] | undefined = [];
-  ailmentsPatient : any[] | undefined = [];
+  ailmentsPatient: any[] | undefined = [];
   closeModal: string | undefined;
-  ailment : any;
+  ailment: any;
+  updatedDate = new FormControl('');
+  appointmentToChangeDate: IAppointment | null = null;
   private readonly destroy$ = new Subject<void>();
 
   constructor(
@@ -117,7 +117,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         });
         this.getAilmentsPatient();
       });
-
     });
     this.loadAllEmergencyContact();
     this.loadAllAppoiments();
@@ -141,20 +140,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  getAilmentsPatient(): void{
-  this.appointmentTreatmentAilmentService.query()
-  .subscribe(data => {
-    this.appointmentsPatient?.forEach(appointment => {
-      if (data.body !== null){
-        data.body.forEach(element => {
-          if(element.appointment?.id === appointment.id){
-            this.ailmentsPatient?.push(element);
-          }
-        });
-      }
-
+  getAilmentsPatient(): void {
+    this.appointmentTreatmentAilmentService.query().subscribe(data => {
+      this.appointmentsPatient?.forEach(appointment => {
+        if (data.body !== null) {
+          data.body.forEach(element => {
+            if (element.appointment?.id === appointment.id) {
+              this.ailmentsPatient?.push(element);
+            }
+          });
+        }
+      });
     });
-  });
   }
 
   trackId(index: number, item: IEmergencyContact): number {
@@ -216,13 +213,27 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
 
-  open(content : any, ailment : any): void {
-   this.modalService.open(content, {
-     windowClass: 'elementoPrueba'
+  openChangeDateModal(content: any, clickedElementIndex: any): void {
+    if (this.appointmentsDoctor?.length) {
+      this.appointmentToChangeDate = this.appointmentsDoctor[clickedElementIndex];
     }
-    )
-   console.log("Pedrito" , ailment )
-   this.ailment = ailment;
+    this.modalService.open(content);
   }
 
+  handleChangeDate(): void {
+    const newAppointment = {
+      ...this.appointmentToChangeDate,
+      date: this.updatedDate.value,
+    };
+    this.appointmentService.update(newAppointment).subscribe(() => {
+      this.sweetAlertService.showMsjInfo('home.messages.updatedAppointmentDatetitle', 'home.messages.updatedAppointmentDateMsj');
+      window.setTimeout(() => this.ngOnInit(), 1000);
+    });
+    this.modalService.dismissAll();
+  }
+
+  openAilmentModal(content: any, ailment: any): void {
+    this.modalService.open(content);
+    this.ailment = ailment;
+  }
 }

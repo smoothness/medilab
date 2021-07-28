@@ -16,9 +16,9 @@
           <div class="card-body">
             <!-- START Top left card / Patient Block -->
             <div *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
-              <a href="#" class="btn btn-secondary" mediTranslate="home.viewLastAppointment" [routerLink]="['/appointment/1/view']">
+              <!-- <a href="#" class="btn btn-secondary" mediTranslate="home.viewLastAppointment" [routerLink]="['/appointment/1/view']">
                 Ver última cita
-              </a>
+              </a> -->
               <a
                 target="_blank"
                 class="btn btn-secondary"
@@ -130,7 +130,7 @@
                   <div class="ml-ailment-data">
                     <b>{{ ailment.ailment.name }}</b>
                   </div>
-                  <button class="btn btn-secondary btn-sm mr-1" (click)="open(mymodal , ailment)">Detalle</button>
+                  <button class="btn btn-secondary btn-sm mr-1" (click)="openAilmentModal(addAilmentModal, ailment)">Detalle</button>
                 </li>
               </ul>
             </div>
@@ -195,7 +195,7 @@
           <h5 class="card-header" mediTranslate="home.upcomingAppointments">Próximas citas</h5>
           <div class="card-body">
             <ul class="list-group ml-profile__agenda">
-              <li class="list-group-item" *ngFor="let appointment of appointmentsDoctor; let i = index">
+              <li class="list-group-item" *ngFor="let appointment of appointmentsDoctor; let i = index" [id]="i">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -230,16 +230,25 @@
                     </span>
                   </div>
                 </div>
-                <a
-                  class="btn btn-secondary btn-sm mr-1"
-                  mediTranslate="home.appointmentDetail"
-                  [routerLink]="['/main/appointment', appointment.id, 'view']"
-                >
-                  Detalle
-                </a>
-                <button class="btn btn-danger btn-sm" mediTranslate="home.appointmentDelete" (click)="cancelAppointment(appointment)">
-                  Cancelar cita
-                </button>
+                <div class="ml-profile__appointment-patient-info-ctas">
+                  <a
+                    class="btn btn-secondary btn-sm mr-1"
+                    mediTranslate="home.appointmentDetail"
+                    [routerLink]="['/main/appointment', appointment.id, 'view']"
+                  >
+                    Detalle
+                  </a>
+                  <button
+                    class="btn btn-warning btn-sm mr-1"
+                    mediTranslate="home.appointmentDateChange"
+                    (click)="openChangeDateModal(changeDateModal, i)"
+                  >
+                    Cambiar fecha
+                  </button>
+                  <button class="btn btn-danger btn-sm" mediTranslate="home.appointmentDelete" (click)="cancelAppointment(appointment)">
+                    Cancelar cita
+                  </button>
+                </div>
               </li>
             </ul>
           </div>
@@ -251,59 +260,90 @@
   <!-- closes bootstrap container -->
 </div>
 
+<ng-template #changeDateModal>
+  <div class="change-date-modal">
+    <div class="mt-3">
+      <div class="card bg-dark">
+        <h5 class="card-header" mediTranslate="home.appointmentDateChangeModal.title">Cambiar la fecha de la cita</h5>
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+              <div class="input-group">
+                <input
+                  class="form-control"
+                  [formControl]="updatedDate"
+                  placeholder="dd/mm/yyyy"
+                  name="dp"
+                  ngbDatepicker
+                  #dateDp="ngbDatepicker"
+                />
+                <span class="input-group-append">
+                  <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()">
+                    <fa-icon icon="calendar-alt"></fa-icon>
+                  </button>
+                </span>
+              </div>
+              <div class="change-date-modal__button-container">
+                <button type="button" class="btn btn-primary" (click)="handleChangeDate()">Cambiar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
 
-<ng-template #mymodal let-modal >
-<div >
-  <!-- Ailment Detail Modal -->
-  <div class="mt-3">
+<ng-template #addAilmentModal let-modal>
+  <div>
+    <div class="mt-3">
       <div class="card bg-dark mb-3">
         <h5 class="card-header" mediTranslate="medilabApp.appointmentTreatmentAilment.diagnosis">Diagnóstico detallado</h5>
         <div class="card-body">
           <ul class="list-group ml-profile__agenda">
-            <li class="list-group-item" >
-              <div class="modal_card" >
+            <li class="list-group-item">
+              <div class="modal_card">
                 <div class="modal_data_info">
                   <b class="mr-2" mediTranslate="medilabApp.appointmentTreatmentAilment.date">Fecha</b>
                 </div>
-                <span class="badge bg-secondary" id="details">{{ailment.appointment.date}}</span>
+                <span class="badge bg-secondary" id="details">{{ ailment.appointment.date }}</span>
               </div>
             </li>
-            <li class="list-group-item" >
-              <div class="modal_card" >
+            <li class="list-group-item">
+              <div class="modal_card">
                 <div class="modal_data_info">
                   <b class="mr-2" mediTranslate="medilabApp.appointmentTreatmentAilment.ailment">Padecimiento</b>
                 </div>
-                <span class="badge bg-secondary" id="details">{{ailment.ailment.name}}</span>
+                <span class="badge bg-secondary" id="details">{{ ailment.ailment.name }}</span>
               </div>
             </li>
-             <li class="list-group-item" >
-              <div class="modal_card" >
+            <li class="list-group-item">
+              <div class="modal_card">
                 <div class="modal_data_info">
                   <b class="mr-2" mediTranslate="medilabApp.appointmentTreatmentAilment.treatment">Tratamiento</b>
                 </div>
-                <span class="badge bg-secondary" id="details">{{ailment.treatment.medicines}}</span>
+                <span class="badge bg-secondary" id="details">{{ ailment.treatment.medicines }}</span>
               </div>
             </li>
-            <li class="list-group-item" >
-              <div class="modal_card" >
+            <li class="list-group-item">
+              <div class="modal_card">
                 <div class="modal_data_info">
                   <b class="mr-2" mediTranslate="medilabApp.appointmentTreatmentAilment.duration">Duración</b>
                 </div>
-                <span class="badge bg-secondary" id="details">{{ailment.treatment.duration}}</span>
+                <span class="badge bg-secondary" id="details">{{ ailment.treatment.duration }}</span>
               </div>
             </li>
-            <li class="list-group-item" >
-              <div class="modal_card" >
+            <li class="list-group-item">
+              <div class="modal_card">
                 <div class="modal_data_info">
                   <b class="mr-2" mediTranslate="medilabApp.appointmentTreatmentAilment.specification">Especificación</b>
                 </div>
-                <span class="badge bg-secondary" id="details">{{ailment.treatment.specifications}}</span>
+                <span class="badge bg-secondary" id="details">{{ ailment.treatment.specifications }}</span>
               </div>
             </li>
           </ul>
         </div>
       </div>
+    </div>
   </div>
-</div>
-
 </ng-template>
