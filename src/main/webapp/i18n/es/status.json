@@ -2,10 +2,10 @@
   "medilabApp": {
     "Status": {
       "null": "",
-      "CANCELED": "CANCELED",
-      "PENDING": "PENDING",
-      "PAID": "PAID",
-      "FINISHED": "FINISHED"
+      "CANCELED": "Cancelado",
+      "PENDING": "Pendiente",
+      "PAID": "Pagado",
+      "FINISHED": "Concluido"
     }
   }
 }
