@@ -1,39 +1,16 @@
 <div class="container">
-  
-    <!--
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span mediTranslate="medilabApp.invoice.home.refreshListLabel">Refresh List</span>
-      </button>
-
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-invoice"
-        [routerLink]="['/invoice/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span mediTranslate="medilabApp.invoice.home.createLabel"> Create a new Invoice </span>
-      </button>
-    </div> 
    
-
-  <medi-alert-error></medi-alert-error>
-
-  <medi-alert></medi-alert> -->
-  
   <section class="row p-0 m-0">
     <div class="cold-md-10 mx-auto my-5 card bg-dark">
       <div class="text-center mt-3"> 
         <h2 mediTranslate="medilabApp.invoice.home.title"></h2>
       </div>
-      <div class="alert alert-warning" id="no-result" *ngIf="invoices?.length == undefined">
+      <div class="alert alert-warning" id="no-result" *ngIf="!invoices?.length">
         <span mediTranslate="medilabApp.invoice.home.notFound">No invoices found</span>
       </div>
 
       <div class="mt-4">
-        <div class="table-responsive" id="entities" *ngIf="invoices && invoices.length > 0">
+        <div class="table-responsive" id="entities" *ngIf="invoices && invoices.length">
           <table class="table table-striped" aria-describedby="page-heading">
             <thead>
               <tr>
@@ -66,18 +43,6 @@
                       <fa-icon icon="eye"></fa-icon>
                       <span class="d-none d-md-inline" mediTranslate="entity.action.view">View</span>
                     </button>
-                    <!--
-                    <button type="submit" [routerLink]="['/invoice', invoice.id, 'edit']" class="btn btn-primary btn-sm"
-                      data-cy="entityEditButton">
-                      <fa-icon icon="pencil-alt"></fa-icon>
-                      <span class="d-none d-md-inline" mediTranslate="entity.action.edit">Edit</span>
-                    </button>
-
-                    <button type="submit" (click)="delete(invoice)" class="btn btn-danger btn-sm"
-                      data-cy="entityDeleteButton">
-                      <fa-icon icon="times"></fa-icon>
-                      <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
-                    </button>-->
                   </div>
                 </td>
               </tr>

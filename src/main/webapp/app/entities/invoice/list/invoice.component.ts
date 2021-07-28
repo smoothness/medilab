@@ -95,7 +95,6 @@ export class InvoiceComponent implements OnInit {
 
   getInvoices(): void {
     this.invoiceService.query().subscribe(data => {
-      console.log("data", data);
       if(this.account?.authorities[0] === 'ROLE_PATIENT' ){
         this.appointmentsPatient?.forEach(appointment => {
           if (data.body !== null) {
@@ -119,7 +118,6 @@ export class InvoiceComponent implements OnInit {
         });
       }
       
-      console.log("invoice", this.invoices);
     });
   }
   
@@ -135,7 +133,6 @@ export class InvoiceComponent implements OnInit {
       (res: HttpResponse<IInvoice[]>) => {
         this.isLoading = false;
         this.invoices = res.body ?? [];
-        console.log("Facturas", this.invoices);
       },
       () => {
         this.isLoading = false;
