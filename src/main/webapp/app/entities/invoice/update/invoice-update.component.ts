@@ -65,7 +65,6 @@ export class InvoiceUpdateComponent implements OnInit {
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IInvoice>>): void {
     result.subscribe(data => {
-      // eslint-disable-next-line no-console
       console.log({ data });
     });
 

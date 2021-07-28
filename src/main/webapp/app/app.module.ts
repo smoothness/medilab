@@ -1,5 +1,5 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
-import {CommonModule, registerLocaleData} from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import locale from '@angular/common/locales/es';
 import { BrowserModule, Title } from '@angular/platform-browser';
@@ -20,6 +20,7 @@ import './config/dayjs';
 import { NgbDateDayjsAdapter } from './config/datepicker-adapter';
 import { httpInterceptorProviders } from './core/interceptor/index';
 import { translatePartialLoader, missingTranslationHandler } from './config/translation.config';
+import { FilterNotCancelled } from './shared/pipes/filterNotCancelled.pipe';
 
 import { LayoutsComponent } from './layouts/layouts.component';
 
@@ -54,7 +55,7 @@ import { LayoutsComponent } from './layouts/layouts.component';
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
     httpInterceptorProviders,
   ],
-  declarations: [LayoutsComponent],
+  declarations: [LayoutsComponent, FilterNotCancelled],
   bootstrap: [LayoutsComponent],
 })
 export class AppModule {
