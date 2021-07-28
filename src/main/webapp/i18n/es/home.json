@@ -25,6 +25,8 @@
       "cancelAppointmentMsj": "Esta cita ha sido cancelada, será removida del calendario."
     },
     "btnNewContact": "Agregar nuevo contacto",
-    "personalInfo": "Información personal"
+    "personalInfo": "Información personal",
+    "viewPatient": "Ver paciente"
+
   }
 }

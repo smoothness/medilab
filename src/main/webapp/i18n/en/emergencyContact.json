@@ -17,6 +17,13 @@
       "detail": {
         "title": "Emergency Contact"
       },
+      "deleteConfirm": {
+        "title": "Are you sure?",
+        "text": "You won't be able to revert this.",
+        "confirmButtonText": "Confirm",
+        "cancelButtonText": "Cancel",
+        "titleSuccess": "Has been successfully removed."
+      },
       "id": "ID",
       "name": "Name",
       "phone": "Phone",
@@ -25,6 +32,13 @@
       "patient": "Patient",
       "success": "Contact updated successfully.",
       "error": "The contact could not be modified."
+    },
+    "deleteConfirm": {
+      "title": "Are you sure?",
+      "text": "You won't be able to revert this.",
+      "confirmButtonText": "Confirm",
+      "cancelButtonText": "Cancel",
+      "titleSuccess": "Has been successfully removed."
     }
   }
 }

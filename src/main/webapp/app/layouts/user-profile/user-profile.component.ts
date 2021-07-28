@@ -1,8 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {UserProfileService} from "./user-profile.service";
-import {AccountService} from "../../core/auth/account.service";
-import {PatientService} from "../../entities/patient/service/patient.service";
-import {DoctorService} from "../../entities/doctor/service/doctor.service";
+import {Component, Input} from '@angular/core';
 import {Doctor, Patient} from "../../core/auth/account.model";
 
 @Component({
@@ -12,12 +8,6 @@ import {Doctor, Patient} from "../../core/auth/account.model";
 })
 export class UserProfileComponent {
   @Input() user: any;
-
-  constructor(
-    private userProfileService: UserProfileService,
-    private accountService: AccountService,
-    private patientService: PatientService,
-    private doctorService: DoctorService) {}
 
   get isPatient(): boolean {
     return this.user instanceof Patient;

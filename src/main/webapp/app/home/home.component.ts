@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 // import { takeUntil } from 'rxjs/operators';
 import { SweetAlertService } from 'app/shared/services/sweet-alert.service';
 import { AccountService } from 'app/core/auth/account.service';
@@ -20,7 +20,6 @@ import { Status } from 'app/entities/enumerations/status.model';
 import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
 import { EmergencyContactService } from 'app/entities/emergency-contact/service/emergency-contact.service';
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
-import { EmergencyContactDeleteDialogComponent } from '../entities/emergency-contact/delete/emergency-contact-delete-dialog.component';
 import { UserService } from 'app/entities/user/user.service';
 import {EmergencyContactUpdateComponent} from "../entities/emergency-contact/update/emergency-contact-update.component";
 
@@ -41,7 +40,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   isLoadingAppointmentTreatmentAilment = false;
   appointmentTreatmentAilmentNew: IAppointmentTreatmentAilment[] | null = null;
   authority: string | undefined;
-  appointmentsDoctor: any[] | undefined = [];
+  appointmentsDoctor: any[] = [];
   appointmentsPatient: any[] | undefined = [];
   ailmentsPatient: any[] | undefined = [];
   currentUser: any;
@@ -75,10 +74,30 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
 
         if (this.account?.authorities[0] === 'ROLE_USER') {
-          this.mergeAccountWithDoctor(this.account);
+          this.doctorService.findByInternalUser(this.account.id).subscribe((res) => {
+            this.appointmentService.findDoctorAppointments(<number>res.body?.id).subscribe((response: any) => {
+                let index = 0;
+                this.appointmentsDoctor = response.body;
+                this.formatPatientData(this.appointmentsDoctor).subscribe((data) => {
+                  this.appointmentsDoctor[index].patient = data;
+                  index++;
+                });
+            });
+          });
         }
       });
   }
+
+  formatPatientData(appointments: any): Observable<any> {
+    return new Observable(subscriber => {
+      for (const appointment of appointments[Symbol.iterator]()) {
+        this.patientService.find(appointment.patient.id).subscribe((patient) => {
+          subscriber.next(patient.body);
+        });
+      }
+    });
+  }
+
 
   public autenticatedAccount(): void {
     this.accountService.formatUserIdentity().subscribe((user) => {
@@ -103,7 +122,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.loadAllAppoiments();
   }
 
-  mergeAccountWithDoctor(account: Account): void {
+ /***mergeAccountWithDoctor(account: Account): void {
     this.doctorService.query().subscribe(res => {
       this.theDoctor = res.body?.find(doctor => doctor.internalUser?.id === account.id);
       this.appointmentService.query().subscribe(data => {
@@ -111,7 +130,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           /** the information returned from the server of the doctor is incorrect
           // it is based on the doctor id, not the internal user id
           // same with the patient, that's why it is needed the patient internal user id
-          // to query with the internal user id for the actual patient*/
+          // to query with the internal user id for the actual patient
           this.patientService.find(Number(appointment.patient?.id)).subscribe(patient => {
             Object.assign(appointment.patient, patient.body);
           });
@@ -119,7 +138,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         });
       });
     });
-  }
+  }*/
 
   getAilmentsPatient(): void {
     this.appointmentTreatmentAilmentService.query().subscribe(data => {
@@ -157,12 +176,18 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   deleteEmergencyContact(emergencyContact: IEmergencyContact): void {
-    const modalRef = this.modalService.open(EmergencyContactDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.emergencyContact = emergencyContact;
-    // unsubscribe not needed because closed completes on modal close
-    modalRef.closed.subscribe(reason => {
-      if (reason === 'deleted') {
-        this.loadAllEmergencyContact();
+    this.sweetAlertService.showConfirmMsg({
+      title: 'medilabApp.deleteConfirm.title',
+      text: 'medilabApp.deleteConfirm.text',
+      confirmButtonText: 'medilabApp.deleteConfirm.confirmButtonText',
+      cancelButtonText: 'medilabApp.deleteConfirm.cancelButtonText',
+    }).then((res) => {
+      if(res){
+        this.emergencyContactService.delete(<number>emergencyContact.id).subscribe(() => {
+          this.sweetAlertService.showMsjSuccess('reset.done', 'medilabApp.deleteConfirm.titleSuccess').then( () => {
+            this.loadAllEmergencyContact();
+          });
+        });
       }
     });
   }
@@ -196,6 +221,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public showCreateContactModal(): void {
-    const modalRef = this.modalService.open(EmergencyContactUpdateComponent);
+    //const modalRef = this.modalService.open(EmergencyContactUpdateComponent);
   }
 }

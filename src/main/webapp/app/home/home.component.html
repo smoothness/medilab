@@ -46,10 +46,13 @@
           <!-- close card body -->
         </div>
         <!-- close top left card -->
-        <!-- open top right card -->
+
+        <!-- open user profile -->
         <div class="card bg-dark">
           <medi-user-profile [user]="currentUser"></medi-user-profile>
         </div>
+        <!-- close user profile -->
+
       </section>
       <!-- close profile top section -->
       <!-- open profile bottom or body section -->
@@ -230,6 +233,7 @@
                     </span>
                   </div>
                 </div>
+
                 <a
                   class="btn btn-secondary btn-sm mr-1"
                   mediTranslate="home.appointmentDetail"
@@ -237,6 +241,13 @@
                 >
                   Detalle
                 </a>
+                <button
+                  class="btn btn-primary btn-sm"
+                  mediTranslate="home.viewPatient"
+                  [routerLink]="['/main/patient', appointment.patient.id, 'view']"
+                >
+                  View Patient
+                </button>
                 <button class="btn btn-danger btn-sm" mediTranslate="home.appointmentDelete" (click)="cancelAppointment(appointment)">
                   Cancelar cita
                 </button>

@@ -25,6 +25,7 @@
       "cancelAppointmentMsj": "This appointment has been canceled, it will be removed from the calendar."
     },
     "btnNewContact": "Add new contact",
-    "personalInfo": "Personal Info"
+    "personalInfo": "Personal Info",
+    "viewPatient": "View patient"
   }
 }
