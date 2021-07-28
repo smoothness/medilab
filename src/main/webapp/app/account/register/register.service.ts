@@ -47,7 +47,10 @@ export class RegisterService {
     return this.http.post(this.getUrl('api/emergency-contacts'), newContact);
   }
 
+
+
   private getUrl(url: string): string {
     return this.applicationConfigService.getEndpointFor(url);
   }
+
 }

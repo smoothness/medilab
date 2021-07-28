@@ -1,21 +1,19 @@
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 import { PasswordResetFinishService } from './password-reset-finish.service';
+import {SweetAlertService} from "../../../shared/services/sweet-alert.service";
 
 @Component({
   selector: 'medi-password-reset-finish',
   templateUrl: './password-reset-finish.component.html',
+  styleUrls: ['./password-reset-finish.component.scss']
 })
 export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
   @ViewChild('newPassword', { static: false })
   newPassword?: ElementRef;
-
-  initialized = false;
   doNotMatch = false;
-  error = false;
-  success = false;
   key = '';
 
   passwordForm = this.fb.group({
@@ -23,36 +21,55 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
     confirmPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
   });
 
-  constructor(private passwordResetFinishService: PasswordResetFinishService, private route: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    private passwordResetFinishService: PasswordResetFinishService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private fb: FormBuilder,
+    private sweetAlertService: SweetAlertService
+  ) {}
 
-  ngOnInit(): void {
+  public get confirmPasswordForm(): string {
+    return <string>this.passwordForm.get(['confirmPassword'])!.value
+  }
+
+  public get newPasswordForm(): string {
+    return <string>this.passwordForm.get(['newPassword'])!.value
+  }
+
+  public ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       if (params['key']) {
         this.key = params['key'];
+      } else {
+        this.sweetAlertService.showMsjError('register.messages.error.error', 'reset.finish.messages.keymissing').then(() => {
+          this.router.navigate(['']);
+        });
       }
-      this.initialized = true;
     });
   }
 
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
     if (this.newPassword) {
       this.newPassword.nativeElement.focus();
     }
   }
 
-  finishReset(): void {
+  public finishReset(): void {
     this.doNotMatch = false;
-    this.error = false;
 
-    const newPassword = this.passwordForm.get(['newPassword'])!.value;
-    const confirmPassword = this.passwordForm.get(['confirmPassword'])!.value;
-
-    if (newPassword !== confirmPassword) {
-      this.doNotMatch = true;
+    if (this.newPasswordForm !== this.confirmPasswordForm) {
+      this.sweetAlertService.showMsjWarning('reset.done', 'global.messages.error.dontmatch');
     } else {
-      this.passwordResetFinishService.save(this.key, newPassword).subscribe(
-        () => (this.success = true),
-        () => (this.error = true)
+      this.passwordResetFinishService.save(this.key, this.newPasswordForm).subscribe(
+        () => {
+          this.sweetAlertService.showMsjSuccess('reset.done', 'reset.finish.messages.success').then(() => {
+            this.router.navigate(['']);
+          });
+        },
+        () => {
+          this.sweetAlertService.showMsjError('register.messages.error.error', 'reset.finish.messages.error');
+        }
       );
     }
   }

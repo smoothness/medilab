@@ -6,13 +6,14 @@ import { AppointmentTreatmentAilmentUpdateComponent } from './update/appointment
 import { AppointmentTreatmentAilmentDeleteDialogComponent } from './delete/appointment-treatment-ailment-delete-dialog.component';
 import { AppointmentTreatmentAilmentRoutingModule } from './route/appointment-treatment-ailment-routing.module';
 
+
 @NgModule({
   imports: [SharedModule, AppointmentTreatmentAilmentRoutingModule],
   declarations: [
     AppointmentTreatmentAilmentComponent,
     AppointmentTreatmentAilmentDetailComponent,
     AppointmentTreatmentAilmentUpdateComponent,
-    AppointmentTreatmentAilmentDeleteDialogComponent,
+    AppointmentTreatmentAilmentDeleteDialogComponent
   ],
   entryComponents: [AppointmentTreatmentAilmentDeleteDialogComponent],
 })

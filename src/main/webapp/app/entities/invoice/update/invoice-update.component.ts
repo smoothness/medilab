@@ -82,11 +82,7 @@ export class InvoiceUpdateComponent implements OnInit {
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IInvoice>>): void {
     result.subscribe(data => {
-      // eslint-disable-next-line no-console
-      console.log({data})
-      // eslint-disable-next-line no-console
-      console.log(data.body?.id)
-    })
+    });
 
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
       () => this.onSaveSuccess(),

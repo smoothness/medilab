@@ -1,5 +1,6 @@
 package com.cenfotec.medilab.web.rest;
 
+import com.cenfotec.medilab.config.Constants;
 import com.cenfotec.medilab.domain.PersistentToken;
 import com.cenfotec.medilab.domain.User;
 import com.cenfotec.medilab.repository.PersistentTokenRepository;
@@ -18,12 +19,15 @@ import java.net.URLDecoder;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tech.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing the current user's account.
@@ -93,6 +97,11 @@ public class AccountResource {
         if (!user.isPresent()) {
             throw new AccountResourceException("No user was found for this activation key");
         }
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 
     /**
