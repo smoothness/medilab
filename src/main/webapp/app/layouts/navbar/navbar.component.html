@@ -78,6 +78,15 @@
           </span>
         </a>
       </li>
+      <!-- NEW USER -->
+      <li *mediHasAnyAuthority="'ROLE_ADMIN'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="admin/user-management/new" (click)="collapseNavbar()">
+          <span>
+            <fa-icon icon="user-plus" [fixedWidth]="true"></fa-icon>
+            <span mediTranslate="userManagement.home.createLabel">User management</span>
+          </span>
+        </a>
+      </li>
 
       <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
       <li
@@ -268,7 +277,7 @@
           <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
         </ul>
       </li>
-      <li
+      <!--li
         *mediHasAnyAuthority="'ROLE_ADMIN'"
         ngbDropdown
         class="nav-item dropdown pointer"
@@ -319,9 +328,10 @@
               <span mediTranslate="global.menu.admin.apidocs">API</span>
             </a>
           </li>
-          <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
+
         </ul>
-      </li>
+      </li-->
+      <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
       <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" *ngIf="languages && languages.length > 1">
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
           <span>

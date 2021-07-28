@@ -39,6 +39,7 @@ import {
   faWrench,
   faClinicMedical,
   faCalendar,
+  
   // jhipster-needle-add-icon-import
 } from '@fortawesome/free-solid-svg-icons';
 
