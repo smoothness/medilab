@@ -55,12 +55,13 @@
 
             <button
               type="submit"
-              [routerLink]="[treatment.id, 'edit']"
-              class="btn btn-primary btn-sm"
+              [routerLink]="[treatment.id, 'view']"
+              mediTranslate="home.appointmentDetail"
+              class="btn btn-primary btn-sm mr-1"
               data-cy="entityEditButton"
             >
-              <fa-icon icon="pencil-alt"></fa-icon>
-              <span class="d-none d-md-inline" mediTranslate="entity.action.edit">Edit</span>
+              <fa-icon icon="eye"></fa-icon>
+              <span class="d-none d-md-inline" mediTranslate="entity.action.edit">View</span>
             </button>
 
             <button type="submit" (click)="delete(treatment)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">

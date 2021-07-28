@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { getTreatmentIdentifier, ITreatment, Treatment } from '../treatment.model';
+import { ITreatment } from '../treatment.model';
 import { TreatmentService } from '../service/treatment.service';
 import { TreatmentDeleteDialogComponent } from '../delete/treatment-delete-dialog.component';
 
