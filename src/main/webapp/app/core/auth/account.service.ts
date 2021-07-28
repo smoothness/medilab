@@ -8,7 +8,9 @@ import { shareReplay, tap, catchError } from 'rxjs/operators';
 
 import { StateStorageService } from './../../core/auth/state-storage.service';
 import { ApplicationConfigService } from '../config/application-config.service';
-import { Account } from './../../core/auth/account.model';
+import { Account, Patient, Doctor } from './../../core/auth/account.model';
+import {PatientService} from "../../entities/patient/service/patient.service";
+import {DoctorService} from "../../entities/doctor/service/doctor.service";
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -22,7 +24,9 @@ export class AccountService {
     private http: HttpClient,
     private stateStorageService: StateStorageService,
     private router: Router,
-    private applicationConfigService: ApplicationConfigService
+    private applicationConfigService: ApplicationConfigService,
+    private patientService: PatientService,
+    private doctorService: DoctorService
   ) {}
 
   save(account: Account): Observable<{}> {
@@ -66,6 +70,36 @@ export class AccountService {
       );
     }
     return this.accountCache$;
+  }
+
+  formatUserIdentity(): Observable<{}>{
+    return new Observable<{}>(subscriber => {
+      this.identity().subscribe(
+        (account) => {
+          if(account?.authorities[0] === "ROLE_PATIENT"){
+            this.patientService.findOneByInternalUser(account.id).subscribe((res: any) => {
+              res.body.internalUser = account;
+              subscriber.next(new Patient(res.body));
+              subscriber.complete();
+            });
+          }else{
+            if(account?.authorities[0] === "ROLE_USER"){
+              if(account.authorities[1] === "ROLE_ADMIN"){
+                subscriber.next(new Account(<any>account));
+                subscriber.complete();
+              }else{
+                this.doctorService.findByInternalUser(account.id).subscribe((res: any) => {
+                  res.body.internalUser = account;
+                  subscriber.next(new Doctor(res.body));
+                  subscriber.complete();
+                })
+              }
+            }
+
+          }
+        }
+      )
+    })
   }
 
   isAuthenticated(): boolean {
