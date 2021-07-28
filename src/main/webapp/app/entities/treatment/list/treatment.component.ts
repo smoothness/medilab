@@ -1,39 +1,53 @@
-import {Component, OnInit} from '@angular/core';
-import {HttpResponse} from '@angular/common/http';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import {ITreatment} from '../treatment.model';
-import {TreatmentService} from '../service/treatment.service';
-import {TreatmentDeleteDialogComponent} from '../delete/treatment-delete-dialog.component';
+import { getTreatmentIdentifier, ITreatment, Treatment } from '../treatment.model';
+import { TreatmentService } from '../service/treatment.service';
+import { TreatmentDeleteDialogComponent } from '../delete/treatment-delete-dialog.component';
 
-import {AccountService} from 'app/core/auth/account.service';
-import {Account} from 'app/core/auth/account.model';
+import { AccountService } from 'app/core/auth/account.service';
+import { Account } from 'app/core/auth/account.model';
 
-import {AppointmentTreatmentAilment} from '../../appointment-treatment-ailment/appointment-treatment-ailment.model';
-import {AppointmentTreatmentAilmentService} from '../../appointment-treatment-ailment/service/appointment-treatment-ailment.service';
+import { IAppointment } from '../../appointment/appointment.model';
+import { AppointmentService } from '../../appointment/service/appointment.service';
 
-import {AppointmentService} from '../../appointment/service/appointment.service';
-import {Appointment} from '../../appointment/appointment.model';
-import {takeUntil} from "rxjs/operators";
+import { PatientService } from 'app/entities/patient/service/patient.service';
+import { Patient, IPatient } from 'app/entities/patient/patient.model';
+
+import { IAppointmentTreatmentAilment, AppointmentTreatmentAilment } from '../../appointment-treatment-ailment/appointment-treatment-ailment.model';
+import { AppointmentTreatmentAilmentService } from '../../appointment-treatment-ailment/service/appointment-treatment-ailment.service';
 
 @Component({
   selector: 'medi-treatment',
   templateUrl: './treatment.component.html',
+  styleUrls: ['../../../home/home.component.scss'],
 })
 export class TreatmentComponent implements OnInit {
-  account: Account | null = null;
-  appointment: Appointment | null = null;
+  patient: Patient | null = null;
+  patients: IPatient[] | null = null;
+  isLoadingPatient = false;
+
   treatments?: ITreatment[];
+
+  appointments?: IAppointment[];
+  isLoadingAppointments = false;
+
+  appointmentTreatmentAilment?: AppointmentTreatmentAilment[];
+  appointmentTreatmentAilments?: IAppointmentTreatmentAilment[];
+  isLoadingAppointmentTreatmentAilments = false;
+
+  account: Account | null = null;
   isLoading = false;
 
-  constructor(
-    protected treatmentService: TreatmentService,
-    protected appointmentService: AppointmentService,
+  constructor(protected treatmentService: TreatmentService,
     protected accountService: AccountService,
-    protected modalService: NgbModal) {
-  }
+    protected appointmentService: AppointmentService,
+    protected patientService: PatientService,
+    protected appointmentTreatmentAilmentService: AppointmentTreatmentAilmentService,
+    protected modalService: NgbModal) { }
 
-  loadAll(): void {
+  loadAllTreatments(): void {
     this.isLoading = true;
 
     this.treatmentService.query().subscribe(
@@ -47,15 +61,53 @@ export class TreatmentComponent implements OnInit {
     );
   }
 
-  loadAllPacientTreatments(): void {
-    this.isLoading = true;
+  loadPacient(): void {
+    this.isLoadingPatient = true;
 
-    this.treatmentService
-      .find(Number(this.account?.login))
-      .subscribe(appointmentlist => {
-          this.appointment = appointmentlist.body;
-        }
-      );
+    this.patientService.query().subscribe(
+      (res: HttpResponse<IPatient[]>) => {
+        this.isLoadingPatient = false;
+        this.patients = res.body?.filter(
+          data => data.internalUser?.id === this.account?.id
+        ) ?? [];
+
+        this.patient = this.patients[0];
+      },
+      () => {
+        this.isLoadingPatient = false;
+      }
+    );
+  }
+
+  loadAllPacientAppointments(): void {
+    this.isLoadingAppointments = true;
+
+    this.appointmentService.query().subscribe(
+      (res: HttpResponse<IAppointment[]>) => {
+        this.isLoadingAppointments = false;
+        this.appointments = res.body?.filter(
+          data => data.patient?.id === this.patient?.id
+        ) ?? [];
+      },
+      () => {
+        this.isLoadingAppointments = false;
+      }
+    );
+
+  }
+
+  loadAllAppointmentTreatmentAilmentService(): void {
+    this.isLoadingAppointmentTreatmentAilments = true;
+
+    this.appointmentTreatmentAilmentService.query().subscribe(
+      (res: HttpResponse<IAppointmentTreatmentAilment[]>) => {
+        this.isLoadingAppointmentTreatmentAilments = false;
+        this.appointmentTreatmentAilments = res.body ?? [];
+      },
+      () => {
+        this.isLoadingAppointmentTreatmentAilments = false;
+      }
+    );
   }
 
   ngOnInit(): void {
@@ -63,16 +115,10 @@ export class TreatmentComponent implements OnInit {
       .getAuthenticationState()
       .subscribe(account => (this.account = account));
 
-    this.appointmentService
-      .find(Number(this.account?.login))
-      .subscribe(appointmentlist => {
-          this.appointment = appointmentlist.body;
-        }
-      );
-
-    if(this.account){
-      this.loadAll();
-    }
+    this.loadPacient();
+    this.loadAllPacientAppointments();
+    this.loadAllAppointmentTreatmentAilmentService();
+    this.loadAllTreatments();
   }
 
   trackId(index: number, item: ITreatment): number {
@@ -80,13 +126,49 @@ export class TreatmentComponent implements OnInit {
   }
 
   delete(treatment: ITreatment): void {
-    const modalRef = this.modalService.open(TreatmentDeleteDialogComponent, {size: 'lg', backdrop: 'static'});
+    const modalRef = this.modalService.open(TreatmentDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.treatment = treatment;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe(reason => {
       if (reason === 'deleted') {
-        this.loadAll();
+        this.loadAllTreatments();
       }
     });
+  }
+
+  searchForTreatment(item: ITreatment): boolean {
+    let result = false;
+    this.appointmentTreatmentAilments?.forEach(
+      data=> {
+        if(data.treatment?.id === item.id
+          && this.searchForAppointment(data)){
+          result = true;
+        }
+      })
+    return result;
+  }
+
+  searchForAppointment(item: IAppointmentTreatmentAilment): boolean {
+    let result = false;
+    this.appointments?.forEach(
+      data=> {
+        if(data.id === item.appointment?.id){
+          result = true;
+        }
+      }
+    )
+    return result;
+  }
+
+  removedTranslation(item: IAppointmentTreatmentAilment): boolean {
+    let result = false;
+    this.appointments?.forEach(
+      data=> {
+        if(data.id === item.appointment?.id){
+          result = true;
+        }
+      }
+    )
+    return result;
   }
 }

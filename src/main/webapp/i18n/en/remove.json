@@ -1,0 +1,8 @@
+{
+  "medilabApp": {
+    "remove": {
+      "true": "enabled",
+      "false": "removed"
+    }
+  }
+}

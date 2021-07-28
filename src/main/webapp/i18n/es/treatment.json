@@ -5,7 +5,7 @@
         "title": "Tratamientos",
         "refreshListLabel": "Refrescar lista",
         "createLabel": "Crear nuevo tratamiento",
-        "createOrEditLabel": "Crear o editar tratamiento",
+        "createOrEditLabel": "Formulario de tratamiento",
         "notFound": "Ningún tratamiento encontrado"
       },
       "created": "Un nuevo tratamiento ha sido creado con el identificador {{ param }}",
@@ -21,7 +21,7 @@
       "specifications": "Especificaciones",
       "medicines": "Medicinas",
       "duration": "Duración",
-      "removed": "Removido",
+      "removed": "Estado",
       "appointmentTreatmentAilment": "Cita tratamiento Padecimiento"
     }
   }

@@ -93,7 +93,7 @@ Main page styles
 
   .card-header, b, span{
     color: #fff;
-    
+
   }
 
   span{
@@ -123,6 +123,25 @@ Main page styles
     align-items: center;
     display: flex;
   }
-  
+
+}
+
+
+/* treatments */
+
+.ml-treatments{
+    margin: 20px;
+  .list-display{
+
+  margin-top: 1em;
+      svg {
+        margin-right: 1rem;
+      }
+
+      th {
+        align-items: center;
+        display: flex;
+      }
+  }
 }
 
