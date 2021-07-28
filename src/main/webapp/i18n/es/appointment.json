@@ -4,6 +4,9 @@
       "home": {
         "title": "Citas",
         "refreshListLabel": "Refrescar lista",
+        "viewLastAppointment": "Ver última cita",
+        "requestAppointment": "Solicitar una cita",
+        "createNewAppointment": "Crear una nueva cita",
         "createOrEditAppointment": "Crear o editar una cita",
         "notFound": "Ningúna cita encontrada"
       },
@@ -18,11 +21,13 @@
       },
       "id": "ID",
       "date": "Fecha",
-      "status": "Estatus",
+      "status": "Estado",
       "appointmentTreatmentAilment": "Dolencia, tratamiento",
       "medicalExams": "Exámenes médicos",
       "patient": "Paciente",
-      "doctor": "Doctor"
+      "doctor": "Doctor",
+      "specialist": "Especialista",
+      "area": "Área"
     }
   }
 }
