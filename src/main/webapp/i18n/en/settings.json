@@ -14,7 +14,7 @@
         "fail": "<strong>An error has occurred!</strong> Settings could not be saved.",
         "emailexists": "<strong>Email is already in use!</strong> Please choose another one."
       },
-      "success": "<strong>Settings saved!</strong>",
+      "success": "Profile updated successfully.",
       "validate": {
         "firstname": {
           "required": "Your first name is required.",

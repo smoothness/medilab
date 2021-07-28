@@ -32,6 +32,13 @@ public interface AilmentService {
     List<Ailment> findAll();
 
     /**
+     * Get all the ailments for patient.
+     *
+     * @return the list of ailments.
+     */
+    List<Ailment> findAllPatientAilments(Long id);
+
+    /**
      * Get the "id" ailment.
      *
      * @param id the id of the entity.

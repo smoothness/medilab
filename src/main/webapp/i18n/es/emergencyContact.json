@@ -22,7 +22,16 @@
       "phone": "Teléfono",
       "email": "Correo electrónico",
       "relationShip": "Parentesco",
-      "patient": "Paciente"
+      "patient": "Paciente",
+      "success": "Contacto actualizado con éxito.",
+      "error": "No se pudo modificar el contacto."
+    },
+    "deleteConfirm": {
+      "title": "¿Está seguro?",
+      "text": "No podrá revertir esto",
+      "confirmButtonText": "Confirmar",
+      "cancelButtonText": "Cancelar",
+      "titleSuccess": "Se ha eliminado exitosamente."
     }
   }
 }

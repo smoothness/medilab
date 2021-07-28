@@ -5,9 +5,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './../shared/shared.module';
 import { HOME_ROUTE } from './home.route';
 import { HomeComponent } from './home.component';
+import { LayoutsModule } from '../layouts/layouts.module';
 
 @NgModule({
-  imports: [SharedModule, ReactiveFormsModule, RouterModule.forChild([HOME_ROUTE])],
+  imports: [ReactiveFormsModule, SharedModule, RouterModule.forChild([HOME_ROUTE]), LayoutsModule],
   declarations: [HomeComponent],
   exports: [HomeComponent],
 })

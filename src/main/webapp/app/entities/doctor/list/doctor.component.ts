@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IDoctor } from '../doctor.model';
 import { DoctorService } from '../service/doctor.service';
 import { DoctorDeleteDialogComponent } from '../delete/doctor-delete-dialog.component';
+import { Doctor } from '../../../core/auth/account.model';
 
 @Component({
   selector: 'medi-doctor',
   templateUrl: './doctor.component.html',
 })
 export class DoctorComponent implements OnInit {
-  doctors?: IDoctor[];
+  doctors?: Doctor[];
   isLoading = false;
 
   constructor(protected doctorService: DoctorService, protected modalService: NgbModal) {}
@@ -19,10 +19,10 @@ export class DoctorComponent implements OnInit {
   loadAll(): void {
     this.isLoading = true;
 
-    this.doctorService.query().subscribe(
-      (res: HttpResponse<IDoctor[]>) => {
+    this.doctorService.getCompleteDoctor().subscribe(
+      (res: any) => {
         this.isLoading = false;
-        this.doctors = res.body ?? [];
+        this.doctors = res ?? [];
       },
       () => {
         this.isLoading = false;
