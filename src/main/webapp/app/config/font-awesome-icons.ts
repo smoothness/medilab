@@ -39,6 +39,7 @@ import {
   faWrench,
   faClinicMedical,
   faCalendar,
+  faFileInvoiceDollar,
   // jhipster-needle-add-icon-import
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -83,5 +84,6 @@ export const fontAwesomeIcons = [
   faWrench,
   faClinicMedical,
   faCalendar,
+  faFileInvoiceDollar,
   // jhipster-needle-add-icon-import
 ];
