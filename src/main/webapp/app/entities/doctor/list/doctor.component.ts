@@ -4,7 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IDoctor } from '../doctor.model';
 import { DoctorService } from '../service/doctor.service';
 import { DoctorDeleteDialogComponent } from '../delete/doctor-delete-dialog.component';
-import {Doctor} from "../../../core/auth/account.model";
+import { Doctor } from '../../../core/auth/account.model';
 
 @Component({
   selector: 'medi-doctor',

@@ -7,14 +7,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  exports: [
-    FormsModule,
-    CommonModule,
-    NgbModule,
-    InfiniteScrollModule,
-    FontAwesomeModule,
-    ReactiveFormsModule,
-    TranslateModule
-  ],
+  exports: [FormsModule, CommonModule, NgbModule, InfiniteScrollModule, FontAwesomeModule, ReactiveFormsModule, TranslateModule],
 })
 export class SharedLibsModule {}

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
-
     @Query(value = "SELECT * from doctor where internal_user_id = :id", nativeQuery = true)
     Doctor findByInternalUser(@Param("id") Long id);
 }

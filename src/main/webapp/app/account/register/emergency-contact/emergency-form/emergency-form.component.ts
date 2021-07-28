@@ -22,11 +22,16 @@ export class EmergencyFormComponent {
     this.parentReference = '';
   }
 
-  public addContactData({name, email, phone, relationShip: relationship}: {
-    name: string,
-    phone: string,
-    email: string,
-    relationShip: string
+  public addContactData({
+    name,
+    email,
+    phone,
+    relationShip: relationship,
+  }: {
+    name: string;
+    phone: string;
+    email: string;
+    relationShip: string;
   }): void {
     this.emergencyContactForm.patchValue({
       name: name.split(` `)[0],
@@ -35,7 +40,7 @@ export class EmergencyFormComponent {
       phone,
       email,
       relationship,
-    })
+    });
   }
 
   public removeContact(): void {
@@ -47,7 +52,7 @@ export class EmergencyFormComponent {
     this.parentReference = parent;
   }
 
-  clearForm(): void{
+  clearForm(): void {
     this.emergencyContactForm.reset();
   }
 }

@@ -8,9 +8,8 @@ describe('RegisterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EmergencyContactRegisterComponent ]
-    })
-    .compileComponents();
+      declarations: [EmergencyContactRegisterComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

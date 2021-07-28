@@ -11,7 +11,6 @@ import {
 import { EmergencyFormComponent } from './emergency-form/emergency-form.component';
 import { EmergencyContact } from './../register.model';
 
-
 @Component({
   selector: 'medi-emergency-contact',
   templateUrl: './emergency-contact.component.html',

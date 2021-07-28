@@ -1,8 +1,7 @@
 <div class="container">
-   
   <section class="row p-0 m-0">
     <div class="cold-md-10 mx-auto my-5 card bg-dark">
-      <div class="text-center mt-3"> 
+      <div class="text-center mt-3">
         <h2 mediTranslate="medilabApp.invoice.home.title"></h2>
       </div>
       <div class="alert alert-warning" id="no-result" *ngIf="!invoices?.length">
@@ -32,14 +31,17 @@
                 <td mediTranslate="{{ 'medilabApp.Status.' + invoice.status }}">{{ invoice.status }}</td>
                 <td>
                   <div *ngIf="invoice.appointment">
-                    <a
-                      [routerLink]="['/appointment', invoice.appointment?.id, 'view']">{{ invoice.appointment?.id }}</a>
+                    <a [routerLink]="['/appointment', invoice.appointment?.id, 'view']">{{ invoice.appointment?.id }}</a>
                   </div>
                 </td>
                 <td class="text-right">
                   <div class="btn-group">
-                    <button type="submit" [routerLink]="['/invoice', invoice.id, 'view']" class="btn btn-info btn-sm"
-                      data-cy="entityDetailsButton">
+                    <button
+                      type="submit"
+                      [routerLink]="['/invoice', invoice.id, 'view']"
+                      class="btn btn-info btn-sm"
+                      data-cy="entityDetailsButton"
+                    >
                       <fa-icon icon="eye"></fa-icon>
                       <span class="d-none d-md-inline" mediTranslate="entity.action.view">View</span>
                     </button>

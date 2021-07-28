@@ -44,15 +44,15 @@ export class SweetAlertService {
   }
 
   public showConfirmMsg(messageConfig: any): Promise<boolean> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       Swal.fire({
         title: this.translateService.instant(messageConfig.title),
         text: this.translateService.instant(messageConfig.text),
         icon: 'warning',
         showCancelButton: true,
-        cancelButtonText:this.translateService.instant(messageConfig.cancelButtonText),
-        confirmButtonText: this.translateService.instant(messageConfig.confirmButtonText)
-      }).then((result) => {
+        cancelButtonText: this.translateService.instant(messageConfig.cancelButtonText),
+        confirmButtonText: this.translateService.instant(messageConfig.confirmButtonText),
+      }).then(result => {
         if (result.isConfirmed) {
           resolve(true);
         } else {
@@ -63,15 +63,15 @@ export class SweetAlertService {
   }
 
   private showAlert({ icon, title, text }: msjConfig): Promise<boolean> {
-   return new Promise((resolve) => {
-     Swal.fire(<any>{
-       icon,
-       title: this.translateService.instant(title),
-       text: this.translateService.instant(text),
-       confirmButton: this.translateService.instant('global.swalBtn')
-     }).then(() => {
-       resolve(true);
-     });
-   })
+    return new Promise(resolve => {
+      Swal.fire(<any>{
+        icon,
+        title: this.translateService.instant(title),
+        text: this.translateService.instant(text),
+        confirmButton: this.translateService.instant('global.swalBtn'),
+      }).then(() => {
+        resolve(true);
+      });
+    });
   }
 }

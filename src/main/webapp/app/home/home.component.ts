@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse } from '@angular/common/http';
-import {Observable, Subject} from 'rxjs';
-// import { takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 import { SweetAlertService } from 'app/shared/services/sweet-alert.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
@@ -21,15 +21,14 @@ import { AppointmentService } from 'app/entities/appointment/service/appointment
 import { EmergencyContactService } from 'app/entities/emergency-contact/service/emergency-contact.service';
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { UserService } from 'app/entities/user/user.service';
-import {EmergencyContactUpdateComponent} from "../entities/emergency-contact/update/emergency-contact-update.component";
-import {EmergencyContactRegisterComponent} from "../entities/emergency-contact/register/emergency-contact-register.component";
-
+import { EmergencyContactUpdateComponent } from '../entities/emergency-contact/update/emergency-contact-update.component';
+import { EmergencyContactRegisterComponent } from '../entities/emergency-contact/register/emergency-contact-register.component';
 
 @Component({
   selector: 'medi-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
@@ -46,10 +45,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   appointmentsDoctor: any[] = [];
   appointmentsPatient: any[] | undefined = [];
   ailmentsPatient: any[] | undefined = [];
-  currentUser: any;
   closeModal: string | undefined;
-  ailment : any;
-
+  ailment: any;
+  updatedDate = new FormControl('');
+  appointmentToChangeDate: IAppointment | null = null;
+  currentUser: any;
   private readonly destroy$ = new Subject<void>();
 
   constructor(
@@ -71,33 +71,31 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.autenticatedAccount();
-    this.accountService
-      .getAuthenticationState()
-      .subscribe(account => {
-        this.account = account;
-        if (this.account?.authorities[0] === 'ROLE_PATIENT') {
-          this.mergeAccountWithPatient(this.account);
-        }
+    this.accountService.getAuthenticationState().subscribe(account => {
+      this.account = account;
+      if (this.account?.authorities[0] === 'ROLE_PATIENT') {
+        this.mergeAccountWithPatient(this.account);
+      }
 
-        if (this.account?.authorities[0] === 'ROLE_USER') {
-          this.doctorService.findByInternalUser(this.account.id).subscribe((res) => {
-            this.appointmentService.findDoctorAppointments(<number>res.body?.id).subscribe((response: any) => {
-                let index = 0;
-                this.appointmentsDoctor = response.body;
-                this.formatPatientData(this.appointmentsDoctor).subscribe((data) => {
-                  this.appointmentsDoctor[index].patient = data;
-                  index++;
-                });
+      if (this.account?.authorities[0] === 'ROLE_USER') {
+        this.doctorService.findByInternalUser(this.account.id).subscribe(res => {
+          this.appointmentService.findDoctorAppointments(<number>res.body?.id).subscribe((response: any) => {
+            let index = 0;
+            this.appointmentsDoctor = response.body;
+            this.formatPatientData(this.appointmentsDoctor).subscribe(data => {
+              this.appointmentsDoctor[index].patient = data;
+              index++;
             });
           });
-        }
-      });
+        });
+      }
+    });
   }
 
   public formatPatientData(appointments: any): Observable<any> {
     return new Observable(subscriber => {
       for (const appointment of appointments[Symbol.iterator]()) {
-        this.patientService.find(appointment.patient.id).subscribe((patient) => {
+        this.patientService.find(appointment.patient.id).subscribe(patient => {
           subscriber.next(patient.body);
         });
       }
@@ -105,7 +103,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public autenticatedAccount(): void {
-    this.accountService.formatUserIdentity().subscribe((user) => {
+    this.accountService.formatUserIdentity().subscribe(user => {
       this.currentUser = user;
     });
   }
@@ -122,7 +120,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         });
         this.getAilmentsPatient();
       });
-
     });
     this.loadAllEmergencyContact();
     this.loadAllAppoiments();
@@ -164,25 +161,27 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public deleteEmergencyContact(emergencyContact: IEmergencyContact): void {
-    this.sweetAlertService.showConfirmMsg({
-      title: 'medilabApp.deleteConfirm.title',
-      text: 'medilabApp.deleteConfirm.text',
-      confirmButtonText: 'medilabApp.deleteConfirm.confirmButtonText',
-      cancelButtonText: 'medilabApp.deleteConfirm.cancelButtonText',
-    }).then((res) => {
-      if(res){
-        this.emergencyContactService.delete(<number>emergencyContact.id).subscribe(() => {
-          this.sweetAlertService.showMsjSuccess('reset.done', 'medilabApp.deleteConfirm.titleSuccess').then( () => {
-            this.loadAllEmergencyContact();
+    this.sweetAlertService
+      .showConfirmMsg({
+        title: 'medilabApp.deleteConfirm.title',
+        text: 'medilabApp.deleteConfirm.text',
+        confirmButtonText: 'medilabApp.deleteConfirm.confirmButtonText',
+        cancelButtonText: 'medilabApp.deleteConfirm.cancelButtonText',
+      })
+      .then(res => {
+        if (res) {
+          this.emergencyContactService.delete(<number>emergencyContact.id).subscribe(() => {
+            this.sweetAlertService.showMsjSuccess('reset.done', 'medilabApp.deleteConfirm.titleSuccess').then(() => {
+              this.loadAllEmergencyContact();
+            });
           });
-        });
-      }
-    });
+        }
+      });
   }
 
   public loadAllEmergencyContact(): void {
     this.isLoadingEmergencyContact = true;
-    this.patientService.findOneByInternalUser(<number>this.account?.id).subscribe((patient) => {
+    this.patientService.findOneByInternalUser(<number>this.account?.id).subscribe(patient => {
       this.emergencyContactService.findByPatientId(<number>patient.body?.id).subscribe((res: any) => {
         this.emergencyContacts = res.body;
       });
@@ -203,6 +202,24 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
 
+  openChangeDateModal(content: any, clickedElementIndex: any): void {
+    if (this.appointmentsDoctor.length) {
+      this.appointmentToChangeDate = this.appointmentsDoctor[clickedElementIndex];
+    }
+    this.modalService.open(content);
+  }
+
+  handleChangeDate(): void {
+    const newAppointment = {
+      ...this.appointmentToChangeDate,
+      date: this.updatedDate.value,
+    };
+    this.appointmentService.update(newAppointment).subscribe(() => {
+      this.sweetAlertService.showMsjInfo('home.messages.updatedAppointmentDatetitle', 'home.messages.updatedAppointmentDateMsj');
+      window.setTimeout(() => this.ngOnInit(), 1000);
+    });
+    this.modalService.dismissAll();
+  }
 
   public showModifyContactModal(emergencyContact: IEmergencyContact): void {
     const modalRef = this.modalService.open(EmergencyContactUpdateComponent);
@@ -219,12 +236,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  open(content : any, ailment : any): void {
-   this.modalService.open(content, {
-     windowClass: 'elementoPrueba'
-    }
-    )
-   this.ailment = ailment;
+  open(content: any, ailment: any): void {
+    this.modalService.open(content, {
+      windowClass: 'elementoPrueba',
+    });
+    this.ailment = ailment;
   }
 
+  openAilmentModal(content: any, ailment: any): void {
+    this.modalService.open(content);
+    this.ailment = ailment;
+  }
 }
