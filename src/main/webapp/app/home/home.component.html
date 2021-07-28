@@ -98,7 +98,7 @@
           <div class="card bg-dark mb-3">
             <h5 class="card-header" mediTranslate="home.ailments">Padecimientos</h5>
             <div class="card-body">
-              <ul class="list-group ml-profile__agenda">
+              <ul class="list-group ml-ailment">
                 <li class="list-group-item" *ngFor="let ailment of ailmentsPatient; let i = index">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -116,9 +116,10 @@
                       d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"
                     />
                   </svg>
-                  <div class="ml-profile__agenda-data">
+                  <div class="ml-ailment-data">
                     <b>{{ ailment.ailment.name }}</b>
                   </div>
+                  <button class="btn btn-secondary btn-sm mr-1" (click)="open(mymodal , ailment)">Detalle</button>
                 </li>
               </ul>
             </div>
@@ -262,3 +263,60 @@
   </div>
   <!-- closes bootstrap container -->
 </div>
+
+
+<ng-template #mymodal let-modal >
+<div >
+  <!-- Ailment Detail Modal -->
+  <div class="mt-3">
+      <div class="card bg-dark mb-3">
+        <h5 class="card-header" mediTranslate="medilabApp.appointmentTreatmentAilment.diagnosis">Diagnóstico detallado</h5>
+        <div class="card-body">
+          <ul class="list-group ml-profile__agenda">
+            <li class="list-group-item" >
+              <div class="modal_card" >
+                <div class="modal_data_info">
+                  <b class="mr-2" mediTranslate="medilabApp.appointmentTreatmentAilment.date">Fecha</b>
+                </div>
+                <span class="badge bg-secondary" id="details">{{ailment.appointment.date}}</span>
+              </div>
+            </li>
+            <li class="list-group-item" >
+              <div class="modal_card" >
+                <div class="modal_data_info">
+                  <b class="mr-2" mediTranslate="medilabApp.appointmentTreatmentAilment.ailment">Padecimiento</b>
+                </div>
+                <span class="badge bg-secondary" id="details">{{ailment.ailment.name}}</span>
+              </div>
+            </li>
+             <li class="list-group-item" >
+              <div class="modal_card" >
+                <div class="modal_data_info">
+                  <b class="mr-2" mediTranslate="medilabApp.appointmentTreatmentAilment.treatment">Tratamiento</b>
+                </div>
+                <span class="badge bg-secondary" id="details">{{ailment.treatment.medicines}}</span>
+              </div>
+            </li>
+            <li class="list-group-item" >
+              <div class="modal_card" >
+                <div class="modal_data_info">
+                  <b class="mr-2" mediTranslate="medilabApp.appointmentTreatmentAilment.duration">Duración</b>
+                </div>
+                <span class="badge bg-secondary" id="details">{{ailment.treatment.duration}}</span>
+              </div>
+            </li>
+            <li class="list-group-item" >
+              <div class="modal_card" >
+                <div class="modal_data_info">
+                  <b class="mr-2" mediTranslate="medilabApp.appointmentTreatmentAilment.specification">Especificación</b>
+                </div>
+                <span class="badge bg-secondary" id="details">{{ailment.treatment.specifications}}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+  </div>
+</div>
+
+</ng-template>

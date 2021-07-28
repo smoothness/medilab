@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse } from '@angular/common/http';
@@ -14,8 +14,8 @@ import { Doctor } from 'app/entities/doctor/doctor.model';
 
 import { AppointmentTreatmentAilmentService } from 'app/entities/appointment-treatment-ailment/service/appointment-treatment-ailment.service';
 import { IAppointmentTreatmentAilment } from 'app/entities/appointment-treatment-ailment/appointment-treatment-ailment.model';
-
 import { IAppointment } from 'app/entities/appointment/appointment.model';
+
 import { Status } from 'app/entities/enumerations/status.model';
 import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
 import { EmergencyContactService } from 'app/entities/emergency-contact/service/emergency-contact.service';
@@ -24,10 +24,12 @@ import { UserService } from 'app/entities/user/user.service';
 import {EmergencyContactUpdateComponent} from "../entities/emergency-contact/update/emergency-contact-update.component";
 import {EmergencyContactRegisterComponent} from "../entities/emergency-contact/register/emergency-contact-register.component";
 
+
 @Component({
   selector: 'medi-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
@@ -45,6 +47,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   appointmentsPatient: any[] | undefined = [];
   ailmentsPatient: any[] | undefined = [];
   currentUser: any;
+  closeModal: string | undefined;
+  ailment : any;
+
   private readonly destroy$ = new Subject<void>();
 
   constructor(
@@ -117,6 +122,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         });
         this.getAilmentsPatient();
       });
+
     });
     this.loadAllEmergencyContact();
     this.loadAllAppoiments();
@@ -197,6 +203,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
 
+
   public showModifyContactModal(emergencyContact: IEmergencyContact): void {
     const modalRef = this.modalService.open(EmergencyContactUpdateComponent);
     modalRef.componentInstance.setEmergencyContactData(emergencyContact);
@@ -211,4 +218,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  open(content : any, ailment : any): void {
+   this.modalService.open(content, {
+     windowClass: 'elementoPrueba'
+    }
+    )
+   this.ailment = ailment;
+  }
+
 }
