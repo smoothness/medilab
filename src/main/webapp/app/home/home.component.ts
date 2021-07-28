@@ -111,7 +111,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.appointmentsPatient = data.body?.filter(appointment => {
           this.accountService.retrieveUserById(Number(appointment.doctor?.id)).subscribe(doctor => {
             Object.assign(appointment.doctor, doctor);
-            console.log('doctor', doctor);
           });
           return appointment.patient?.id === this.thePatient?.id;
         });
