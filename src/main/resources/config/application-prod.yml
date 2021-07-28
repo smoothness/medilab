@@ -109,7 +109,7 @@ jhipster:
       # security key (this key should be unique for your application, and kept secret)
       key: d50075cd0ed4f7d8ae40d3bfbbd0a33d954ee1182e138bcf46652fb8c8324dfd0f7355a71bd00605f532907c193f91228d13
   mail: # specific JHipster mail property, for standard properties see MailProperties
-    base-url: http://my-server-url-to-change # Modify according to your server's URL
+    base-url: https://medi-lab-lo-geek.herokuapp.com/ # Modify according to your server's URL
   logging:
     use-json-format: false # By default, logs are not in Json format
     logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
