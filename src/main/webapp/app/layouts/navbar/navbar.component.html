@@ -67,9 +67,9 @@
         </a>
       </li>
       <li>
-        <!-- Doctor List-->
       </li>
 
+        <!-- Doctor List-->     
       <li *mediHasAnyAuthority="'ROLE_PATIENT'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a class="nav-link" routerLink="doctor" (click)="collapseNavbar()">
           <span>
@@ -84,6 +84,16 @@
           <span>
             <fa-icon icon="user-plus" [fixedWidth]="true"></fa-icon>
             <span mediTranslate="userManagement.home.createLabel">User management</span>
+          </span>
+        </a>
+      </li>
+
+      <!-- Invoice List-->     
+      <li  class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="invoice" (click)="collapseNavbar()">
+          <span>
+            <fa-icon icon="file-invoice-dollar" [fixedWidth]="true"></fa-icon>
+            <span mediTranslate="global.menu.entities.invoices">Doctor</span>
           </span>
         </a>
       </li>
@@ -188,18 +198,6 @@
             >
               <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
               <span mediTranslate="global.menu.entities.medicalExams">Medical Exams</span>
-            </a>
-          </li>
-          <li>
-            <a
-              class="dropdown-item"
-              routerLink="invoice"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              (click)="collapseNavbar()"
-            >
-              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-              <span mediTranslate="global.menu.entities.invoice">Invoice</span>
             </a>
           </li>
           <li>

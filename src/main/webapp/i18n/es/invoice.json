@@ -15,17 +15,18 @@
         "question": "¿Seguro que quiere eliminar Invoice {{ id }}?"
       },
       "detail": {
-        "title": "Invoice"
+        "title": "Factura"
       },
       "id": "ID",
-      "date": "Date",
+      "date": "Fecha",
       "subtotal": "Subtotal",
-      "taxes": "Taxes",
-      "discount": "Discount",
+      "taxes": "Impuestos 13%",
+      "discount": "Descuento",
       "total": "Total",
-      "status": "Status",
-      "appointment": "Appointment",
-      "lineComment": "Line Comment"
+      "status": "Estado",
+      "appointment": "Cita",
+      "lineComment": "Line Comment",
+      "invoiceDetail": "Detalle de la Factura"
     }
   }
 }
