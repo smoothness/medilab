@@ -1,7 +1,7 @@
 <div class="list-display ml-appointment-history">
   <div class="container">
-    <div class="mb-4">
-      <h2 id="page-heading" data-cy="AppointmentHeading">
+    <div class="mb-4 card bg-dark">
+      <h2 class="card-header" id="page-heading" data-cy="AppointmentHeading">
         <span id="appointmentHistory" mediTranslate="global.menu.reports.appointmentHistory">
           Appointments
         </span>
@@ -20,7 +20,7 @@
         <span mediTranslate="medilabApp.appointment.home.notFound">No appointments found</span>
       </div>
 
-      <div class="table-responsive card bg-dark"
+      <div class="table-responsive card bg-dark card-body"
            id="entities"
            *ngIf="appointments && appointments.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
@@ -46,6 +46,7 @@
               specialist
             </span>
             </th>
+            <th scope="col"></th>
           </tr>
           </thead>
           <tbody class="list-display">
