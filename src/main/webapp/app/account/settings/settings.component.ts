@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 import { TranslateService } from '@ngx-translate/core';
 import { AccountService } from './../../core/auth/account.service';
-import { PatientService } from "../../entities/patient/service/patient.service";
+import { PatientService } from '../../entities/patient/service/patient.service';
 
 import { LANGUAGES } from './../../config/language.constants';
-import {Doctor, Patient} from "../../core/auth/account.model";
-import {DoctorService} from "../../entities/doctor/service/doctor.service";
-import {SweetAlertService} from "../../shared/services/sweet-alert.service";
+import { Doctor, Patient } from '../../core/auth/account.model';
+import { DoctorService } from '../../entities/doctor/service/doctor.service';
+import { SweetAlertService } from '../../shared/services/sweet-alert.service';
 
 @Component({
   selector: 'medi-settings',
@@ -39,7 +39,7 @@ export class SettingsComponent implements OnInit {
       phone: ['', [Validators.required]],
       email: ['', [Validators.required]],
     }),
-    langKey: [undefined]
+    langKey: [undefined],
   });
 
   constructor(
@@ -75,17 +75,17 @@ export class SettingsComponent implements OnInit {
     this.accountService.save(this.account.internalUserData).subscribe(() => {
       this.accountService.authenticate(this.account);
 
-      if(this.account instanceof Patient){
+      if (this.account instanceof Patient) {
         this.patientService.updatePatientProfile(this.account).subscribe(() => {
           this.updateLanguage();
           this.sweetAlertService.showMsjSuccess('reset.done', 'settings.messages.success');
         });
-      }else if(this.account instanceof Doctor){
+      } else if (this.account instanceof Doctor) {
         this.doctorService.updateDoctorProfile(this.account).subscribe(() => {
           this.updateLanguage();
           this.sweetAlertService.showMsjSuccess('reset.done', 'settings.messages.success');
         });
-      }else{
+      } else {
         this.updateLanguage();
         this.sweetAlertService.showMsjSuccess('reset.done', 'settings.messages.success');
       }
@@ -104,11 +104,11 @@ export class SettingsComponent implements OnInit {
       login: this.account.login,
       name: this.account.firstName,
       lastname: this.account.lastName,
-      secondlastname: this.account.secondSurname
+      secondlastname: this.account.secondSurname,
     });
     this.contactInfoForm.patchValue({
       email: this.account.email,
-      phone: this.account.phone
+      phone: this.account.phone,
     });
     this.settingsForm.patchValue({
       langKey: this.account.langKey,

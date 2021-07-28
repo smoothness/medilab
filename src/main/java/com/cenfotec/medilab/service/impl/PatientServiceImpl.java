@@ -74,7 +74,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     @Transactional(readOnly = true)
-    public Patient findByInternalUser(Long id){
+    public Patient findByInternalUser(Long id) {
         return patientRepository.findByInternalUser(id);
     }
 

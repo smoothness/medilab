@@ -12,26 +12,8 @@ import { MainComponent } from './main/main.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
-  declarations: [
-    ActiveMenuDirective,
-    FooterComponent,
-    NavbarComponent,
-    MainComponent,
-    PageRibbonComponent,
-    UserProfileComponent
-  ],
-  exports: [
-    ActiveMenuDirective,
-    FooterComponent,
-    NavbarComponent,
-    MainComponent,
-    PageRibbonComponent,
-    UserProfileComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    LayoutsRoutesModule
-  ],
+  declarations: [ActiveMenuDirective, FooterComponent, NavbarComponent, MainComponent, PageRibbonComponent, UserProfileComponent],
+  exports: [ActiveMenuDirective, FooterComponent, NavbarComponent, MainComponent, PageRibbonComponent, UserProfileComponent],
+  imports: [CommonModule, SharedModule, LayoutsRoutesModule],
 })
 export class LayoutsModule {}
