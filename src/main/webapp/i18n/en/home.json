@@ -9,6 +9,10 @@
     "upcomingAppointments": "Upcoming appointments",
     "appointmentDetail": "Detail",
     "appointmentDelete": "Cancel appointment",
+    "appointmentDateChange": "Change date",
+    "appointmentDateChangeModal": {
+      "title": "Change the date of the appointment"
+    },
     "profile": {
       "identification": "Identification:",
       "phone": "Phone:",
@@ -22,7 +26,9 @@
     "ailments": "Ailments",
     "messages": {
       "cancelAppointmentTitle": "Appointent canceled",
-      "cancelAppointmentMsj": "This appointment has been canceled, it will be removed from the calendar."
+      "cancelAppointmentMsj": "This appointment has been canceled, it will be removed from the calendar.",
+      "updatedAppointmentDatetitle": "Date change",
+      "updatedAppointmentDateMsj": "The appointment date was changed successfully"
     },
     "btnNewContact": "Add new contact",
     "personalInfo": "Personal Info",

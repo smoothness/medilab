@@ -164,8 +164,6 @@ public class EmergencyContactResource {
         return ResponseEntity.ok(emergencyContacts);
     }
 
-
-
     /**
      * {@code DELETE  /emergency-contacts/:id} : delete the "id" emergencyContact.
      *

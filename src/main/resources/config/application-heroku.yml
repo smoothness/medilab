@@ -12,35 +12,17 @@
 
 eureka:
   instance:
-    hostname: medilablogeek.herokuapp.com
+    hostname: medi-lab-lo-geek.herokuapp.com
     non-secure-port: 80
     prefer-ip-address: false
 
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://sql5.freemysqlhosting.net/sql5427365?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-    username: sql5427365
-    password: 6CdCBW1eRR
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
     hikari:
       maximumPoolSize: 8
 server:
   port: ${PORT:8080}
-
-jpa:
-  liquibase:
-    contexts: prod
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: superadmi.medilab@gmail.com
-    password: logeek2021
-    protocol: smtp
-    tls: true
-    properties.mail.smtp:
-      auth: true
-      starttls.enable: true
-      ssl.trust: smtp.gmail.com
-
-  thymeleaf:
-    cache: true

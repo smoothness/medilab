@@ -74,7 +74,7 @@ public class EmergencyContactServiceImpl implements EmergencyContactService {
 
     @Override
     @Transactional(readOnly = true)
-    public  List<EmergencyContact> findByPatientId(Long id) {
+    public List<EmergencyContact> findByPatientId(Long id) {
         return emergencyContactRepository.findByPatientId(id);
     }
 
