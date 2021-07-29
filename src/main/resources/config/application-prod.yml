@@ -35,7 +35,7 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:mysql://sql5.freemysqlhosting.net/sql5427365?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
     username: sql5427365
-    password: root
+    password: 6CdCBW1eRR
     hikari:
       poolName: Hikari
       auto-commit: false
