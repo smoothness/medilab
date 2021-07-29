@@ -19,10 +19,28 @@ eureka:
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: ${JDBC_DATABASE_URL}
-    username: ${JDBC_DATABASE_USERNAME}
-    password: ${JDBC_DATABASE_PASSWORD}
+    url: jdbc:mysql://sql5.freemysqlhosting.net/sql5427365?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: sql5427365
+    password: 6CdCBW1eRR
     hikari:
       maximumPoolSize: 8
 server:
   port: ${PORT:8080}
+
+  jpa:
+  # Replace by 'prod, faker' to add the faker context and have sample data loaded in production
+  liquibase:
+    contexts: prod
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: superadmi.medilab@gmail.com
+    password: logeek2021
+    protocol: smtp
+    tls: true
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
+      ssl.trust: smtp.gmail.com 
+  thymeleaf:
+    cache: true
