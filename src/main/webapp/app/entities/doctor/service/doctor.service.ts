@@ -6,6 +6,7 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IDoctor, getDoctorIdentifier } from '../doctor.model';
+import { Doctor } from '../../../core/auth/account.model';
 
 export type EntityResponseType = HttpResponse<IDoctor>;
 export type EntityArrayResponseType = HttpResponse<IDoctor[]>;
@@ -24,6 +25,10 @@ export class DoctorService {
     return this.http.put<IDoctor>(`${this.resourceUrl}/${getDoctorIdentifier(doctor) as number}`, doctor, { observe: 'response' });
   }
 
+  updateDoctorProfile(doctor: Doctor): Observable<EntityResponseType> {
+    return this.http.put(`${this.resourceUrl}/${doctor.doctorId}`, doctor.doctorData, { observe: 'response' });
+  }
+
   partialUpdate(doctor: IDoctor): Observable<EntityResponseType> {
     return this.http.patch<IDoctor>(`${this.resourceUrl}/${getDoctorIdentifier(doctor) as number}`, doctor, { observe: 'response' });
   }
@@ -32,9 +37,27 @@ export class DoctorService {
     return this.http.get<IDoctor>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  findByInternalUser(id: number): Observable<EntityResponseType> {
+    return this.http.get<IDoctor>(`api/doctor/${id}`, { observe: 'response' });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IDoctor[]>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+
+  getCompleteDoctor(): Observable<{}> {
+    return new Observable<{}>(subscriber => {
+      this.http.get(this.resourceUrl).subscribe((doctors: any) => {
+        for (let i = 0; i < doctors.length; i++) {
+          const formatted = new Doctor(doctors[i]);
+          doctors[i] = formatted;
+        }
+        console.log(doctors);
+        subscriber.next(doctors);
+        subscriber.complete();
+      });
+    });
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {

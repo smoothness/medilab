@@ -6,6 +6,7 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IPatient, getPatientIdentifier } from '../patient.model';
+import { Patient } from '../../../core/auth/account.model';
 
 export type EntityResponseType = HttpResponse<IPatient>;
 export type EntityArrayResponseType = HttpResponse<IPatient[]>;
@@ -24,6 +25,10 @@ export class PatientService {
     return this.http.put<IPatient>(`${this.resourceUrl}/${getPatientIdentifier(patient) as number}`, patient, { observe: 'response' });
   }
 
+  updatePatientProfile(patient: Patient): Observable<EntityResponseType> {
+    return this.http.put(`${this.resourceUrl}/${patient.patientId}`, patient.patientData, { observe: 'response' });
+  }
+
   partialUpdate(patient: IPatient): Observable<EntityResponseType> {
     return this.http.patch<IPatient>(`${this.resourceUrl}/${getPatientIdentifier(patient) as number}`, patient, { observe: 'response' });
   }
@@ -31,6 +36,15 @@ export class PatientService {
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<IPatient>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
+
+  findOneByInternalUser(id: number): Observable<EntityResponseType> {
+    return this.http.get<IPatient>(`api/patient/${id}`, { observe: 'response' });
+  }
+
+  findOneByAppointmen(id: number): Observable<EntityResponseType> {
+    return this.http.get<IPatient>(`api/patient-appointment/${id}`, {observe: 'response'});
+  }
+
 
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
@@ -41,7 +55,7 @@ export class PatientService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  findByInternalUser(internalUser : number): Observable<EntityResponseType> {
+  findByInternalUser(internalUser: number): Observable<EntityResponseType> {
     return this.http.get<IPatient>(`${this.resourceUrl}/${internalUser}`, { observe: 'response' });
   }
 

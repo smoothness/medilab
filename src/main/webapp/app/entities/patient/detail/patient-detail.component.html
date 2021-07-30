@@ -1,9 +1,81 @@
-<div class="row justify-content-center">
+<section class="row p-0 m-0">
+  <div class="col-10 card bg-dark my-4 mx-auto">
+    <div class="text-center my-5">
+      <h2 data-cy="patientDetailsHeading">{{ patient.fullName }}</h2>
+    </div>
+    <div class="card-body">
+      <div class="col-12">
+        <div class="text-center mb-4">
+          <h4 mediTranslate="home.personalInfo">Información personal</h4>
+        </div>
+        <div class="table-responsive col-5 mx-auto text-center">
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <td scope="row" class="text-primary font-weight-bold" mediTranslate="home.profile.identification"></td>
+                <td>{{ patient.login }}</td>
+              </tr>
+              <tr>
+                <td scope="row" class="text-primary font-weight-bold" mediTranslate="home.profile.phone"></td>
+                <td>{{ patient.phone }}</td>
+              </tr>
+              <tr>
+                <td scope="row" class="text-primary font-weight-bold" mediTranslate="home.profile.email"></td>
+                <td>{{ patient.email }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-12" *ngIf="ailments.length !== 0">
+        <div class="text-center my-4">
+          <h4 mediTranslate="home.ailments">Ailments</h4>
+        </div>
+        <div class="table-responsive col-5 mx-auto text-center">
+          <table class="table table-bordered">
+            <tbody>
+              <tr *ngFor="let ailment of ailments; let i = index">
+                <td scope="row" class="text-primary font-weight-bold" mediTranslate="medilabApp.patient.ailmentName"></td>
+                <td>{{ ailment.name }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div></div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="text-center my-4">
+          <h4 mediTranslate="medilabApp.emergencyContact.home.title"></h4>
+        </div>
+        <div class="table-responsive col-8 mx-auto text-center">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col"><span class="text-primary" mediTranslate="medilabApp.emergencyContact.name">Name</span></th>
+                <th scope="col"><span class="text-primary" mediTranslate="medilabApp.emergencyContact.phone">Phone</span></th>
+                <th scope="col"><span class="text-primary" mediTranslate="medilabApp.emergencyContact.email">Email</span></th>
+                <th scope="col"><span class="text-primary" mediTranslate="medilabApp.emergencyContact.relationShip">Relationship</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let emergencyContact of emergencyContacts" data-cy="entityTable">
+                <td *ngIf="emergencyContact.patient">{{ emergencyContact.name }}</td>
+                <td *ngIf="emergencyContact.patient">{{ emergencyContact.phone }}</td>
+                <td *ngIf="emergencyContact.patient">{{ emergencyContact.email }}</td>
+                <td *ngIf="emergencyContact.patient">{{ emergencyContact.relationShip }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--div>
   <div class="col-8">
     <div *ngIf="patient">
-      <h2 data-cy="patientDetailsHeading"><span mediTranslate="medilabApp.patient.detail.title">Patient</span></h2>
-
-      <hr />
 
       <medi-alert-error></medi-alert-error>
 
@@ -45,4 +117,4 @@
       </button>
     </div>
   </div>
-</div>
+</div-->
