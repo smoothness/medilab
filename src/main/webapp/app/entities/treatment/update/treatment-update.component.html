@@ -8,7 +8,7 @@
       <div>
         <medi-alert-error></medi-alert-error>
 
-        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null" *ngIf="false">
           <label class="form-control-label" mediTranslate="global.field.id" for="field_id">ID</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div>
