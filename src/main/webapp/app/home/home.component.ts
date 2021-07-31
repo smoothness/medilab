@@ -80,7 +80,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.theDoctorId = res.body.id;
           this.appointmentService.findDoctorAppointments(this.theDoctorId).subscribe((response: any) => {
             let index = 0;
-            this.appointmentsDoctor = response.body;
+            this.appointmentsDoctor = response.body.filter((item: IAppointment) => item.status !== 'CANCELED');
             this.formatPatientData(this.appointmentsDoctor).subscribe(data => {
               this.appointmentsDoctor[index].patient = data;
               index++;
