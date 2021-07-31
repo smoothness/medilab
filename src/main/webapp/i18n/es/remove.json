@@ -1,8 +1,8 @@
 {
   "medilabApp": {
     "remove": {
-      "true": "removido",
-      "false": "agregado"
+      "true": "Activo",
+      "false": "Inactivo"
     }
   }
 }
