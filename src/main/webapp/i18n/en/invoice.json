@@ -20,12 +20,13 @@
       "id": "ID",
       "date": "Date",
       "subtotal": "Subtotal",
-      "taxes": "Taxes",
+      "taxes": "Taxes 13%",
       "discount": "Discount",
       "total": "Total",
       "status": "Status",
       "appointment": "Appointment",
-      "lineComment": "Line Comment"
+      "lineComment": "Line Comment",
+      "invoiceDetail": "Invoice Detail"
     }
   }
 }

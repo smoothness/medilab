@@ -9,30 +9,29 @@
     "upcomingAppointments": "Próximas citas",
     "appointmentDetail": "Detalle",
     "appointmentDelete": "Cancelar cita",
+    "appointmentDateChange": "Cambiar fecha",
+    "appointmentDateChangeModal": {
+      "title": "Cambiar la fecha de la cita"
+    },
     "profile": {
-      "identification": "Identificación",
-      "phone": "Teléfono",
-      "email": "Correo electrónico",
-      "specialty": "Especialidad",
+      "identification": "Identificación:",
+      "phone": "Teléfono:",
+      "email": "Correo electrónico:",
+      "specialty": "Especialidad:",
       "rating": "Clasificación"
     },
     "logged": {
       "message": "Está conectado como \"{{username}}\"."
     },
-    "question": "Si tiene preguntas sobre JHipster:",
-    "link": {
-      "homepage": "Página de inicio de JHipster",
-      "stackoverflow": "JHipster en Stack Overflow",
-      "bugtracker": "JHipster seguimiento de errores",
-      "chat": "Sala de chat pública de JHipster",
-      "follow": "contacto @jhipster en Twitter"
-    },
-    "like": "Si te gusta JHipster, danos una estrella en",
-    "github": "GitHub",
     "ailments": "Padecimientos",
     "messages": {
       "cancelAppointmentTitle": "Cita cancelada",
-      "cancelAppointmentMsj": "Esta cita ha sido cancelada, será removida del calendario."
-    }
+      "cancelAppointmentMsj": "Esta cita ha sido cancelada, será removida del calendario.",
+      "updatedAppointmentDatetitle": "Cambio de fecha",
+      "updatedAppointmentDateMsj": "La fecha de la cita fue Cambiada con éxito."
+    },
+    "btnNewContact": "Agregar nuevo contacto",
+    "personalInfo": "Información personal",
+    "viewPatient": "Ver paciente"
   }
 }

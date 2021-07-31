@@ -40,6 +40,10 @@ export class EmergencyContactService {
     return this.http.get<IEmergencyContact>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  findByPatientId(id: number): Observable<EntityResponseType> {
+    return this.http.get<IEmergencyContact>(`${this.resourceUrl}-patient/${id}`, { observe: 'response' });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IEmergencyContact[]>(this.resourceUrl, { params: options, observe: 'response' });

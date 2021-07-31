@@ -1,10 +1,44 @@
-<div>
+<section class="row p-0 m-0 mt-5">
+  <div id="ml-modify" class="card col-md-7 mx-auto my-4">
+    <!-- Form -->
+    <div id="formContainer" class="card-body overflow-auto">
+      <form name="settingsForm" role="form" autocomplete="off" [formGroup]="settingsForm">
+        <medi-personal-info [personalDataForm]="personalInfoForm"></medi-personal-info>
+        <medi-contact-info [contactInfoForm]="contactInfoForm"></medi-contact-info>
+        <div class="form-group">
+          <label for="langKey" mediTranslate="settings.form.language">Language</label>
+          <select class="form-control" id="langKey" name="langKey" formControlName="langKey" data-cy="langKey">
+            <option *ngFor="let language of languages" [value]="language">{{ language | findLanguageFromKey }}</option>
+          </select>
+        </div>
+      </form>
+    </div>
+
+    <!-- Buttons -->
+    <div class="card-footer">
+      <div class="row m-0 p-0 justify-content-center align-middle">
+        <button
+          type="button"
+          [disabled]="settingsForm.invalid"
+          (click)="save()"
+          class="btn btn-lg btn-primary col-4"
+          mediTranslate="settings.form.button"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--<div>
   <div class="row justify-content-center">
     <div class="col-md-8">
       <h2 mediTranslate="settings.title" [translateValues]="{ username: account.login }" *ngIf="account">
         User settings for [<strong>{{ account.login }}</strong
         >]
       </h2>
+
 
       <div class="alert alert-success" *ngIf="success" mediTranslate="settings.messages.success">
         <strong>Settings saved!</strong>
@@ -163,4 +197,4 @@
       </form>
     </div>
   </div>
-</div>
+</div>-->

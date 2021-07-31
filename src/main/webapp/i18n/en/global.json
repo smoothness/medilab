@@ -8,7 +8,7 @@
       "entities": {
         "main": "Entities",
         "patient": "Patient",
-        "doctor": "Doctor",
+        "doctor": "Doctors list",
         "appointment": "Appointment",
         "emergencyContact": "Emergency Contact",
         "treatment": "Treatment",
@@ -16,6 +16,7 @@
         "appointmentTreatmentAilment": "Appointment Treatment Ailment",
         "medicalExams": "Medical Exams",
         "invoice": "Invoice",
+        "invoices": "List of invoices",
         "lineComment": "Line Comment",
         "binnacle": "Binnacle",
         "rating": "Rating",

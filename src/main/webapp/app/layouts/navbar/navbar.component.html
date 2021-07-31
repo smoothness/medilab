@@ -82,6 +82,38 @@
           <span>Tratamientos</span>
         </a>
       </li>
+      <li>
+      </li>
+
+        <!-- Doctor List-->     
+      <li *mediHasAnyAuthority="'ROLE_PATIENT'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="doctor" (click)="collapseNavbar()">
+          <span>
+            <fa-icon icon="clinic-medical" [fixedWidth]="true"></fa-icon>
+            <span mediTranslate="global.menu.entities.doctor">Doctor</span>
+          </span>
+        </a>
+      </li>
+      <!-- NEW USER -->
+      <li *mediHasAnyAuthority="'ROLE_ADMIN'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="admin/user-management/new" (click)="collapseNavbar()">
+          <span>
+            <fa-icon icon="user-plus" [fixedWidth]="true"></fa-icon>
+            <span mediTranslate="userManagement.home.createLabel">User management</span>
+          </span>
+        </a>
+      </li>
+
+      <!-- Invoice List-->     
+      <li  class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="invoice" (click)="collapseNavbar()">
+          <span>
+            <fa-icon icon="file-invoice-dollar" [fixedWidth]="true"></fa-icon>
+            <span mediTranslate="global.menu.entities.invoices">Doctor</span>
+          </span>
+        </a>
+      </li>
+
       <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
       <li
         *ngSwitchCase="true"
@@ -110,18 +142,7 @@
               <span mediTranslate="global.menu.entities.patient">Patient</span>
             </a>
           </li>
-          <li>
-            <a
-              class="dropdown-item"
-              routerLink="doctor"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              (click)="collapseNavbar()"
-            >
-              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-              <span mediTranslate="global.menu.entities.doctor">Doctor</span>
-            </a>
-          </li>
+
           <li>
             <a
               class="dropdown-item"
@@ -134,7 +155,6 @@
               <span mediTranslate="global.menu.entities.appointment">Appointment</span>
             </a>
           </li>
-
 
           <li>
             <a
@@ -194,18 +214,6 @@
             >
               <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
               <span mediTranslate="global.menu.entities.medicalExams">Medical Exams</span>
-            </a>
-          </li>
-          <li>
-            <a
-              class="dropdown-item"
-              routerLink="invoice"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              (click)="collapseNavbar()"
-            >
-              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-              <span mediTranslate="global.menu.entities.invoice">Invoice</span>
             </a>
           </li>
           <li>
@@ -283,7 +291,7 @@
           <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
         </ul>
       </li>
-      <li
+      <!--li
         *mediHasAnyAuthority="'ROLE_ADMIN'"
         ngbDropdown
         class="nav-item dropdown pointer"
@@ -334,9 +342,10 @@
               <span mediTranslate="global.menu.admin.apidocs">API</span>
             </a>
           </li>
-          <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
+
         </ul>
-      </li>
+      </li-->
+      <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
       <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" *ngIf="languages && languages.length > 1">
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
           <span>
@@ -374,13 +383,7 @@
         </a>
         <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
           <li *ngSwitchCase="true">
-            <a
-              class="dropdown-item"
-              routerLink="account/settings"
-              routerLinkActive="active"
-              (click)="collapseNavbar()"
-              data-cy="settings"
-            >
+            <a class="dropdown-item" routerLink="account/settings" routerLinkActive="active" (click)="collapseNavbar()" data-cy="settings">
               <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
               <span mediTranslate="global.menu.account.settings">Settings</span>
             </a>
@@ -413,13 +416,7 @@
             </a>
           </li>
           <li *ngSwitchCase="false">
-            <a
-              class="dropdown-item"
-              routerLink="account/register"
-              routerLinkActive="active"
-              (click)="collapseNavbar()"
-              data-cy="register"
-            >
+            <a class="dropdown-item" routerLink="account/register" routerLinkActive="active" (click)="collapseNavbar()" data-cy="register">
               <fa-icon icon="user-plus" [fixedWidth]="true"></fa-icon>
               <span mediTranslate="global.menu.account.register">Register</span>
             </a>
