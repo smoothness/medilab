@@ -1,52 +1,27 @@
-<div class="row justify-content-center">
-  <div class="col-8">
-    <div *ngIf="emergencyContact">
-      <h2 data-cy="emergencyContactDetailsHeading">
-        <span mediTranslate="medilabApp.emergencyContact.detail.title">Emergency Contact</span>
-      </h2>
-
-      <hr />
-
-      <medi-alert-error></medi-alert-error>
-
-      <medi-alert></medi-alert>
-
-      <dl class="row-md jh-entity-details">
-        <dt><span mediTranslate="global.field.id">ID</span></dt>
-        <dd>
-          <span>{{ emergencyContact.id }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.emergencyContact.name">Name</span></dt>
-        <dd>
-          <span>{{ emergencyContact.name }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.emergencyContact.phone">Phone</span></dt>
-        <dd>
-          <span>{{ emergencyContact.phone }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.emergencyContact.email">Email</span></dt>
-        <dd>
-          <span>{{ emergencyContact.email }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.emergencyContact.relationShip">Relation Ship</span></dt>
-        <dd>
-          <span>{{ emergencyContact.relationShip }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.emergencyContact.patient">Patient</span></dt>
-        <dd>
-          <div *ngIf="emergencyContact.patient">
-            <a [routerLink]="['/patient', emergencyContact.patient?.id, 'view']">{{ emergencyContact.patient?.id }}</a>
-          </div>
-        </dd>
-      </dl>
-
-      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span mediTranslate="entity.action.back">Back</span>
-      </button>
-
-      <button type="button" [routerLink]="['/emergency-contact', emergencyContact.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span mediTranslate="entity.action.edit">Edit</span>
-      </button>
+<section class="card bg-dark card-size-profile">
+  <div class="card-header">
+    <h5 mediTranslate="medilabApp.emergencyContact.home.title"></h5>
+  </div>
+  <div class="card-body table-responsive">
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col"><span class="text-primary" mediTranslate="medilabApp.emergencyContact.name">Name</span></th>
+        <th scope="col"><span class="text-primary" mediTranslate="medilabApp.emergencyContact.phone">Phone</span></th>
+        <th scope="col"><span class="text-primary" mediTranslate="medilabApp.emergencyContact.email">Email</span></th>
+        <th scope="col"><span class="text-primary" mediTranslate="medilabApp.emergencyContact.relationShip">Relationship</span></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let contact of emergencyContacts" data-cy="entityTable">
+        <td *ngIf="contact">{{ contact.name }}</td>
+        <td *ngIf="contact">{{ contact.phone }}</td>
+        <td *ngIf="contact">{{ contact.email }}</td>
+        <td *ngIf="contact">{{ contact.relationShip }}</td>
+      </tr>
+      </tbody>
+    </table>
+    <div>
     </div>
   </div>
-</div>
+</section>

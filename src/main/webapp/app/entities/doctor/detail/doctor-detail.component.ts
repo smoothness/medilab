@@ -1,20 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { IDoctor } from '../doctor.model';
+import { Doctor } from './../../../core/auth/account.model';
+
 
 @Component({
   selector: 'medi-doctor-detail',
   templateUrl: './doctor-detail.component.html',
 })
 export class DoctorDetailComponent implements OnInit {
-  doctor: IDoctor | null = null;
+  doctor: any = {};
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ doctor }) => {
-      this.doctor = doctor;
+      this.doctor = new Doctor(doctor);
+      console.log(doctor);
     });
   }
 
