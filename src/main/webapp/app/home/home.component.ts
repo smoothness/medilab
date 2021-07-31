@@ -78,6 +78,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       if (this.account?.authorities[0] === 'ROLE_USER') {
         this.doctorService.findByInternalUser(this.account.id).subscribe((res: any) => {
           this.theDoctorId = res.body.id;
+          console.log(res.body);
           this.appointmentService.findDoctorAppointments(this.theDoctorId).subscribe((response: any) => {
             let index = 0;
             this.appointmentsDoctor = response.body;

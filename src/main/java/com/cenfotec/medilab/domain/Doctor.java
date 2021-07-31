@@ -25,8 +25,14 @@ public class Doctor implements Serializable {
     @Column(name = "specialty")
     private String specialty;
 
-    @Column(name = "active")
-    private Boolean active;
+    @Column(name = "second_surname")
+    private String secondSurname;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "doctor_code")
+    private String doctorCode;
 
     @OneToOne
     @JoinColumn(unique = true)
@@ -34,17 +40,17 @@ public class Doctor implements Serializable {
 
     @OneToMany(mappedBy = "doctor")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "rating", "patient", "doctor" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "rating", "Doctor", "doctor" }, allowSetters = true)
     private Set<RatingUser> ratingUsers = new HashSet<>();
 
     @OneToMany(mappedBy = "doctor")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "comment", "patient", "doctor" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "comment", "Doctor", "doctor" }, allowSetters = true)
     private Set<CommentUser> commentUsers = new HashSet<>();
 
     @OneToMany(mappedBy = "doctor")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "appointmentTreatmentAilments", "medicalExams", "patient", "doctor" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "appointmentTreatmentAilments", "medicalExams", "Doctor", "doctor" }, allowSetters = true)
     private Set<Appointment> internalUsers = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -74,17 +80,43 @@ public class Doctor implements Serializable {
         this.specialty = specialty;
     }
 
-    public Boolean getActive() {
-        return this.active;
+    public String getSecondSurname() {
+        return this.secondSurname;
     }
 
-    public Doctor active(Boolean active) {
-        this.active = active;
+    public Doctor secondSurname(String secondSurname) {
+        this.secondSurname = secondSurname;
         return this;
     }
 
-    public void setActive(Boolean active) {
-        this.active = active;
+    public void setSecondSurname(String secondSurname) {
+        this.secondSurname = secondSurname;
+    }
+
+    public String getPhone() {
+        return this.phone;
+    }
+
+    public Doctor phone(String phone) {
+        this.phone = phone;
+        return this;
+    }
+
+    public void setDoctorCode(String doctorCode) {
+        this.doctorCode = doctorCode;
+    }
+
+    public String getDoctorCode() {
+        return this.doctorCode;
+    }
+
+    public Doctor doctorCode(String doctorCode) {
+        this.doctorCode = doctorCode;
+        return this;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public User getInternalUser() {
@@ -217,8 +249,9 @@ public class Doctor implements Serializable {
     public String toString() {
         return "Doctor{" +
             "id=" + getId() +
+            ", secondSurname='" + getSecondSurname() + "'" +
+            ", phone='" + getPhone() + "'" +
             ", specialty='" + getSpecialty() + "'" +
-            ", active='" + getActive() + "'" +
             "}";
     }
 }

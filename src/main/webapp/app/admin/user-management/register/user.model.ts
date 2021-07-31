@@ -15,6 +15,7 @@ interface newUserData {
   };
   role: string;
   specialty?: string;
+  doctorCode?: string;
 }
 
 interface registration {
@@ -52,7 +53,7 @@ class User extends PersonalInfo {
   id = -1;
   password = '';
 
-  constructor({ personalInfo, contactInfo, role, specialty}: newUserData) {
+  constructor({ personalInfo, contactInfo, role, specialty, doctorCode}: newUserData) {
     super();
     this.login = personalInfo.login;
     this.name = personalInfo.name;
@@ -63,6 +64,7 @@ class User extends PersonalInfo {
     this.email = contactInfo.email;
     this.role = role;
     this.specialty = specialty ?? null;
+    this.doctorCode = doctorCode;
     this.authorities = [this.role]
   }
 
@@ -77,9 +79,18 @@ class User extends PersonalInfo {
     };
   }
 
-  public get doctorData(): { specialty: string | null | undefined; internalUser: { id: number } } {
+  public get doctorData(): {
+    specialty: string | null | undefined;
+    secondSurname: string | null | undefined;
+    phone: string | null | undefined;
+    doctorCode: string | null | undefined;
+    internalUser: { id: number }
+  } {
     return {
       specialty: this.specialty,
+      secondSurname: this.secondlastname,
+      phone: this.phone,
+      doctorCode: this.doctorCode,
       internalUser: {
         id: this.id,
       },
