@@ -109,8 +109,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   public autenticatedAccount(): void {
     this.accountService.formatUserIdentity().subscribe(user => {
       this.currentUser = user;
-      console.log(this.isDoctor);
-
     });
   }
 
