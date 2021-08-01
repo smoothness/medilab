@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private emergencyContactService: EmergencyContactService,
     private appointmentTreatmentAilmentService: AppointmentTreatmentAilmentService,
     private router: Router,
-    private ailmentService : AilmentService,
+    private ailmentService: AilmentService,
     protected modalService: NgbModal
   ) {}
 
@@ -91,13 +91,10 @@ export class HomeComponent implements OnInit, OnDestroy {
           });
         });
       } else {
-        
-        console.log("Sirve");
+        console.log('Sirve');
       }
     });
-    this.getAilmentReport();
   }
-
 
   public formatPatientData(appointments: any): Observable<any> {
     return new Observable(subscriber => {
@@ -254,16 +251,4 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.modalService.open(content);
     this.ailment = ailment;
   }
-
-  protected getAilmentReport(): void {
-
-    this.ailmentService.getAilmentReport().subscribe( (ailmentResponse: { body: any; }) => {
-      console.log("report", ailmentResponse.body);
-    }
-  
-    )
-
-   }
-
-   
 }

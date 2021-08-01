@@ -5,6 +5,7 @@ export interface IAilment {
   name?: string | null;
   removed?: boolean | null;
   appointmentTreatmentAilments?: IAppointmentTreatmentAilment[] | null;
+  total?: number;
 }
 
 export class Ailment implements IAilment {
@@ -12,7 +13,8 @@ export class Ailment implements IAilment {
     public id?: number,
     public name?: string | null,
     public removed?: boolean | null,
-    public appointmentTreatmentAilments?: IAppointmentTreatmentAilment[] | null
+    public appointmentTreatmentAilments?: IAppointmentTreatmentAilment[] | null,
+    public total?: number
   ) {
     this.removed = this.removed ?? false;
   }

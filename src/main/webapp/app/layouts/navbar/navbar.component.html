@@ -66,10 +66,9 @@
           </span>
         </a>
       </li>
-      <li>
-      </li>
+      <li></li>
 
-        <!-- Doctor List-->     
+      <!-- Doctor List-->
       <li *mediHasAnyAuthority="'ROLE_PATIENT'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a class="nav-link" routerLink="doctor" (click)="collapseNavbar()">
           <span>
@@ -88,12 +87,22 @@
         </a>
       </li>
 
-      <!-- Invoice List-->     
-      <li  class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <!-- Invoice List-->
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a class="nav-link" routerLink="invoice" (click)="collapseNavbar()">
           <span>
             <fa-icon icon="file-invoice-dollar" [fixedWidth]="true"></fa-icon>
             <span mediTranslate="global.menu.entities.invoices">Doctor</span>
+          </span>
+        </a>
+      </li>
+
+      <!-- Ailment Report-->
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="ailment/ailment-report" (click)="collapseNavbar()">
+          <span>
+            <fa-icon icon="file-alt" [fixedWidth]="true"></fa-icon>
+            <span mediTranslate="global.menu.entities.ailmentReport"></span>
           </span>
         </a>
       </li>
