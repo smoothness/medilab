@@ -14,7 +14,7 @@
         data-cy="entityCreateSaveButton"
         class="btn btn-lg btn-primary col-12"
         (click)="save()"
-        [disabled]="contactForm.valid"
+        [disabled]="contactForm.invalid"
       >
         <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
       </button>

@@ -56,7 +56,7 @@ export class EmergencyContactRegisterComponent {
   public save(): void {
     this.emergencyContactService.create(this.formatContactData).subscribe(
       () => {
-        this.sweetAlertService.showMsjSuccess('reset.done', 'medilabApp.emergencyContact.success').then(() => {
+        this.sweetAlertService.showMsjSuccess('reset.done', 'medilabApp.emergencyContact.registerSuccess').then(() => {
           this.activeModal.close('register');
         });
       },
