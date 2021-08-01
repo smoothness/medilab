@@ -19,7 +19,6 @@ export class EmergencyContactDetailComponent implements OnInit {
   ngOnInit(): void {
     this.emergencyContactService.findByPatientId(this.patientId).subscribe((res: any) => {
       this.emergencyContacts = res.body;
-      console.log(this.emergencyContacts);
     });
   }
 

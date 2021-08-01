@@ -84,7 +84,6 @@ export class UserManagementRegisterComponent {
   }
 
   public registerUser(newUser: User): void {
-    console.log("USER-> ", newUser);
     this.userService.registerUser(newUser).subscribe(
       () => {
         this.sweetAlertService.showMsjSuccess('register.messages.success', 'register.messages.successInternal').then(() => {
