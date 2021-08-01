@@ -136,6 +136,10 @@ class User extends PersonalInfo {
   public setPassword(newPassword: string): void {
     this.password = newPassword;
   }
+
+  public addEmergencyContactList(emergencyContact: EmergencyContact[]): void {
+    this.emergencyContact = emergencyContact;
+  }
 }
 
-export { EmergencyContact, User };
+export { User, EmergencyContact, emergencyContactRegisterData };

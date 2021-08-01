@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -8,23 +8,23 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class ConfirmPasswordComponent {
   @Output() password: EventEmitter<string> = new EventEmitter();
-  public doNotMatch = false;
-  public passwordForm = this.fb.group({
-    newPassword: ['', [Validators.required]],
-    confirmPassword: ['', [Validators.required]],
+  @Input() passwordForm = this.fb.group({
+    newPassword: ['', [Validators.required, Validators.minLength(4)]],
+    confirmPassword: ['', [Validators.required, Validators.minLength(4)]],
   });
+  public doNotMatch = false;
 
-  get newPassword(): string {
+  public constructor(private fb: FormBuilder) {}
+
+  public get newPassword(): string {
     return <string>this.passwordForm.get(['newPassword'])!.value;
   }
 
-  get confirmPassword(): string {
+  public get confirmPassword(): string {
     return <string>this.passwordForm.get(['confirmPassword'])!.value;
   }
 
-  constructor(private fb: FormBuilder) {}
-
-  validatePassword(): void {
+  public validatePassword(): void {
     this.doNotMatch = false;
 
     if (this.newPassword === this.confirmPassword) {

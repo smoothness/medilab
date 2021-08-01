@@ -1,16 +1,14 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
 
-import { IEmergencyContact } from '../emergency-contact.model';
 import { EmergencyContactService } from '../service/emergency-contact.service';
-import { PatientService } from 'app/entities/patient/service/patient.service';
-import { EmergencyFormComponent } from '../../../account/register/emergency-contact/emergency-form/emergency-form.component';
 import { SweetAlertService } from '../../../shared/services/sweet-alert.service';
+
+import { EmergencyFormComponent } from '../../../account/register/emergency-contact/emergency-form/emergency-form.component';
+
+import { ContactData, IEmergencyContact } from '../emergency-contact.model';
 
 @Component({
   selector: 'medi-emergency-contact-register',
@@ -23,24 +21,25 @@ export class EmergencyContactRegisterComponent {
   public container!: EmergencyFormComponent;
   public emergencyContactData?: any;
 
-  isSaving = false;
-
-  constructor(
+  public constructor(
     protected emergencyContactService: EmergencyContactService,
-    protected patientService: PatientService,
     protected activatedRoute: ActivatedRoute,
-    public activeModal: NgbActiveModal,
     protected fb: FormBuilder,
+    public activeModal: NgbActiveModal,
     public sweetAlertService: SweetAlertService
   ) {}
 
-  get contactData(): any {
-    return <{}>this.container.emergencyContactForm.value;
+  public get contactForm(): FormGroup {
+    return this.container.emergencyContactForm;
   }
 
-  get formatContactData(): any {
+  public get contactData(): ContactData {
+    return <ContactData>this.contactForm.value;
+  }
+
+  public get formatContactData(): IEmergencyContact {
     return {
-      name: `${<string>this.contactData.name} ${<string>this.contactData.lastname} ${<string>this.contactData.secondlastname}`,
+      name: `${this.contactData.name} ${this.contactData.lastname} ${this.contactData.secondlastname || ''}`,
       phone: this.contactData.phone,
       email: this.contactData.email,
       relationShip: this.contactData.relationship,
@@ -50,17 +49,12 @@ export class EmergencyContactRegisterComponent {
     };
   }
 
-  previousState(): void {
+  public previousState(): void {
     window.history.back();
   }
 
-  save(): void {
-    this.isSaving = true;
-    this.subscribeToSaveResponse(this.emergencyContactService.create(this.formatContactData));
-  }
-
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IEmergencyContact>>): void {
-    result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
+  public save(): void {
+    this.emergencyContactService.create(this.formatContactData).subscribe(
       () => {
         this.sweetAlertService.showMsjSuccess('reset.done', 'medilabApp.emergencyContact.success').then(() => {
           this.activeModal.close('register');
@@ -72,9 +66,5 @@ export class EmergencyContactRegisterComponent {
         });
       }
     );
-  }
-
-  protected onSaveFinalize(): void {
-    this.isSaving = false;
   }
 }
