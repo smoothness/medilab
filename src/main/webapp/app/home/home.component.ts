@@ -22,6 +22,7 @@ import { EmergencyContactService } from 'app/entities/emergency-contact/service/
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactUpdateComponent } from '../entities/emergency-contact/update/emergency-contact-update.component';
 import { EmergencyContactRegisterComponent } from '../entities/emergency-contact/register/emergency-contact-register.component';
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'medi-home',
@@ -80,7 +81,14 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.theDoctorId = res.body.id;
           this.appointmentService.findDoctorAppointments(this.theDoctorId).subscribe((response: any) => {
             let index = 0;
-            this.appointmentsDoctor = response.body.filter((item: IAppointment) => item.status === 'PENDING');
+            this.appointmentsDoctor = response.body
+              .filter((item: IAppointment) => item.status === 'PENDING')
+              .sort((a: IAppointment, b: IAppointment) => {
+                if (a.date && b.date) {
+                  return new Date(String(a.date)).valueOf() - new Date(String(b.date)).valueOf();
+                }
+                return null;
+              });
             this.formatPatientData(this.appointmentsDoctor).subscribe(data => {
               this.appointmentsDoctor[index].patient = data;
               index++;
