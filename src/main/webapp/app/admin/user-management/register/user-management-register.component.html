@@ -19,7 +19,11 @@
           </div>
 
           <div class="mt-3" *ngIf="isUser && currentStep === 1">
-            <!-- Specialty -->
+            <!-- doctorCode -->
+            <div class="form-group">
+              <label class="form-control-label" for="doctorCode" mediTranslate="register.form.doctorCode">Specialty</label>
+              <input type="text" class="form-control" id="doctorCode" name="doctorCode" formControlName="doctorCode" data-cy="doctorCode" />
+            </div>
             <div class="form-group">
               <label class="form-control-label" for="specialty" mediTranslate="register.form.specialty">Specialty</label>
               <input type="text" class="form-control" id="specialty" name="specialty" formControlName="specialty" data-cy="specialty" />

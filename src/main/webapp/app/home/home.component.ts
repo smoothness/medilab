@@ -8,9 +8,8 @@ import { SweetAlertService } from 'app/shared/services/sweet-alert.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
 import { PatientService } from 'app/entities/patient/service/patient.service';
-import { Patient } from 'app/entities/patient/patient.model';
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
-import { Doctor } from 'app/entities/doctor/doctor.model';
+import { Doctor, Patient} from './../core/auth/account.model';
 
 import { AppointmentTreatmentAilmentService } from 'app/entities/appointment-treatment-ailment/service/appointment-treatment-ailment.service';
 import { IAppointmentTreatmentAilment } from 'app/entities/appointment-treatment-ailment/appointment-treatment-ailment.model';
@@ -31,8 +30,6 @@ import { EmergencyContactRegisterComponent } from '../entities/emergency-contact
 })
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
-  patient: Patient | null = null;
-  doctor: Doctor | null = null;
   thePatient: any;
   theDoctorId = 0;
   emergencyContacts: IEmergencyContact[] = [];
@@ -62,6 +59,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     private router: Router,
     protected modalService: NgbModal
   ) {}
+
+  public get isPatient(): boolean {
+    return this.currentUser instanceof Patient;
+  }
+
+  public get isDoctor(): boolean {
+    return this.currentUser instanceof Doctor;
+  }
 
   public get emergencyContactsTotal(): number {
     return this.emergencyContacts.length;
@@ -106,6 +111,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.currentUser = user;
     });
   }
+
 
   mergeAccountWithPatient(account: Account): void {
     this.patientService.query().subscribe(res => {

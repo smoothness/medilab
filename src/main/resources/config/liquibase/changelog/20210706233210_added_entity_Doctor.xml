@@ -17,7 +17,13 @@
             <column name="specialty" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="active" type="boolean">
+            <column name="second_surname" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="phone" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="doctor_code" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="internal_user_id" type="bigint">
