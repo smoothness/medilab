@@ -1,6 +1,8 @@
 package com.cenfotec.medilab.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.beans.Transient;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,12 +30,29 @@ public class Ailment implements Serializable {
     @Column(name = "removed")
     private Boolean removed;
 
+    private Integer total;
+
+
     @OneToMany(mappedBy = "ailment")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "ailment", "treatment", "appointment" }, allowSetters = true)
     private Set<AppointmentTreatmentAilment> appointmentTreatmentAilments = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public void setTotal(Integer total){
+        this.total = total;
+    }
+
+    public Integer getTotal(){
+        return total;
+    }
+
+    public Ailment total(Integer total){
+        this.total = total;
+        return this;
+    }
+
     public Long getId() {
         return id;
     }

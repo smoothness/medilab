@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscriber } from 'rxjs';
 import { SweetAlertService } from 'app/shared/services/sweet-alert.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
@@ -22,6 +22,8 @@ import { EmergencyContactService } from 'app/entities/emergency-contact/service/
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactUpdateComponent } from '../entities/emergency-contact/update/emergency-contact-update.component';
 import { EmergencyContactRegisterComponent } from '../entities/emergency-contact/register/emergency-contact-register.component';
+
+import { AilmentService } from 'app/entities/ailment/service/ailment.service';
 
 @Component({
   selector: 'medi-home',
@@ -60,6 +62,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private emergencyContactService: EmergencyContactService,
     private appointmentTreatmentAilmentService: AppointmentTreatmentAilmentService,
     private router: Router,
+    private ailmentService : AilmentService,
     protected modalService: NgbModal
   ) {}
 
@@ -87,9 +90,14 @@ export class HomeComponent implements OnInit, OnDestroy {
             });
           });
         });
+      } else {
+        
+        console.log("Sirve");
       }
     });
+    this.getAilmentReport();
   }
+
 
   public formatPatientData(appointments: any): Observable<any> {
     return new Observable(subscriber => {
@@ -246,4 +254,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.modalService.open(content);
     this.ailment = ailment;
   }
+
+  protected getAilmentReport(): void {
+
+    this.ailmentService.getAilmentReport().subscribe( (ailmentResponse: { body: any; }) => {
+      console.log("report", ailmentResponse.body);
+    }
+  
+    )
+
+   }
+
+   
 }
