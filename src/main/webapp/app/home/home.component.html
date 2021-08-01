@@ -187,6 +187,56 @@
               </div>
             </div>
           </div>
+        <!-- Treatments-->
+            <div class="card bg-dark mt-3">
+              <h5 class="card-header">
+                <span mediTranslate="medilabApp.treatment.home.title" class="m-0 p-0">Treatments</span>
+                <div class="d-flex justify-content-end m-0 p-0">
+                  <button
+                    id="createTreament"
+                    data-cy="entityCreateButton"
+                    class="btn btn-primary"
+                    *ngIf="account?.authorities?.includes('ROLE_USER')"
+                  >
+                    <fa-icon icon="plus"></fa-icon>
+                    <span mediTranslate="home.treatment.btn.new"> Create a new treatmnt </span>
+                  </button>
+                </div>
+              </h5>
+              <div class="card body bg-dark" id="entities" *ngIf="treatments">
+                <div class="mb-3 mt-3 mb-3 ml-3">
+                <table class="table table-striped" aria-describedby="page-heading">
+                  <tbody>
+                    <tr class="list-group-item" *ngFor="let treatment of treatments; trackBy: trackId" data-cy="entityTable">
+                      <td *ngIf="searchForTreatment(treatment)"><fa-icon icon="pills" [fixedWidth]="true"></fa-icon></td>
+                      <td *ngIf="searchForTreatment(treatment)">{{ treatment.medicines }}</td>
+                      <td class="text-right" *ngIf="searchForTreatment(treatment)">
+                        <div class="btn-group">
+              
+              
+                          <button type="submit" [routerLink]="[treatment.id, 'view']" mediTranslate="home.appointmentDetail"
+                            class="btn btn-primary btn-sm mr-1" data-cy="entityEditButton">
+                            <fa-icon icon="eye"></fa-icon>
+                            <span class="d-none d-md-inline" mediTranslate="entity.action.edit">View</span>
+                          </button>
+              
+                          <button type="submit" 
+                          *ngIf="account?.authorities?.includes('ROLE_USER')"
+                           (click)="delete(treatment)" 
+                           class="btn btn-danger btn-sm"
+                            data-cy="entityDeleteButton">
+                            <fa-icon icon="times"></fa-icon>
+                            <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
+
+              </div>
+            </div>
         </div>
         <!-- END body patient Block -->
 

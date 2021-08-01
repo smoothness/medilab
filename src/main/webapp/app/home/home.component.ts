@@ -8,7 +8,7 @@ import { SweetAlertService } from 'app/shared/services/sweet-alert.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
 import { PatientService } from 'app/entities/patient/service/patient.service';
-import { Patient } from 'app/entities/patient/patient.model';
+import { Patient, IPatient } from 'app/entities/patient/patient.model';
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
 import { Doctor } from 'app/entities/doctor/doctor.model';
 
@@ -23,6 +23,11 @@ import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-cont
 import { EmergencyContactUpdateComponent } from '../entities/emergency-contact/update/emergency-contact-update.component';
 import { EmergencyContactRegisterComponent } from '../entities/emergency-contact/register/emergency-contact-register.component';
 
+// Treatmnts
+import { ITreatment, Treatment } from '../entities/treatment/treatment.model';
+import { TreatmentService } from '../entities/treatment/service/treatment.service';
+import { TreatmentDeleteDialogComponent } from '../entities/treatment/delete/treatment-delete-dialog.component';
+
 @Component({
   selector: 'medi-home',
   templateUrl: './home.component.html',
@@ -31,7 +36,6 @@ import { EmergencyContactRegisterComponent } from '../entities/emergency-contact
 })
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
-  patient: Patient | null = null;
   doctor: Doctor | null = null;
   thePatient: any;
   theDoctorId = 0;
@@ -49,6 +53,24 @@ export class HomeComponent implements OnInit, OnDestroy {
   updatedDate = new FormControl('');
   appointmentToChangeDate: IAppointment | null = null;
   currentUser: any;
+
+  // treatments
+ 
+  patient: Patient | null = null;
+  patients: IPatient[] | null = null;
+  isLoadingPatient = false;
+
+  treatments?: Treatment[];
+
+  appointments?: IAppointment[];
+  isLoadingAppointments = false;
+
+  appointmentTreatmentAilment?: IAppointmentTreatmentAilment[];
+  appointmentTreatmentAilments?: IAppointmentTreatmentAilment[];
+  isLoadingAppointmentTreatmentAilments = false;
+
+  isLoadingtreatment = false;
+
   private readonly destroy$ = new Subject<void>();
 
   constructor(
@@ -56,6 +78,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private accountService: AccountService,
     private patientService: PatientService,
     private doctorService: DoctorService,
+    protected treatmentService: TreatmentService,
     private appointmentService: AppointmentService,
     private emergencyContactService: EmergencyContactService,
     private appointmentTreatmentAilmentService: AppointmentTreatmentAilmentService,
@@ -89,6 +112,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         });
       }
     });
+    
+    this.loadPacient();
+    this.loadAllPacientAppointments();
+    this.loadAllAppointmentTreatmentAilmentService();
+    this.loadAllTreatments();
   }
 
   public formatPatientData(appointments: any): Observable<any> {
@@ -245,5 +273,117 @@ export class HomeComponent implements OnInit, OnDestroy {
   openAilmentModal(content: any, ailment: any): void {
     this.modalService.open(content);
     this.ailment = ailment;
+  }
+
+  // Treaments
+
+  loadAllTreatments(): void {
+    this.isLoadingtreatment = true;
+
+    this.treatmentService.query().subscribe(
+      (res: HttpResponse<ITreatment[]>) => {
+        this.isLoadingtreatment = false;
+        this.treatments = res.body ?? [];
+      },
+      () => {
+        this.isLoadingtreatment = false;
+      }
+    );
+  }
+
+  loadPacient(): void {
+    this.isLoadingPatient = true;
+
+    this.patientService.query().subscribe(
+      (res: HttpResponse<IPatient[]>) => {
+        this.isLoadingPatient = false;
+        this.patients = res.body?.filter(
+          data => data.internalUser?.id === this.account?.id
+        ) ?? [];
+
+        this.patient = this.patients[0];
+      },
+      () => {
+        this.isLoadingPatient = false;
+      }
+    );
+  }
+
+  loadAllPacientAppointments(): void {
+    this.isLoadingAppointments = true;
+
+    this.appointmentService.query().subscribe(
+      (res: HttpResponse<IAppointment[]>) => {
+        this.isLoadingAppointments = false;
+        this.appointments = res.body?.filter(
+          data => data.patient?.id === this.patient?.id
+        ) ?? [];
+      },
+      () => {
+        this.isLoadingAppointments = false;
+      }
+    );
+
+  }
+
+  loadAllAppointmentTreatmentAilmentService(): void {
+    this.isLoadingAppointmentTreatmentAilments = true;
+
+    this.appointmentTreatmentAilmentService.query().subscribe(
+      (res: HttpResponse<IAppointmentTreatmentAilment[]>) => {
+        this.isLoadingAppointmentTreatmentAilments = false;
+        this.appointmentTreatmentAilments = res.body ?? [];
+      },
+      () => {
+        this.isLoadingAppointmentTreatmentAilments = false;
+      }
+    );
+  }
+
+    searchForTreatment(item: ITreatment): boolean {
+    let result = false;
+    this.appointmentTreatmentAilments?.forEach(
+      data=> {
+        if(data.treatment?.id === item.id
+          && this.searchForAppointment(data)){
+          result = true;
+        }
+      })
+    return result;
+  }
+
+  searchForAppointment(item: IAppointmentTreatmentAilment): boolean {
+    let result = false;
+    this.appointments?.forEach(
+      data=> {
+        if(data.id === item.appointment?.id){
+          result = true;
+        }
+      }
+    )
+    return result;
+  }
+
+  removedTranslation(item: IAppointmentTreatmentAilment): boolean {
+    let result = false;
+    this.appointments?.forEach(
+      data=> {
+        if(data.id === item.appointment?.id){
+          result = true;
+        }
+      }
+    )
+    return result;
+  }
+
+  delete(treatment: ITreatment): void {
+    const modalRef = this.modalService.open(TreatmentDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.treatment = treatment;
+    // unsubscribe not needed because closed completes on modal close
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'deleted') {
+        this.loadAllTreatments();
+      }
+    });
   }
 }

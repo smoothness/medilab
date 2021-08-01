@@ -66,24 +66,6 @@
           </span>
         </a>
       </li>
-      <li
-        class="nav-item"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-        *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
-        <a
-          class="nav-link"
-          routerLink="treatment"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          (click)="collapseNavbar()"
-        >
-          <fa-icon icon="pills" [fixedWidth]="true"></fa-icon>
-          <span>Tratamientos</span>
-        </a>
-      </li>
-      <li>
-      </li>
 
         <!-- Doctor List-->     
       <li *mediHasAnyAuthority="'ROLE_PATIENT'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">

@@ -31,50 +31,47 @@
   <div class="table-responsive card bg-dark" id="entities" *ngIf="treatments && treatments.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
-      <tr>
-        <th scope="col" *ngIf="false"><span mediTranslate="global.field.id">ID</span></th>
-        <th scope="col"><span mediTranslate="medilabApp.treatment.specifications">Specifications</span></th>
-        <th scope="col"><span mediTranslate="medilabApp.treatment.medicines">Medicines</span></th>
-        <th scope="col"><span mediTranslate="medilabApp.treatment.duration">Duration</span></th>
-        <th scope="col"><span mediTranslate="medilabApp.treatment.removed">Estado</span></th>
-        <th scope="col"></th>
-      </tr>
+        <tr>
+          <th scope="col" *ngIf="false"><span mediTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span mediTranslate="medilabApp.treatment.specifications">Specifications</span></th>
+          <th scope="col"><span mediTranslate="medilabApp.treatment.medicines">Medicines</span></th>
+          <th scope="col"><span mediTranslate="medilabApp.treatment.duration">Duration</span></th>
+          <th scope="col"><span mediTranslate="medilabApp.treatment.removed">Estado</span></th>
+          <th scope="col"></th>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let treatment of treatments; trackBy: trackId" data-cy="entityTable">
-        <td *ngIf="false">
-          <a [routerLink]="[treatment.id, '/view']">{{ treatment.id }}</a>
-        </td>
-        <td *ngIf="searchForTreatment(treatment)">{{ treatment.specifications }}</td>
-        <td *ngIf="searchForTreatment(treatment)">{{ treatment.medicines }}</td>
-        <td *ngIf="searchForTreatment(treatment)">{{ treatment.duration }}</td>
-        <td *ngIf="searchForTreatment(treatment)"  mediTranslate="{{ 'medilabApp.remove.' + treatment.removed }}">{{ treatment.removed }}</td>
-        <td class="text-right" *ngIf="searchForTreatment(treatment)">
-          <div class="btn-group">
-
-
-            <button
-              type="submit"
-              [routerLink]="[treatment.id, 'view']"
-              mediTranslate="home.appointmentDetail"
-              class="btn btn-primary btn-sm mr-1"
-              data-cy="entityEditButton"
-            >
-              <fa-icon icon="eye"></fa-icon>
-              <span class="d-none d-md-inline" mediTranslate="entity.action.edit">View</span>
-            </button>
-
-            <button type="submit" (click)="delete(treatment)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-              <fa-icon icon="times"></fa-icon>
-              <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
-            </button>
-          </div>
-        </td>
-      </tr>
+        <tr *ngFor="let treatment of treatments; trackBy: trackId" data-cy="entityTable">
+          <td *ngIf="false">
+            <a [routerLink]="[treatment.id, '/view']">{{ treatment.id }}</a>
+          </td>
+          <td *ngIf="searchForTreatment(treatment)">{{ treatment.specifications }}</td>
+          <td *ngIf="searchForTreatment(treatment)">{{ treatment.medicines }}</td>
+          <td *ngIf="searchForTreatment(treatment)">{{ treatment.duration }}</td>
+          <td *ngIf="searchForTreatment(treatment)" mediTranslate="{{ 'medilabApp.remove.' + treatment.removed }}">{{
+            treatment.removed }}</td>
+          <td class="text-right" *ngIf="searchForTreatment(treatment)">
+            <div class="btn-group">
+  
+  
+              <button type="submit" [routerLink]="[treatment.id, 'view']" mediTranslate="home.appointmentDetail"
+                class="btn btn-primary btn-sm mr-1" data-cy="entityEditButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" mediTranslate="entity.action.edit">View</span>
+              </button>
+  
+              <button type="submit" (click)="delete(treatment)" class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
-    </div>
+  </div>
   </div>
 
 </div>
