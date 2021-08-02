@@ -21,6 +21,14 @@ import { EmergencyContactService } from 'app/entities/emergency-contact/service/
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactUpdateComponent } from '../entities/emergency-contact/update/emergency-contact-update.component';
 import { EmergencyContactRegisterComponent } from '../entities/emergency-contact/register/emergency-contact-register.component';
+
+import { RatingService } from 'app/entities/rating/service/rating.service';
+import { Rating, IRating } from 'app/entities/rating/rating.model';
+
+import { RatingUserService } from 'app/entities/rating-user/service/rating-user.service';
+import { RatingUser, IRatingUser } from 'app/entities/rating-user/rating-user.model';
+import { IDoctor } from 'app/entities/doctor/doctor.model';
+
 import * as dayjs from 'dayjs';
 
 @Component({
@@ -47,8 +55,22 @@ export class HomeComponent implements OnInit, OnDestroy {
   updatedDate = new FormControl('');
   appointmentToChangeDate: IAppointment | null = null;
   currentUser: any;
-  private readonly destroy$ = new Subject<void>();
+      // Rating
 
+      isLoadingRaiting = false;
+      rating: Rating | null = null;
+      ratings: IRating[] | null = null;
+    
+      // Rating User
+      isLoadingRaitingUser = false;
+      ratingUser: RatingUser | null = null;
+      ratingUsers?: RatingUser[] | null = null;
+    
+      // Rating Doctor Data
+      userDoctor?: IDoctor | null = null;
+      totalDoctorRaiting = 0;
+  
+  private readonly destroy$ = new Subject<void>();
   constructor(
     private sweetAlertService: SweetAlertService,
     private accountService: AccountService,
@@ -57,6 +79,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private appointmentService: AppointmentService,
     private emergencyContactService: EmergencyContactService,
     private appointmentTreatmentAilmentService: AppointmentTreatmentAilmentService,
+    private ratingService: RatingService,
+    private ratingUserService: RatingUserService,
     private router: Router,
     protected modalService: NgbModal
   ) {}
@@ -100,6 +124,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             });
           });
         });
+        this.loadAllRatingUsers();
       }
     });
   }
@@ -260,4 +285,56 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.modalService.open(content);
     this.ailment = ailment;
   }
+
+    // Rating
+
+    loadAllRatingUsers(): void {
+
+      this.doctorService.query().subscribe(doctorRes => {
+        this.userDoctor = doctorRes.body?.find(
+          doctorData => doctorData.internalUser?.id === this.account?.id);
+        this.ratingUserService.query().subscribe(ratingUserRes => {
+          this.ratingUsers = ratingUserRes.body?.filter(
+            ratingUserData => ratingUserData.doctor?.id === this.userDoctor?.id) ?? [];
+          this.ratingService.query().subscribe(ratingRes => {
+            this.ratings = ratingRes.body ?? [];
+            this.ratings.forEach(
+              raitingData => {
+                this.ratingUsers?.forEach(
+                  dataRaiting => {
+                    if (dataRaiting.rating?.id === raitingData.id) {
+                      this.totalDoctorRaiting = this.totalDoctorRaiting + Number(raitingData.value);
+                    }
+                  })
+              }
+            );
+            this.totalDoctorRaiting = this.totalDoctorRaiting / (Number(this.ratingUsers?.length));
+          });
+        });
+      });
+    }
+  
+    verifyRaiting(id?: number): boolean {
+      let result = false;
+      this.ratingUsers?.forEach(
+        dataRaiting => {
+          if (dataRaiting.rating?.id === id) {
+            result = true;
+          }
+        }
+      )
+      return result;
+    }
+  
+    ratingTotal(): number {
+      let total = 0;
+  
+      this.ratings?.forEach(
+        data => {
+          total = total + Number(data.value);
+          console.log("total", total);
+        }
+      )
+      return total;
+    }
 }
