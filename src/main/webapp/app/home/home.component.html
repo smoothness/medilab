@@ -5,15 +5,9 @@
       <section class="ml-profile__top">
         <!-- open top left card -->
         <div class="card bg-dark">
-          <h5 class="card-header" *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
+          <h5 class="card-header">
             <span mediTranslate="home.welcome">Bienvenido: </span>
-            <span class="ml-profile__user-text">{{ account?.firstName }} {{ account?.lastName }} {{
-              patient?.secondSurname }}</span>
-          </h5>
-          <h5 class="card-header"
-            *ngIf="account?.authorities?.includes('ROLE_ADMIN') || account?.authorities?.includes('ROLE_USER')">
-            <span mediTranslate="home.welcome">Bienvenido: </span>
-            <span class="ml-profile__user-text">{{ account?.firstName }} {{ account?.lastName }}</span>
+            <span class="ml-profile__user-text">{{ currentUser.fullName }}</span>
           </h5>
           <div class="card-body">
             <!-- START Top left card / Patient Block -->
@@ -49,7 +43,7 @@
       <!-- open profile bottom or body section -->
       <section class="ml-profile__bottom">
         <!-- START body patient Block -->
-        <div class="mt-3" *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
+        <div class="mt-3" *ngIf="isPatient">
           <div class="card bg-dark mb-3">
             <h5 class="card-header" mediTranslate="home.upcomingAppointments">Próximas citas</h5>
             <div class="card-body">
@@ -194,7 +188,7 @@
         <!-- END body patient Block -->
 
         <!-- START body doctor Block -->
-        <div class="card bg-dark mt-3" *ngIf="account?.authorities?.includes('ROLE_USER')">
+        <div class="card bg-dark mt-3" *ngIf="isDoctor">
           <h5 class="card-header" mediTranslate="home.upcomingAppointments">Próximas citas</h5>
           <div class="card-body">
             <ul class="list-group ml-profile__agenda">

@@ -9,4 +9,7 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface AppointmentTreatmentAilmentRepository extends JpaRepository<AppointmentTreatmentAilment, Long> {}
+public interface AppointmentTreatmentAilmentRepository extends JpaRepository<AppointmentTreatmentAilment, Long> {
+
+   
+}

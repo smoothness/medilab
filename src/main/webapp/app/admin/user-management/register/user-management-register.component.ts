@@ -38,7 +38,7 @@ export class UserManagementRegisterComponent {
       email: ['', [Validators.required]],
     }),
     role: ['', [Validators.required]],
-    // doctorCode: [''],
+    doctorCode: [''],
     specialty: [''],
   });
   roles = [

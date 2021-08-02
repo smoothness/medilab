@@ -6,9 +6,16 @@
   </div>
 
   <div class="card-body">
-    <medi-emergency-form #formElement></medi-emergency-form>
+    <medi-emergency-form #formElement [showTitleCount]="false"></medi-emergency-form>
     <div class="text-center">
-      <button type="submit" id="save-entity" data-cy="entityCreateSaveButton" class="btn btn-lg btn-primary col-12" (click)="save()">
+      <button
+        type="submit"
+        id="save-entity"
+        data-cy="entityCreateSaveButton"
+        class="btn btn-lg btn-primary col-12"
+        (click)="save()"
+        [disabled]="contactForm.invalid"
+      >
         <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
       </button>
     </div>
