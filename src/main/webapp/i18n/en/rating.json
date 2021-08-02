@@ -15,7 +15,8 @@
         "question": "Are you sure you want to delete Rating {{ id }}?"
       },
       "detail": {
-        "title": "Rating"
+        "title": "Rating",
+        "score": "Score: "
       },
       "id": "ID",
       "value": "Value",

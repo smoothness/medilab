@@ -132,8 +132,14 @@ Main page styles
 }
 
 /* rating */
+.ml-raiting{
+  
+  p{
+    color: #639282 !important;
+  }
 
-#raitingStar{
+  section#raitingStar{
   display: flex;
   display: inline-flex;
+  } 
 }

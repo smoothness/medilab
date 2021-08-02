@@ -31,7 +31,7 @@ describe('Component Tests', () => {
         comp.ngOnInit();
 
         // THEN
-        expect(comp.doctor).toEqual(expect.objectContaining({ id: 123 }));
+        expect(comp.theDoctor).toEqual(expect.objectContaining({ id: 123 }));
       });
     });
   });

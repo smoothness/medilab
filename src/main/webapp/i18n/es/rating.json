@@ -15,7 +15,8 @@
         "question": "¿Seguro que quiere eliminar Rating {{ id }}?"
       },
       "detail": {
-        "title": "Rating"
+        "title": "Calificación",
+        "score": "Puntuación: "
       },
       "id": "ID",
       "value": "Value",
