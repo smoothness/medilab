@@ -1,38 +1,42 @@
 <section>
   <div class="container">
-    <div class="col-md-10 mx-auto my-5 card bg-dark">
-      <div class="text-center mt-3">
-        <h2 mediTranslate="medilabApp.ailment.home.title"></h2>
-      </div>
-      <div class="mt-4">
-        <div class="table-responsive" id="entities">
-          <table class="table table-striped" aria-describedby="page-heading">
-            <thead>
-              <tr>
-                <th class="text-center" scope="col"><span mediTranslate="medilabApp.ailment.ailmentName"></span></th>
-                <th class="text-center" scope="col"><span mediTranslate="medilabApp.ailment.quantityPatients"></span></th>
-                <th class="text-center" scope="col"><span mediTranslate="medilabApp.ailment.detail"></span></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let object of ailments" data-cy="entityTable">
-                <td class="text-center">
-                  {{ object[1] }}
-                </td>
-                <td class="text-center">
-                  {{ object[3] }}
-                </td>
-                <td class="text-center">
-                  <div>
-                    <button type="submit" [routerLink]="['', 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
-                      <fa-icon icon="eye"></fa-icon>
-                      <span class="d-none d-md-inline" mediTranslate="medilabApp.ailment.viewReport"></span>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+    <div class="row">
+      <div class="col-md-10 mx-auto my-5 card bg-dark">
+        <div class="text-center mt-3">
+          <h2 mediTranslate="medilabApp.ailment.home.title"></h2>
+        </div>
+        <div class="mt-4">
+          <div class="table-responsive" id="entities">
+            <table class="table table-striped" aria-describedby="page-heading">
+              <thead>
+                <tr>
+                  <th class="text-center" scope="col"><span mediTranslate="medilabApp.ailment.ailmentName"></span></th>
+                  <th class="text-center" scope="col"><span mediTranslate="medilabApp.ailment.quantityPatients"></span>
+                  </th>
+                  <th class="text-center" scope="col"><span mediTranslate="medilabApp.ailment.detail"></span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let object of ailments" data-cy="entityTable">
+                  <td class="text-center">
+                    {{ object[1] }}
+                  </td>
+                  <td class="text-center">
+                    {{ object[3] }}
+                  </td>
+                  <td class="text-center">
+                    <div>
+                      <button type="submit" [routerLink]="['', 'edit']" class="btn btn-primary btn-sm"
+                        data-cy="entityEditButton">
+                        <fa-icon icon="eye"></fa-icon>
+                        <span class="d-none d-md-inline" mediTranslate="medilabApp.ailment.viewReport"></span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
