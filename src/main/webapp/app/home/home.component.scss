@@ -104,7 +104,7 @@ Main page styles
 
 /* Ailments */
 
-.ml-ailment {
+.ml-ailment{
   margin-top: 1em;
 
   svg {
@@ -127,18 +127,18 @@ Main page styles
 
 .ml-treatments{
     margin: 20px;
-  .list-display{
-
-  margin-top: 1em;
-      svg {
-        margin-right: 1rem;
-      }
-
-      th {
-        align-items: center;
-        display: flex;
-      }
-  }
+    svg {
+      margin-right: 1rem;
+    }
+  
+    button {
+      margin-left: auto;
+    }
+  
+    li {
+      align-items: center;
+      display: flex;
+    }
 }
 
 .change-date-modal {
