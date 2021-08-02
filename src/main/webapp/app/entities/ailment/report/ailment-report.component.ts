@@ -18,9 +18,7 @@ export class AilmentReportComponent implements OnInit {
 
   protected getAilmentReport(): void {
     this.ailmentService.getAilmentReport().subscribe((ailmentResponse: any) => {
-      console.log('Modelo', ailmentResponse.body);
       this.ailments = ailmentResponse.body;
-      console.log('ailments', this.ailments);
     });
   }
 }
