@@ -30,7 +30,10 @@
       "patient": "Patient",
       "doctor": "Doctor",
       "specialist": "Specialist",
-      "area": "Area"
+      "area": "Area",
+      "viewPatient": "View patient",
+      "viewDoctor": "View doctor",
+      "appointmentDetail": "Detalle"
     }
   }
 }

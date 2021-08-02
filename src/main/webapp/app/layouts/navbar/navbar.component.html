@@ -67,9 +67,7 @@
         </a>
       </li>
       <li class="nav-item"
-          routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-          *ngIf="account?.authorities?.includes('ROLE_PATIENT')
-          || account?.authorities?.includes('ROLE_USER')">
+          routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a class="nav-link"
            routerLink="appointment"
            (click)="collapseNavbar()">

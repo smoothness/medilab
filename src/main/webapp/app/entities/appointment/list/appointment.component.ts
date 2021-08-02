@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { IAppointment } from '../appointment.model';
+import { Appointment, IAppointment } from '../appointment.model';
 import { AppointmentService } from '../service/appointment.service';
 import { AppointmentDeleteDialogComponent } from '../delete/appointment-delete-dialog.component';
 
@@ -11,6 +11,9 @@ import { Patient, IPatient } from 'app/entities/patient/patient.model';
 
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
 import { Doctor, IDoctor } from 'app/entities/doctor/doctor.model';
+
+import { UserService } from 'app/entities/user/user.service';
+import { User, IUser } from 'app/entities/user/user.model';
 
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
@@ -24,10 +27,15 @@ export class AppointmentComponent implements OnInit {
   account: Account | null = null;
   appointments?: IAppointment[];
   isLoading = false;
+  appointmentsPatient: any[] | undefined = [];
 
   patient: Patient | null = null;
   patients: IPatient[] | null = null;
   isLoadingPatient = false;
+
+  user: User | null = null;
+  users: IUser[] | null = null;
+  isLoadingUser = false;
 
   doctor: Doctor | null = null;
   doctors: IDoctor[] | null = null;
@@ -37,7 +45,8 @@ export class AppointmentComponent implements OnInit {
     protected modalService: NgbModal,
     private accountService: AccountService,
     protected patientService: PatientService,
-    protected doctorService: DoctorService) { }
+    protected doctorService: DoctorService,
+    protected userService: PatientService) { }
 
   loadAllAppointments(): void {
     this.isLoading = true;
@@ -51,10 +60,12 @@ export class AppointmentComponent implements OnInit {
         this.isLoading = false;
       }
     );
+
+    console.log("RESULTADO", this.appointments);
   }
 
 
-  loadAllAccount(): void {
+  loadAccount(): void {
     this.accountService
       .getAuthenticationState()
       .subscribe(account => {
@@ -65,12 +76,16 @@ export class AppointmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAllAppointments();
-    this.loadAllAccount();
-    if(this.account?.authorities.includes("ROLE_USER")){
+    this.loadAccount();
+    if (this.account?.authorities.includes("ROLE_USER")
+      || this.account?.authorities.includes("ROLE_ADMIN")) {
       this.loadDoctor();
-    } if (this.account?.authorities.includes("ROLE_PATIENT")){
-      this.loadPacient();
+      this.loadPatients();
+    } if (this.account?.authorities.includes("ROLE_PATIENT")) {
+      this.loadPatient();
+      this.loadDoctors();
     }
+    this.loadUser();
   }
 
   trackId(index: number, item: IAppointment): number {
@@ -88,7 +103,42 @@ export class AppointmentComponent implements OnInit {
     });
   }
 
-  loadPacient(): void {
+  loadUser(): void {
+    this.isLoadingUser = true;
+    this.userService.query().subscribe(
+      (res: HttpResponse<IUser[]>) => {
+        this.isLoadingUser = false;
+        this.users = res.body ?? [];
+      },
+      () => {
+        this.isLoadingUser = false;
+      }
+    );
+  }
+
+  loadDoctor(): void {
+    this.isLoadingDoctor = true;
+
+    this.doctorService.query().subscribe(
+      (res: HttpResponse<IDoctor[]>) => {
+        this.isLoadingDoctor = false;
+        this.doctors = res.body?.filter(
+          data => data.internalUser?.id === this.account?.id
+        ) ?? [];
+
+        this.doctor = this.doctors[0];
+
+        this.doctors = res.body?.filter(
+          data => data.internalUser?.id === this.account?.id
+        ) ?? [];
+      },
+      () => {
+        this.isLoadingDoctor = false;
+      }
+    );
+  }
+
+  loadPatient(): void {
     this.isLoadingPatient = true;
 
     this.patientService.query().subscribe(
@@ -105,17 +155,27 @@ export class AppointmentComponent implements OnInit {
     );
   }
 
-  loadDoctor(): void {
+  loadPatients(): void {
+    this.isLoadingPatient = true;
+
+    this.patientService.query().subscribe(
+      (res: HttpResponse<IPatient[]>) => {
+        this.isLoadingPatient = false;
+        this.patients = res.body ?? [];
+      },
+      () => {
+        this.isLoadingPatient = false;
+      }
+    );
+  }
+
+  loadDoctors(): void {
     this.isLoadingDoctor = true;
 
     this.doctorService.query().subscribe(
       (res: HttpResponse<IDoctor[]>) => {
         this.isLoadingDoctor = false;
-        this.doctors = res.body?.filter(
-          data => data.internalUser?.id === this.account?.id
-        ) ?? [];
-
-        this.doctor = this.doctors[0];
+        this.doctors = res.body ?? [];
       },
       () => {
         this.isLoadingDoctor = false;
@@ -123,4 +183,29 @@ export class AppointmentComponent implements OnInit {
     );
   }
 
+
+  searchPatientFullName(patientSearching?: Patient): string {
+    let accountAux: any;
+    this.patients?.forEach(
+      data => {
+        if (data.id === patientSearching?.id && data.id) {
+          accountAux = data.internalUser;
+        }
+      }
+    )
+    return String(accountAux.completeName);
+  }
+
+
+  searchDoctorFullName(doctorSearching?: Doctor): string {
+    let accountAux: any;
+    this.doctors?.forEach(
+      data => {
+        if (data.id === doctorSearching?.id && data.id) {
+          accountAux = data.internalUser;
+        }
+      }
+    )
+    return String(accountAux.completeName);
+  }
 }
