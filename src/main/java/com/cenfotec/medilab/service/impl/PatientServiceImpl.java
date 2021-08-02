@@ -45,12 +45,6 @@ public class PatientServiceImpl implements PatientService {
                     if (patient.getPhone() != null) {
                         existingPatient.setPhone(patient.getPhone());
                     }
-                    if (patient.getToken() != null) {
-                        existingPatient.setToken(patient.getToken());
-                    }
-                    if (patient.getActive() != null) {
-                        existingPatient.setActive(patient.getActive());
-                    }
 
                     return existingPatient;
                 }

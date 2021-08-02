@@ -1,12 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
-import { IEmergencyContact } from '../emergency-contact.model';
+import {ContactData, IEmergencyContact} from '../emergency-contact.model';
 import { EmergencyContactService } from '../service/emergency-contact.service';
 import { IPatient } from 'app/entities/patient/patient.model';
 import { PatientService } from 'app/entities/patient/service/patient.service';
@@ -33,6 +33,14 @@ export class EmergencyContactUpdateComponent {
     protected fb: FormBuilder,
     public sweetAlertService: SweetAlertService
   ) {}
+
+  public get contactForm(): FormGroup {
+    return this.container.emergencyContactForm;
+  }
+
+  public get contactData(): ContactData {
+    return <ContactData>this.contactForm.value;
+  }
 
   setEmergencyContactData(emergencyContact: any): void {
     this.emergencyContactData = emergencyContact;

@@ -11,27 +11,6 @@
     </div>
   </section>
 
-  <!-- Errors -->
-  <section class="row p-0 m-0">
-    <div class="col-12 text-center">
-      <!-- <div class="alert alert-success" *ngIf="success" mediTranslate="register.messages.success">
-        <strong>Registration saved!</strong> Please check your email for confirmation.
-      </div>
-      <div class="alert alert-danger" *ngIf="error" mediTranslate="register.messages.error.fail">
-        <strong>Registration failed!</strong> Please try again later.
-      </div>
-      <div class="alert alert-danger" *ngIf="errorUserExists" mediTranslate="register.messages.error.userexists">
-        <strong>Login name already registered!</strong> Please choose another one.
-      </div>
-      <div class="alert alert-danger" *ngIf="errorEmailExists" mediTranslate="register.messages.error.emailexists">
-        <strong>Email is already in use!</strong> Please choose another one.
-      </div>
-      <div class="alert alert-danger" *ngIf="doNotMatch" mediTranslate="global.messages.error.dontmatch">
-        The password and its confirmation do not match!
-      </div> -->
-    </div>
-  </section>
-
   <!-- Wizard form -->
   <section class="row p-0 m-0">
     <div id="ml-register" class="card col-md-5 mx-auto my-2">
@@ -42,7 +21,8 @@
 
             <medi-contact-info *ngIf="currentStep === 1" [contactInfoForm]="currentGroup"> </medi-contact-info>
 
-            <medi-confirm-password *ngIf="currentStep === 1" (password)="validatePassword($event)"> </medi-confirm-password>
+            <medi-confirm-password *ngIf="currentStep === 1" [passwordForm]="passwordGroup" (password)="validatePassword($event)">
+            </medi-confirm-password>
 
             <medi-emergency-contact *ngIf="currentStep === 2" #emergencyContact> </medi-emergency-contact>
           </div>
@@ -71,8 +51,8 @@
             class="btn btn-success col-4 m-2"
             mediTranslate="register.form.button"
             *ngIf="currentStep === 2"
-            (click)="registerUser(emergencyContact)"
-            [disabled]="registerForm.invalid"
+            (click)="registerUser()"
+            [disabled]="validForm"
           ></button>
         </div>
       </div>

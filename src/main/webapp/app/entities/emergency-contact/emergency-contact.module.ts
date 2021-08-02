@@ -9,14 +9,17 @@ import { RegisterModule } from '../../account/register/register.module';
 import { EmergencyContactRegisterComponent } from './register/emergency-contact-register.component';
 
 @NgModule({
-  imports: [SharedModule, EmergencyContactRoutingModule, RegisterModule],
-  declarations: [
-    EmergencyContactComponent,
-    EmergencyContactDetailComponent,
-    EmergencyContactUpdateComponent,
-    EmergencyContactDeleteDialogComponent,
-    EmergencyContactRegisterComponent,
-  ],
-  entryComponents: [EmergencyContactDeleteDialogComponent],
+    imports: [SharedModule, EmergencyContactRoutingModule, RegisterModule],
+    declarations: [
+        EmergencyContactComponent,
+        EmergencyContactDetailComponent,
+        EmergencyContactUpdateComponent,
+        EmergencyContactDeleteDialogComponent,
+        EmergencyContactRegisterComponent,
+    ],
+    entryComponents: [EmergencyContactDeleteDialogComponent],
+    exports: [
+        EmergencyContactDetailComponent
+    ]
 })
 export class EmergencyContactModule {}
