@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse } from '@angular/common/http';
-import { Observable, Subject, Subscriber } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { SweetAlertService } from 'app/shared/services/sweet-alert.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
@@ -90,8 +90,6 @@ export class HomeComponent implements OnInit, OnDestroy {
             });
           });
         });
-      } else {
-        console.log('Sirve');
       }
     });
   }

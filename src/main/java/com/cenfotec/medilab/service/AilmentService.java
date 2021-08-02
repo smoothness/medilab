@@ -53,6 +53,5 @@ public interface AilmentService {
      */
     void delete(Long id);
 
-   
-    List<Ailment> getAilmentsReport();
+    List<Object> getAilmentsReport();
 }

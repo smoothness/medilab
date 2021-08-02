@@ -4,17 +4,17 @@
       "home": {
         "title": "Lista de padecimientos",
         "refreshListLabel": "Refrescar lista",
-        "createLabel": "Crear nuevo Padecimiento",
-        "createOrEditLabel": "Crear o editar Padecimiento",
-        "notFound": "Ningún Ailments encontrado"
+        "createLabel": "Crear nuevo padecimiento",
+        "createOrEditLabel": "Crear o editar padecimiento",
+        "notFound": "Ningún padecimiento encontrado"
       },
-      "created": "Un nuevo Padecimiento ha sido creado con el identificador {{ param }}",
-      "updated": "Un Padecimiento ha sido actualizado con el identificador {{ param }}",
-      "deleted": "Un Padecimiento ha sido eliminado con el identificador {{ param }}",
+      "created": "El padecimiento se ha registrado  exitosamente",
+      "updated": "El padecimiento se ha actualizado exitosamente",
+      "deleted": "El padecimiento se ha eliminado exitosamente",
       "delete": {
-        "question": "¿Seguro que quiere eliminar Padecimiento {{ id }}?"
+        "question": "¿Seguro que quiere eliminar el padecimiento {{ id }}?"
       },
-      "title": "Ailment",
+      "title": "Padecimientos",
       "id": "ID",
       "name": "Nombre",
       "removed": "Activo",

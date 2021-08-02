@@ -8,21 +8,19 @@ import { AilmentService } from '../service/ailment.service';
   styleUrls: ['./ailment-report.component.scss'],
 })
 export class AilmentReportComponent implements OnInit {
-  public ailments: IAilment[] = [];
+  public ailments: any[] = [];
 
   constructor(protected ailmentService: AilmentService) {}
 
   ngOnInit(): void {
-    this.prueba();
-  }
-
-  prueba(): void {
     this.getAilmentReport();
   }
 
   protected getAilmentReport(): void {
     this.ailmentService.getAilmentReport().subscribe((ailmentResponse: any) => {
+      console.log('Modelo', ailmentResponse.body);
       this.ailments = ailmentResponse.body;
+      console.log('ailments', this.ailments);
     });
   }
 }

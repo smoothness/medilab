@@ -4,26 +4,26 @@
       "home": {
         "title": "List of ailments",
         "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Ailment",
-        "createOrEditLabel": "Create or edit a Ailment",
-        "notFound": "No Ailments found"
+        "createLabel": "Create a new ailment",
+        "createOrEditLabel": "Create or edit an ailment",
+        "notFound": "No ailment found"
       },
-      "created": "A new Ailment is created with identifier {{ param }}",
-      "updated": "A Ailment is updated with identifier {{ param }}",
-      "deleted": "A Ailment is deleted with identifier {{ param }}",
+      "created": "A new ailment was created with identifier {{ param }}",
+      "updated": "An ailment was updated with identifier {{ param }}",
+      "deleted": "The ailment has been successfully deleted",
       "delete": {
-        "question": "Are you sure you want to delete Ailment {{ id }}?"
+        "question": "Are you sure you want to delete ailment {{ id }}?"
       },
       "title": "Ailment",
       "id": "ID",
       "name": "Name",
       "removed": "Removed",
-      "appointmentTreatmentAilment": "Appointment Treatment Ailment",
+      "appointmentTreatmentAilment": "Appointment Treatment ailment",
       "active": "Yes",
       "inactive": "No",
       "activate": "Activate",
       "deactivate": "Deactivate",
-      "ailmentName": "Ailment name",
+      "ailmentName": "ailment name",
       "quantityPatients": "Number of patients",
       "detail": "Detail",
       "viewReport": "View patients"

@@ -80,7 +80,7 @@ public class AilmentServiceImpl implements AilmentService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Ailment> getAilmentsReport() {
+    public List<Object> getAilmentsReport() {
         return ailmentRepository.getAilmentsReport();
     }
 }

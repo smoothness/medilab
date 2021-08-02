@@ -27,5 +27,5 @@ public interface AilmentRepository extends JpaRepository<Ailment, Long> {
         value = "SELECT ailment.id, ailment.name, ailment.removed, count(ailment.name) as total FROM appointment_treatment_ailment join ailment on appointment_treatment_ailment.ailment_id = ailment.id group by ailment.name",
         nativeQuery = true
     )
-    List<Ailment> getAilmentsReport();
+    List<Object> getAilmentsReport();
 }

@@ -98,7 +98,7 @@
       </li>
 
       <!-- Ailment Report-->
-      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <li *mediHasAnyAuthority="'ROLE_ADMIN'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a class="nav-link" routerLink="ailment/ailment-report" (click)="collapseNavbar()">
           <span>
             <fa-icon icon="file-alt" [fixedWidth]="true"></fa-icon>
