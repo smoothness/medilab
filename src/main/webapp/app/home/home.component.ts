@@ -26,7 +26,7 @@ import * as dayjs from 'dayjs';
 
 import { AilmentService } from 'app/entities/ailment/service/ailment.service';
 
-// Treatmnts
+// Treatments
 import { ITreatment, Treatment } from '../entities/treatment/treatment.model';
 import { TreatmentService } from '../entities/treatment/service/treatment.service';
 import { TreatmentDeleteDialogComponent } from '../entities/treatment/delete/treatment-delete-dialog.component';
@@ -388,18 +388,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   searchForAppointment(item: IAppointmentTreatmentAilment): boolean {
-    let result = false;
-    this.appointments?.forEach(
-      data=> {
-        if(data.id === item.appointment?.id){
-          result = true;
-        }
-      }
-    )
-    return result;
-  }
-
-  removedTranslation(item: IAppointmentTreatmentAilment): boolean {
     let result = false;
     this.appointments?.forEach(
       data=> {

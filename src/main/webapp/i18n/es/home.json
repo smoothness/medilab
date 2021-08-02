@@ -22,6 +22,9 @@
     },
     "logged": {
       "message": "Está conectado como \"{{username}}\"."
+    },  
+    "treatment":{
+      "createNew": "Add new treatment"
     },
     "ailments": "Padecimientos",
     "messages": {

@@ -18,6 +18,54 @@
       <div class="col-12 card bg-dark">
         <div class="text-center my-4">
           <h1>AQUI VA EL COMPONENTE REUTILIZABLE DE LOS DIGANOSTICOS (PADECIMIENTO Y TRATAMIENTO) EN UN CARD</h1>
+          <div class="card bg-dark mt-3">
+            <div class="card-header">
+              <h5 mediTranslate="medilabApp.treatment.home.title">Treatments</h5>
+              <div class="d-flex justify-content-end">
+                <button
+                  id="jh-create-entity"
+                  data-cy="entityCreateButton"
+                  class="btn btn-primary jh-create-entity create-treatment"
+                  [routerLink]="['../../../treatment/new']"
+                >
+                  <fa-icon icon="plus"></fa-icon>
+                  <span mediTranslate="home.treatment.createNew"> Create a new Treatment </span>
+                </button>
+              </div>
+            </div>
+            <div class="card body bg-dark" id="entities" *ngIf="treatments">
+
+              <ul class="list-group ml-treatments">
+                <div class="list-group-item" *ngFor="let treatment of treatments; trackBy: trackByTreatment">
+                  <li >
+
+                    <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                      class="bi bi-clipboard-plus" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd"
+                        d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z" />
+                      <path
+                        d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                      <path
+                        d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                    </svg>
+
+                    <div >{{ treatment.medicines }}</div>
+                    
+                    <button 
+                    class="btn btn-secondary btn-sm mr-1"
+                    mediTranslate="home.appointmentDetail"
+                    (click)="openTreatmentModal(addTreatmentModal, treatment)">Detalle</button>
+                    
+                    <button *ngIf="account?.authorities?.includes('ROLE_USER')" type="submit" (click)="delete(treatment)"
+                      class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                      <fa-icon icon="times"></fa-icon>
+                      <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
+                    </button>
+                  </li>
+                </div>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -25,3 +73,54 @@
   </div>
 </section>
 </div>
+
+<ng-template #addTreatmentModal let-modal>
+  <div>
+    <div class="mt-3">
+      <div class="card bg-dark mb-3">
+        <h5 class="card-header" mediTranslate="medilabApp.appointmentTreatmentAilment.treatment">Tratamiento detallado
+        </h5>
+        <div class="card-body">
+          <ul class="list-group ml-profile__agenda">
+            <li class="list-group-item">
+              <div class="modal_card">
+                <div class="modal_data_info">
+                  <b class="mr-2"mediTranslate="medilabApp.treatment.specifications">Specifications</b>
+                </div>
+                <span class="badge bg-secondary" id="details">{{ treatment.specifications }}</span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="modal_card">
+                <div class="modal_data_info">
+                  <b class="mr-2" mediTranslate="medilabApp.treatment.medicines">a</b>
+                </div>
+                <span class="badge bg-secondary" id="details">{{ treatment.medicines }}</span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="modal_card">
+                <div class="modal_data_info">
+                  <b class="mr-2" mediTranslate="medilabApp.treatment.duration">Duración</b>
+                </div>
+                <span class="badge bg-secondary" id="details">{{ treatment.duration }}</span>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="modal_card">
+                <div class="modal_data_info">
+                  <b class="mr-2" mediTranslate="medilabApp.treatment.removed">Estado</b>
+                </div>
+                <span 
+                class="badge bg-secondary" 
+                id="details" 
+                mediTranslate="{{ 'medilabApp.remove.' + treatment.removed }}">
+                  {{ treatment.removed }}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
