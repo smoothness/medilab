@@ -2,13 +2,13 @@ import { Component, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+
+import { RegisterService } from './register.service';
 import { SweetAlertService } from '../../shared/services/sweet-alert.service';
-import {Router} from "@angular/router";
 
 import { EmergencyContactComponent } from './emergency-contact/emergency-contact.component';
 
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from './../../config/error.constants';
-import { RegisterService } from './register.service';
 import { User } from './register.model';
 
 @Component({
@@ -16,12 +16,10 @@ import { User } from './register.model';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent{
+export class RegisterComponent {
   @ViewChild(EmergencyContactComponent) emergencyContact?: any;
   doNotMatch = false;
-  error = false;
   currentStep = 0;
-  emergencyContacts: any[] = [];
   registerForm = this.fb.group({
     personalInfo: this.fb.group({
       login: [
@@ -40,21 +38,35 @@ export class RegisterComponent{
     }),
     contactInfo: this.fb.group({
       phone: ['', [Validators.required]],
-      email: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
     }),
-    password: [''],
+    passwordInfo: this.fb.group({
+      newPassword: ['', [Validators.required, Validators.minLength(4)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(4)]],
+    }),
   });
 
   constructor(
     private fb: FormBuilder,
     private service: RegisterService,
     private translateService: TranslateService,
-    private sweetAlertService: SweetAlertService,
-    private router: Router
+    private sweetAlertService: SweetAlertService
   ) {}
 
-  public get currentGroup(): any {
+  public get validForm(): boolean {
+    let isValid = true;
+    if (this.registerForm.valid && this.emergencyContact && this.emergencyContact.formsContactsValid) {
+      isValid = false;
+    }
+    return isValid;
+  }
+
+  public get currentGroup(): FormGroup {
     return this.getGroupAt(this.currentStep);
+  }
+
+  public get passwordGroup(): FormGroup {
+    return <FormGroup>this.registerForm.get('passwordInfo');
   }
 
   public nextStep(): void {
@@ -65,18 +77,17 @@ export class RegisterComponent{
     this.currentStep--;
   }
 
-  public registerUser(newEmergencyContacts: any): void {
+  public registerUser(): void {
     const newUser: User = new User(this.registerForm.value);
-    newUser.emergencyContact = newEmergencyContacts.contacts;
+    newUser.addEmergencyContactList(this.emergencyContact.contacts);
 
     this.service.register(newUser).subscribe(
       () => {
-        this.sweetAlertService.showMsjSuccess('register.messages.success', 'register.messages.emailConfirm').
-        then(() =>{
+        this.sweetAlertService.showMsjSuccess('register.messages.success', 'register.messages.emailConfirm').then(() => {
           this.registerForm.reset();
           this.emergencyContact.resetComponent();
           window.location.assign('/');
-        });;
+        });
       },
       response => this.processError(response)
     );
