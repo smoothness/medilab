@@ -5,10 +5,21 @@ import { DoctorDetailComponent } from './detail/doctor-detail.component';
 import { DoctorUpdateComponent } from './update/doctor-update.component';
 import { DoctorDeleteDialogComponent } from './delete/doctor-delete-dialog.component';
 import { DoctorRoutingModule } from './route/doctor-routing.module';
+import { LayoutsModule } from './../../layouts/layouts.module';
+
 
 @NgModule({
-  imports: [SharedModule, DoctorRoutingModule],
-  declarations: [DoctorComponent, DoctorDetailComponent, DoctorUpdateComponent, DoctorDeleteDialogComponent],
+  imports: [
+    SharedModule,
+    DoctorRoutingModule,
+    LayoutsModule,
+  ],
+  declarations: [
+    DoctorComponent,
+    DoctorDetailComponent,
+    DoctorUpdateComponent,
+    DoctorDeleteDialogComponent
+  ],
   entryComponents: [DoctorDeleteDialogComponent],
 })
 export class DoctorModule {}

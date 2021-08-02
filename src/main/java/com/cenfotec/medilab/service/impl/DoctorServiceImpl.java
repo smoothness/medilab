@@ -42,9 +42,6 @@ public class DoctorServiceImpl implements DoctorService {
                     if (doctor.getSpecialty() != null) {
                         existingDoctor.setSpecialty(doctor.getSpecialty());
                     }
-                    if (doctor.getActive() != null) {
-                        existingDoctor.setActive(doctor.getActive());
-                    }
 
                     return existingDoctor;
                 }

@@ -10,7 +10,9 @@ interface newUserData {
     phone: string;
     email: string;
   };
-  password: string;
+  passwordInfo: {
+    newPassword: string;
+  };
 }
 
 interface fromContactData {
@@ -93,7 +95,7 @@ class User extends PersonalInfo {
   id = -1;
   password = '';
 
-  constructor({ personalInfo, contactInfo, password }: newUserData) {
+  constructor({ personalInfo, contactInfo, passwordInfo }: newUserData) {
     super();
     this.login = personalInfo.login;
     this.name = personalInfo.name;
@@ -102,7 +104,7 @@ class User extends PersonalInfo {
     this.langKey = personalInfo.langKey;
     this.phone = contactInfo.phone;
     this.email = contactInfo.email;
-    this.password = password;
+    this.password = passwordInfo.newPassword;
   }
 
   public get data(): registration {
@@ -136,6 +138,10 @@ class User extends PersonalInfo {
   public setPassword(newPassword: string): void {
     this.password = newPassword;
   }
+
+  public addEmergencyContactList(emergencyContact: EmergencyContact[]): void {
+    this.emergencyContact = emergencyContact;
+  }
 }
 
-export { EmergencyContact, User };
+export { User, EmergencyContact, emergencyContactRegisterData };

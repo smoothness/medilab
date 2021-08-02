@@ -81,8 +81,9 @@ export class AppointmentService {
   }
 
   protected convertDateFromClient(appointment: IAppointment): IAppointment {
+    appointment.date = dayjs(String(appointment.date));
     return Object.assign({}, appointment, {
-      date: appointment.date?.isValid() ? appointment.date.format(DATE_FORMAT) : undefined,
+      date: appointment.date.isValid() ? appointment.date.format(DATE_FORMAT) : undefined,
     });
   }
 
