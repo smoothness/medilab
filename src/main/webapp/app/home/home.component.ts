@@ -23,6 +23,8 @@ import { EmergencyContactUpdateComponent } from '../entities/emergency-contact/u
 import { EmergencyContactRegisterComponent } from '../entities/emergency-contact/register/emergency-contact-register.component';
 import * as dayjs from 'dayjs';
 
+import { AilmentService } from 'app/entities/ailment/service/ailment.service';
+
 @Component({
   selector: 'medi-home',
   templateUrl: './home.component.html',
@@ -58,6 +60,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private emergencyContactService: EmergencyContactService,
     private appointmentTreatmentAilmentService: AppointmentTreatmentAilmentService,
     private router: Router,
+    private ailmentService: AilmentService,
     protected modalService: NgbModal
   ) {}
 
