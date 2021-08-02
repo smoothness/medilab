@@ -23,7 +23,8 @@
         "ratingUser": "Rating User",
         "comment": "Comment",
         "commentUser": "Comment User",
-        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
+        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
+        "ailmentReport": "Reporte de padecimientos"
       },
       "account": {
         "main": "Cuenta",

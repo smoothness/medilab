@@ -31,6 +31,8 @@ import { IDoctor } from 'app/entities/doctor/doctor.model';
 
 import * as dayjs from 'dayjs';
 
+import { AilmentService } from 'app/entities/ailment/service/ailment.service';
+
 @Component({
   selector: 'medi-home',
   templateUrl: './home.component.html',
@@ -82,6 +84,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private ratingService: RatingService,
     private ratingUserService: RatingUserService,
     private router: Router,
+    private ailmentService: AilmentService,
     protected modalService: NgbModal
   ) {}
 

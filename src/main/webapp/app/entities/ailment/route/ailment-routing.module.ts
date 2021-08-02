@@ -6,6 +6,7 @@ import { AilmentComponent } from '../list/ailment.component';
 import { AilmentDetailComponent } from '../detail/ailment-detail.component';
 import { AilmentUpdateComponent } from '../update/ailment-update.component';
 import { AilmentRoutingResolveService } from './ailment-routing-resolve.service';
+import { AilmentReportComponent } from '../report/ailment-report.component';
 
 const ailmentRoute: Routes = [
   {
@@ -32,6 +33,14 @@ const ailmentRoute: Routes = [
   {
     path: ':id/edit',
     component: AilmentUpdateComponent,
+    resolve: {
+      ailment: AilmentRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'ailment-report',
+    component: AilmentReportComponent,
     resolve: {
       ailment: AilmentRoutingResolveService,
     },
