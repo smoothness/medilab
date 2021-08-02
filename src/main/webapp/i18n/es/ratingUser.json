@@ -4,8 +4,8 @@
       "home": {
         "title": "Rating Users",
         "refreshListLabel": "Refrescar lista",
-        "createLabel": "Crear nuevo Rating User",
-        "createOrEditLabel": "Crear o editar Rating User",
+        "createLabel": "Calificar",
+        "createOrEditLabel": "Calificar a un medico",
         "notFound": "Ningún Rating Users encontrado"
       },
       "created": "Un nuevo Rating User ha sido creado con el identificador {{ param }}",
@@ -18,7 +18,7 @@
         "title": "Rating User"
       },
       "id": "ID",
-      "rating": "Rating",
+      "rating": "Calificación",
       "patient": "Patient",
       "doctor": "Doctor"
     }

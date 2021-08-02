@@ -22,7 +22,8 @@
       "appointmentTreatmentAilment": "Appointment Treatment Ailment",
       "medicalExams": "Medical Exams",
       "patient": "Patient",
-      "doctor": "Doctor"
+      "doctor": "Doctor",
+      "ranking": "Rank"
     }
   }
 }

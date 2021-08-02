@@ -1,6 +1,7 @@
-<div class="row justify-content-center">
-  <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+<div class="bg-dark cardcontainer  p-0 m-0 mt-5 card col-md-7 mx-auto my-4">
+<div class="justify-content-center">
+  <div class="m-3">
+    <form  name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2
         id="medi-rating-user-heading"
         data-cy="RatingUserCreateUpdateHeading"
@@ -8,7 +9,6 @@
       >
         Create or edit a Rating User
       </h2>
-
       <div>
         <medi-alert-error></medi-alert-error>
 
@@ -22,15 +22,14 @@
           <select class="form-control" id="field_rating" data-cy="rating" name="rating" formControlName="rating">
             <option [ngValue]="null"></option>
             <option
-              [ngValue]="ratingOption.id === editForm.get('rating')!.value?.id ? editForm.get('rating')!.value : ratingOption"
-              *ngFor="let ratingOption of ratingsSharedCollection; trackBy: trackRatingById"
+              *ngFor="let number of [].constructor(5); index as i"
             >
-              {{ ratingOption.id }}
+              {{ i+1 }}
             </option>
           </select>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" *ngIf="false">
           <label class="form-control-label" mediTranslate="medilabApp.ratingUser.patient" for="field_patient">Patient</label>
           <select class="form-control" id="field_patient" data-cy="patient" name="patient" formControlName="patient">
             <option [ngValue]="null"></option>
@@ -51,7 +50,7 @@
               [ngValue]="doctorOption.id === editForm.get('doctor')!.value?.id ? editForm.get('doctor')!.value : doctorOption"
               *ngFor="let doctorOption of doctorsSharedCollection; trackBy: trackDoctorById"
             >
-              {{ doctorOption.id }}
+              {{searchDoctorFullName(doctorOption)}}
             </option>
           </select>
         </div>
@@ -74,4 +73,6 @@
       </div>
     </form>
   </div>
+</div>
+
 </div>

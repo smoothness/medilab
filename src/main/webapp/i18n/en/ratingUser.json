@@ -4,8 +4,8 @@
       "home": {
         "title": "Rating Users",
         "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Rating User",
-        "createOrEditLabel": "Create or edit a Rating User",
+        "createLabel": "Rate",
+        "createOrEditLabel": "Rate a Doctor",
         "notFound": "No Rating Users found"
       },
       "created": "A new Rating User is created with identifier {{ param }}",
