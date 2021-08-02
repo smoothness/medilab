@@ -8,9 +8,8 @@ import { SweetAlertService } from 'app/shared/services/sweet-alert.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
 import { PatientService } from 'app/entities/patient/service/patient.service';
-import { Patient } from 'app/entities/patient/patient.model';
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
-import { Doctor } from 'app/entities/doctor/doctor.model';
+import { Doctor, Patient} from './../core/auth/account.model';
 
 import { AppointmentTreatmentAilmentService } from 'app/entities/appointment-treatment-ailment/service/appointment-treatment-ailment.service';
 import { IAppointmentTreatmentAilment } from 'app/entities/appointment-treatment-ailment/appointment-treatment-ailment.model';
@@ -22,6 +21,7 @@ import { EmergencyContactService } from 'app/entities/emergency-contact/service/
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactUpdateComponent } from '../entities/emergency-contact/update/emergency-contact-update.component';
 import { EmergencyContactRegisterComponent } from '../entities/emergency-contact/register/emergency-contact-register.component';
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'medi-home',
@@ -31,8 +31,6 @@ import { EmergencyContactRegisterComponent } from '../entities/emergency-contact
 })
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
-  patient: Patient | null = null;
-  doctor: Doctor | null = null;
   thePatient: any;
   theDoctorId = 0;
   emergencyContacts: IEmergencyContact[] = [];
@@ -63,6 +61,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected modalService: NgbModal
   ) {}
 
+  public get isPatient(): boolean {
+    return this.currentUser instanceof Patient;
+  }
+
+  public get isDoctor(): boolean {
+    return this.currentUser instanceof Doctor;
+  }
+
   public get emergencyContactsTotal(): number {
     return this.emergencyContacts.length;
   }
@@ -80,7 +86,14 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.theDoctorId = res.body.id;
           this.appointmentService.findDoctorAppointments(this.theDoctorId).subscribe((response: any) => {
             let index = 0;
-            this.appointmentsDoctor = response.body;
+            this.appointmentsDoctor = response.body
+              .filter((item: IAppointment) => item.status === 'PENDING')
+              .sort((a: IAppointment, b: IAppointment) => {
+                if (a.date && b.date) {
+                  return new Date(String(a.date)).valueOf() - new Date(String(b.date)).valueOf();
+                }
+                return null;
+              });
             this.formatPatientData(this.appointmentsDoctor).subscribe(data => {
               this.appointmentsDoctor[index].patient = data;
               index++;
@@ -106,6 +119,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.currentUser = user;
     });
   }
+
 
   mergeAccountWithPatient(account: Account): void {
     this.patientService.query().subscribe(res => {

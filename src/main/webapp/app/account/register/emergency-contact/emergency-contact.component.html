@@ -4,15 +4,15 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-12 text-right">
-      <button class="btn btn-info btn-sm" (click)="createComponent()" [disabled]="formContacts.length === 3">
+    <div class="col-12 text-right" *ngIf="formsContacts.length < 3">
+      <button class="btn btn-info btn-sm" (click)="createComponent()" [disabled]="formsContacts.length === 3">
         <fa-icon icon="plus"></fa-icon>
         <span class="ml-1" mediTranslate="register.form.addContact"> Add emergency contact </span>
       </button>
     </div>
 
     <div class="col-12">
-      <ng-container #containerElement></ng-container>
+      <ng-container #containerForms></ng-container>
     </div>
   </div>
 </div>

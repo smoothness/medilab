@@ -26,6 +26,9 @@ interface DoctorUserData {
   id: number;
   internalUser: InternalUserData;
   specialty: string;
+  phone: string;
+  secondSurname: string;
+  doctorCode: string;
 }
 
 abstract class PersonalData {
@@ -78,6 +81,10 @@ class Patient extends PersonalData {
     this.secondSurname = secondSurname;
   }
 
+  get fullName(): string {
+    return `${this.firstName} ${this.lastName} ${this.secondSurname || ""}`;
+  }
+
   get patientData(): {} {
     return {
       id: this.patientId,
@@ -93,16 +100,28 @@ class Patient extends PersonalData {
 class Doctor extends PersonalData {
   public doctorId: number;
   public specialty: string;
+  public phone: string;
+  public secondSurname: string;
+  public doctorCode: string;
 
-  constructor({ id, internalUser, specialty }: DoctorUserData) {
+  constructor({ id, internalUser, specialty, secondSurname, phone, doctorCode }: DoctorUserData) {
     super(internalUser);
     this.doctorId = id;
     this.specialty = specialty;
+    this.phone = phone;
+    this.secondSurname = secondSurname;
+    this.doctorCode = doctorCode;
+  }
+
+  get fullName(): string {
+    return `${this.firstName} ${this.lastName} ${this.secondSurname || ""}`;
   }
 
   get doctorData(): {} {
     return {
       specialty: this.specialty,
+      phone: this.phone,
+      secondSurname: this.secondSurname,
     };
   }
 }

@@ -12,12 +12,10 @@ import { EmergencyContactService } from '../../emergency-contact/service/emergen
 export class PatientDetailComponent implements OnInit {
   patient: any = {};
   ailments: any = [];
-  emergencyContacts: any = [];
 
   constructor(
     protected activatedRoute: ActivatedRoute,
     private ailmentService: AilmentService,
-    private emergencyContactService: EmergencyContactService
   ) {}
 
   ngOnInit(): void {
@@ -25,9 +23,6 @@ export class PatientDetailComponent implements OnInit {
       this.patient = new Patient(patient);
       this.ailmentService.findAllAilmentsPacient(this.patient.patientId).subscribe(pacientAilments => {
         this.ailments = pacientAilments.body;
-        this.emergencyContactService.findByPatientId(this.patient.patientId).subscribe((res: any) => {
-          this.emergencyContacts = res.body;
-        });
       });
     });
   }

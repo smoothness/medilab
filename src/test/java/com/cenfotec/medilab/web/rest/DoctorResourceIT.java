@@ -33,9 +33,6 @@ class DoctorResourceIT {
     private static final String DEFAULT_SPECIALTY = "AAAAAAAAAA";
     private static final String UPDATED_SPECIALTY = "BBBBBBBBBB";
 
-    private static final Boolean DEFAULT_ACTIVE = false;
-    private static final Boolean UPDATED_ACTIVE = true;
-
     private static final String ENTITY_API_URL = "/api/doctors";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -60,7 +57,7 @@ class DoctorResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Doctor createEntity(EntityManager em) {
-        Doctor doctor = new Doctor().specialty(DEFAULT_SPECIALTY).active(DEFAULT_ACTIVE);
+        Doctor doctor = new Doctor().specialty(DEFAULT_SPECIALTY);
         return doctor;
     }
 
@@ -71,7 +68,7 @@ class DoctorResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Doctor createUpdatedEntity(EntityManager em) {
-        Doctor doctor = new Doctor().specialty(UPDATED_SPECIALTY).active(UPDATED_ACTIVE);
+        Doctor doctor = new Doctor().specialty(UPDATED_SPECIALTY);
         return doctor;
     }
 
@@ -96,7 +93,6 @@ class DoctorResourceIT {
         assertThat(doctorList).hasSize(databaseSizeBeforeCreate + 1);
         Doctor testDoctor = doctorList.get(doctorList.size() - 1);
         assertThat(testDoctor.getSpecialty()).isEqualTo(DEFAULT_SPECIALTY);
-        assertThat(testDoctor.getActive()).isEqualTo(DEFAULT_ACTIVE);
     }
 
     @Test
@@ -131,8 +127,7 @@ class DoctorResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(doctor.getId().intValue())))
-            .andExpect(jsonPath("$.[*].specialty").value(hasItem(DEFAULT_SPECIALTY)))
-            .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())));
+            .andExpect(jsonPath("$.[*].specialty").value(hasItem(DEFAULT_SPECIALTY)));
     }
 
     @Test
@@ -147,8 +142,7 @@ class DoctorResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(doctor.getId().intValue()))
-            .andExpect(jsonPath("$.specialty").value(DEFAULT_SPECIALTY))
-            .andExpect(jsonPath("$.active").value(DEFAULT_ACTIVE.booleanValue()));
+            .andExpect(jsonPath("$.specialty").value(DEFAULT_SPECIALTY));
     }
 
     @Test
@@ -170,7 +164,7 @@ class DoctorResourceIT {
         Doctor updatedDoctor = doctorRepository.findById(doctor.getId()).get();
         // Disconnect from session so that the updates on updatedDoctor are not directly saved in db
         em.detach(updatedDoctor);
-        updatedDoctor.specialty(UPDATED_SPECIALTY).active(UPDATED_ACTIVE);
+        updatedDoctor.specialty(UPDATED_SPECIALTY);
 
         restDoctorMockMvc
             .perform(
@@ -186,7 +180,6 @@ class DoctorResourceIT {
         assertThat(doctorList).hasSize(databaseSizeBeforeUpdate);
         Doctor testDoctor = doctorList.get(doctorList.size() - 1);
         assertThat(testDoctor.getSpecialty()).isEqualTo(UPDATED_SPECIALTY);
-        assertThat(testDoctor.getActive()).isEqualTo(UPDATED_ACTIVE);
     }
 
     @Test
@@ -261,7 +254,7 @@ class DoctorResourceIT {
         Doctor partialUpdatedDoctor = new Doctor();
         partialUpdatedDoctor.setId(doctor.getId());
 
-        partialUpdatedDoctor.specialty(UPDATED_SPECIALTY).active(UPDATED_ACTIVE);
+        partialUpdatedDoctor.specialty(UPDATED_SPECIALTY);
 
         restDoctorMockMvc
             .perform(
@@ -277,7 +270,6 @@ class DoctorResourceIT {
         assertThat(doctorList).hasSize(databaseSizeBeforeUpdate);
         Doctor testDoctor = doctorList.get(doctorList.size() - 1);
         assertThat(testDoctor.getSpecialty()).isEqualTo(UPDATED_SPECIALTY);
-        assertThat(testDoctor.getActive()).isEqualTo(UPDATED_ACTIVE);
     }
 
     @Test
@@ -292,7 +284,7 @@ class DoctorResourceIT {
         Doctor partialUpdatedDoctor = new Doctor();
         partialUpdatedDoctor.setId(doctor.getId());
 
-        partialUpdatedDoctor.specialty(UPDATED_SPECIALTY).active(UPDATED_ACTIVE);
+        partialUpdatedDoctor.specialty(UPDATED_SPECIALTY);
 
         restDoctorMockMvc
             .perform(
@@ -308,7 +300,6 @@ class DoctorResourceIT {
         assertThat(doctorList).hasSize(databaseSizeBeforeUpdate);
         Doctor testDoctor = doctorList.get(doctorList.size() - 1);
         assertThat(testDoctor.getSpecialty()).isEqualTo(UPDATED_SPECIALTY);
-        assertThat(testDoctor.getActive()).isEqualTo(UPDATED_ACTIVE);
     }
 
     @Test

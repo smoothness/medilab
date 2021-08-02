@@ -15,7 +15,8 @@
       "contact": "Contact",
       "addContact": "Add emergency contact",
       "delContact": "Delete contact",
-      "specialty": "Specialty"
+      "specialty": "Specialty",
+      "doctorCode": "Doctor Code"
     },
     "messages": {
       "validate": {
