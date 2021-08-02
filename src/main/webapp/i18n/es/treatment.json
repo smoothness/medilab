@@ -18,9 +18,9 @@
         "title": "Treatment"
       },
       "id": "ID",
-      "specifications": "Specifications",
-      "medicines": "Medicines",
-      "duration": "Duration",
+      "specifications": "Especificaciones",
+      "medicines": "Medicamentos",
+      "duration": "Duración",
       "removed": "Removed",
       "appointmentTreatmentAilment": "Appointment Treatment Ailment"
     }
