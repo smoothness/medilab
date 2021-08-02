@@ -61,6 +61,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   isLoadingPatient = false;
 
   treatments?: Treatment[];
+  treatment: any;
 
   appointments?: IAppointment[];
   isLoadingAppointments = false;
@@ -277,13 +278,27 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // Treaments
 
+  openTreatment(content: any, treatment: any): void {
+    this.modalService.open(content, {
+      windowClass: 'elementTreatment',
+    });
+    this.treatment = treatment;
+  }
+
+  openTreatmentModal(content: any, treatment: any): void {
+    this.modalService.open(content);
+    this.treatment = treatment;
+  }
+
   loadAllTreatments(): void {
     this.isLoadingtreatment = true;
 
     this.treatmentService.query().subscribe(
       (res: HttpResponse<ITreatment[]>) => {
         this.isLoadingtreatment = false;
-        this.treatments = res.body ?? [];
+        this.treatments = res.body?.filter(
+          data => this.searchForTreatment(data)
+        ) ?? [];
       },
       () => {
         this.isLoadingtreatment = false;
