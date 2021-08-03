@@ -42,6 +42,7 @@ export class InvoiceDetailComponent implements OnInit {
   getLinesInvoice(): void {
     this.linesService.findLineComment(this.invoice.id).subscribe(lines => {
       this.invoice.lineComments = lines.body;
+      console.log(this.invoice);
     });
   }
 

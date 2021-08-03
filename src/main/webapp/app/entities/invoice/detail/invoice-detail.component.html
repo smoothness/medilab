@@ -31,26 +31,30 @@
           </table>
         </div>
       </div>
-      <!--
-      <div class="col-12" *ngIf="ailments.length !== 0">
+
+      <div class="col-12">
         <div class="text-center my-4">
           <h4 mediTranslate="home.ailments">Ailments</h4>
         </div>
         <div class="table-responsive col-5 mx-auto text-center">
           <table class="table table-bordered">
+            <thead>
+              <td>Cantidad</td>
+              <td>Descripción</td>
+              <td>Precio Unitario</td>
+            </thead>
             <tbody>
-            <tr *ngFor="let ailment of ailments; let i = index">
-              <td scope="row" class="text-primary font-weight-bold" mediTranslate="medilabApp.patient.ailmentName"></td>
-              <td>{{ailment.name}}</td>
-            </tr>
+              <tr *ngFor="let lineComment of invoice.lineComments; let i = index">
+                <td>{{ lineComment.quantity }}</td>
+                <td>{{ lineComment.description }}</td>
+                <td>$ {{ lineComment.unitPrice }}</td>
+              </tr>
             </tbody>
           </table>
-          <div>
-
-          </div>
-
+          <div></div>
         </div>
-      </div> -->
+      </div>
+
       <div class="col-12">
         <div class="text-center my-4"></div>
 
