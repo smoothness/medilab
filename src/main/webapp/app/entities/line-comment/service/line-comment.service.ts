@@ -26,6 +26,10 @@ export class LineCommentService {
     });
   }
 
+  findLineComment(invoiceId: number): Observable<EntityResponseType> {
+    return this.http.get<ILineComment>(`${this.resourceUrl}/${invoiceId}/detail`, { observe: 'response' });
+  }
+
   partialUpdate(lineComment: ILineComment): Observable<EntityResponseType> {
     return this.http.patch<ILineComment>(`${this.resourceUrl}/${getLineCommentIdentifier(lineComment) as number}`, lineComment, {
       observe: 'response',
