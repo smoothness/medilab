@@ -10,7 +10,7 @@ import { RatingService } from 'app/entities/rating/service/rating.service';
 import { RatingDeleteDialogComponent } from 'app/entities/rating/delete/rating-delete-dialog.component';
 
 import { RatingUserService } from 'app/entities/rating-user/service/rating-user.service';
-import { RatingUser, IRatingUser } from 'app/entities/rating-user/rating-user.model';
+import { RatingUser} from 'app/entities/rating-user/rating-user.model';
 
 @Component({
   selector: 'medi-doctor-detail',
@@ -62,6 +62,7 @@ export class DoctorDetailComponent implements OnInit {
       }
     );
   }
+
   trackId(index: number, item: IRating): number {
     return item.id!;
   }
@@ -83,7 +84,7 @@ export class DoctorDetailComponent implements OnInit {
   loadAllRatingUsers(): void {
     this.ratingUserService.query().subscribe(ratingUserRes => {
       this.ratingUsers = ratingUserRes.body?.filter(
-        ratingUserData => ratingUserData.doctor?.id === this.doctor?.id) ?? [];
+        ratingUserData =>ratingUserData.doctor?.id === this.doctor?.doctorId) ?? [];
       this.ratingService.query().subscribe(ratingRes => {
         this.ratings = ratingRes.body ?? [];
         this.ratings.forEach(
@@ -96,7 +97,7 @@ export class DoctorDetailComponent implements OnInit {
               })
           }
         );
-        this.totalDoctorRaiting = Math.round(this.totalDoctorRaiting / (Number(this.ratingUsers?.length)));
+        this.totalDoctorRaiting = this.totalDoctorRaiting / (Number(this.ratingUsers?.length));
       });
     });
   }
@@ -119,7 +120,6 @@ export class DoctorDetailComponent implements OnInit {
     this.ratings?.forEach(
       data => {
         total = total + Number(data.value);
-        console.log("total", total);
       }
     )
     return total;
