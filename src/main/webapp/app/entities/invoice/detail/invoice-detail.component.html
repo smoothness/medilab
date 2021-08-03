@@ -34,14 +34,14 @@
 
       <div class="col-12">
         <div class="text-center my-4">
-          <h4 mediTranslate="home.ailments">Ailments</h4>
+          <h4 mediTranslate="medilabApp.invoice.lineComment"></h4>
         </div>
         <div class="table-responsive col-5 mx-auto text-center">
           <table class="table table-bordered">
             <thead>
-              <td>Cantidad</td>
-              <td>Descripción</td>
-              <td>Precio Unitario</td>
+              <td class="text-primary font-weight-bold" mediTranslate="medilabApp.invoice.quantity"></td>
+              <td class="text-primary font-weight-bold" mediTranslate="medilabApp.invoice.description"></td>
+              <td class="text-primary font-weight-bold" mediTranslate="medilabApp.invoice.unitPrice"></td>
             </thead>
             <tbody>
               <tr *ngFor="let lineComment of invoice.lineComments; let i = index">
