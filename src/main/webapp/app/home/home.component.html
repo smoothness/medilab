@@ -11,7 +11,7 @@
           </h5>
           <div class="card-body">
             <!-- START Top left card / Patient Block -->
-            <div *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
+            <div *ngIf="isPatient">
               <a
                 target="_blank"
                 class="btn btn-secondary"
@@ -39,11 +39,12 @@
                   </svg>
                 </section>
               </div>
+            <div *ngIf="isDoctor">
               <button
                 id="jh-create-entity"
                 data-cy="entityCreateButton"
                 class="btn btn-primary jh-create-entity create-appointment"
-                [routerLink]="['/main/appointment/new', { doctorId: theDoctorId }]"
+                [routerLink]="['/main/appointment/new', { doctorId: currentUser.doctorId }]"
               >
                 <fa-icon icon="plus"></fa-icon>
                 <span mediTranslate="home.createNewAppointment">Crear una nueva cita</span>
@@ -131,7 +132,7 @@
               </ul>
             </div>
           </div>
-
+          <!-- EMERGENCY CONTACTS -->
           <div class="card bg-dark">
             <h5 class="card-header">
               <span mediTranslate="medilabApp.emergencyContact.home.title" class="m-0 p-0">Contact(s) en caso de una emergencia</span>
@@ -144,7 +145,7 @@
                   class="btn btn-primary"
                 >
                   <fa-icon icon="plus"></fa-icon>
-                  <span mediTranslate="home.btnNewContact"> Create a new Ailment </span>
+                  <span mediTranslate="home.btnNewContact"> Create a new Contact </span>
                 </button>
               </div>
             </h5>
@@ -153,7 +154,7 @@
                 <span mediTranslate="medilabApp.emergencyContact.home.notFound">No emergencyContacts found</span>
               </div>
               <div class="table-responsive" id="entities" *ngIf="emergencyContacts && emergencyContacts.length > 0">
-                <table class="table table-striped" aria-describedby="page-heading">
+                <table class="table table-striped table-hover" aria-describedby="page-heading">
                   <thead>
                     <tr>
                       <th scope="col"><span mediTranslate="medilabApp.emergencyContact.name">Name</span></th>
@@ -164,7 +165,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let emergencyContact of emergencyContacts; trackBy: trackId" data-cy="entityTable">
+                    <tr *ngFor="let emergencyContact of emergencyContacts" data-cy="entityTable">
                       <td *ngIf="emergencyContact.patient">{{ emergencyContact.name }}</td>
                       <td *ngIf="emergencyContact.patient">{{ emergencyContact.phone }}</td>
                       <td *ngIf="emergencyContact.patient">{{ emergencyContact.email }}</td>
