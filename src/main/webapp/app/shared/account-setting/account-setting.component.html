@@ -1,0 +1,36 @@
+<li ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+  <a class="nav-link dropdown-toggle font-weight-normal" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
+    <span>
+      <fa-icon icon="user"></fa-icon>
+      <span mediTranslate="global.menu.account.main">Account</span>
+    </span>
+  </a>
+  <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesnavBarDropdown">
+    <li>
+      <a class="dropdown-item" routerLink="account/settings" routerLinkActive="active">
+        <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
+        <span mediTranslate="global.menu.account.settings">Settings</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="dropdown-item" routerLink="account/password" routerLinkActive="active">
+        <fa-icon icon="lock" [fixedWidth]="true"></fa-icon>
+        <span mediTranslate="global.menu.account.password">Password</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="dropdown-item" routerLink="account/sessions" routerLinkActive="active">
+        <fa-icon icon="cloud" [fixedWidth]="true"></fa-icon>
+        <span mediTranslate="global.menu.account.sessions">Sessions</span>
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item" href="javascript:void(0);" (click)="logout()">
+        <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
+        <span mediTranslate="global.menu.account.logout">Sign out</span>
+      </a>
+    </li>
+  </ul>
+</li>

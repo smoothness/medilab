@@ -5,7 +5,6 @@ import { HttpResponse } from '@angular/common/http';
 
 import { Patient } from './../../../core/auth/account.model';
 import { AilmentService } from '../../ailment/service/ailment.service';
-import { EmergencyContactService } from '../../emergency-contact/service/emergency-contact.service';
 
 // Treatments
 import { ITreatment, Treatment } from 'app/entities/treatment/treatment.model';
