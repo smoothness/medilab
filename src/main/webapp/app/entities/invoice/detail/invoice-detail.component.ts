@@ -5,9 +5,7 @@ import { AccountService } from 'app/core/auth/account.service';
 import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
 import { LineCommentService } from 'app/entities/line-comment/service/line-comment.service';
 import { PatientService } from 'app/entities/patient/service/patient.service';
-import { IInvoice } from '../invoice.model';
 import { InvoiceService } from '../service/invoice.service';
-import { IPatient } from '../../patient/patient.model';
 
 @Component({
   selector: 'medi-invoice-detail',

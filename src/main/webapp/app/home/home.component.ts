@@ -21,7 +21,6 @@ import { EmergencyContactService } from 'app/entities/emergency-contact/service/
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactUpdateComponent } from '../entities/emergency-contact/update/emergency-contact-update.component';
 import { EmergencyContactRegisterComponent } from '../entities/emergency-contact/register/emergency-contact-register.component';
-import * as dayjs from 'dayjs';
 
 import { AilmentService } from 'app/entities/ailment/service/ailment.service';
 
@@ -98,7 +97,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.getAppointmentsPatient();
       this.getAilmentsPatient();
       this.loadAllEmergencyContact();
-
     }else if(this.isDoctor) {
       this.getAppointmentsDoctor();
     }
@@ -195,7 +193,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-    this.router.navigate(['/']);
   }
 
   /**
