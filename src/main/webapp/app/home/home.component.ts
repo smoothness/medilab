@@ -21,7 +21,6 @@ import { EmergencyContactService } from 'app/entities/emergency-contact/service/
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactUpdateComponent } from '../entities/emergency-contact/update/emergency-contact-update.component';
 import { EmergencyContactRegisterComponent } from '../entities/emergency-contact/register/emergency-contact-register.component';
-import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'medi-home',
@@ -58,7 +57,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private emergencyContactService: EmergencyContactService,
     private appointmentTreatmentAilmentService: AppointmentTreatmentAilmentService,
     private router: Router,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
   ) {}
 
   public get isPatient(): boolean {

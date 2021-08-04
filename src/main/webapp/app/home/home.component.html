@@ -10,6 +10,7 @@
             <span class="ml-profile__user-text">{{ currentUser.fullName }}</span>
           </h5>
           <div class="card-body">
+
             <!-- START Top left card / Patient Block -->
             <div *ngIf="account?.authorities?.includes('ROLE_PATIENT')">
               <a
@@ -20,6 +21,7 @@
               >
                 Solicitar una cita
               </a>
+
             </div>
             <!-- END Top left card / Patient Block -->
             <!-- START Top left card / Doctor Block -->

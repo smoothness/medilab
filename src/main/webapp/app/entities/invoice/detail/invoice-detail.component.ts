@@ -14,19 +14,22 @@ export class InvoiceDetailComponent implements OnInit {
   patient: any | null = null;
 
   constructor(
+    protected activatedRoute: ActivatedRoute,
     protected invoiceService : InvoiceService,
     protected appointmentService : AppointmentService,
-    protected patientService : PatientService,
-    protected activatedRoute: ActivatedRoute) {}
+    protected patientService : PatientService) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ invoice }) => {
       this.invoice = invoice;
-
-      this.patientService.findOneByAppointmen(<number>this.invoice?.appointment?.id).subscribe((data: any) => {
+      this.patientService.findOneByAppointment(<number>this.invoice?.appointment?.id).subscribe((data: any) => {
         this.patient = data.body;
       })
     });
+  }
+
+  setInvoiceStatus(confirmPayment: boolean): void {
+    console.log(confirmPayment, "SE PAGO");
   }
 
   previousState(): void {
