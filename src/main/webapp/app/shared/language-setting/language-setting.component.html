@@ -1,0 +1,15 @@
+<li ngbDropdown class="nav-item dropdown pointer" display="dynamic" *ngIf="languages && languages.length > 1">
+  <a class="nav-link dropdown-toggle font-weight-normal" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
+    <span>
+      <fa-icon icon="flag"></fa-icon>
+      <span mediTranslate="global.menu.language">Language</span>
+    </span>
+  </a>
+  <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesnavBarDropdown">
+    <li *ngFor="let language of languages">
+      <a class="dropdown-item" href="javascript:void(0);" (click)="changeLanguage(language)">
+        {{ language | findLanguageFromKey }}
+      </a>
+    </li>
+  </ul>
+</li>
