@@ -60,8 +60,6 @@ export class AppointmentComponent implements OnInit {
         this.isLoading = false;
       }
     );
-
-    console.log("RESULTADO", this.appointments);
   }
 
 
