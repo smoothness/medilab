@@ -113,7 +113,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.appointmentsPatient[index].doctor = data;
         index++;
       });
-      console.log(this.appointmentsPatient);
     });
   }
 
@@ -138,7 +137,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public getAppointmentsDoctor(): void {
     this.appointmentService.findDoctorAppointments(this.currentUser.doctorId).subscribe((appointments: any) => {
       let index = 0;
-      this.appointmentsPatient = appointments.body;
+      this.appointmentsDoctor = appointments.body;
       this.formatPatientData(this.appointmentsDoctor).subscribe(data => {
         this.appointmentsDoctor[index].patient = data;
         index++;
