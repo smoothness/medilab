@@ -22,8 +22,6 @@ import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-cont
 import { EmergencyContactUpdateComponent } from '../entities/emergency-contact/update/emergency-contact-update.component';
 import { EmergencyContactRegisterComponent } from '../entities/emergency-contact/register/emergency-contact-register.component';
 
-import { AilmentService } from 'app/entities/ailment/service/ailment.service';
-
 @Component({
   selector: 'medi-home',
   templateUrl: './home.component.html',
@@ -59,7 +57,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     private emergencyContactService: EmergencyContactService,
     private appointmentTreatmentAilmentService: AppointmentTreatmentAilmentService,
     private router: Router,
-    private ailmentService: AilmentService,
     protected modalService: NgbModal
   ) {}
 
@@ -95,6 +92,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public getAppointmentsByUser(): void {
     if(this.isPatient){
       this.getAppointmentsPatient();
+      console.log(this.appointmentsPatient);
       this.getAilmentsPatient();
       this.loadAllEmergencyContact();
     }else if(this.isDoctor) {
@@ -108,14 +106,14 @@ export class HomeComponent implements OnInit, OnDestroy {
    * @description this method brings up all pending appointments of a patient.
    */
   public getAppointmentsPatient(): void {
-    console.log(this.currentUser);
     this.appointmentService.findPatientAppointments(this.currentUser.patientId).subscribe((appointments: any) => {
       let index = 0;
       this.appointmentsPatient = appointments.body;
-      this.formatPatientData(this.appointmentsPatient).subscribe(data => {
-        this.appointmentsPatient[index].patient = data;
+      this.formatDoctorData(this.appointmentsPatient).subscribe(data => {
+        this.appointmentsPatient[index].doctor = data;
         index++;
       });
+      console.log(this.appointmentsPatient);
     });
   }
 

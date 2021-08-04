@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
+import { ILineComment } from "../../entities/line-comment/line-comment.model";
 
 @Component({
   selector: 'medi-payment-component',
@@ -16,35 +17,8 @@ export class PaymentComponent implements OnInit {
   public showCancel  = false;
   public showError  = false;
 
-  get items(): any[] {
-    return [
-      {
-        id: 1,
-        unit_price: 2,
-        quantity: 1,
-        description: 'Medical appointment',
-      },
-      {
-        id: 1,
-        unit_price: 2,
-        quantity: 1,
-        description: 'Treatment',
-      },
-      {
-        id: 1,
-        unit_price: 2,
-        quantity: 1,
-        description: 'Terapy',
-      },
-      {
-        id: 1,
-        unit_price: 2,
-        quantity: 2,
-        description: 'Alcohol',
-      }
-    ];
-
-    // return this.invoice.lineComments
+  get items(): ILineComment[] {
+    return <ILineComment[]>this.invoice.lineComments
   }
 
   get itemsFormatted(): any[] {
@@ -54,14 +28,13 @@ export class PaymentComponent implements OnInit {
       category: 'DIGITAL_GOODS',
       unit_amount: {
         currency_code: 'USD',
-        value: item.unit_price,
+        value: item.unitPrice,
       },
     }))
   }
 
   ngOnInit(): void {
     this.initConfig();
-    console.log(this.invoice);
   }
 
   protected createOrder(): ICreateOrderRequest {
@@ -84,30 +57,24 @@ export class PaymentComponent implements OnInit {
   }
 
   protected onApprove(data: any, actions: any): void {
-  console.log('Data', data);
-  actions.order.get().then((details: any) => {
-    console.log('onApprove - you can get full order details inside onApprove: ', details);
-  })}
+    actions.order.get();
+  }
 
   protected onClientAuthorization(data: any): void {
-    console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
     this.confirmPayment.emit(true);
     this.showSuccess = true;
   }
 
   protected onCancel(data: any, actions: any): void {
-    console.log('OnCancel', data, actions);
     this.showCancel = true;
 
   }
 
   protected onError(err: any): void{
-  console.log('OnError', err);
   this.showError = true;
 }
 
   protected onClick(data: any, actions: any): void {
-    console.log('onClick', data, actions);
     this.resetStatus();
   }
 

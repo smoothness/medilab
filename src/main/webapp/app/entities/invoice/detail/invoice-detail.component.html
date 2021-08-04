@@ -79,6 +79,10 @@
             </table>
           </div>
         </div>
+
+        <div *ngIf="validateShow()">
+          <medi-payment-component [invoice]="invoice" (confirmPayment)="setInvoiceStatus($event)"></medi-payment-component>
+        </div>
       </div>
     </div>
   </div>

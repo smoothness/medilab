@@ -6,6 +6,7 @@ import { AppointmentService } from 'app/entities/appointment/service/appointment
 import { LineCommentService } from 'app/entities/line-comment/service/line-comment.service';
 import { PatientService } from 'app/entities/patient/service/patient.service';
 import { InvoiceService } from '../service/invoice.service';
+import {Patient} from "../../../core/auth/account.model";
 
 @Component({
   selector: 'medi-invoice-detail',
@@ -45,18 +46,38 @@ export class InvoiceDetailComponent implements OnInit {
   }
 
   getPatientInvoice(): void {
-    this.patientService.findOneByAppointmen(<number>this.invoice.appointment.id).subscribe((data: any) => {
+    this.patientService.findOneByAppointment(<number>this.invoice.appointment.id).subscribe((data: any) => {
       this.patient = data.body;
     });
   }
 
+  public getInvoiceDataUpdated(): void {
+    this.invoiceService.find(this.invoice.id).subscribe((invoice) => {
+      this.invoice = invoice.body;
+      this.getLinesInvoice();
+    });
+  }
+
+  public setInvoiceStatus(confirmPayment: boolean): void {
+    if(confirmPayment){
+      this.invoiceService.payInvoice(this.invoice.id).subscribe( () => {
+        this.getInvoiceDataUpdated();
+      });
+    }
+  }
   public autenticatedAccount(): void {
     this.accountService.formatUserIdentity().subscribe(user => {
       this.currentUser = user;
     });
   }
 
-  previousState(): void {
-    window.history.back();
+  public validateShow(): boolean {
+    let show = false;
+    if (this.currentUser instanceof Patient) {
+      if(this.invoice.status !== 'PAID'){
+        show = true;
+      }
+    }
+    return show;
   }
 }
