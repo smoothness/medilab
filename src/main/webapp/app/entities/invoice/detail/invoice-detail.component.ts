@@ -7,13 +7,14 @@ import { LineCommentService } from 'app/entities/line-comment/service/line-comme
 import { PatientService } from 'app/entities/patient/service/patient.service';
 import { IInvoice } from '../invoice.model';
 import { InvoiceService } from '../service/invoice.service';
+import { IPatient } from '../../patient/patient.model';
 
 @Component({
   selector: 'medi-invoice-detail',
   templateUrl: './invoice-detail.component.html',
 })
 export class InvoiceDetailComponent implements OnInit {
-  invoice: any = null;
+  invoice: any = {};
   patient: any = {};
   currentUser: any = {};
 
