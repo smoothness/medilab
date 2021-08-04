@@ -32,7 +32,8 @@
       "unitPrice": "Precio Unitario",
       "pending": "Pendiente de pago",
       "paid": "Pagada",
-      "canceled": "Anulada"
+      "canceled": "Anulada",
+      "invoiceNumber": "Factura Número"
     }
   }
 }

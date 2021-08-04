@@ -32,7 +32,8 @@
       "unitPrice": "Unit Price",
       "pending": "Pending",
       "paid": "Paid",
-      "canceled": "Canceled"
+      "canceled": "Canceled",
+      "invoiceNumber": "Invoice number"
     }
   }
 }
