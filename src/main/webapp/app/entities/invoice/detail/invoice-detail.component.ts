@@ -1,22 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AccountService } from 'app/core/auth/account.service';
 
 import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
 import { LineCommentService } from 'app/entities/line-comment/service/line-comment.service';
 import { PatientService } from 'app/entities/patient/service/patient.service';
-import { IInvoice } from '../invoice.model';
 import { InvoiceService } from '../service/invoice.service';
-import { IPatient } from '../../patient/patient.model';
+
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import htmlToPdfmake from 'html-to-pdfmake';
+(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'medi-invoice-detail',
   templateUrl: './invoice-detail.component.html',
 })
 export class InvoiceDetailComponent implements OnInit {
+  @ViewChild('pdfTable')
+  pdfTable!: ElementRef;
+
   invoice: any = {};
   patient: any = {};
   currentUser: any = {};
+  isVisible = true;
 
   constructor(
     protected invoiceService: InvoiceService,
@@ -30,6 +37,14 @@ export class InvoiceDetailComponent implements OnInit {
   ngOnInit(): void {
     this.autenticatedAccount();
     this.getInvoiceData();
+  }
+
+  downloadAsPDF(): void {
+    this.isVisible = false;
+    const pdfTable = this.pdfTable.nativeElement;
+    const html = htmlToPdfmake(pdfTable.innerHTML);
+    const documentDefinition = { content: html };
+    pdfMake.createPdf(documentDefinition).download();
   }
 
   getInvoiceData(): void {
