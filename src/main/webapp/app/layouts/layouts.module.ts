@@ -11,6 +11,7 @@ import { ActiveMenuDirective } from './navbar/active-menu.directive';
 import { MainComponent } from './main/main.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { InternalHeaderComponent } from './internal-header/internal-header.component';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -31,6 +32,11 @@ import { InternalHeaderComponent } from './internal-header/internal-header.compo
     PageRibbonComponent,
     UserProfileComponent,
   ],
-  imports: [CommonModule, SharedModule, LayoutsRoutesModule],
+  imports: [
+    RouterModule,
+    CommonModule,
+    SharedModule,
+    LayoutsRoutesModule
+  ],
 })
 export class LayoutsModule {}

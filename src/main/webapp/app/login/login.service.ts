@@ -28,7 +28,7 @@ export class LoginService {
     this.accountService.authenticate(null);
   }
 
-  logout(): void {
-    this.authServerProvider.logout().subscribe({ complete: () => this.accountService.authenticate(null) });
+  logout(): Observable<any> {
+    return this.authServerProvider.logout();
   }
 }

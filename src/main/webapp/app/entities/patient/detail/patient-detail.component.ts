@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Patient } from './../../../core/auth/account.model';
 import { AilmentService } from '../../ailment/service/ailment.service';
-import { EmergencyContactService } from '../../emergency-contact/service/emergency-contact.service';
 
 @Component({
   selector: 'medi-patient-detail',
