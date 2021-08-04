@@ -29,7 +29,10 @@
       "invoiceDetail": "Invoice Detail",
       "quantity": "Quantity Detail",
       "description": "Description",
-      "unitPrice": "Unit Price"
+      "unitPrice": "Unit Price",
+      "pending": "Pending",
+      "paid": "Paid",
+      "canceled": "Canceled"
     }
   }
 }

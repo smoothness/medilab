@@ -29,7 +29,10 @@
       "invoiceDetail": "Detalle de la Factura",
       "quantity": "Cantidad",
       "description": "Descripción",
-      "unitPrice": "Precio Unitario"
+      "unitPrice": "Precio Unitario",
+      "pending": "Pendiente de pago",
+      "paid": "Pagada",
+      "canceled": "Anulada"
     }
   }
 }

@@ -10,7 +10,7 @@
         </div>
         <div class="text-center mb-4">
           <h4 class="text-primary" mediTranslate="medilabApp.invoice.status"></h4>
-          <h5 *ngIf="invoice">{{ invoice.status }}</h5>
+          <h5 *ngIf="invoice">{{ invoice.status | invoicepipe }}</h5>
         </div>
         <div class="table-responsive col-5 mx-auto text-center">
           <table class="table table-bordered">
