@@ -5,18 +5,11 @@ import { InvoiceDetailComponent } from './detail/invoice-detail.component';
 import { InvoiceUpdateComponent } from './update/invoice-update.component';
 import { InvoiceDeleteDialogComponent } from './delete/invoice-delete-dialog.component';
 import { InvoiceRoutingModule } from './route/invoice-routing.module';
+import { InvoicePipe } from './pipe/invoice.pipe';
 
 @NgModule({
-    imports: [SharedModule, InvoiceRoutingModule],
-    declarations: [
-        InvoiceComponent,
-        InvoiceDetailComponent,
-        InvoiceUpdateComponent,
-        InvoiceDeleteDialogComponent
-    ],
-    entryComponents: [InvoiceDeleteDialogComponent],
-    exports: [
-        InvoiceDetailComponent
-    ]
+  imports: [SharedModule, InvoiceRoutingModule],
+  declarations: [InvoiceComponent, InvoiceDetailComponent, InvoiceUpdateComponent, InvoiceDeleteDialogComponent, InvoicePipe],
+  entryComponents: [InvoiceDeleteDialogComponent],
 })
 export class InvoiceModule {}

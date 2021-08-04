@@ -18,6 +18,8 @@ import { SortDirective } from './sort/sort.directive';
 import { ItemCountComponent } from './pagination/item-count.component';
 import { HeaderComponent } from './header/header.component';
 import {PaymentComponent} from "./payment/payment.component";
+import { LanguageSettingComponent } from './language-setting/language-setting.component';
+import { AccountSettingComponent } from './account-setting/account-setting.component';
 
 @NgModule({
   imports: [RouterModule, SharedLibsModule],
@@ -33,6 +35,8 @@ import {PaymentComponent} from "./payment/payment.component";
     SortByDirective,
     SortDirective,
     ItemCountComponent,
+    LanguageSettingComponent,
+    AccountSettingComponent,
     HeaderComponent,
     PaymentComponent,
   ],
@@ -49,6 +53,8 @@ import {PaymentComponent} from "./payment/payment.component";
     SortByDirective,
     SortDirective,
     ItemCountComponent,
+    LanguageSettingComponent,
+    AccountSettingComponent,
     HeaderComponent,
     PaymentComponent,
   ],

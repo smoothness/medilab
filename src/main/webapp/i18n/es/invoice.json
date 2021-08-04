@@ -4,15 +4,15 @@
       "home": {
         "title": "Invoices",
         "refreshListLabel": "Refrescar lista",
-        "createLabel": "Crear nuevo Invoice",
-        "createOrEditLabel": "Crear o editar Invoice",
-        "notFound": "Ningún Invoices encontrado"
+        "createLabel": "Crear nueva factura",
+        "createOrEditLabel": "Crear o editar factura",
+        "notFound": "Ninguna factura ha sido encontrada"
       },
-      "created": "Un nuevo Invoice ha sido creado con el identificador {{ param }}",
-      "updated": "Un Invoice ha sido actualizado con el identificador {{ param }}",
-      "deleted": "Un Invoice ha sido eliminado con el identificador {{ param }}",
+      "created": "Una nueva factura ha sido creada con el identificador {{ param }}",
+      "updated": "Una factura ha sido actualizada con el identificador {{ param }}",
+      "deleted": "Una factura ha sido eliminada con el identificador {{ param }}",
       "delete": {
-        "question": "¿Seguro que quiere eliminar Invoice {{ id }}?"
+        "question": "¿Seguro que quiere eliminar la factura {{ id }}?"
       },
       "detail": {
         "title": "Factura"
@@ -20,13 +20,20 @@
       "id": "ID",
       "date": "Fecha",
       "subtotal": "Subtotal",
-      "taxes": "Impuestos 13%",
+      "taxes": "Impuesto 13%",
       "discount": "Descuento",
       "total": "Total",
       "status": "Estado",
       "appointment": "Cita",
-      "lineComment": "Line Comment",
-      "invoiceDetail": "Detalle de la Factura"
+      "lineComment": "Lineas facturadas",
+      "invoiceDetail": "Detalle de la Factura",
+      "quantity": "Cantidad",
+      "description": "Descripción",
+      "unitPrice": "Precio Unitario",
+      "pending": "Pendiente de pago",
+      "paid": "Pagada",
+      "canceled": "Anulada",
+      "invoiceNumber": "Factura Número"
     }
   }
 }

@@ -28,12 +28,50 @@ public class Ailment implements Serializable {
     @Column(name = "removed")
     private Boolean removed;
 
+    @Transient
+    private Integer total;
+
     @OneToMany(mappedBy = "ailment")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "ailment", "treatment", "appointment" }, allowSetters = true)
     private Set<AppointmentTreatmentAilment> appointmentTreatmentAilments = new HashSet<>();
 
+    public Ailment() {}
+
+    public Ailment(Long id, String name, Boolean removed) {
+        this.id = id;
+        this.name = name;
+        this.removed = removed;
+    }
+
+    public Ailment(Long id, String name, Boolean removed, Integer total) {
+        this.id = id;
+        this.name = name;
+        this.removed = removed;
+        this.total = total;
+    }
+
+    public Ailment(Long id, String name, Integer total) {
+        this.id = id;
+        this.name = name;
+        this.total = total;
+    }
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public Ailment total(Integer total) {
+        this.total = total;
+        return this;
+    }
+
     public Long getId() {
         return id;
     }

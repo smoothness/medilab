@@ -234,6 +234,15 @@ a {
   border-color: $gray-900;
 }
 
+.table-hover {
+  tbody {
+    tr:hover {
+      background: $dropdown-link-hover-bg;
+      color: $dropdown-link-hover-color;
+    }
+  }
+}
+
 .card {
   border-radius: 7px;
 }

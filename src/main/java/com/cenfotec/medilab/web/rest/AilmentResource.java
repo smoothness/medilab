@@ -173,4 +173,9 @@ public class AilmentResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    @GetMapping("/ailments/ailmentReport")
+    public List<Object> getAilmentsReport() {
+        return ailmentService.getAilmentsReport();
+    }
 }
