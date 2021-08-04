@@ -44,7 +44,6 @@ export class InvoiceComponent implements OnInit {
       }
 
       if (this.account?.authorities[0] === 'ROLE_USER') {
-        console.log('cuenta', this.account);
         this.mergeAccountWithDoctor(this.account);
       }
 
