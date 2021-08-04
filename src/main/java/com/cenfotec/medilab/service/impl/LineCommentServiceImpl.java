@@ -74,4 +74,10 @@ public class LineCommentServiceImpl implements LineCommentService {
         log.debug("Request to delete LineComment : {}", id);
         lineCommentRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<LineComment> findInvoiceLines(Long id) {
+        return lineCommentRepository.findInvoiceLines(id);
+    }
 }

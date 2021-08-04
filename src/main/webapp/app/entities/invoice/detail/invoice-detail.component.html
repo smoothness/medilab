@@ -1,80 +1,84 @@
-<section class="row p-0 m-0">
-  <div class="col-10 card bg-dark my-4 mx-auto">
-    <div class="text-center my-5">
-      <h4 data-cy="patientDetailsHeading">Factura Número {{invoice?.id}}</h4>
-    </div>
-    <div class="card-body">
-      <div class="col-12">
-        <div class="text-center mb-4">
-          <h4 mediTranslate="medilabApp.invoice.invoiceDetail">Detalle de la factura {{invoice?.id}}</h4>
-        </div>
-        <div class="text-center mb-4">
-          <h4 class="text-primary" mediTranslate="medilabApp.invoice.status"></h4>
-          <h5 *ngIf="invoice">{{ invoice.status }}</h5>
-        </div>
-        <div class="table-responsive col-5 mx-auto text-center">
-          <table class="table table-bordered">
-            <tbody>
-              <tr>
-                <td scope="row" class="text-primary font-weight-bold" mediTranslate="medilabApp.invoice.date"></td>
-                <td>{{invoice?.date | formatMediumDate}}</td>
-              </tr>
-              <tr>
-                <td scope="row" class="text-primary font-weight-bold" mediTranslate="home.profile.phone"></td>
-                <td>{{patient.internalUser?.completeName}} {{patient.secondSurname}}</td>
-              </tr>
-              <tr>
-                <td scope="row" class="text-primary font-weight-bold" mediTranslate="home.profile.email"></td>
-                <td>{{patient.internalUser?.login}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+<div class="container">
+  <div class="row">
+    <div class="col-10 card bg-dark my-4 mx-auto">
+      <div class="text-center my-5">
+        <h4 data-cy="patientDetailsHeading" mediTranslate="medilabApp.invoice.invoiceNumber>Factura Número">{{ invoice?.id }}</h4>
       </div>
-      <!--
-      <div class="col-12" *ngIf="ailments.length !== 0">
-        <div class="text-center my-4">
-          <h4 mediTranslate="home.ailments">Ailments</h4>
-        </div>
-        <div class="table-responsive col-5 mx-auto text-center">
-          <table class="table table-bordered">
-            <tbody>
-            <tr *ngFor="let ailment of ailments; let i = index">
-              <td scope="row" class="text-primary font-weight-bold" mediTranslate="medilabApp.patient.ailmentName"></td>
-              <td>{{ailment.name}}</td>
-            </tr>
-            </tbody>
-          </table>
-          <div>
-
+      <div class="card-body">
+        <div class="col-12">
+          <div class="text-center mb-4">
+            <h4 mediTranslate="medilabApp.invoice.invoiceDetail">{{ invoice?.id }}</h4>
           </div>
-
+          <div class="text-center mb-4">
+            <h4 class="text-primary" mediTranslate="medilabApp.invoice.status"></h4>
+            <h5 *ngIf="invoice">{{ invoice.status | invoicePipe }}</h5>
+          </div>
+          <div class="table-responsive col-5 mx-auto text-center">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <td scope="row" class="text-primary font-weight-bold" mediTranslate="medilabApp.invoice.date"></td>
+                  <td>{{ invoice.date | formatMediumDate }}</td>
+                </tr>
+                <tr>
+                  <td scope="row" class="text-primary font-weight-bold" mediTranslate="home.profile.phone"></td>
+                  <td>{{ patient.internalUser?.completeName }} {{ patient.secondSurname }}</td>
+                </tr>
+                <tr>
+                  <td scope="row" class="text-primary font-weight-bold" mediTranslate="home.profile.email"></td>
+                  <td>{{ patient.internalUser?.login }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div> -->
-      <div class="col-12">
-        <div class="text-center my-4">
+
+        <div class="col-12">
+          <div class="text-center my-4">
+            <h4 mediTranslate="medilabApp.invoice.lineComment"></h4>
+          </div>
+          <div class="table-responsive col-5 mx-auto text-center">
+            <table class="table table-bordered">
+              <thead>
+                <td class="text-primary font-weight-bold" mediTranslate="medilabApp.invoice.quantity"></td>
+                <td class="text-primary font-weight-bold" mediTranslate="medilabApp.invoice.description"></td>
+                <td class="text-primary font-weight-bold" mediTranslate="medilabApp.invoice.unitPrice"></td>
+              </thead>
+              <tbody>
+                <tr *ngFor="let lineComment of invoice.lineComments">
+                  <td>{{ lineComment.quantity }}</td>
+                  <td>{{ lineComment.description }}</td>
+                  <td>$ {{ lineComment.unitPrice }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div></div>
+          </div>
         </div>
 
-          <div id="totalDetail" class="table-responsive mr-0 col-5 mx-auto " >
+        <div class="col-12">
+          <div class="text-center my-4"></div>
+
+          <div id="totalDetail" class="table-responsive mr-0 col-5 mx-auto">
             <table class="table table-bordered text-center">
               <tbody>
                 <tr>
-                  <td scope="row" class="text-primary font-weight-bold" mediTranslate="medilabApp.invoice.subtotal">
-                  </td>
-                  <td *ngIf="invoice">₡ {{invoice.subtotal}}</td>
+                  <td scope="row" class="text-primary font-weight-bold" mediTranslate="medilabApp.invoice.subtotal"></td>
+                  <td *ngIf="invoice">$ {{ invoice.subtotal }}</td>
                 </tr>
                 <tr>
                   <td scope="row" class="text-primary font-weight-bold" mediTranslate="medilabApp.invoice.taxes"></td>
-                  <td *ngIf="invoice">₡ {{invoice.taxes }}</td>
+                  <td *ngIf="invoice">$ {{ invoice.taxes }}</td>
                 </tr>
                 <tr>
                   <td scope="row" class="text-primary font-weight-bold" mediTranslate="medilabApp.invoice.total"></td>
-                  <td *ngIf="invoice">₡ {{ invoice.total }}</td>
+                  <td *ngIf="invoice">$ {{ invoice.total }}</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
+    </div>
   </div>
-</section>
+</div>
