@@ -9,7 +9,7 @@ import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
 import { PatientService } from 'app/entities/patient/service/patient.service';
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
-import { Doctor, Patient} from './../core/auth/account.model';
+import { Doctor, Patient } from './../core/auth/account.model';
 
 import { AppointmentTreatmentAilmentService } from 'app/entities/appointment-treatment-ailment/service/appointment-treatment-ailment.service';
 import { IAppointmentTreatmentAilment } from 'app/entities/appointment-treatment-ailment/appointment-treatment-ailment.model';
@@ -21,7 +21,7 @@ import { EmergencyContactService } from 'app/entities/emergency-contact/service/
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactUpdateComponent } from '../entities/emergency-contact/update/emergency-contact-update.component';
 import { EmergencyContactRegisterComponent } from '../entities/emergency-contact/register/emergency-contact-register.component';
-import * as dayjs from 'dayjs';
+// import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'medi-home',
@@ -119,7 +119,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.currentUser = user;
     });
   }
-
 
   mergeAccountWithPatient(account: Account): void {
     this.patientService.query().subscribe(res => {

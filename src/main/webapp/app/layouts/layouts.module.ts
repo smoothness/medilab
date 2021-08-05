@@ -5,6 +5,7 @@ import { SharedModule } from './../shared/shared.module';
 import { LayoutsRoutesModule } from './layouts-routes.module';
 
 import { NavbarComponent } from './navbar/navbar.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 import { FooterComponent } from './footer/footer.component';
 import { PageRibbonComponent } from './profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './navbar/active-menu.directive';
@@ -14,24 +15,22 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 @NgModule({
   declarations: [
     ActiveMenuDirective,
+    NotificationsComponent,
     FooterComponent,
     NavbarComponent,
     MainComponent,
     PageRibbonComponent,
-    UserProfileComponent
+    UserProfileComponent,
   ],
   exports: [
     ActiveMenuDirective,
+    NotificationsComponent,
     FooterComponent,
     NavbarComponent,
     MainComponent,
     PageRibbonComponent,
-    UserProfileComponent
+    UserProfileComponent,
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    LayoutsRoutesModule
-  ],
+  imports: [CommonModule, SharedModule, LayoutsRoutesModule],
 })
 export class LayoutsModule {}

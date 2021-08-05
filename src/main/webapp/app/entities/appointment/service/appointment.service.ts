@@ -9,20 +9,39 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import { IAppointment, getAppointmentIdentifier } from '../appointment.model';
 
+import { Subject } from 'rxjs';
+
 export type EntityResponseType = HttpResponse<IAppointment>;
 export type EntityArrayResponseType = HttpResponse<IAppointment[]>;
 
 @Injectable({ providedIn: 'root' })
 export class AppointmentService {
+  notification: Subject<any>;
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/appointments');
 
-  constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
+  constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {
+    this.notification = new Subject<any>();
+  }
+
+  createNotificationSubjectPayload(data: any, eventTrigger: string): any {
+    console.log('data', data);
+
+    const notificationSubjectPayload: any = {
+      eventTrigger,
+    };
+  }
 
   create(appointment: IAppointment): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(appointment);
-    return this.http
-      .post<IAppointment>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+    return this.http.post<IAppointment>(this.resourceUrl, copy, { observe: 'response' }).pipe(
+      map((res: EntityResponseType) => {
+        const response = this.convertDateFromServer(res);
+        console.log('mierda');
+        const notificationSubjectPayload = this.createNotificationSubjectPayload(response, 'create');
+        this.notification.next(response.body);
+        return response;
+      })
+    );
   }
 
   update(appointment: IAppointment): Observable<EntityResponseType> {
