@@ -92,7 +92,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   public getAppointmentsByUser(): void {
     if(this.isPatient){
       this.getAppointmentsPatient();
-      console.log(this.appointmentsPatient);
       this.getAilmentsPatient();
       this.loadAllEmergencyContact();
     }else if(this.isDoctor) {

@@ -75,7 +75,7 @@ export class PaymentComponent implements OnInit {
 }
 
   protected onClick(data: any, actions: any): void {
-    this.resetStatus();
+    console.log("");
   }
 
   private initConfig(): void {
@@ -97,8 +97,6 @@ export class PaymentComponent implements OnInit {
       onClick: (data: any, actions: any) => this.onClick(data, actions),
     };
   }
-  private resetStatus(): void {
-    console.log("");
-  }
+
 }
 

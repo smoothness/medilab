@@ -6,7 +6,7 @@ import { AppointmentService } from 'app/entities/appointment/service/appointment
 import { LineCommentService } from 'app/entities/line-comment/service/line-comment.service';
 import { PatientService } from 'app/entities/patient/service/patient.service';
 import { InvoiceService } from '../service/invoice.service';
-import {Patient} from "../../../core/auth/account.model";
+import { Patient } from "../../../core/auth/account.model";
 
 @Component({
   selector: 'medi-invoice-detail',
@@ -60,7 +60,7 @@ export class InvoiceDetailComponent implements OnInit {
 
   public setInvoiceStatus(confirmPayment: boolean): void {
     if(confirmPayment){
-      this.invoiceService.payInvoice(this.invoice.id).subscribe( () => {
+      this.invoiceService.payInvoice(this.invoice.id).subscribe(() => {
         this.getInvoiceDataUpdated();
       });
     }
