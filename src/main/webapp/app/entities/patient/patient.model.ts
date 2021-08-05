@@ -9,7 +9,6 @@ export interface IPatient {
   secondSurname?: string | null;
   phone?: string | null;
   token?: string | null;
-  active?: boolean | null;
   internalUser?: IUser | null;
   emergencyContacts?: IEmergencyContact[] | null;
   ratingUsers?: IRatingUser[] | null;
@@ -23,15 +22,12 @@ export class Patient implements IPatient {
     public secondSurname?: string | null,
     public phone?: string | null,
     public token?: string | null,
-    public active?: boolean | null,
     public internalUser?: IUser | null,
     public emergencyContacts?: IEmergencyContact[] | null,
     public ratingUsers?: IRatingUser[] | null,
     public commentUsers?: ICommentUser[] | null,
     public internalUsers?: IAppointment[] | null
-  ) {
-    this.active = this.active ?? false;
-  }
+  ) {}
 }
 
 export function getPatientIdentifier(patient: IPatient): number | undefined {

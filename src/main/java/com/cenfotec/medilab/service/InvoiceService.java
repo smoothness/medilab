@@ -39,6 +39,8 @@ public interface InvoiceService {
      */
     Optional<Invoice> findOne(Long id);
 
+    void payInvoice(Long id);
+
     /**
      * Delete the "id" invoice.
      *
