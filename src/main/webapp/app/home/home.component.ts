@@ -267,7 +267,7 @@ export class HomeComponent implements OnInit, OnDestroy {
    * @param emergencyContact
    */
   public showModifyContactModal(emergencyContact: IEmergencyContact): void {
-    const modalRef = this.modalService.open(EmergencyContactUpdateComponent);
+    const modalRef = this.modalService.open(EmergencyContactUpdateComponent, { centered: true });
     modalRef.componentInstance.setEmergencyContactData(emergencyContact);
   }
 
@@ -277,7 +277,7 @@ export class HomeComponent implements OnInit, OnDestroy {
    * @param emergencyContact
    */
   public showCreateContactModal(): void {
-    const modalRef = this.modalService.open(EmergencyContactRegisterComponent);
+    const modalRef = this.modalService.open(EmergencyContactRegisterComponent, { centered: true });
     modalRef.componentInstance.patientId = this.currentUser.patientId;
     modalRef.closed.subscribe(reason => {
       if (reason === 'register') {

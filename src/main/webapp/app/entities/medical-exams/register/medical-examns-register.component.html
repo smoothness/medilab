@@ -1,0 +1,31 @@
+<section>
+  <div class="card bg-dark">
+    <div class="card-header text-center p-0 m-0">
+      <h2 class="text-primary py-2" mediTranslate="medilabApp.medicalExams.register"></h2>
+    </div>
+    <div class="card-body">
+      <form name="editForm" role="form" autocomplete="off" (submit)="save()" [formGroup]="registerForm">
+        <div class="form-group">
+          <label class="form-control-label text-white" mediTranslate="medilabApp.medicalExams.name" for="fieldName">Name</label>
+          <input type="text" class="form-control" name="name" id="fieldName" data-cy="name" formControlName="name" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label text-white" for="fieldDescription" mediTranslate="medilabApp.medicalExams.description">Example textarea</label>
+          <textarea class="form-control" id="fieldDescription" rows="3" formControlName="description"></textarea>
+        </div>
+        <div>
+          <button
+            type="submit"
+            id="saveEntity"
+            data-cy="entityCreateSaveButton"
+            [disabled]="registerForm.invalid"
+            class="btn btn-primary col-12"
+          >
+            <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

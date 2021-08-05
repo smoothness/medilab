@@ -5,10 +5,6 @@
 
       <hr />
 
-      <medi-alert-error></medi-alert-error>
-
-      <medi-alert></medi-alert>
-
       <dl class="row-md jh-entity-details">
         <dt><span mediTranslate="global.field.id">ID</span></dt>
         <dd>
@@ -43,6 +39,13 @@
       <button type="button" [routerLink]="['/appointment', appointment.id, 'edit']" class="btn btn-primary">
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span mediTranslate="entity.action.edit">Edit</span>
       </button>
+
+      <button type="button" class="btn btn-secondary" (click)="showRegisterMedicalExamModal()">Agregar examen médico</button>
     </div>
+
+    <div class="mt-4" *ngIf="medicalExams.length > 0">
+      <medi-medical-exams [medicalExams]="medicalExams" [showButtons]="showButtons" (updateList)="loadMedicalExams($event)"></medi-medical-exams>
+    </div>
+
   </div>
 </div>

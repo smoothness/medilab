@@ -141,6 +141,11 @@ public class MedicalExamsResource {
         return medicalExamsService.findAll();
     }
 
+    @GetMapping("/medical-exams/appointment/{id}")
+    public List<MedicalExams> findMedicalExamsByAppointment(@PathVariable Long id) {
+        return medicalExamsService.findMedicalExamsByAppointment(id);
+    }
+
     /**
      * {@code GET  /medical-exams/:id} : get the "id" medicalExams.
      *
@@ -163,6 +168,15 @@ public class MedicalExamsResource {
     @DeleteMapping("/medical-exams/{id}")
     public ResponseEntity<Void> deleteMedicalExams(@PathVariable Long id) {
         log.debug("REST request to delete MedicalExams : {}", id);
+        medicalExamsService.delete(id);
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
+    }
+
+    @DeleteMapping("/medical-exams-del/{id}")
+    public ResponseEntity<Void> deleteByRemoved(@PathVariable Long id) {
         medicalExamsService.delete(id);
         return ResponseEntity
             .noContent()
