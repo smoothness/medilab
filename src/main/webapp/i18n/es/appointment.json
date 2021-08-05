@@ -14,15 +14,18 @@
         "question": "¿Seguro que quiere eliminar la cita {{ id }}?"
       },
       "detail": {
-        "title": "Cita"
+        "title": "Detalle de la cita"
       },
       "id": "ID",
-      "date": "Fecha",
-      "status": "Status",
+      "date": "Fecha: ",
+      "status": "Estado de la cita: ",
       "appointmentTreatmentAilment": "Dolencia, tratamiento",
       "medicalExams": "Exámenes médicos",
-      "patient": "Paciente",
-      "doctor": "Doctor"
+      "patient": "Paciente: ",
+      "doctor": "Doctor: ",
+      "phone": "Teléfono: ",
+      "email": "Correo electrónico: ",
+      "specialty": "Especialidad: "
     }
   }
 }

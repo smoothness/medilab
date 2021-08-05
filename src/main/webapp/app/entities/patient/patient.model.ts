@@ -1,4 +1,3 @@
-import { IUser } from 'app/entities/user/user.model';
 import { IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { IRatingUser } from 'app/entities/rating-user/rating-user.model';
 import { ICommentUser } from 'app/entities/comment-user/comment-user.model';
@@ -9,7 +8,7 @@ export interface IPatient {
   secondSurname?: string | null;
   phone?: string | null;
   token?: string | null;
-  internalUser?: IUser | null;
+  internalUser?: any | null;
   emergencyContacts?: IEmergencyContact[] | null;
   ratingUsers?: IRatingUser[] | null;
   commentUsers?: ICommentUser[] | null;
@@ -22,7 +21,7 @@ export class Patient implements IPatient {
     public secondSurname?: string | null,
     public phone?: string | null,
     public token?: string | null,
-    public internalUser?: IUser | null,
+    public internalUser?: any | null,
     public emergencyContacts?: IEmergencyContact[] | null,
     public ratingUsers?: IRatingUser[] | null,
     public commentUsers?: ICommentUser[] | null,
