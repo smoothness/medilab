@@ -33,6 +33,8 @@ public interface MedicalExamsService {
 
     List<MedicalExams> findMedicalExamsByAppointment(Long id);
 
+    List<MedicalExams> findMedicalExamsByPatient(Long id);
+
     /**
      * Get the "id" medicalExams.
      *

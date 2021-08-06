@@ -45,6 +45,7 @@
         <!-- open user profile -->
         <div class="card bg-dark">
           <medi-user-profile [user]="currentUser"></medi-user-profile>
+
         </div>
         <!-- close user profile -->
       </section>
@@ -184,6 +185,9 @@
                 </table>
               </div>
             </div>
+          </div>
+          <div class="my-4">
+            <medi-medical-exams [medicalExams]="patientMedicalExams" [showButtons]="false"></medi-medical-exams>
           </div>
         </div>
         <!-- END body patient Block -->

@@ -40,6 +40,10 @@ export class MedicalExamsService {
     return this.http.get<IMedicalExams>(`${this.resourceUrl}/appointment/${appointmentId}`, { observe: 'response' });
   }
 
+  findByPatient(appointmentId: number): Observable<EntityResponseType> {
+    return this.http.get<IMedicalExams>(`${this.resourceUrl}/patient/${appointmentId}`, { observe: 'response' });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IMedicalExams[]>(this.resourceUrl, { params: options, observe: 'response' });

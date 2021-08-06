@@ -70,6 +70,12 @@ public class MedicalExamsServiceImpl implements MedicalExamsService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<MedicalExams> findMedicalExamsByPatient(Long id) {
+        return medicalExamsRepository.findMedicalExamsByPatient(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Optional<MedicalExams> findOne(Long id) {
         log.debug("Request to get MedicalExams : {}", id);
         return medicalExamsRepository.findById(id);

@@ -1,7 +1,7 @@
 <div class="container">
 <section class="row p-0 m-0">
-  <div class="col-10 my-4 mx-auto">
-    <div class="text-center my-5">
+  <div class="col-10 mx-auto">
+    <div class="text-center">
       <h2 data-cy="patientDetailsHeading">{{ patient.fullName }}</h2>
     </div>
     <div class="row p-0 m-0 card-body">
@@ -11,6 +11,10 @@
       <div class="col-6">
         <medi-emergency-contact-detail [patientId]="patient.patientId"></medi-emergency-contact-detail>
       </div>
+    </div>
+
+    <div class="my-4">
+      <medi-medical-exams [medicalExams]="patientMedicalExams" [showButtons]="false"></medi-medical-exams>
     </div>
 
     <!--DIAGNOSIS -->

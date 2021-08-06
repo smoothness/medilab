@@ -2,6 +2,7 @@
   "medilabApp": {
     "medicalExams": {
       "register": "Medical exam register",
+      "update": "Medical exam update",
       "created": "The medical exam has been created successfully.",
       "updated": "The medical exam has been updated successfully.",
       "deleted": "The medical exam has been deleted successfully",

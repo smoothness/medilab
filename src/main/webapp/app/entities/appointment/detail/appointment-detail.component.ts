@@ -7,7 +7,7 @@ import { MedicalExamnsRegisterComponent } from "../../medical-exams/register/med
 import { IMedicalExams } from "../../medical-exams/medical-exams.model";
 import { MedicalExamsService } from "../../medical-exams/service/medical-exams.service";
 import { AccountService } from "../../../core/auth/account.service";
-import { Doctor, Patient } from "../../../core/auth/account.model";
+import { Patient } from "../../../core/auth/account.model";
 
 
 @Component({

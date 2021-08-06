@@ -159,6 +159,12 @@ public class MedicalExamsResource {
         return ResponseUtil.wrapOrNotFound(medicalExams);
     }
 
+    @GetMapping("/medical-exams/patient/{id}")
+    public ResponseEntity<List<MedicalExams>> getMedicalExamsByPatient(@PathVariable Long id) {
+        List<MedicalExams> medicalExams = medicalExamsService.findMedicalExamsByPatient(id);
+        return ResponseEntity.ok(medicalExams);
+    }
+
     /**
      * {@code DELETE  /medical-exams/:id} : delete the "id" medicalExams.
      *

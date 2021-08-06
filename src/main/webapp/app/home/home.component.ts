@@ -21,6 +21,8 @@ import { EmergencyContactService } from 'app/entities/emergency-contact/service/
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactUpdateComponent } from '../entities/emergency-contact/update/emergency-contact-update.component';
 import { EmergencyContactRegisterComponent } from '../entities/emergency-contact/register/emergency-contact-register.component';
+import {IMedicalExams} from "../entities/medical-exams/medical-exams.model";
+import {MedicalExamsService} from "../entities/medical-exams/service/medical-exams.service";
 
 @Component({
   selector: 'medi-home',
@@ -46,9 +48,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   updatedDate = new FormControl('');
   appointmentToChangeDate: IAppointment | null = null;
   currentUser: any = {};
+  patientMedicalExams: IMedicalExams[] = [];
+
   private readonly destroy$ = new Subject<void>();
 
   constructor(
+    private router: Router,
+    protected modalService: NgbModal,
     private sweetAlertService: SweetAlertService,
     private accountService: AccountService,
     private patientService: PatientService,
@@ -56,8 +62,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private appointmentService: AppointmentService,
     private emergencyContactService: EmergencyContactService,
     private appointmentTreatmentAilmentService: AppointmentTreatmentAilmentService,
-    private router: Router,
-    protected modalService: NgbModal
+    private medicalExamsService: MedicalExamsService
   ) {}
 
   public get isPatient(): boolean {
@@ -92,6 +97,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public getAppointmentsByUser(): void {
     if(this.isPatient){
       this.getAppointmentsPatient();
+      this.getMedicalExams();
       this.getAilmentsPatient();
       this.loadAllEmergencyContact();
     }else if(this.isDoctor) {
@@ -156,6 +162,15 @@ export class HomeComponent implements OnInit, OnDestroy {
           subscriber.next(doctor.body);
         });
       }
+    });
+  }
+
+  /**
+   * @description this method brings up all medical exams of a patient.
+   */
+  public getMedicalExams(): void {
+    this.medicalExamsService.findByPatient(this.currentUser.patientId).subscribe((patientMedicalExams: any) => {
+      this.patientMedicalExams = patientMedicalExams.body;
     });
   }
 

@@ -1,16 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
 
 import { IMedicalExams, MedicalExams } from '../medical-exams.model';
 import { MedicalExamsService } from '../service/medical-exams.service';
 import { IAppointment } from 'app/entities/appointment/appointment.model';
 import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
 import {SweetAlertService} from "../../../shared/services/sweet-alert.service";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'medi-medical-exams-update',

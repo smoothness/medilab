@@ -40,7 +40,7 @@
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span mediTranslate="entity.action.edit">Edit</span>
       </button>
 
-      <button type="button" class="btn btn-secondary" (click)="showRegisterMedicalExamModal()">Agregar examen médico</button>
+      <button type="button" class="btn btn-secondary" (click)="showRegisterMedicalExamModal()" *ngIf="showButtons">Agregar examen médico</button>
     </div>
 
     <div class="mt-4" *ngIf="medicalExams.length > 0">
