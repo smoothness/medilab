@@ -6,9 +6,10 @@ import { AppointmentUpdateComponent } from './update/appointment-update.componen
 import { AppointmentDeleteDialogComponent } from './delete/appointment-delete-dialog.component';
 import { AppointmentRoutingModule } from './route/appointment-routing.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { InvoiceModule } from '../invoice/invoice.module';
 
 @NgModule({
-  imports: [SharedModule, AppointmentRoutingModule, SweetAlert2Module],
+  imports: [SharedModule, AppointmentRoutingModule, SweetAlert2Module, InvoiceModule],
   declarations: [AppointmentComponent, AppointmentDetailComponent, AppointmentUpdateComponent, AppointmentDeleteDialogComponent],
   entryComponents: [AppointmentDeleteDialogComponent],
 })
