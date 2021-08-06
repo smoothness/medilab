@@ -7,9 +7,9 @@
         "createOrEditAppointment": "Crear o editar una cita",
         "notFound": "Ninguna cita encontrada"
       },
-      "created": "Una nueva cita ha sido creada con el identificador {{ param }}",
-      "updated": "Una cita ha sido actualizado con el identificador {{ param }}",
-      "deleted": "Una cita ha sido eliminada con el identificador {{ param }}",
+      "created": "Una nueva cita ha sido creada.",
+      "updated": "Una cita ha sido actualizado.",
+      "deleted": "Una cita ha sido eliminada.",
       "delete": {
         "question": "¿Seguro que quiere eliminar la cita {{ id }}?"
       },
