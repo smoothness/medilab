@@ -11,6 +11,6 @@ import { InvoicePipe } from './pipe/invoice.pipe';
   imports: [SharedModule, InvoiceRoutingModule],
   declarations: [InvoiceComponent, InvoiceDetailComponent, InvoiceUpdateComponent, InvoiceDeleteDialogComponent, InvoicePipe],
   entryComponents: [InvoiceDeleteDialogComponent],
-  exports: [InvoicePipe]
+  exports: [InvoicePipe],
 })
 export class InvoiceModule {}

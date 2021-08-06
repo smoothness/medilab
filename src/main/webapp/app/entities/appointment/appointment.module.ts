@@ -7,13 +7,15 @@ import { AppointmentDeleteDialogComponent } from './delete/appointment-delete-di
 import { AppointmentRoutingModule } from './route/appointment-routing.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { MedicalExamsModule } from "../medical-exams/medical-exams.module";
+import { InvoiceModule } from '../invoice/invoice.module';
 
 @NgModule({
   imports: [
     SharedModule,
     AppointmentRoutingModule,
     SweetAlert2Module,
-    MedicalExamsModule
+    MedicalExamsModule,
+    InvoiceModule
   ],
   declarations: [
     AppointmentComponent,

@@ -7,17 +7,17 @@ import { MedicalExamnsRegisterComponent } from "../../medical-exams/register/med
 import { IMedicalExams } from "../../medical-exams/medical-exams.model";
 import { MedicalExamsService } from "../../medical-exams/service/medical-exams.service";
 import { AccountService } from "../../../core/auth/account.service";
-import { Patient } from "../../../core/auth/account.model";
-
+import {Doctor, Patient} from "../../../core/auth/account.model";
 
 @Component({
   selector: 'medi-appointment-detail',
   templateUrl: './appointment-detail.component.html',
 })
 export class AppointmentDetailComponent implements OnInit {
-  appointment: IAppointment = {};
+  appointment: any | null = null;
   medicalExams: IMedicalExams[] = [];
   currentUser: any;
+  userType = 'doctor';
 
   constructor(
     protected activatedRoute: ActivatedRoute,
@@ -25,6 +25,14 @@ export class AppointmentDetailComponent implements OnInit {
     private accountService: AccountService,
     private medicalExamsService: MedicalExamsService
   ) {}
+
+  public get isPatient(): boolean {
+    return this.currentUser instanceof Patient;
+  }
+
+  public get isDoctor(): boolean {
+    return this.currentUser instanceof Doctor;
+  }
 
   get showButtons(): boolean {
     let show = true;
