@@ -187,7 +187,7 @@
             </div>
           </div>
 
-          <div class="my-4" *ngIf="patientMedicalExams > 0">
+          <div class="my-4" *ngIf="patientMedicalExams.length > 0">
             <medi-medical-exams [medicalExams]="patientMedicalExams" [showButtons]="false"></medi-medical-exams>
           </div>
         </div>
