@@ -16,7 +16,8 @@
       "name": "Nombre",
       "description": "Descripción",
       "removed": "Removed",
-      "appointment": "Appointment"
+      "appointment": "Appointment",
+      "btnAdd": "Add medical exam"
     }
   }
 }

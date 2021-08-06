@@ -16,10 +16,8 @@
       "name": "Name",
       "description": "Description",
       "removed": "Removed",
-      "appointment": "Appointment"
-    },
-    "created": "The medical exam has been created successfully.",
-    "name": "Name",
-    "description": "Description"
+      "appointment": "Appointment",
+      "btnAdd": "Add medical exam"
+    }
   }
 }
