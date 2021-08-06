@@ -9,6 +9,7 @@ import {MedicalExamsService} from "../../medical-exams/service/medical-exams.ser
 @Component({
   selector: 'medi-patient-detail',
   templateUrl: './patient-detail.component.html',
+  styleUrls: ['./patient-detail.component.scss']
 })
 export class PatientDetailComponent implements OnInit {
   patient: any = {};
