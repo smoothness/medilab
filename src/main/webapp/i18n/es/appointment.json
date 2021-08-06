@@ -5,9 +5,9 @@
         "title": "Citas",
         "refreshListLabel": "Refrescar lista",
         "createOrEditAppointment": "Crear o editar una cita",
-        "notFound": "Ningúna cita encontrada"
+        "notFound": "Ninguna cita encontrada"
       },
-      "created": "Una nuevo cita ha sido creada con el identificador {{ param }}",
+      "created": "Una nueva cita ha sido creada con el identificador {{ param }}",
       "updated": "Una cita ha sido actualizado con el identificador {{ param }}",
       "deleted": "Una cita ha sido eliminada con el identificador {{ param }}",
       "delete": {
