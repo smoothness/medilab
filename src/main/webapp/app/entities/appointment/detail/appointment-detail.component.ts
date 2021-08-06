@@ -28,11 +28,9 @@ export class AppointmentDetailComponent implements OnInit {
 
   get showButtons(): boolean {
     let show = true;
-    console.log('user->', this.currentUser);
     if (this.currentUser instanceof Patient){
       show = false;
     }
-    console.log(show);
     return show;
   }
 
