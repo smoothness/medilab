@@ -43,7 +43,7 @@
               <li class="list-group-item">
                 <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.doctor">Doctor: </span>
                 <a [routerLink]="['/main/doctor', appointment.doctor?.id, 'view']">
-                  {{ appointment.doctor?.internalUser?.completeName }} {{ appointment.doctor?.secondSurname }}
+                  {{ appointment.doctor.internalUser?.completeName }} {{ appointment.doctor.secondSurname }}
                 </a>
               </li>
               <li class="list-group-item">
@@ -52,22 +52,37 @@
               </li>
               <li class="list-group-item">
                 <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.phone">Teléfono: </span>
-                <span>{{ appointment.doctor?.phone }}</span>
+                <span>{{ appointment.doctor.phone }}</span>
               </li>
               <li class="list-group-item">
                 <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.email">Correo electrónico: </span>
-                <span>{{ appointment.doctor?.internalUser?.email }}</span>
+                <span>{{ appointment.doctor.internalUser?.email }}</span>
               </li>
             </ul>
           </div>
+
           <div class="card-footer">
             <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
               <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span mediTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="showRegisterMedicalExamModal()"
+              *ngIf="isDoctor">
+              <fa-icon icon="plus"></fa-icon>
+              <span mediTranslate="medilabApp.medicalExams.btnAdd">add</span>
             </button>
           </div>
         </div>
         <!-- close card -->
       </div>
     </div>
+
+    <div class="col-8 mt-4" *ngIf="medicalExams.length > 0">
+      <medi-medical-exams [medicalExams]="medicalExams" [showButtons]="showButtons" (updateList)="loadMedicalExams($event)"></medi-medical-exams>
+    </div>
+
   </div>
 </div>

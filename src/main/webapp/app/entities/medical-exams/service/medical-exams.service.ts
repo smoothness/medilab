@@ -36,6 +36,14 @@ export class MedicalExamsService {
     return this.http.get<IMedicalExams>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  findByAppointment(appointmentId: number): Observable<EntityResponseType> {
+    return this.http.get<IMedicalExams>(`${this.resourceUrl}/appointment/${appointmentId}`, { observe: 'response' });
+  }
+
+  findByPatient(appointmentId: number): Observable<EntityResponseType> {
+    return this.http.get<IMedicalExams>(`${this.resourceUrl}/patient/${appointmentId}`, { observe: 'response' });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IMedicalExams[]>(this.resourceUrl, { params: options, observe: 'response' });
@@ -43,6 +51,10 @@ export class MedicalExamsService {
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  deleteByRemove(id: number): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}-del/${id}`, { observe: 'response' });
   }
 
   addMedicalExamsToCollectionIfMissing(
