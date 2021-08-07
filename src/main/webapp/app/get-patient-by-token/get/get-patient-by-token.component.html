@@ -1,0 +1,54 @@
+<medi-header></medi-header>
+
+<main>
+  <!-- Title -->
+  <section class="row p-0 m-0 mt-2">
+    <div class="col-md-12 text-center">
+      <h1 mediTranslate="register.title" data-cy="registerTitle">Registration</h1>
+    </div>
+  </section>
+
+  <!-- Wizard form -->
+  <section class="row p-0 m-0">
+    <div id="ml-register" class="card col-md-5 mx-auto my-2 bg-dark">
+      <div id="formContainer" class="card-body">
+        <form name="registerForm" role="form" autocomplete="off" [formGroup]="searchForm" (ngSubmit)="find()">
+          <div class="form-group">
+            <label class="form-control-label" for="token" mediTranslate="global.form.phone.label">Phone</label>
+            <input
+              type="text"
+              class="form-control"
+              id="token"
+              name="token"
+              formControlName="token"
+              data-cy="token"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-control-label" for="doctorCode" mediTranslate="global.form.phone.label">Phone</label>
+            <input
+              type="text"
+              class="form-control"
+              id="doctorCode"
+              name="doctorCode"
+              formControlName="doctorCode"
+              data-cy="doctorCode"
+            />
+          </div>
+
+          <!-- Buttons -->
+          <div class="text-center">
+            <button
+              type="submit"
+              class="btn btn-primary col-5 m-2"
+              mediTranslate="register.form.previous"
+              [disabled]="searchForm.invalid"
+            ></button>
+          </div>
+        </form>
+      </div>
+
+      </div>
+  </section>
+</main>
