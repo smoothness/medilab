@@ -103,7 +103,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     }else if(this.isDoctor) {
       this.getAppointmentsDoctor();
     }
-
     this.loadAllAppoiments();
   }
 
@@ -193,12 +192,21 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   cancelAppointment(appointment: IAppointment): void {
-    appointment.status = Status.CANCELED;
-    this.appointmentService.update(appointment).subscribe(() => {
-      this.sweetAlertService.showMsjInfo('home.messages.cancelAppointmentTitle', 'home.messages.cancelAppointmentMsj').then(() => {
-        this.loadAllAppoiments();
+    this.sweetAlertService
+      .showConfirmMsg({
+        title: 'medilabApp.deleteConfirm.title',
+        text: 'medilabApp.deleteConfirm.text',
+        confirmButtonText: 'medilabApp.deleteConfirm.confirmButtonText',
+        cancelButtonText: 'medilabApp.deleteConfirm.cancelButtonText',
+      })
+      .then(res => {
+        appointment.status = Status.CANCELED;
+        this.appointmentService.update(appointment).subscribe(() => {
+          this.sweetAlertService.showMsjInfo('home.messages.cancelAppointmentTitle', 'home.messages.cancelAppointmentMsj').then(() => {
+            this.getAppointmentsDoctor();
+          });
+        });
       });
-    });
   }
 
   ngOnDestroy(): void {
@@ -269,9 +277,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     };
     this.appointmentService.update(newAppointment).subscribe(() => {
       this.sweetAlertService.showMsjInfo('home.messages.updatedAppointmentDatetitle', 'home.messages.updatedAppointmentDateMsj').then(() => {
-        this.loadAllAppoiments();
+        this.getAppointmentsDoctor();
         this.modalService.dismissAll();
-
       });
     });
   }
