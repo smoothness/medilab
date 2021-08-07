@@ -249,6 +249,10 @@ a {
 
 .card-header {
   background-color: rgba(0, 0, 0, 0.2);
+
+  h5 {
+    margin: 0;
+  }
 }
 
 .btn-light {
@@ -298,7 +302,13 @@ a {
   }
 }
 
-.card-size-profile{
+.card-size-profile {
   min-height: 19rem;
   max-height: 19rem;
+}
+
+.list-group-item {
+  &__dt {
+    font-weight: bold;
+  }
 }

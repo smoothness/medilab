@@ -6,10 +6,17 @@ import { SharedModule } from './../shared/shared.module';
 import { HOME_ROUTE } from './home.route';
 import { HomeComponent } from './home.component';
 import { LayoutsModule } from '../layouts/layouts.module';
+import { MedicalExamsModule } from "../entities/medical-exams/medical-exams.module";
 
 @NgModule({
-  imports: [ReactiveFormsModule, SharedModule, RouterModule.forChild([HOME_ROUTE]), LayoutsModule],
-  declarations: [HomeComponent],
-  exports: [HomeComponent],
+  imports: [
+    ReactiveFormsModule,
+    SharedModule,
+    RouterModule.forChild([HOME_ROUTE]),
+    LayoutsModule,
+    MedicalExamsModule
+  ],
+  declarations: [ HomeComponent ],
+  exports: [ HomeComponent ],
 })
 export class HomeModule {}
