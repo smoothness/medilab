@@ -42,6 +42,11 @@ public class Patient implements Serializable {
 
     @OneToMany(mappedBy = "patient")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "patient" }, allowSetters = true)
+    private Set<Binnacle> binnacles = new HashSet<>();
+
+    @OneToMany(mappedBy = "patient")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "rating", "patient", "doctor" }, allowSetters = true)
     private Set<RatingUser> ratingUsers = new HashSet<>();
 

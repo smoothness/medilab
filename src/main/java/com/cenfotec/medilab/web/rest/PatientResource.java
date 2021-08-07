@@ -1,17 +1,23 @@
 package com.cenfotec.medilab.web.rest;
 
+import com.cenfotec.medilab.domain.Binnacle;
 import com.cenfotec.medilab.domain.Patient;
 import com.cenfotec.medilab.domain.User;
 import com.cenfotec.medilab.repository.PatientRepository;
 import com.cenfotec.medilab.repository.UserRepository;
+import com.cenfotec.medilab.service.BinnacleService;
 import com.cenfotec.medilab.service.PatientService;
 import com.cenfotec.medilab.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import javax.validation.Valid;
+
+import com.cenfotec.medilab.web.rest.errors.InvalidTokenException;
+import com.cenfotec.medilab.web.rest.vm.TokenVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +46,9 @@ public class PatientResource {
     private String applicationName;
 
     private final PatientService patientService;
+
+    @Autowired
+    private BinnacleService binnacleService;
 
     private final PatientRepository patientRepository;
 
@@ -192,5 +201,30 @@ public class PatientResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+
+    @PostMapping(path = "/token")
+    public ResponseEntity<Patient> queryByToken(@RequestBody TokenVM tokenVM) {
+        Optional<Patient> patient = isInvalidToken(tokenVM.getKey());
+        if (!patient.isPresent()) {
+            throw new InvalidTokenException();
+        }
+        Binnacle binnacle = new Binnacle();
+        binnacle.setPatient(patient.get());
+        binnacle.setDate(LocalDate.now());
+        binnacle.setDoctorCode(tokenVM.getDoctorCode());
+        binnacleService.save(binnacle);
+
+        patient.get().setToken(null);
+
+        Patient patientConsulted = patientRepository.save(patient.get());
+
+        return ResponseEntity.ok(patientConsulted);
+    }
+
+    private Optional<Patient> isInvalidToken(String key) {
+        Optional<Patient> patient = patientService.findPatientByToken(key);
+        return patient;
     }
 }

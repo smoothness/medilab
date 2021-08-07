@@ -45,6 +45,9 @@ export class PatientService {
     return this.http.get<IPatient>(`api/patient-appointment/${id}`, {observe: 'response'});
   }
 
+  findOneByToken(key: number, doctorCode: string): Observable<{}> {
+    return this.http.post(this.applicationConfigService.getEndpointFor('api/token'), { key, doctorCode });
+  }
 
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
