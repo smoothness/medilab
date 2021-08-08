@@ -84,6 +84,7 @@
     "bootstrap": "4.6.0",
     "dayjs": "1.10.5",
     "ngx-infinite-scroll": "10.0.1",
+    "ngx-paypal": "^7.0.0",
     "ngx-webstorage": "8.0.0",
     "rxjs": "6.6.7",
     "swagger-ui-dist": "3.50.0",

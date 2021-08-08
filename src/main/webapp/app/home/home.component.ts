@@ -21,7 +21,12 @@ import { EmergencyContactService } from 'app/entities/emergency-contact/service/
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactUpdateComponent } from '../entities/emergency-contact/update/emergency-contact-update.component';
 import { EmergencyContactRegisterComponent } from '../entities/emergency-contact/register/emergency-contact-register.component';
+<<<<<<< HEAD
 // import * as dayjs from 'dayjs';
+=======
+import {IMedicalExams} from "../entities/medical-exams/medical-exams.model";
+import {MedicalExamsService} from "../entities/medical-exams/service/medical-exams.service";
+>>>>>>> develop
 
 @Component({
   selector: 'medi-home',
@@ -40,16 +45,20 @@ export class HomeComponent implements OnInit, OnDestroy {
   appointmentTreatmentAilmentNew: IAppointmentTreatmentAilment[] | null = null;
   authority: string | undefined;
   appointmentsDoctor: any[] = [];
-  appointmentsPatient: any[] | undefined = [];
+  appointmentsPatient: any[] = [];
   ailmentsPatient: any[] | undefined = [];
   closeModal: string | undefined;
   ailment: any;
   updatedDate = new FormControl('');
   appointmentToChangeDate: IAppointment | null = null;
-  currentUser: any;
+  currentUser: any = {};
+  patientMedicalExams: IMedicalExams[] = [];
+
   private readonly destroy$ = new Subject<void>();
 
   constructor(
+    private router: Router,
+    protected modalService: NgbModal,
     private sweetAlertService: SweetAlertService,
     private accountService: AccountService,
     private patientService: PatientService,
@@ -57,8 +66,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private appointmentService: AppointmentService,
     private emergencyContactService: EmergencyContactService,
     private appointmentTreatmentAilmentService: AppointmentTreatmentAilmentService,
-    private router: Router,
-    protected modalService: NgbModal
+    private medicalExamsService: MedicalExamsService
   ) {}
 
   public get isPatient(): boolean {
@@ -75,35 +83,52 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.autenticatedAccount();
-    this.accountService.getAuthenticationState().subscribe(account => {
-      this.account = account;
-      if (this.account?.authorities[0] === 'ROLE_PATIENT') {
-        this.mergeAccountWithPatient(this.account);
-      }
+  }
 
-      if (this.account?.authorities[0] === 'ROLE_USER') {
-        this.doctorService.findByInternalUser(this.account.id).subscribe((res: any) => {
-          this.theDoctorId = res.body.id;
-          this.appointmentService.findDoctorAppointments(this.theDoctorId).subscribe((response: any) => {
-            let index = 0;
-            this.appointmentsDoctor = response.body
-              .filter((item: IAppointment) => item.status === 'PENDING')
-              .sort((a: IAppointment, b: IAppointment) => {
-                if (a.date && b.date) {
-                  return new Date(String(a.date)).valueOf() - new Date(String(b.date)).valueOf();
-                }
-                return null;
-              });
-            this.formatPatientData(this.appointmentsDoctor).subscribe(data => {
-              this.appointmentsDoctor[index].patient = data;
-              index++;
-            });
-          });
-        });
-      }
+  /**
+   * @description this method is responsible for bringing the authenticated user.
+   */
+  public autenticatedAccount(): void {
+    this.accountService.formatUserIdentity().subscribe(user => {
+      this.currentUser = user;
+      this.getAppointmentsByUser();
     });
   }
 
+  /**
+   * @description This method is responsible for bringing all the appointments according to the role of the authenticated user
+   */
+  public getAppointmentsByUser(): void {
+    if(this.isPatient){
+      this.getAppointmentsPatient();
+      this.getMedicalExams();
+      this.getAilmentsPatient();
+      this.loadAllEmergencyContact();
+    }else if(this.isDoctor) {
+      this.getAppointmentsDoctor();
+    }
+    this.loadAllAppoiments();
+  }
+
+  /**
+   * @description this method brings up all pending appointments of a patient.
+   */
+  public getAppointmentsPatient(): void {
+    this.appointmentService.findPatientAppointments(this.currentUser.patientId).subscribe((appointments: any) => {
+      let index = 0;
+      this.appointmentsPatient = appointments.body;
+      this.formatDoctorData(this.appointmentsPatient).subscribe(data => {
+        this.appointmentsPatient[index].doctor = data;
+        index++;
+      });
+    });
+  }
+
+  /**
+   * @description this method formats the patients of the appointments
+   * @param {Object} appointments
+   * @return {Observable}
+   */
   public formatPatientData(appointments: any): Observable<any> {
     return new Observable(subscriber => {
       for (const appointment of appointments[Symbol.iterator]()) {
@@ -114,12 +139,21 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  public autenticatedAccount(): void {
-    this.accountService.formatUserIdentity().subscribe(user => {
-      this.currentUser = user;
+  /**
+   * @description this method brings up all pending appointments of a doctor.
+   */
+  public getAppointmentsDoctor(): void {
+    this.appointmentService.findDoctorAppointments(this.currentUser.doctorId).subscribe((appointments: any) => {
+      let index = 0;
+      this.appointmentsDoctor = appointments.body;
+      this.formatPatientData(this.appointmentsDoctor).subscribe(data => {
+        this.appointmentsDoctor[index].patient = data;
+        index++;
+      });
     });
   }
 
+<<<<<<< HEAD
   mergeAccountWithPatient(account: Account): void {
     this.patientService.query().subscribe(res => {
       this.thePatient = res.body?.find(patient => patient.internalUser?.id === account.id);
@@ -129,17 +163,35 @@ export class HomeComponent implements OnInit, OnDestroy {
             Object.assign(appointment.doctor, doctor);
           });
           return appointment.patient?.id === this.thePatient?.id;
+=======
+  /**
+   * @description this method formats the doctors of the appointments
+   * @param {Object} appointments
+   * @return {Observable}
+   */
+  public formatDoctorData(appointments: any): Observable<any> {
+    return new Observable(subscriber => {
+      for (const appointment of appointments[Symbol.iterator]()) {
+        this.doctorService.find(appointment.doctor.id).subscribe(doctor => {
+          subscriber.next(doctor.body);
+>>>>>>> develop
         });
-        this.getAilmentsPatient();
-      });
+      }
     });
-    this.loadAllEmergencyContact();
-    this.loadAllAppoiments();
+  }
+
+  /**
+   * @description this method brings up all medical exams of a patient.
+   */
+  public getMedicalExams(): void {
+    this.medicalExamsService.findByPatient(this.currentUser.patientId).subscribe((patientMedicalExams: any) => {
+      this.patientMedicalExams = patientMedicalExams.body;
+    });
   }
 
   getAilmentsPatient(): void {
     this.appointmentTreatmentAilmentService.query().subscribe(data => {
-      this.appointmentsPatient?.forEach(appointment => {
+      this.appointmentsPatient.forEach(appointment => {
         if (data.body !== null) {
           data.body.forEach(element => {
             if (element.appointment?.id === appointment.id) {
@@ -151,20 +203,26 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  trackId(index: number, item: IEmergencyContact): number {
-    return item.id!;
-  }
-
   login(): void {
     this.router.navigate(['/login']);
   }
 
   cancelAppointment(appointment: IAppointment): void {
-    appointment.status = Status.CANCELED;
-    this.appointmentService.update(appointment).subscribe(() => {
-      this.sweetAlertService.showMsjInfo('home.messages.cancelAppointmentTitle', 'home.messages.cancelAppointmentMsj');
-      this.ngOnInit();
-    });
+    this.sweetAlertService
+      .showConfirmMsg({
+        title: 'medilabApp.deleteConfirm.title',
+        text: 'medilabApp.deleteConfirm.text',
+        confirmButtonText: 'medilabApp.deleteConfirm.confirmButtonText',
+        cancelButtonText: 'medilabApp.deleteConfirm.cancelButtonText',
+      })
+      .then(res => {
+        appointment.status = Status.CANCELED;
+        this.appointmentService.update(appointment).subscribe(() => {
+          this.sweetAlertService.showMsjInfo('home.messages.cancelAppointmentTitle', 'home.messages.cancelAppointmentMsj').then(() => {
+            this.getAppointmentsDoctor();
+          });
+        });
+      });
   }
 
   ngOnDestroy(): void {
@@ -172,6 +230,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  /**
+   * @description this method takes care of removing an emergency contact
+   * @param emergencyContact
+   */
   public deleteEmergencyContact(emergencyContact: IEmergencyContact): void {
     this.sweetAlertService
       .showConfirmMsg({
@@ -191,9 +253,12 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * @description This method is responsible for bringing all the emergency contacts of the authenticated patient.
+   */
   public loadAllEmergencyContact(): void {
     this.isLoadingEmergencyContact = true;
-    this.patientService.findOneByInternalUser(<number>this.account?.id).subscribe(patient => {
+    this.patientService.findOneByInternalUser(this.currentUser.id).subscribe(patient => {
       this.emergencyContactService.findByPatientId(<number>patient.body?.id).subscribe((res: any) => {
         this.emergencyContacts = res.body;
       });
@@ -227,19 +292,30 @@ export class HomeComponent implements OnInit, OnDestroy {
       date: this.updatedDate.value,
     };
     this.appointmentService.update(newAppointment).subscribe(() => {
-      this.sweetAlertService.showMsjInfo('home.messages.updatedAppointmentDatetitle', 'home.messages.updatedAppointmentDateMsj');
-      window.setTimeout(() => this.ngOnInit(), 1000);
+      this.sweetAlertService.showMsjInfo('home.messages.updatedAppointmentDatetitle', 'home.messages.updatedAppointmentDateMsj').then(() => {
+        this.getAppointmentsDoctor();
+        this.modalService.dismissAll();
+      });
     });
-    this.modalService.dismissAll();
   }
 
+  /**
+   * @description this method is responsible for displaying the component
+   *  to modify an emergency contact of the authenticated patient.
+   * @param emergencyContact
+   */
   public showModifyContactModal(emergencyContact: IEmergencyContact): void {
-    const modalRef = this.modalService.open(EmergencyContactUpdateComponent);
+    const modalRef = this.modalService.open(EmergencyContactUpdateComponent, { centered: true });
     modalRef.componentInstance.setEmergencyContactData(emergencyContact);
   }
 
+  /**
+   * @description this method is responsible for displaying the component
+   *  to create a new emergency contact of the authenticated patient.
+   * @param emergencyContact
+   */
   public showCreateContactModal(): void {
-    const modalRef = this.modalService.open(EmergencyContactRegisterComponent);
+    const modalRef = this.modalService.open(EmergencyContactRegisterComponent, { centered: true });
     modalRef.componentInstance.patientId = this.currentUser.patientId;
     modalRef.closed.subscribe(reason => {
       if (reason === 'register') {

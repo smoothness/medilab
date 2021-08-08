@@ -41,7 +41,7 @@ export class PatientService {
     return this.http.get<IPatient>(`api/patient/${id}`, { observe: 'response' });
   }
 
-  findOneByAppointmen(id: number): Observable<EntityResponseType> {
+  findOneByAppointment(id: number): Observable<EntityResponseType> {
     return this.http.get<IPatient>(`api/patient-appointment/${id}`, {observe: 'response'});
   }
 

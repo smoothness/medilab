@@ -68,6 +68,10 @@ export class AppointmentService {
     return this.http.get<IAppointment>(`${this.resourceUrl}-doctor/${doctorId}`, { observe: 'response' });
   }
 
+  findPatientAppointments(patientId: number): Observable<EntityResponseType> {
+    return this.http.get<IAppointment>(`${this.resourceUrl}-patient/${patientId}`, { observe: 'response' });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http

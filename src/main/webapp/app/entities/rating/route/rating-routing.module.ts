@@ -9,11 +9,6 @@ import { RatingRoutingResolveService } from './rating-routing-resolve.service';
 
 const ratingRoute: Routes = [
   {
-    path: '',
-    component: RatingComponent,
-    canActivate: [UserRouteAccessService],
-  },
-  {
     path: ':id/view',
     component: RatingDetailComponent,
     resolve: {

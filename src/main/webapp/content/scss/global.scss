@@ -234,12 +234,25 @@ a {
   border-color: $gray-900;
 }
 
+.table-hover {
+  tbody {
+    tr:hover {
+      background: $dropdown-link-hover-bg;
+      color: $dropdown-link-hover-color;
+    }
+  }
+}
+
 .card {
   border-radius: 7px;
 }
 
 .card-header {
   background-color: rgba(0, 0, 0, 0.2);
+
+  h5 {
+    margin: 0;
+  }
 }
 
 .btn-light {
@@ -289,7 +302,13 @@ a {
   }
 }
 
-.card-size-profile{
+.card-size-profile {
   min-height: 19rem;
   max-height: 19rem;
+}
+
+.list-group-item {
+  &__dt {
+    font-weight: bold;
+  }
 }

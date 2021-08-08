@@ -1,6 +1,15 @@
 import { IPatient } from 'app/entities/patient/patient.model';
 
-export interface IEmergencyContact {
+interface ContactData {
+  name: string;
+  lastname: string;
+  secondlastname: string;
+  phone: string;
+  email: string;
+  relationship: string;
+}
+
+interface IEmergencyContact {
   id?: number;
   name?: string | null;
   phone?: string | null;
@@ -23,3 +32,5 @@ export class EmergencyContact implements IEmergencyContact {
 export function getEmergencyContactIdentifier(emergencyContact: IEmergencyContact): number | undefined {
   return emergencyContact.id;
 }
+
+export { ContactData, IEmergencyContact };

@@ -64,6 +64,18 @@ public class MedicalExamsServiceImpl implements MedicalExamsService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<MedicalExams> findMedicalExamsByAppointment(Long id) {
+        return medicalExamsRepository.findMedicalExamsByAppointment(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<MedicalExams> findMedicalExamsByPatient(Long id) {
+        return medicalExamsRepository.findMedicalExamsByPatient(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Optional<MedicalExams> findOne(Long id) {
         log.debug("Request to get MedicalExams : {}", id);
         return medicalExamsRepository.findById(id);
@@ -73,5 +85,10 @@ public class MedicalExamsServiceImpl implements MedicalExamsService {
     public void delete(Long id) {
         log.debug("Request to delete MedicalExams : {}", id);
         medicalExamsRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteByRemoved(Long id) {
+        medicalExamsRepository.deleteByRemoved(id);
     }
 }

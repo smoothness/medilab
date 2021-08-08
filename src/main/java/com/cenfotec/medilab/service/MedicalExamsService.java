@@ -31,6 +31,10 @@ public interface MedicalExamsService {
      */
     List<MedicalExams> findAll();
 
+    List<MedicalExams> findMedicalExamsByAppointment(Long id);
+
+    List<MedicalExams> findMedicalExamsByPatient(Long id);
+
     /**
      * Get the "id" medicalExams.
      *
@@ -45,4 +49,6 @@ public interface MedicalExamsService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    void deleteByRemoved(Long id);
 }

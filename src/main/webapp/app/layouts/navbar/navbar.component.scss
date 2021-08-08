@@ -18,6 +18,7 @@ Navbar
 
 .navbar {
   padding: 0.2rem 1rem;
+  height: 90vh !important;
 
   ul.navbar-nav {
     .nav-item {
@@ -50,19 +51,6 @@ Logo styles
 .ml-navbar-nav {
   display: flex;
   flex-direction: column;
-}
-
-.navbar-brand span:first-of-type {
-  color: $brand;
-}
-
-.navbar-brand span:last-of-type {
-  color: $brand-dark;
-}
-
-.navbar-title {
-  font-size: 1rem;
-  font-weight: 300;
 }
 
 .navbar-nav a {

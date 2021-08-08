@@ -156,6 +156,15 @@ public class InvoiceResource {
         return ResponseUtil.wrapOrNotFound(invoice);
     }
 
+    @PutMapping("/invoices/payment/{id}")
+    public ResponseEntity<Invoice> payInvoice(@PathVariable Long id) {
+        invoiceService.payInvoice(id);
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
+    }
+
     /**
      * {@code DELETE  /invoices/:id} : delete the "id" invoice.
      *
