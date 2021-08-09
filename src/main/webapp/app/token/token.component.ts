@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PatientService } from "../entities/patient/service/patient.service";
 import { Patient } from "../core/auth/account.model";
 
