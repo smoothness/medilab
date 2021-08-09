@@ -17,6 +17,12 @@
             <column name="date" type="date">
                 <constraints nullable="true" />
             </column>
+            <column name="canceled" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="updated" type="boolean">
+                <constraints nullable="true" />
+            </column>
             <column name="status" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -47,6 +53,8 @@
                   tableName="appointment">
             <column name="id" type="numeric"/>
             <column name="date" type="date"/>
+            <column name="canceled" type="boolean"/>
+            <column name="updated" type="boolean"/>
             <column name="status" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>

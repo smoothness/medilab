@@ -27,6 +27,12 @@ public class Appointment implements Serializable {
     @Column(name = "date")
     private LocalDate date;
 
+    @Column(name = "canceled")
+    private Boolean canceled;
+
+    @Column(name = "updated")
+    private Boolean updated;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
@@ -77,6 +83,32 @@ public class Appointment implements Serializable {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public Boolean getCanceled() {
+        return this.canceled;
+    }
+
+    public Appointment canceled(Boolean canceled) {
+        this.canceled = canceled;
+        return this;
+    }
+
+    public void setCanceled(Boolean canceled) {
+        this.canceled = canceled;
+    }
+
+    public Boolean getUpdated() {
+        return this.updated;
+    }
+
+    public Appointment updated(Boolean updated) {
+        this.updated = updated;
+        return this;
+    }
+
+    public void setUpdated(Boolean updated) {
+        this.updated = updated;
     }
 
     public Status getStatus() {
