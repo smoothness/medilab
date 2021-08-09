@@ -3,7 +3,13 @@ Main page styles
 ========================================================================== */
 @import '../../content/scss/bootstrap-variables';
 
-#totalDetail{
-    margin-right: 0 !important;
-    margin-left: 4rem !important;
+#totalDetail {
+  margin-right: 0 !important;
+  margin-left: 4rem !important;
+}
+
+#btnPdf {
+  text-align: center;
+  margin: 0;
+  position: absolute;
 }

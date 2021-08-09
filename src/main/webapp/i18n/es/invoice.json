@@ -33,7 +33,8 @@
       "pending": "Pendiente de pago",
       "paid": "Pagada",
       "canceled": "Anulada",
-      "invoiceNumber": "Factura Número"
+      "invoiceNumber": "Factura Número",
+      "download": "Descargar factura"
     }
   }
 }

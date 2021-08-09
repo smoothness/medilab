@@ -19,7 +19,7 @@
               <tbody>
                 <tr>
                   <td scope="row" class="text-primary font-weight-bold" mediTranslate="medilabApp.invoice.date"></td>
-                  <td>{{ invoice.date | formatMediumDate }}</td>
+                  <td id="invoiceDate">{{ invoice.date | formatMediumDate }}</td>
                 </tr>
                 <tr>
                   <td scope="row" class="text-primary font-weight-bold" mediTranslate="home.profile.phone"></td>
@@ -58,8 +58,6 @@
         </div>
 
         <div class="col-12">
-          <div class="text-center my-4"></div>
-
           <div id="totalDetail" class="table-responsive mr-0 col-5 mx-auto">
             <table class="table table-bordered text-center">
               <tbody>
@@ -78,7 +76,20 @@
               </tbody>
             </table>
           </div>
-          <button class="btn btn-primary" *ngIf="isVisible" (click)="downloadAsPDF()">Export To PDF</button>
+        </div>
+
+        <div class="col-12">
+          <div class="text-center mb-4">
+            <button
+              id="btnPdf"
+              class="btn btn-primary"
+              *ngIf="isVisible"
+              mediTranslate="medilabApp.invoice.download"
+              (click)="downloadInvoiceAsPDF()"
+            >
+              Export To PDF
+            </button>
+          </div>
         </div>
 
         <div *ngIf="validateShow()">
