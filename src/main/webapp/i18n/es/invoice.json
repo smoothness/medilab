@@ -26,14 +26,14 @@
       "status": "Estado",
       "appointment": "Cita",
       "lineComment": "Lineas facturadas",
-      "invoiceDetail": "Detalle de la Factura",
+      "invoiceDetail": "Detalle de la factura",
       "quantity": "Cantidad",
       "description": "Descripción",
-      "unitPrice": "Precio Unitario",
+      "unitPrice": "Precio unitario",
       "pending": "Pendiente de pago",
       "paid": "Pagada",
       "canceled": "Anulada",
-      "invoiceNumber": "Factura Número",
+      "invoiceNumber": "Factura número",
       "download": "Descargar factura"
     }
   }
