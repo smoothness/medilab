@@ -1,0 +1,16 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '../../../content/scss/bootstrap-variables';
+
+.navbar-brand span:first-of-type {
+  color: $brand;
+}
+
+.navbar-brand span:last-of-type {
+  color: $brand-dark;
+}
+
+.navbar-title {
+  font-size: 1rem;
+  font-weight: 300;
+}

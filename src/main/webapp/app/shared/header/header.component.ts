@@ -1,7 +1,4 @@
 import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { SessionStorageService } from 'ngx-webstorage';
-import { LANGUAGES } from '../../config/language.constants';
 
 @Component({
   selector: 'medi-header',
@@ -10,15 +7,10 @@ import { LANGUAGES } from '../../config/language.constants';
 })
 export class HeaderComponent {
   isNavbarCollapsed = true;
-  languages = LANGUAGES;
 
-  constructor(private translateService: TranslateService, private sessionStorageService: SessionStorageService) {}
-
-  changeLanguage(languageKey: string): void {
-    this.sessionStorageService.store('locale', languageKey);
-    this.translateService.use(languageKey);
-  }
-
+  /**
+   * @description This method is in charge of changing the collapse state of the menu
+   */
   collapseNavbar(): void {
     this.isNavbarCollapsed = true;
   }

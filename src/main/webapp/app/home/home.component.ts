@@ -21,9 +21,8 @@ import { EmergencyContactService } from 'app/entities/emergency-contact/service/
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactUpdateComponent } from '../entities/emergency-contact/update/emergency-contact-update.component';
 import { EmergencyContactRegisterComponent } from '../entities/emergency-contact/register/emergency-contact-register.component';
-import * as dayjs from 'dayjs';
-
-import { AilmentService } from 'app/entities/ailment/service/ailment.service';
+import {IMedicalExams} from "../entities/medical-exams/medical-exams.model";
+import {MedicalExamsService} from "../entities/medical-exams/service/medical-exams.service";
 
 @Component({
   selector: 'medi-home',
@@ -49,9 +48,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   updatedDate = new FormControl('');
   appointmentToChangeDate: IAppointment | null = null;
   currentUser: any = {};
+  patientMedicalExams: IMedicalExams[] = [];
+
   private readonly destroy$ = new Subject<void>();
 
   constructor(
+    private router: Router,
+    protected modalService: NgbModal,
     private sweetAlertService: SweetAlertService,
     private accountService: AccountService,
     private patientService: PatientService,
@@ -59,9 +62,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private appointmentService: AppointmentService,
     private emergencyContactService: EmergencyContactService,
     private appointmentTreatmentAilmentService: AppointmentTreatmentAilmentService,
-    private router: Router,
-    private ailmentService: AilmentService,
-    protected modalService: NgbModal
+    private medicalExamsService: MedicalExamsService
   ) {}
 
   public get isPatient(): boolean {
@@ -96,13 +97,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   public getAppointmentsByUser(): void {
     if(this.isPatient){
       this.getAppointmentsPatient();
+      this.getMedicalExams();
       this.getAilmentsPatient();
       this.loadAllEmergencyContact();
-
     }else if(this.isDoctor) {
       this.getAppointmentsDoctor();
     }
-
     this.loadAllAppoiments();
   }
 
@@ -110,12 +110,11 @@ export class HomeComponent implements OnInit, OnDestroy {
    * @description this method brings up all pending appointments of a patient.
    */
   public getAppointmentsPatient(): void {
-    console.log(this.currentUser);
     this.appointmentService.findPatientAppointments(this.currentUser.patientId).subscribe((appointments: any) => {
       let index = 0;
       this.appointmentsPatient = appointments.body;
-      this.formatPatientData(this.appointmentsPatient).subscribe(data => {
-        this.appointmentsPatient[index].patient = data;
+      this.formatDoctorData(this.appointmentsPatient).subscribe(data => {
+        this.appointmentsPatient[index].doctor = data;
         index++;
       });
     });
@@ -142,7 +141,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public getAppointmentsDoctor(): void {
     this.appointmentService.findDoctorAppointments(this.currentUser.doctorId).subscribe((appointments: any) => {
       let index = 0;
-      this.appointmentsPatient = appointments.body;
+      this.appointmentsDoctor = appointments.body;
       this.formatPatientData(this.appointmentsDoctor).subscribe(data => {
         this.appointmentsDoctor[index].patient = data;
         index++;
@@ -165,6 +164,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * @description this method brings up all medical exams of a patient.
+   */
+  public getMedicalExams(): void {
+    this.medicalExamsService.findByPatient(this.currentUser.patientId).subscribe((patientMedicalExams: any) => {
+      this.patientMedicalExams = patientMedicalExams.body;
+    });
+  }
+
   getAilmentsPatient(): void {
     this.appointmentTreatmentAilmentService.query().subscribe(data => {
       this.appointmentsPatient.forEach(appointment => {
@@ -184,18 +192,26 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   cancelAppointment(appointment: IAppointment): void {
-    appointment.status = Status.CANCELED;
-    this.appointmentService.update(appointment).subscribe(() => {
-      this.sweetAlertService.showMsjInfo('home.messages.cancelAppointmentTitle', 'home.messages.cancelAppointmentMsj').then(() => {
-        this.loadAllAppoiments();
+    this.sweetAlertService
+      .showConfirmMsg({
+        title: 'medilabApp.deleteConfirm.title',
+        text: 'medilabApp.deleteConfirm.text',
+        confirmButtonText: 'medilabApp.deleteConfirm.confirmButtonText',
+        cancelButtonText: 'medilabApp.deleteConfirm.cancelButtonText',
+      })
+      .then(res => {
+        appointment.status = Status.CANCELED;
+        this.appointmentService.update(appointment).subscribe(() => {
+          this.sweetAlertService.showMsjInfo('home.messages.cancelAppointmentTitle', 'home.messages.cancelAppointmentMsj').then(() => {
+            this.getAppointmentsDoctor();
+          });
+        });
       });
-    });
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-    this.router.navigate(['/']);
   }
 
   /**
@@ -261,9 +277,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     };
     this.appointmentService.update(newAppointment).subscribe(() => {
       this.sweetAlertService.showMsjInfo('home.messages.updatedAppointmentDatetitle', 'home.messages.updatedAppointmentDateMsj').then(() => {
-        this.loadAllAppoiments();
+        this.getAppointmentsDoctor();
         this.modalService.dismissAll();
-
       });
     });
   }
@@ -274,7 +289,7 @@ export class HomeComponent implements OnInit, OnDestroy {
    * @param emergencyContact
    */
   public showModifyContactModal(emergencyContact: IEmergencyContact): void {
-    const modalRef = this.modalService.open(EmergencyContactUpdateComponent);
+    const modalRef = this.modalService.open(EmergencyContactUpdateComponent, { centered: true });
     modalRef.componentInstance.setEmergencyContactData(emergencyContact);
   }
 
@@ -284,7 +299,7 @@ export class HomeComponent implements OnInit, OnDestroy {
    * @param emergencyContact
    */
   public showCreateContactModal(): void {
-    const modalRef = this.modalService.open(EmergencyContactRegisterComponent);
+    const modalRef = this.modalService.open(EmergencyContactRegisterComponent, { centered: true });
     modalRef.componentInstance.patientId = this.currentUser.patientId;
     modalRef.closed.subscribe(reason => {
       if (reason === 'register') {

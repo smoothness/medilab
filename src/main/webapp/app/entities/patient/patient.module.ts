@@ -6,7 +6,8 @@ import { PatientUpdateComponent } from './update/patient-update.component';
 import { PatientDeleteDialogComponent } from './delete/patient-delete-dialog.component';
 import { PatientRoutingModule } from './route/patient-routing.module';
 import { LayoutsModule } from "../../layouts/layouts.module";
-import {EmergencyContactModule} from "../emergency-contact/emergency-contact.module";
+import { EmergencyContactModule } from "../emergency-contact/emergency-contact.module";
+import { MedicalExamsModule } from "../medical-exams/medical-exams.module";
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import {EmergencyContactModule} from "../emergency-contact/emergency-contact.mod
     SharedModule,
     PatientRoutingModule,
     LayoutsModule,
-    EmergencyContactModule
+    EmergencyContactModule,
+    MedicalExamsModule
   ],
   declarations: [
     PatientComponent,

@@ -9,11 +9,6 @@ import { MedicalExamsRoutingResolveService } from './medical-exams-routing-resol
 
 const medicalExamsRoute: Routes = [
   {
-    path: '',
-    component: MedicalExamsComponent,
-    canActivate: [UserRouteAccessService],
-  },
-  {
     path: ':id/view',
     component: MedicalExamsDetailComponent,
     resolve: {
