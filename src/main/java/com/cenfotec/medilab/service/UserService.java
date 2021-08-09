@@ -146,7 +146,7 @@ public class UserService {
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
         this.clearUserCaches(newUser);
-        log.debug("Created Information for User: {}", newUser);
+
         return newUser;
     }
 
@@ -191,7 +191,7 @@ public class UserService {
         }
         userRepository.save(user);
         this.clearUserCaches(user);
-        log.debug("Created Information for User: {}", user);
+
         return user;
     }
 

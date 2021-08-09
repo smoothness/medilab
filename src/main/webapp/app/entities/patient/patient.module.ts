@@ -25,5 +25,6 @@ import { MedicalExamsModule } from "../medical-exams/medical-exams.module";
     PatientDeleteDialogComponent
   ],
   entryComponents: [PatientDeleteDialogComponent],
+  exports: [ PatientDetailComponent ]
 })
 export class PatientModule {}

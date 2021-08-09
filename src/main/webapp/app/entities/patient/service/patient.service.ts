@@ -49,6 +49,11 @@ export class PatientService {
     return this.http.post(this.applicationConfigService.getEndpointFor('api/token'), { key, doctorCode });
   }
 
+  createToken(patient: Patient) : Observable<{}> {
+    return this.http.post(this.applicationConfigService.getEndpointFor(`api/token/${patient.patientId}`),
+      patient.patientData, { observe: 'response' });
+}
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IPatient[]>(this.resourceUrl, { params: options, observe: 'response' });

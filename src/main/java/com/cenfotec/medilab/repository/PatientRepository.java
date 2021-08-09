@@ -29,5 +29,4 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Query(value = "Select * from patient where token = :token", nativeQuery = true)
     Optional<Patient> findPatientByToken(@Param("token") String token);
 
-
 }

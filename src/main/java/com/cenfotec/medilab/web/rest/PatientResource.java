@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Random;
 import javax.validation.Valid;
 
 import com.cenfotec.medilab.web.rest.errors.InvalidTokenException;
@@ -24,7 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import tech.jhipster.security.RandomUtil;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
@@ -46,6 +49,9 @@ public class PatientResource {
     private String applicationName;
 
     private final PatientService patientService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private BinnacleService binnacleService;
@@ -203,6 +209,23 @@ public class PatientResource {
             .build();
     }
 
+    @PostMapping(path = "/token/{id}")
+    public ResponseEntity<Patient> createToken(@PathVariable Long id, @RequestBody Patient patient) {
+        if(patient.getId() == null){
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, patient.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!patientRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        patient.setToken(generateToken());
+        Patient updatedPatient = patientRepository.save(patient);
+        return ResponseEntity.ok(updatedPatient);
+    }
 
     @PostMapping(path = "/token")
     public ResponseEntity<Patient> queryByToken(@RequestBody TokenVM tokenVM) {
@@ -210,15 +233,11 @@ public class PatientResource {
         if (!patient.isPresent()) {
             throw new InvalidTokenException();
         }
-        Binnacle binnacle = new Binnacle();
-        binnacle.setPatient(patient.get());
-        binnacle.setDate(LocalDate.now());
-        binnacle.setDoctorCode(tokenVM.getDoctorCode());
-        binnacleService.save(binnacle);
-
         patient.get().setToken(null);
 
-        Patient patientConsulted = patientRepository.save(patient.get());
+        saveBinnacle(tokenVM.getDoctorCode(), patient.get());
+
+        Patient patientConsulted = this.patientRepository.save(patient.get());
 
         return ResponseEntity.ok(patientConsulted);
     }
@@ -226,5 +245,27 @@ public class PatientResource {
     private Optional<Patient> isInvalidToken(String key) {
         Optional<Patient> patient = patientService.findPatientByToken(key);
         return patient;
+    }
+
+    private String generateToken() {
+        Random ran = new Random();
+        int top = 5;
+        char data = ' ';
+        String dat = "";
+
+        for (int i=0; i <= top; i++) {
+            data = (char)(ran.nextInt(25)+97);
+            dat = data + dat;
+        }
+        return dat.toUpperCase();
+    }
+
+
+    private void saveBinnacle(String doctorCode, Patient patient){
+        Binnacle binnacle = new Binnacle();
+        binnacle.setPatient(patient);
+        binnacle.setDate(LocalDate.now());
+        binnacle.setDoctorCode(doctorCode);
+        binnacleService.save(binnacle);
     }
 }

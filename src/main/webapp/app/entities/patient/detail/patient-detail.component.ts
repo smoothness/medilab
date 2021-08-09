@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Patient } from './../../../core/auth/account.model';
 import { AilmentService } from '../../ailment/service/ailment.service';
 import { IMedicalExams } from "../../medical-exams/medical-exams.model";
-import {MedicalExamsService} from "../../medical-exams/service/medical-exams.service";
+import { MedicalExamsService } from "../../medical-exams/service/medical-exams.service";
 
 @Component({
   selector: 'medi-patient-detail',
@@ -12,28 +12,43 @@ import {MedicalExamsService} from "../../medical-exams/service/medical-exams.ser
   styleUrls: ['./patient-detail.component.scss']
 })
 export class PatientDetailComponent implements OnInit {
-  patient: any = {};
+  @Input() patient?: Patient;
+  isLoaded = false;
   ailments: any = [];
   patientMedicalExams: IMedicalExams[] = [];
 
   constructor(
     protected activatedRoute: ActivatedRoute,
     private ailmentService: AilmentService,
-    private medicalExamsService: MedicalExamsService
+    private medicalExamsService: MedicalExamsService,
   ) {}
 
   ngOnInit(): void {
+    if (!this.patient){
+      this.getByUrl();
+    }else{
+      this.getMedicalExams();
+      this.getAilments();
+    }
+  }
+
+  public getByUrl(): void {
     this.activatedRoute.data.subscribe(({ patient }) => {
       this.patient = new Patient(patient);
       this.getMedicalExams();
-      this.ailmentService.findAllAilmentsPacient(this.patient.patientId).subscribe(pacientAilments => {
-        this.ailments = pacientAilments.body;
-      });
+      this.getAilments();
+    });
+  }
+
+  public getAilments(): void {
+    this.ailmentService.findAllAilmentsPacient(<number>this.patient?.patientId).subscribe(pacientAilments => {
+      this.ailments = pacientAilments.body;
+      this.isLoaded = true;
     });
   }
 
   public getMedicalExams(): void {
-    this.medicalExamsService.findByPatient(this.patient.patientId).subscribe((patientMedicalExams: any) => {
+    this.medicalExamsService.findByPatient(<number>this.patient?.patientId).subscribe((patientMedicalExams: any) => {
       this.patientMedicalExams = patientMedicalExams.body;
     });
   }

@@ -1,20 +1,17 @@
 <medi-header></medi-header>
 
-<main>
+<main class="row m-0 p-0 mt-5">
   <!-- Title -->
-  <section class="row p-0 m-0 mt-2">
+  <section class="row p-0 m-0 mx-auto mt-5">
     <div class="col-md-12 text-center">
-      <h1 mediTranslate="register.title" data-cy="registerTitle">Registration</h1>
+      <h1 mediTranslate="token.title" data-cy="registerTitle">Registration</h1>
     </div>
-  </section>
 
-  <!-- Wizard form -->
-  <section class="row p-0 m-0">
-    <div id="ml-register" class="card col-md-5 mx-auto my-2 bg-dark">
+    <div id="ml-register" class="card col-md-12 mx-auto my-3 bg-dark">
       <div id="formContainer" class="card-body">
         <form name="registerForm" role="form" autocomplete="off" [formGroup]="searchForm" (ngSubmit)="find()">
           <div class="form-group">
-            <label class="form-control-label" for="token" mediTranslate="global.form.phone.label">Phone</label>
+            <label class="form-control-label" for="token" mediTranslate="token.key">Phone</label>
             <input
               type="text"
               class="form-control"
@@ -26,7 +23,7 @@
           </div>
 
           <div class="form-group">
-            <label class="form-control-label" for="doctorCode" mediTranslate="global.form.phone.label">Phone</label>
+            <label class="form-control-label" for="doctorCode" mediTranslate="token.doctorCode">Phone</label>
             <input
               type="text"
               class="form-control"
@@ -42,13 +39,14 @@
             <button
               type="submit"
               class="btn btn-primary col-5 m-2"
-              mediTranslate="register.form.previous"
               [disabled]="searchForm.invalid"
-            ></button>
+            >
+              <fa-icon icon="search"></fa-icon>
+              <span mediTranslate="token.btn"></span>
+            </button>
           </div>
         </form>
       </div>
-
-      </div>
+    </div>
   </section>
 </main>

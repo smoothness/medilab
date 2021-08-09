@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
-import { RatingComponent } from '../list/rating.component';
 import { RatingDetailComponent } from '../detail/rating-detail.component';
 import { RatingUpdateComponent } from '../update/rating-update.component';
 import { RatingRoutingResolveService } from './rating-routing-resolve.service';
