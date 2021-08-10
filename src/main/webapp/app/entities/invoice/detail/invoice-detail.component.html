@@ -1,9 +1,23 @@
 <div class="container">
   <div class="row" id="pdfTable" #pdfTable>
     <div class="col-10 card bg-dark my-4 mx-auto">
-      <div class="text-center my-5">
-        <h4 data-cy="patientDetailsHeading" mediTranslate="medilabApp.invoice.invoiceNumber"></h4>
-        <h4>{{ invoice?.id }}</h4>
+      <div class="my-4">
+        <div class="mx-auto text-center">
+          <h4 data-cy="patientDetailsHeading" mediTranslate="medilabApp.invoice.invoiceNumber"></h4>
+          <h4>{{ invoice?.id }}</h4>
+        </div>
+
+      <div class="float-right m-top">
+        <button
+          id="btnPdf"
+          class="btn btn-primary"
+          *ngIf="isVisible"
+          mediTranslate="medilabApp.invoice.download"
+          (click)="downloadInvoiceAsPDF()"
+        >
+          Export To PDF
+        </button>
+      </div>
       </div>
       <div class="card-body">
         <div class="col-12">
@@ -79,17 +93,7 @@
         </div>
 
         <div class="col-12">
-          <div class="text-center mb-4">
-            <button
-              id="btnPdf"
-              class="btn btn-primary"
-              *ngIf="isVisible"
-              mediTranslate="medilabApp.invoice.download"
-              (click)="downloadInvoiceAsPDF()"
-            >
-              Export To PDF
-            </button>
-          </div>
+
         </div>
 
         <div *ngIf="validateShow()">

@@ -16,6 +16,7 @@ import { FormatMediumDatetimePipe } from 'app/shared/date/format-medium-datetime
 @Component({
   selector: 'medi-invoice-detail',
   templateUrl: './invoice-detail.component.html',
+  styleUrls: ['./invoice-detail.component.scss']
 })
 export class InvoiceDetailComponent implements OnInit {
   @ViewChild('pdfTable')
