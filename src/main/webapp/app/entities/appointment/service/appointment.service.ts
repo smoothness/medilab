@@ -24,11 +24,7 @@ export class AppointmentService {
   }
 
   createNotificationSubjectPayload(data: any, eventTrigger: string): any {
-    console.log('data', data);
-
-    const notificationSubjectPayload: any = {
-      eventTrigger,
-    };
+    return Object.assign({}, data, { action: eventTrigger });
   }
 
   create(appointment: IAppointment): Observable<EntityResponseType> {
@@ -36,19 +32,24 @@ export class AppointmentService {
     return this.http.post<IAppointment>(this.resourceUrl, copy, { observe: 'response' }).pipe(
       map((res: EntityResponseType) => {
         const response = this.convertDateFromServer(res);
-        console.log('mierda');
-        const notificationSubjectPayload = this.createNotificationSubjectPayload(response, 'create');
-        this.notification.next(response.body);
+        const notificationPayload = this.createNotificationSubjectPayload(response, 'create');
+        this.notification.next(notificationPayload);
         return response;
       })
     );
   }
 
-  update(appointment: IAppointment): Observable<EntityResponseType> {
+  update(appointment: IAppointment, action = 'unknown'): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(appointment);
     return this.http
       .put<IAppointment>(`${this.resourceUrl}/${getAppointmentIdentifier(appointment) as number}`, copy, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+      .pipe(
+        map((res: EntityResponseType) => {
+          const notificationPayload = this.createNotificationSubjectPayload(res, action);
+          this.notification.next(notificationPayload);
+          return this.convertDateFromServer(res);
+        })
+      );
   }
 
   partialUpdate(appointment: IAppointment): Observable<EntityResponseType> {

@@ -21,12 +21,8 @@ import { EmergencyContactService } from 'app/entities/emergency-contact/service/
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactUpdateComponent } from '../entities/emergency-contact/update/emergency-contact-update.component';
 import { EmergencyContactRegisterComponent } from '../entities/emergency-contact/register/emergency-contact-register.component';
-<<<<<<< HEAD
-// import * as dayjs from 'dayjs';
-=======
-import {IMedicalExams} from "../entities/medical-exams/medical-exams.model";
-import {MedicalExamsService} from "../entities/medical-exams/service/medical-exams.service";
->>>>>>> develop
+import { IMedicalExams } from '../entities/medical-exams/medical-exams.model';
+import { MedicalExamsService } from '../entities/medical-exams/service/medical-exams.service';
 
 @Component({
   selector: 'medi-home',
@@ -99,12 +95,12 @@ export class HomeComponent implements OnInit, OnDestroy {
    * @description This method is responsible for bringing all the appointments according to the role of the authenticated user
    */
   public getAppointmentsByUser(): void {
-    if(this.isPatient){
+    if (this.isPatient) {
       this.getAppointmentsPatient();
       this.getMedicalExams();
       this.getAilmentsPatient();
       this.loadAllEmergencyContact();
-    }else if(this.isDoctor) {
+    } else if (this.isDoctor) {
       this.getAppointmentsDoctor();
     }
     this.loadAllAppoiments();
@@ -153,17 +149,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-<<<<<<< HEAD
-  mergeAccountWithPatient(account: Account): void {
-    this.patientService.query().subscribe(res => {
-      this.thePatient = res.body?.find(patient => patient.internalUser?.id === account.id);
-      this.appointmentService.query().subscribe(data => {
-        this.appointmentsPatient = data.body?.filter(appointment => {
-          this.accountService.retrieveUserById(Number(appointment.doctor?.id)).subscribe(doctor => {
-            Object.assign(appointment.doctor, doctor);
-          });
-          return appointment.patient?.id === this.thePatient?.id;
-=======
   /**
    * @description this method formats the doctors of the appointments
    * @param {Object} appointments
@@ -174,7 +159,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       for (const appointment of appointments[Symbol.iterator]()) {
         this.doctorService.find(appointment.doctor.id).subscribe(doctor => {
           subscriber.next(doctor.body);
->>>>>>> develop
         });
       }
     });
@@ -215,9 +199,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         confirmButtonText: 'medilabApp.deleteConfirm.confirmButtonText',
         cancelButtonText: 'medilabApp.deleteConfirm.cancelButtonText',
       })
-      .then(res => {
+      .then(() => {
         appointment.status = Status.CANCELED;
-        this.appointmentService.update(appointment).subscribe(() => {
+        this.appointmentService.update(appointment, 'cancel').subscribe(() => {
           this.sweetAlertService.showMsjInfo('home.messages.cancelAppointmentTitle', 'home.messages.cancelAppointmentMsj').then(() => {
             this.getAppointmentsDoctor();
           });
@@ -291,11 +275,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       ...this.appointmentToChangeDate,
       date: this.updatedDate.value,
     };
-    this.appointmentService.update(newAppointment).subscribe(() => {
-      this.sweetAlertService.showMsjInfo('home.messages.updatedAppointmentDatetitle', 'home.messages.updatedAppointmentDateMsj').then(() => {
-        this.getAppointmentsDoctor();
-        this.modalService.dismissAll();
-      });
+    this.appointmentService.update(newAppointment, 'dateChange').subscribe(() => {
+      this.sweetAlertService
+        .showMsjInfo('home.messages.updatedAppointmentDatetitle', 'home.messages.updatedAppointmentDateMsj')
+        .then(() => {
+          this.getAppointmentsDoctor();
+          this.modalService.dismissAll();
+        });
     });
   }
 
