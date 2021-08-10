@@ -1,120 +1,31 @@
+<div class="container-fluid p-0 m-0">
 <section class="row p-0 m-0">
-  <div class="col-10 card bg-dark my-4 mx-auto">
-    <div class="text-center my-5">
-      <h2 data-cy="patientDetailsHeading">{{ patient.fullName }}</h2>
+  <div id="mgt" class="col-10 mx-auto">
+    <div class="text-center mb-5">
+      <h2 data-cy="patientDetailsHeading">{{ patient?.fullName }}</h2>
     </div>
-    <div class="card-body">
-      <div class="col-12">
-        <div class="text-center mb-4">
-          <h4 mediTranslate="home.personalInfo">Información personal</h4>
-        </div>
-        <div class="table-responsive col-5 mx-auto text-center">
-          <table class="table table-bordered">
-            <tbody>
-              <tr>
-                <td scope="row" class="text-primary font-weight-bold" mediTranslate="home.profile.identification"></td>
-                <td>{{ patient.login }}</td>
-              </tr>
-              <tr>
-                <td scope="row" class="text-primary font-weight-bold" mediTranslate="home.profile.phone"></td>
-                <td>{{ patient.phone }}</td>
-              </tr>
-              <tr>
-                <td scope="row" class="text-primary font-weight-bold" mediTranslate="home.profile.email"></td>
-                <td>{{ patient.email }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+    <div class="row p-0 m-0 card-body">
+      <div class="col-6">
+        <medi-user-profile [user]="patient"></medi-user-profile>
       </div>
-      <div class="col-12" *ngIf="ailments.length !== 0">
-        <div class="text-center my-4">
-          <h4 mediTranslate="home.ailments">Ailments</h4>
-        </div>
-        <div class="table-responsive col-5 mx-auto text-center">
-          <table class="table table-bordered">
-            <tbody>
-              <tr *ngFor="let ailment of ailments; let i = index">
-                <td scope="row" class="text-primary font-weight-bold" mediTranslate="medilabApp.patient.ailmentName"></td>
-                <td>{{ ailment.name }}</td>
-              </tr>
-            </tbody>
-          </table>
-          <div></div>
-        </div>
+      <div class="col-6">
+        <medi-emergency-contact-detail [patientId]="patient?.patientId"></medi-emergency-contact-detail>
       </div>
-      <div class="col-12">
+    </div>
+
+    <div class="my-4" *ngIf="patientMedicalExams.length > 0">
+      <medi-medical-exams [medicalExams]="patientMedicalExams" [showButtons]="false"></medi-medical-exams>
+    </div>
+
+    <!--DIAGNOSIS -->
+    <div class="row p-0 m-0 card-body my-4">
+      <div class="col-12 card bg-dark">
         <div class="text-center my-4">
-          <h4 mediTranslate="medilabApp.emergencyContact.home.title"></h4>
-        </div>
-        <div class="table-responsive col-8 mx-auto text-center">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th scope="col"><span class="text-primary" mediTranslate="medilabApp.emergencyContact.name">Name</span></th>
-                <th scope="col"><span class="text-primary" mediTranslate="medilabApp.emergencyContact.phone">Phone</span></th>
-                <th scope="col"><span class="text-primary" mediTranslate="medilabApp.emergencyContact.email">Email</span></th>
-                <th scope="col"><span class="text-primary" mediTranslate="medilabApp.emergencyContact.relationShip">Relationship</span></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let emergencyContact of emergencyContacts" data-cy="entityTable">
-                <td *ngIf="emergencyContact.patient">{{ emergencyContact.name }}</td>
-                <td *ngIf="emergencyContact.patient">{{ emergencyContact.phone }}</td>
-                <td *ngIf="emergencyContact.patient">{{ emergencyContact.email }}</td>
-                <td *ngIf="emergencyContact.patient">{{ emergencyContact.relationShip }}</td>
-              </tr>
-            </tbody>
-          </table>
-          <div></div>
+          <h1>AQUI VA EL COMPONENTE REUTILIZABLE DE LOS DIGANOSTICOS (PADECIMIENTO Y TRATAMIENTO) EN UN CARD</h1>
         </div>
       </div>
     </div>
+
   </div>
 </section>
-
-<!--div>
-  <div class="col-8">
-    <div *ngIf="patient">
-
-      <medi-alert-error></medi-alert-error>
-
-      <medi-alert></medi-alert>
-
-      <dl class="row-md jh-entity-details">
-        <dt><span mediTranslate="global.field.id">ID</span></dt>
-        <dd>
-          <span>{{ patient.id }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.patient.secondSurname">Second Surname</span></dt>
-        <dd>
-          <span>{{ patient.secondSurname }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.patient.phone">Phone</span></dt>
-        <dd>
-          <span>{{ patient.phone }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.patient.token">Token</span></dt>
-        <dd>
-          <span>{{ patient.token }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.patient.active">Active</span></dt>
-        <dd>
-          <span>{{ patient.active }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.patient.internalUser">Internal User</span></dt>
-        <dd>
-          <span>{{ patient.internalUser?.id }}</span>
-        </dd>
-      </dl>
-
-      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span mediTranslate="entity.action.back">Back</span>
-      </button>
-
-      <button type="button" [routerLink]="['/patient', patient.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span mediTranslate="entity.action.edit">Edit</span>
-      </button>
-    </div>
-  </div>
-</div-->
+</div>

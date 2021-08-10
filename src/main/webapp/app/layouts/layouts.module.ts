@@ -10,10 +10,33 @@ import { PageRibbonComponent } from './profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './navbar/active-menu.directive';
 import { MainComponent } from './main/main.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { InternalHeaderComponent } from './internal-header/internal-header.component';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
-  declarations: [ActiveMenuDirective, FooterComponent, NavbarComponent, MainComponent, PageRibbonComponent, UserProfileComponent],
-  exports: [ActiveMenuDirective, FooterComponent, NavbarComponent, MainComponent, PageRibbonComponent, UserProfileComponent],
-  imports: [CommonModule, SharedModule, LayoutsRoutesModule],
+  declarations: [
+    ActiveMenuDirective,
+    FooterComponent,
+    InternalHeaderComponent,
+    NavbarComponent,
+    MainComponent,
+    PageRibbonComponent,
+    UserProfileComponent,
+  ],
+  exports: [
+    ActiveMenuDirective,
+    FooterComponent,
+    InternalHeaderComponent,
+    NavbarComponent,
+    MainComponent,
+    PageRibbonComponent,
+    UserProfileComponent,
+  ],
+  imports: [
+    RouterModule,
+    CommonModule,
+    SharedModule,
+    LayoutsRoutesModule
+  ],
 })
 export class LayoutsModule {}

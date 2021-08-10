@@ -24,7 +24,6 @@ export class PatientUpdateComponent implements OnInit {
     secondSurname: [],
     phone: [],
     token: [],
-    active: [],
     internalUser: [],
   });
 
@@ -86,7 +85,6 @@ export class PatientUpdateComponent implements OnInit {
       secondSurname: patient.secondSurname,
       phone: patient.phone,
       token: patient.token,
-      active: patient.active,
       internalUser: patient.internalUser,
     });
 
@@ -108,7 +106,6 @@ export class PatientUpdateComponent implements OnInit {
       secondSurname: this.editForm.get(['secondSurname'])!.value,
       phone: this.editForm.get(['phone'])!.value,
       token: this.editForm.get(['token'])!.value,
-      active: this.editForm.get(['active'])!.value,
       internalUser: this.editForm.get(['internalUser'])!.value,
     };
   }

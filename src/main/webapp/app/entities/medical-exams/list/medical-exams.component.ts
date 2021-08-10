@@ -1,51 +1,52 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IMedicalExams } from '../medical-exams.model';
+import {SweetAlertService} from "../../../shared/services/sweet-alert.service";
 import { MedicalExamsService } from '../service/medical-exams.service';
-import { MedicalExamsDeleteDialogComponent } from '../delete/medical-exams-delete-dialog.component';
+import { MedicalExamsUpdateComponent } from "../update/medical-exams-update.component";
 
 @Component({
   selector: 'medi-medical-exams',
   templateUrl: './medical-exams.component.html',
 })
-export class MedicalExamsComponent implements OnInit {
-  medicalExams?: IMedicalExams[];
-  isLoading = false;
+export class MedicalExamsComponent {
+  @Input() medicalExams: IMedicalExams[] = [];
+  @Input() showButtons = false;
+  @Output() updateList: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(protected medicalExamsService: MedicalExamsService, protected modalService: NgbModal) {}
+  constructor(
+    protected modalService: NgbModal,
+    private sweetAlertService: SweetAlertService,
+    protected medicalExamsService: MedicalExamsService,
+  ) {}
 
-  loadAll(): void {
-    this.isLoading = true;
-
-    this.medicalExamsService.query().subscribe(
-      (res: HttpResponse<IMedicalExams[]>) => {
-        this.isLoading = false;
-        this.medicalExams = res.body ?? [];
-      },
-      () => {
-        this.isLoading = false;
-      }
-    );
-  }
-
-  ngOnInit(): void {
-    this.loadAll();
-  }
-
-  trackId(index: number, item: IMedicalExams): number {
-    return item.id!;
-  }
-
-  delete(medicalExams: IMedicalExams): void {
-    const modalRef = this.modalService.open(MedicalExamsDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.medicalExams = medicalExams;
-    // unsubscribe not needed because closed completes on modal close
+  public showEditModal(medicalExam: any): void {
+    const modalRef = this.modalService.open(MedicalExamsUpdateComponent, { centered: true });
+    modalRef.componentInstance.medicalExam = medicalExam;
     modalRef.closed.subscribe(reason => {
-      if (reason === 'deleted') {
-        this.loadAll();
+      if (reason === 'updated') {
+        this.updateList.emit(true);
       }
     });
+  }
+
+  delete(medicalExam: IMedicalExams): void {
+    this.sweetAlertService
+      .showConfirmMsg({
+        title: 'medilabApp.deleteConfirm.title',
+        text: 'medilabApp.deleteConfirm.text',
+        confirmButtonText: 'medilabApp.deleteConfirm.confirmButtonText',
+        cancelButtonText: 'medilabApp.deleteConfirm.cancelButtonText',
+      })
+      .then(res => {
+        if (res) {
+          this.medicalExamsService.deleteByRemove(<number>medicalExam.id).subscribe(() => {
+            this.sweetAlertService.showMsjSuccess('reset.done', 'medilabApp.deleteConfirm.titleSuccess').then(() => {
+              this.updateList.emit(true);
+            });
+          });
+        }
+      });
   }
 }

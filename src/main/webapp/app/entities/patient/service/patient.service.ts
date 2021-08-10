@@ -41,6 +41,19 @@ export class PatientService {
     return this.http.get<IPatient>(`api/patient/${id}`, { observe: 'response' });
   }
 
+  findOneByAppointment(id: number): Observable<EntityResponseType> {
+    return this.http.get<IPatient>(`api/patient-appointment/${id}`, {observe: 'response'});
+  }
+
+  findOneByToken(key: number, doctorCode: string): Observable<{}> {
+    return this.http.post(this.applicationConfigService.getEndpointFor('api/token'), { key, doctorCode });
+  }
+
+  createToken(patient: Patient) : Observable<{}> {
+    return this.http.post(this.applicationConfigService.getEndpointFor(`api/token/${patient.patientId}`),
+      patient.patientData, { observe: 'response' });
+}
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IPatient[]>(this.resourceUrl, { params: options, observe: 'response' });

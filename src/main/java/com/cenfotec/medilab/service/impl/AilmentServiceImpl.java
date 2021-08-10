@@ -77,4 +77,10 @@ public class AilmentServiceImpl implements AilmentService {
         log.debug("Request to delete Ailment : {}", id);
         ailmentRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Object> getAilmentsReport() {
+        return ailmentRepository.getAilmentsReport();
+    }
 }

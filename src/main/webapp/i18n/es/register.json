@@ -15,7 +15,8 @@
       "contact": "Contacto",
       "addContact": "Añadir contacto de emergencia",
       "delContact": "Eliminar contacto",
-      "specialty": "Especialidad"
+      "specialty": "Especialidad",
+      "doctorCode": "Código de médico"
     },
     "messages": {
       "validate": {

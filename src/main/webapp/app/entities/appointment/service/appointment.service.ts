@@ -49,6 +49,10 @@ export class AppointmentService {
     return this.http.get<IAppointment>(`${this.resourceUrl}-doctor/${doctorId}`, { observe: 'response' });
   }
 
+  findPatientAppointments(patientId: number): Observable<EntityResponseType> {
+    return this.http.get<IAppointment>(`${this.resourceUrl}-patient/${patientId}`, { observe: 'response' });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
@@ -81,8 +85,9 @@ export class AppointmentService {
   }
 
   protected convertDateFromClient(appointment: IAppointment): IAppointment {
+    appointment.date = dayjs(String(appointment.date));
     return Object.assign({}, appointment, {
-      date: appointment.date?.isValid() ? appointment.date.format(DATE_FORMAT) : undefined,
+      date: appointment.date.isValid() ? appointment.date.format(DATE_FORMAT) : undefined,
     });
   }
 

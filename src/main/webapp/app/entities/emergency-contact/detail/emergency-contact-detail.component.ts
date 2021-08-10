@@ -1,20 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { IEmergencyContact } from '../emergency-contact.model';
+import {EmergencyContactService} from "../service/emergency-contact.service";
 
 @Component({
   selector: 'medi-emergency-contact-detail',
   templateUrl: './emergency-contact-detail.component.html',
 })
 export class EmergencyContactDetailComponent implements OnInit {
-  emergencyContact: IEmergencyContact | null = null;
+  @Input() patientId: any;
+  emergencyContacts: any;
 
-  constructor(protected activatedRoute: ActivatedRoute) {}
+  constructor(
+    protected activatedRoute: ActivatedRoute,
+    private emergencyContactService: EmergencyContactService
+  ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ emergencyContact }) => {
-      this.emergencyContact = emergencyContact;
+    this.emergencyContactService.findByPatientId(this.patientId).subscribe((res: any) => {
+      this.emergencyContacts = res.body;
     });
   }
 

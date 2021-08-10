@@ -45,12 +45,6 @@ public class PatientServiceImpl implements PatientService {
                     if (patient.getPhone() != null) {
                         existingPatient.setPhone(patient.getPhone());
                     }
-                    if (patient.getToken() != null) {
-                        existingPatient.setToken(patient.getToken());
-                    }
-                    if (patient.getActive() != null) {
-                        existingPatient.setActive(patient.getActive());
-                    }
 
                     return existingPatient;
                 }
@@ -77,6 +71,19 @@ public class PatientServiceImpl implements PatientService {
     public Patient findByInternalUser(Long id) {
         return patientRepository.findByInternalUser(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Patient findPatientByAppointment(Long id){
+        return patientRepository.findPatientByAppointment(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Patient> findPatientByToken(String token){
+        return patientRepository.findPatientByToken(token);
+    }
+
 
     @Override
     public void delete(Long id) {

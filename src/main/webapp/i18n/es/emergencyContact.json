@@ -23,8 +23,9 @@
       "email": "Correo electrónico",
       "relationShip": "Parentesco",
       "patient": "Paciente",
-      "success": "Contacto actualizado con éxito.",
-      "error": "No se pudo modificar el contacto."
+      "success": "Contacto actualizado exitosamente.",
+      "error": "No se pudo modificar el contacto.",
+      "registerSuccess": "El contacto se ha registrado exitosamente."
     },
     "deleteConfirm": {
       "title": "¿Está seguro?",

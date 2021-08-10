@@ -1,8 +1,4 @@
 import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { SessionStorageService } from 'ngx-webstorage';
-
-import { LANGUAGES } from './../config/language.constants';
 
 @Component({
   selector: 'medi-landing',
@@ -10,7 +6,6 @@ import { LANGUAGES } from './../config/language.constants';
   styleUrls: ['./landing.component.scss'],
 })
 export class LandingComponent {
-  public languages = LANGUAGES;
   public isMenuCollapsed = true;
   public sliderData = [
     {
@@ -47,13 +42,9 @@ export class LandingComponent {
     },
   ];
 
-  constructor(private translateService: TranslateService, private sessionStorageService: SessionStorageService) {}
-
-  public changeLanguage(languageKey: string): void {
-    this.sessionStorageService.store('locale', languageKey);
-    this.translateService.use(languageKey);
-  }
-
+  /**
+   * @description This method is in charge of changing the collapse state of the menu
+   */
   public collapse(): void {
     this.isMenuCollapsed = !this.isMenuCollapsed;
   }
