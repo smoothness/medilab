@@ -73,12 +73,14 @@ class Patient extends PersonalData {
   public patientId: number;
   public phone: string;
   public secondSurname: string;
+  public token: string;
 
-  constructor({ id, internalUser, secondSurname, phone }: PatientUserData) {
+  constructor({ id, internalUser, secondSurname, phone, token }: PatientUserData) {
     super(internalUser);
     this.patientId = id;
     this.phone = phone;
     this.secondSurname = secondSurname;
+    this.token = token;
   }
 
   get fullName(): string {
@@ -93,7 +95,11 @@ class Patient extends PersonalData {
       },
       phone: this.phone,
       secondSurname: this.secondSurname,
+      token: this.token,
     };
+  }
+  setToken(token: string): void{
+    this.token = token;
   }
 }
 

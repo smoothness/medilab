@@ -10,7 +10,7 @@ import { of, throwError } from 'rxjs';
 
 import { AccountService } from 'app/core/auth/account.service';
 
-import { LoginService } from './login.service';
+import { LoginService } from './../service/login.service';
 import { LoginComponent } from './login.component';
 
 describe('Component Tests', () => {
@@ -123,7 +123,6 @@ describe('Component Tests', () => {
         comp.login();
 
         // THEN
-        expect(comp.authenticationError).toEqual(false);
         expect(mockLoginService.login).toHaveBeenCalledWith(credentials);
         expect(mockRouter.navigate).toHaveBeenCalledWith(['']);
       });
@@ -136,7 +135,6 @@ describe('Component Tests', () => {
         comp.login();
 
         // THEN
-        expect(comp.authenticationError).toEqual(false);
         expect(mockRouter.navigate).not.toHaveBeenCalled();
       });
 
@@ -148,7 +146,6 @@ describe('Component Tests', () => {
         comp.login();
 
         // THEN
-        expect(comp.authenticationError).toEqual(true);
         expect(mockRouter.navigate).not.toHaveBeenCalled();
       });
     });

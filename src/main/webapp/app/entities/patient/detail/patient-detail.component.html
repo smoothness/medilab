@@ -2,14 +2,14 @@
 <section class="row p-0 m-0">
   <div id="mgt" class="col-10 mx-auto">
     <div class="text-center mb-5">
-      <h2 data-cy="patientDetailsHeading">{{ patient.fullName }}</h2>
+      <h2 data-cy="patientDetailsHeading">{{ patient?.fullName }}</h2>
     </div>
     <div class="row p-0 m-0 card-body">
       <div class="col-6">
         <medi-user-profile [user]="patient"></medi-user-profile>
       </div>
       <div class="col-6">
-        <medi-emergency-contact-detail [patientId]="patient.patientId"></medi-emergency-contact-detail>
+        <medi-emergency-contact-detail [patientId]="patient?.patientId"></medi-emergency-contact-detail>
       </div>
     </div>
 

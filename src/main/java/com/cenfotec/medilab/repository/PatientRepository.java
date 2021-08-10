@@ -25,4 +25,8 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
         nativeQuery = true
     )
     Patient findPatientByAppointment(@Param("id") Long id);
+
+    @Query(value = "Select * from patient where token = :token", nativeQuery = true)
+    Optional<Patient> findPatientByToken(@Param("token") String token);
+
 }

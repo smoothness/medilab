@@ -26,7 +26,7 @@ public interface MedicalExamsRepository extends JpaRepository<MedicalExams, Long
         " ON patient.id = appointment.patient_id" +
         " WHERE appointment.patient_id = :id " +
         " AND medical_exams.removed = false" +
-        " AND  appoinment.status = 'FINISHED'",
+        " AND  appointment.status = 'FINISHED'",
         nativeQuery = true)
     List<MedicalExams> findMedicalExamsByPatient(@Param("id") Long id);
 

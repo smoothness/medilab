@@ -5,24 +5,22 @@
       <section class="ml-profile__top">
         <!-- open top left card -->
         <div class="card bg-dark">
-          <h5 class="card-header">
-            <span mediTranslate="home.welcome">Bienvenido: </span>
-            <span class="ml-profile__user-text">{{ currentUser.fullName }}</span>
-          </h5>
+          <div class="card-header">
+            <h5>
+              <span mediTranslate="home.welcome">Bienvenido: </span>
+              <span class="ml-profile__user-text">{{ currentUser.fullName }}</span>
+            </h5>
+          </div>
           <div class="card-body">
 
             <!-- START Top left card / Patient Block -->
-            <div *ngIf="isPatient">
-              <a
-                target="_blank"
-                class="btn btn-secondary"
-                mediTranslate="home.requestAppointment"
-                href="https://wa.me/50688885353?text=Solicito%20una%20cita%20con%20el%20doctor"
-              >
-                Solicitar una cita
-              </a>
-
+            <div class="text-center mt-3 mb-5" *ngIf="isPatient">
+              <div *ngIf="currentUser.token">
+                <h3 class="text-primary" mediTranslate="token.yourToken"></h3>
+                <h3>{{this.currentUser?.token}}</h3>
+              </div>
             </div>
+
             <!-- END Top left card / Patient Block -->
             <!-- START Top left card / Doctor Block -->
             <div *ngIf="isDoctor">
@@ -39,6 +37,17 @@
             <!-- END Top left card / Doctor Block -->
           </div>
           <!-- close card body -->
+          <div class="card-footer  my-2" *ngIf="isPatient">
+            <medi-token [currentUser]="currentUser" (user)="getToken($event)"></medi-token>
+            <a
+              target="_blank"
+              class="btn btn-secondary col-12"
+              mediTranslate="home.requestAppointment"
+              href="https://wa.me/50688885353?text=Solicito%20una%20cita%20con%20el%20doctor"
+            >
+              Solicitar una cita
+            </a>
+          </div>
         </div>
         <!-- close top left card -->
 
@@ -54,7 +63,7 @@
       <section class="ml-profile__bottom">
         <!-- START body patient Block -->
         <div class="mt-3" *ngIf="isPatient">
-          <div class="card bg-dark mb-3">
+          <div class="card bg-dark mb-3" *ngIf="appointmentsPatient.length>0">
             <h5 class="card-header" mediTranslate="home.upcomingAppointments">Próximas citas</h5>
             <div class="card-body">
               <ul class="list-group ml-profile__agenda">
@@ -90,7 +99,7 @@
             </div>
           </div>
           <!--AILMENT-->
-          <div class="card bg-dark mb-3">
+          <div class="card bg-dark mb-3" *ngIf="ailmentsPatient.length > 0">
             <h5 class="card-header" mediTranslate="home.ailments">Padecimientos</h5>
             <div class="card-body">
               <ul class="list-group ml-ailment">

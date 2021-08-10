@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
-import { MedicalExamsComponent } from '../list/medical-exams.component';
 import { MedicalExamsDetailComponent } from '../detail/medical-exams-detail.component';
 import { MedicalExamsUpdateComponent } from '../update/medical-exams-update.component';
 import { MedicalExamsRoutingResolveService } from './medical-exams-routing-resolve.service';
