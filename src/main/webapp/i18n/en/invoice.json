@@ -33,7 +33,8 @@
       "pending": "Pending",
       "paid": "Paid",
       "canceled": "Canceled",
-      "invoiceNumber": "Invoice number"
+      "invoiceNumber": "Invoice number",
+      "download": "Download invoice"
     }
   }
 }

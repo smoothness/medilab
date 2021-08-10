@@ -3,6 +3,7 @@
     "baseUrl": "src/main/webapp/",
     "outDir": "./target/classes/static/",
     "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
     "strict": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
