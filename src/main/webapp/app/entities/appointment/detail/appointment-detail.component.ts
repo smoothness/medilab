@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
-import { IAppointment } from '../appointment.model';
 import { MedicalExamnsRegisterComponent } from "../../medical-exams/register/medical-examns-register.component";
 import { IMedicalExams } from "../../medical-exams/medical-exams.model";
 import { MedicalExamsService } from "../../medical-exams/service/medical-exams.service";
@@ -64,6 +63,16 @@ export class AppointmentDetailComponent implements OnInit {
         this.getAppointmentExams();
       }
     });
+  }
+
+  public showAddMedicalExam(status: any): boolean {
+    let show = false;
+
+    if (this.isDoctor && status === 'PENDING'){
+      show = true;
+    }
+
+    return show;
   }
 
   public getAppointmentExams(): void {

@@ -21,11 +21,25 @@
       "status": "Estado de la cita: ",
       "appointmentTreatmentAilment": "Dolencia, tratamiento",
       "medicalExams": "Exámenes médicos",
-      "patient": "Paciente: ",
-      "doctor": "Doctor: ",
-      "phone": "Teléfono: ",
-      "email": "Correo electrónico: ",
-      "specialty": "Especialidad: "
+      "patient": "Paciente ",
+      "doctor": "Doctor ",
+      "phone": "Teléfono ",
+      "email": "Correo electrónico ",
+      "specialty": "Especialidad: ",
+
+      "history": {
+        "title": "Historial de citas"
+      },
+      "action": {
+        "view": "Ver cita",
+        "doctor": "Ver médico",
+        "patient": "Ver paciente"
+      },
+      "pipe": {
+        "canceled": "Cancelada",
+        "pending": "Pendiente",
+        "finished": "Finalizada"
+      }
     }
   }
 }
