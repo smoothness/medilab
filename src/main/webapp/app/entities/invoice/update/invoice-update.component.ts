@@ -1,16 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {HttpResponse} from '@angular/common/http';
-import {FormBuilder, Validators} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
-import {Observable} from 'rxjs';
-import {finalize, map} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
 
-import {IInvoice, Invoice} from '../invoice.model';
-import {InvoiceService} from '../service/invoice.service';
-import {IAppointment} from 'app/entities/appointment/appointment.model';
-import {AppointmentService} from 'app/entities/appointment/service/appointment.service';
-import {LineCommentService} from 'app/entities/line-comment/service/line-comment.service';
-import {Status} from "../../enumerations/status.model";
+import { IInvoice, Invoice } from '../invoice.model';
+import { InvoiceService } from '../service/invoice.service';
+import { IAppointment } from 'app/entities/appointment/appointment.model';
+import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
+import { LineCommentService } from 'app/entities/line-comment/service/line-comment.service';
+import { Status } from '../../enumerations/status.model';
 import * as dayjs from 'dayjs';
 
 @Component({
@@ -58,7 +58,6 @@ export class InvoiceUpdateComponent implements OnInit {
     if (invoice.id !== undefined) {
       this.subscribeToSaveResponse(this.invoiceService.update(invoice));
     } else {
-
       //La fecha por defecto es la del sistema a la hora de crear la factura
       const now = dayjs();
       invoice.date = now;
@@ -72,7 +71,7 @@ export class InvoiceUpdateComponent implements OnInit {
   trackAppointmentById(index: number, item: IAppointment): number {
     return item.id!;
   }
-/*
+  /*
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IInvoice>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
       () => this.onSaveSuccess(),
@@ -81,9 +80,6 @@ export class InvoiceUpdateComponent implements OnInit {
   }*/
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IInvoice>>): void {
-    result.subscribe(data => {
-    });
-
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
       () => this.onSaveSuccess(),
       () => this.onSaveError()

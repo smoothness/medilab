@@ -66,13 +66,14 @@
               <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span mediTranslate="entity.action.back">Back</span>
             </button>
 
-            <button
-              type="button"
-              class="btn btn-secondary"
-              (click)="showRegisterMedicalExamModal()"
-              *ngIf="isDoctor">
+            <button type="button" class="btn btn-secondary" (click)="showRegisterMedicalExamModal()" *ngIf="isDoctor">
               <fa-icon icon="plus"></fa-icon>
               <span mediTranslate="medilabApp.medicalExams.btnAdd">add</span>
+            </button>
+
+            <button type="button" class="btn btn-secondary" (click)="showRegisterMedicalExamModal()" *ngIf="isDoctor">
+              <fa-icon icon="plus"></fa-icon>
+              <span mediTranslate="medilabApp.medicalExams.btnInvoice">add</span>
             </button>
           </div>
         </div>
@@ -81,8 +82,11 @@
     </div>
 
     <div class="col-8 mt-4" *ngIf="medicalExams.length > 0">
-      <medi-medical-exams [medicalExams]="medicalExams" [showButtons]="showButtons" (updateList)="loadMedicalExams($event)"></medi-medical-exams>
+      <medi-medical-exams
+        [medicalExams]="medicalExams"
+        [showButtons]="showButtons"
+        (updateList)="loadMedicalExams($event)"
+      ></medi-medical-exams>
     </div>
-
   </div>
 </div>

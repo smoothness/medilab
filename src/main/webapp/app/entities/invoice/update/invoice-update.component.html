@@ -34,7 +34,7 @@
             <small class="form-text text-danger" *ngIf="editForm.get('date')?.errors?.required" mediTranslate="entity.validation.required">
               This field is required.
             </small>
-          </div>-->
+          </div>
         </div>
 
         <div class="form-group">
@@ -58,7 +58,7 @@
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" mediTranslate="medilabApp.invoice.status" for="field_status" >Status</label>
+          <label class="form-control-label" mediTranslate="medilabApp.invoice.status" for="field_status">Status</label>
           <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
             <option [ngValue]="null">{{ 'medilabApp.Status.null' | translate }}</option>
             <option value="CANCELED">{{ 'medilabApp.Status.CANCELED' | translate }}</option>
