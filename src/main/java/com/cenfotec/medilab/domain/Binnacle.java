@@ -3,8 +3,11 @@ package com.cenfotec.medilab.domain;
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import com.cenfotec.medilab.domain.Patient;
 
 /**
  * A Binnacle.
@@ -25,6 +28,14 @@ public class Binnacle implements Serializable {
 
     @Column(name = "date")
     private LocalDate date;
+
+
+    @ManyToOne
+    @JsonIgnoreProperties(
+        value = { "internalUser", "emergencyContacts", "ratingUsers", "commentUsers", "internalUsers" },
+        allowSetters = true
+    )
+    private Patient patient;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -64,6 +75,19 @@ public class Binnacle implements Serializable {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public Binnacle patient(Patient patient) {
+        this.patient = patient;
+        return this;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

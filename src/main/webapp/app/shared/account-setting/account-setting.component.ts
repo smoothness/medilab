@@ -1,6 +1,6 @@
 import { Component, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginService } from 'app/login/login.service';
+import { LoginService } from './../../login/service/login.service';
 import {AccountService} from "../../core/auth/account.service";
 
 @Component({

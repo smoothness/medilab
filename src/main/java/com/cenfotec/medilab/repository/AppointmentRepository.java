@@ -14,8 +14,7 @@ import org.springframework.stereotype.Repository;
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
     @Query(
         value = "SELECT *  from appointment" +
-            " INNER JOIN patient ON patient.id  = appointment.patient_id " +
-            " where doctor_id = :id" +
+            " INNER JOIN patient ON patient.id  = appointment.patient_id where doctor_id = :id" +
             " AND appointment.status = 'PENDING'" +
             " order by date asc",
         nativeQuery = true

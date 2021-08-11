@@ -16,6 +16,10 @@ const mainRoutes: Routes = [
     loadChildren: () => import('./landing/landing.module').then(m => m.LandingModule),
   },
   {
+    path: 'token',
+    loadChildren: () => import('./get-patient-by-token/get-patient-by-token.module').then(m => m.GetPatientByTokenModule),
+  },
+  {
     path: '',
     loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
   },

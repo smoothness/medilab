@@ -60,21 +60,21 @@ export class PaymentComponent implements OnInit {
     actions.order.get();
   }
 
-  protected onClientAuthorization(data: any): void {
+  protected onClientAuthorization(): void {
     this.confirmPayment.emit(true);
     this.showSuccess = true;
   }
 
-  protected onCancel(data: any, actions: any): void {
+  protected onCancel(): void {
     this.showCancel = true;
 
   }
 
-  protected onError(err: any): void{
+  protected onError(): void{
   this.showError = true;
 }
 
-  protected onClick(data: any, actions: any): void {
+  protected onClick(): void {
     console.log("");
   }
 
@@ -91,10 +91,10 @@ export class PaymentComponent implements OnInit {
         layout: 'vertical'
       },
       onApprove: (data: any, actions: any) => this.onApprove(data, actions),
-      onClientAuthorization: (data: any) => this.onClientAuthorization(data),
-      onCancel: (data: any, actions: any) => this.onCancel(data, actions),
-      onError: (err: any) => this.onError(err),
-      onClick: (data: any, actions: any) => this.onClick(data, actions),
+      onClientAuthorization: () => this.onClientAuthorization(),
+      onCancel: () => this.onCancel(),
+      onError: () => this.onError(),
+      onClick: () => this.onClick(),
     };
   }
 

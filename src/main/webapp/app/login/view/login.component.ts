@@ -2,9 +2,9 @@ import { Component, ViewChild, OnInit, AfterViewInit, ElementRef } from '@angula
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { LoginService } from './../login/login.service';
-import { AccountService } from './../core/auth/account.service';
-import { SweetAlertService } from "../shared/services/sweet-alert.service";
+import { LoginService } from './../service/login.service';
+import { AccountService } from './../../core/auth/account.service';
+import { SweetAlertService } from "../../shared/services/sweet-alert.service";
 
 @Component({
   selector: 'medi-login',
