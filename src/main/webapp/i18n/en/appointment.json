@@ -5,7 +5,7 @@
         "title": "Appointments",
         "refreshListLabel": "Refresh list",
         "createOrEditAppointment": "Create or edit an appointment",
-        "notFound": "No Appointments found"
+        "notFound": "No appointments found"
       },
       "created": "A new Appointment was created with identifier {{ param }}",
       "updated": "An Appointment was updated with identifier {{ param }}",
