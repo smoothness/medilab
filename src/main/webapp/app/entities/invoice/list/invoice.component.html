@@ -7,6 +7,9 @@
         </div>
 
         <div class="mt-4">
+          <div class="alert alert-warning text-center" id="no-result" *ngIf="!invoices?.length">
+            <span class="h5 text-dark" mediTranslate="medilabApp.invoice.home.notFound">No invoices found</span>
+          </div>
           <div class="table-responsive" id="entities" *ngIf="invoices && invoices.length">
             <table class="table table-striped" aria-describedby="page-heading">
               <thead>
@@ -55,6 +58,4 @@
   </div>
 </section>
 
-<div class="alert alert-warning" id="no-result" *ngIf="!invoices?.length">
-  <span mediTranslate="medilabApp.invoice.home.notFound">No invoices found</span>
-</div>
+

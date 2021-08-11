@@ -6,7 +6,7 @@
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Doctor",
         "createOrEditLabel": "Create or edit a Doctor",
-        "notFound": "No Doctors found"
+        "notFound": "No doctors found"
       },
       "created": "A new Doctor is created with identifier {{ param }}",
       "updated": "A Doctor is updated with identifier {{ param }}",

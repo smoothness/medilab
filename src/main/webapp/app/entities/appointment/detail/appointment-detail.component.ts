@@ -65,6 +65,16 @@ export class AppointmentDetailComponent implements OnInit {
     });
   }
 
+  public showAddMedicalExam(status: any): boolean {
+    let show = false;
+
+    if (this.isDoctor && status === 'PENDING'){
+      show = true;
+    }
+
+    return show;
+  }
+
   public getAppointmentExams(): void {
     this.medicalExamsService.findByAppointment(<number>this.appointment.id).subscribe((exams: any) => {
       this.medicalExams = exams.body;

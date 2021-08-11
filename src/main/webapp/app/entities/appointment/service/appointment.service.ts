@@ -49,8 +49,20 @@ export class AppointmentService {
     return this.http.get<IAppointment>(`${this.resourceUrl}-doctor/${doctorId}`, { observe: 'response' });
   }
 
+  findDoctorAppointmentsHistory(doctorId: number): Observable<EntityResponseType> {
+    return this.http.get<IAppointment>(`${this.resourceUrl}-doctor/history/${doctorId}`, { observe: 'response' });
+  }
+
   findPatientAppointments(patientId: number): Observable<EntityResponseType> {
     return this.http.get<IAppointment>(`${this.resourceUrl}-patient/${patientId}`, { observe: 'response' });
+  }
+
+  findPatientAppointmentsHistory(patientId: number): Observable<EntityResponseType> {
+    return this.http.get<IAppointment>(`${this.resourceUrl}-patient/history/${patientId}`, { observe: 'response' });
+  }
+
+  findAppointmentsHistory(): Observable<EntityResponseType> {
+    return this.http.get<IAppointment>(`${this.resourceUrl}/history`, { observe: 'response' });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {

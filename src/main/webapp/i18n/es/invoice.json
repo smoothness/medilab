@@ -2,7 +2,7 @@
   "medilabApp": {
     "invoice": {
       "home": {
-        "title": "Invoices",
+        "title": "Facturas",
         "refreshListLabel": "Refrescar lista",
         "createLabel": "Crear nueva factura",
         "createOrEditLabel": "Crear o editar factura",

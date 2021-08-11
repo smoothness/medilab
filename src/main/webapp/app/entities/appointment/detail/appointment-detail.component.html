@@ -14,7 +14,7 @@
               </li>
               <li class="list-group-item">
                 <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.status">Estado de la cita: </span>
-                <span>{{ appointment.status | invoicePipe }}</span>
+                <span>{{ appointment.status | status}}</span>
               </li>
               <li class="list-group-item">
                 <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.patient">Paciente: </span>
@@ -38,7 +38,7 @@
               </li>
               <li class="list-group-item">
                 <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.status">Estado de la cita: </span>
-                <span>{{ appointment.status | invoicePipe }}</span>
+                <span>{{ appointment.status | status }}</span>
               </li>
               <li class="list-group-item">
                 <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.doctor">Doctor: </span>
@@ -66,7 +66,11 @@
               <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span mediTranslate="entity.action.back">Back</span>
             </button>
 
-            <button type="button" class="btn btn-secondary" (click)="showRegisterMedicalExamModal()" *ngIf="isDoctor">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="showRegisterMedicalExamModal()"
+              *ngIf="showAddMedicalExam(appointment.status)">
               <fa-icon icon="plus"></fa-icon>
               <span mediTranslate="medilabApp.medicalExams.btnAdd">add</span>
             </button>
