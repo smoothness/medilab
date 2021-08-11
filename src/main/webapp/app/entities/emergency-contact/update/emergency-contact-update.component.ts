@@ -1,23 +1,22 @@
-import {Component, ViewChild} from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
-import { IEmergencyContact, EmergencyContact } from '../emergency-contact.model';
+import {ContactData, IEmergencyContact} from '../emergency-contact.model';
 import { EmergencyContactService } from '../service/emergency-contact.service';
 import { IPatient } from 'app/entities/patient/patient.model';
 import { PatientService } from 'app/entities/patient/service/patient.service';
-import {EmergencyFormComponent} from "../../../account/register/emergency-contact/emergency-form/emergency-form.component";
-import {SweetAlertService} from "../../../shared/services/sweet-alert.service";
-
+import { EmergencyFormComponent } from '../../../account/register/emergency-contact/emergency-form/emergency-form.component';
+import { SweetAlertService } from '../../../shared/services/sweet-alert.service';
 
 @Component({
   selector: 'medi-emergency-contact-update',
   templateUrl: './emergency-contact-update.component.html',
-  styleUrls: ['./emergency-contact-update.component.scss']
+  styleUrls: ['./emergency-contact-update.component.scss'],
 })
 export class EmergencyContactUpdateComponent {
   @ViewChild('formElement', { static: true, read: EmergencyFormComponent })
@@ -35,7 +34,15 @@ export class EmergencyContactUpdateComponent {
     public sweetAlertService: SweetAlertService
   ) {}
 
-  setEmergencyContactData(emergencyContact: any): void{
+  public get contactForm(): FormGroup {
+    return this.container.emergencyContactForm;
+  }
+
+  public get contactData(): ContactData {
+    return <ContactData>this.contactForm.value;
+  }
+
+  setEmergencyContactData(emergencyContact: any): void {
     this.emergencyContactData = emergencyContact;
     this.container.addContactData(emergencyContact);
   }
@@ -54,8 +61,9 @@ export class EmergencyContactUpdateComponent {
     this.emergencyContactData.relationShip = this.container.emergencyContactForm.value.relationship;
     this.emergencyContactData.email = this.container.emergencyContactForm.value.email;
     this.emergencyContactData.phone = this.container.emergencyContactForm.value.phone;
-    this.emergencyContactData.name =
-      `${<string>this.container.emergencyContactForm.value.name} ${<string>this.container.emergencyContactForm.value.lastname} ${<string>this.container.emergencyContactForm.value.secondlastname}`;
+    this.emergencyContactData.name = `${<string>this.container.emergencyContactForm.value.name} ${<string>(
+      this.container.emergencyContactForm.value.lastname
+    )} ${<string>this.container.emergencyContactForm.value.secondlastname}`;
   }
 
   trackPatientById(index: number, item: IPatient): number {

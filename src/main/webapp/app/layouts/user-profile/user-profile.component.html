@@ -1,37 +1,29 @@
-<section class="card bg-dark">
+<section class="card bg-dark card-size-profile">
   <div class="card-header">
     <h5 mediTranslate="home.personalInfo">Información personal</h5>
   </div>
   <div class="card-body table-responsive">
     <table class="table">
       <tbody>
-      <tr>
-        <th scope="row" class="col-3 text-primary border-0" mediTranslate="home.profile.identification"></th>
-        <td class="border-0">{{user.login}}</td>
-      </tr>
-      <tr *ngIf="isPatient">
-        <th scope="row" class="col-4 text-primary border-0" mediTranslate="home.profile.phone"></th>
-        <td class="border-0">{{user.phone}}</td>
-      </tr>
-      <tr>
-        <th scope="row" class="col-4 text-primary border-0" mediTranslate="home.profile.email"></th>
-        <td class="border-0">{{user.email}}</td>
-      </tr>
-      <tr *ngIf="isDoctor">
-        <th scope="row" class="col-4 text-primary border-0" mediTranslate="home.profile.specialty"></th>
-        <td class="border-0">{{user.specialty}}</td>
-      </tr>
+        <tr>
+          <th scope="row" class="col-3 text-primary border-0" mediTranslate="home.profile.identification"></th>
+          <td class="border-0">{{ user.login }}</td>
+        </tr>
+        <tr>
+          <th scope="row" class="col-4 text-primary border-0" mediTranslate="home.profile.phone"></th>
+          <td class="border-0">{{ user.phone }}</td>
+        </tr>
+        <tr>
+          <th scope="row" class="col-4 text-primary border-0" mediTranslate="home.profile.email"></th>
+          <td class="border-0">{{ user.email }}</td>
+        </tr>
+        <tr *ngIf="isDoctor">
+          <th scope="row" class="col-4 text-primary border-0" mediTranslate="home.profile.specialty"></th>
+          <td class="border-0">{{ user.specialty }}</td>
+        </tr>
       </tbody>
     </table>
     <div>
-
-      <!--p>{{ doctor?.specialty }}</p-->
     </div>
-
-    <!--p>{{ account?.login }}</p-->
-
-    <!--p>{{ patient?.phone }}</p-->
-
-    <!--p>{{ account?.email }}</p-->
   </div>
 </section>

@@ -4,10 +4,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { SweetAlertService } from '../../../shared/services/sweet-alert.service';
 import { UserManagementService } from './../service/user-management.service';
 import { User } from './user.model';
-import {EmergencyFormComponent} from "../../../account/register/emergency-contact/emergency-form/emergency-form.component";
-import {EmergencyContact} from "../../../account/register/register.model";
-import {HttpErrorResponse} from "@angular/common/http";
-import {EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE} from "../../../config/error.constants";
+import { EmergencyFormComponent } from '../../../account/register/emergency-contact/emergency-form/emergency-form.component';
+import { EmergencyContact } from '../../../account/register/register.model';
+import { HttpErrorResponse } from '@angular/common/http';
+import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from '../../../config/error.constants';
 
 @Component({
   selector: 'medi-register',
@@ -38,14 +38,14 @@ export class UserManagementRegisterComponent {
       email: ['', [Validators.required]],
     }),
     role: ['', [Validators.required]],
-    // doctorCode: [''],
+    doctorCode: [''],
     specialty: [''],
   });
   roles = [
     { name: 'userManagement.selectRole', abbrev: '' },
     { name: 'userManagement.roleDoctor', abbrev: 'ROLE_USER' },
     { name: 'userManagement.rolePatient', abbrev: 'ROLE_PATIENT' },
-    { name: 'userManagement.roleAdmin', abbrev: 'ROLE_ADMIN'}
+    { name: 'userManagement.roleAdmin', abbrev: 'ROLE_ADMIN' },
   ];
 
   constructor(
@@ -86,20 +86,19 @@ export class UserManagementRegisterComponent {
   public registerUser(newUser: User): void {
     this.userService.registerUser(newUser).subscribe(
       () => {
-        this.sweetAlertService.showMsjSuccess('register.messages.success', 'register.messages.successInternal').
-        then(() =>{
+        this.sweetAlertService.showMsjSuccess('register.messages.success', 'register.messages.successInternal').then(() => {
           this.registerForm.reset();
           this.contact.clearForm();
         });
       },
       response => this.processError(response)
-    )
+    );
   }
 
   validateUserData(contact: any): void {
     const newUser: User = new User(this.registerForm.value);
 
-    if(this.registerForm.value.role === 'ROLE_PATIENT') {
+    if (this.registerForm.value.role === 'ROLE_PATIENT') {
       newUser.emergencyContact = new EmergencyContact(contact.emergencyContactForm.value);
     }
 
@@ -120,5 +119,4 @@ export class UserManagementRegisterComponent {
       this.sweetAlertService.showMsjError('register.messages.error.error', 'register.messages.error.fail');
     }
   }
-
 }

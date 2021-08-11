@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -11,6 +12,7 @@ import { IPatient } from 'app/entities/patient/patient.model';
 import { PatientService } from 'app/entities/patient/service/patient.service';
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { IDoctor } from 'app/entities/doctor/doctor.model';
 
 @Component({
   selector: 'medi-appointment-update',
@@ -20,7 +22,9 @@ export class AppointmentUpdateComponent implements OnInit {
   @ViewChild('addedAppointment')
   public readonly addedAppointment!: SwalComponent;
   isSaving = false;
-  doctor: any;
+  doctorAccount: any;
+  doctorId: number | undefined;
+  doctor: IDoctor | null = null;
   patientsCollection: any[] | null = [];
 
   editForm = this.fb.group({
@@ -41,18 +45,28 @@ export class AppointmentUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.doctorId = Number(window.location.pathname.substring(window.location.pathname.lastIndexOf('=') + 1));
+
+    this.getDoctor();
+
     this.activatedRoute.data.subscribe(({ appointment }) => {
       this.updateForm(appointment);
       // this.loadRelationshipsOptions();
     });
 
     this.accountService.getAuthenticationState().subscribe(account => {
-      this.doctor = account;
+      this.doctorAccount = account;
     });
 
     this.patientService.query().subscribe(data => {
       this.patientsCollection = data.body;
     });
+  }
+
+  getDoctor(): void {
+    if (this.doctorId) {
+      this.doctorService.find(this.doctorId).subscribe(res => (this.doctor = res.body));
+    }
   }
 
   previousState(): void {
@@ -98,13 +112,12 @@ export class AppointmentUpdateComponent implements OnInit {
   }
 
   protected updateForm(appointment: IAppointment): void {
-    console.log('appont from update ', appointment);
     this.editForm.patchValue({
       id: appointment.id,
       date: appointment.date,
       status: appointment.status,
       patient: appointment.patient,
-      doctor: this.doctor.id,
+      doctor: this.doctor,
     });
   }
 

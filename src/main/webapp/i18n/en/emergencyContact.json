@@ -31,7 +31,8 @@
       "relationShip": "Relationship",
       "patient": "Patient",
       "success": "Contact updated successfully.",
-      "error": "The contact could not be modified."
+      "error": "The contact could not be modified.",
+      "registerSuccess": "Contact has been successfully registered."
     },
     "deleteConfirm": {
       "title": "Are you sure?",

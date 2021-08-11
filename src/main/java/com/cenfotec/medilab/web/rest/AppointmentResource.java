@@ -167,6 +167,18 @@ public class AppointmentResource {
     }
 
     /**
+     * {@code GET  /appointments-doctor/:id} : get the "id" doctor.
+     *
+     * @param id the id of the patient to retrieve all appointments.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the list of appointments, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/appointments-patient/{id}")
+    public ResponseEntity<List<Appointment>> getPatientAppointments(@PathVariable Long id) {
+        List<Appointment> appointments = appointmentService.findPatientAppointments(id);
+        return ResponseEntity.ok(appointments);
+    }
+
+    /**
      * {@code DELETE  /appointments/:id} : delete the "id" appointment.
      *
      * @param id the id of the appointment to delete.

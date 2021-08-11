@@ -7,26 +7,16 @@
 
     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ml-auto">
       <li class="nav-item">
+        <a class="nav-link font-weight-normal" mediTranslate="landing.menu.token" routerLink="/token/get"></a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link font-weight-normal" mediTranslate="landing.menu.login" routerLink="/"></a>
       </li>
       <li class="nav-item">
         <a class="nav-link font-weight-normal" mediTranslate="landing.menu.register" routerLink="/register"></a>
       </li>
-      <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" *ngIf="languages && languages.length > 1">
-        <a class="nav-link dropdown-toggle font-weight-normal" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
-          <span>
-            <fa-icon icon="flag"></fa-icon>
-            <span mediTranslate="global.menu.language">Language</span>
-          </span>
-        </a>
-        <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesnavBarDropdown">
-          <li *ngFor="let language of languages">
-            <a class="dropdown-item" href="javascript:void(0);" (click)="changeLanguage(language); collapseNavbar()">{{
-              language | findLanguageFromKey
-            }}</a>
-          </li>
-        </ul>
-      </li>
+
+      <medi-language-setting (menuEvent)="collapseNavbar()"></medi-language-setting>
     </ul>
   </nav>
 </header>

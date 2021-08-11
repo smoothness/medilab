@@ -1,119 +1,63 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
 
 import { IMedicalExams, MedicalExams } from '../medical-exams.model';
 import { MedicalExamsService } from '../service/medical-exams.service';
 import { IAppointment } from 'app/entities/appointment/appointment.model';
 import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
+import {SweetAlertService} from "../../../shared/services/sweet-alert.service";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'medi-medical-exams-update',
   templateUrl: './medical-exams-update.component.html',
 })
 export class MedicalExamsUpdateComponent implements OnInit {
-  isSaving = false;
+  @Input() medicalExam: IMedicalExams = {};
 
   appointmentsSharedCollection: IAppointment[] = [];
 
   editForm = this.fb.group({
-    id: [],
-    name: [],
-    description: [],
-    removed: [],
-    appointment: [],
+    name: ['', [Validators.required]],
+    description: ['', [Validators.required]]
   });
 
   constructor(
+    protected fb: FormBuilder,
+    public activeModal: NgbActiveModal,
+    private sweetAlertService: SweetAlertService,
     protected medicalExamsService: MedicalExamsService,
     protected appointmentService: AppointmentService,
-    protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ medicalExams }) => {
-      this.updateForm(medicalExams);
-
-      this.loadRelationshipsOptions();
-    });
+    this.fillData();
   }
 
-  previousState(): void {
-    window.history.back();
-  }
-
-  save(): void {
-    this.isSaving = true;
-    const medicalExams = this.createFromForm();
-    if (medicalExams.id !== undefined) {
-      this.subscribeToSaveResponse(this.medicalExamsService.update(medicalExams));
-    } else {
-      this.subscribeToSaveResponse(this.medicalExamsService.create(medicalExams));
-    }
-  }
-
-  trackAppointmentById(index: number, item: IAppointment): number {
-    return item.id!;
-  }
-
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IMedicalExams>>): void {
-    result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
-      () => this.onSaveSuccess(),
-      () => this.onSaveError()
-    );
-  }
-
-  protected onSaveSuccess(): void {
-    this.previousState();
-  }
-
-  protected onSaveError(): void {
-    // Api for inheritance.
-  }
-
-  protected onSaveFinalize(): void {
-    this.isSaving = false;
-  }
-
-  protected updateForm(medicalExams: IMedicalExams): void {
+  public fillData(): void {
     this.editForm.patchValue({
-      id: medicalExams.id,
-      name: medicalExams.name,
-      description: medicalExams.description,
-      removed: medicalExams.removed,
-      appointment: medicalExams.appointment,
-    });
+      name: this.medicalExam.name,
+      description: this.medicalExam.description
+    })
+  }
 
-    this.appointmentsSharedCollection = this.appointmentService.addAppointmentToCollectionIfMissing(
-      this.appointmentsSharedCollection,
-      medicalExams.appointment
+  public save(): void {
+     this.medicalExamsService.update(this.createMedicalExam()).subscribe(() => {
+       this.sweetAlertService.showMsjSuccess('reset.done', 'medilabApp.medicalExams.updated').then(() => {
+         this.editForm.reset();
+         this.activeModal.close('updated');
+       });
+     });
+  }
+
+  protected createMedicalExam(): IMedicalExams {
+    const medicalExam = new MedicalExams(
+      this.medicalExam.id,
+      this.editForm.get(['name'])!.value,
+      this.editForm.get(['description'])!.value,
+      this.medicalExam.removed,
+      this.medicalExam.appointment
     );
-  }
-
-  protected loadRelationshipsOptions(): void {
-    this.appointmentService
-      .query()
-      .pipe(map((res: HttpResponse<IAppointment[]>) => res.body ?? []))
-      .pipe(
-        map((appointments: IAppointment[]) =>
-          this.appointmentService.addAppointmentToCollectionIfMissing(appointments, this.editForm.get('appointment')!.value)
-        )
-      )
-      .subscribe((appointments: IAppointment[]) => (this.appointmentsSharedCollection = appointments));
-  }
-
-  protected createFromForm(): IMedicalExams {
-    return {
-      ...new MedicalExams(),
-      id: this.editForm.get(['id'])!.value,
-      name: this.editForm.get(['name'])!.value,
-      description: this.editForm.get(['description'])!.value,
-      removed: this.editForm.get(['removed'])!.value,
-      appointment: this.editForm.get(['appointment'])!.value,
-    };
+    return medicalExam;
   }
 }

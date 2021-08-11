@@ -32,6 +32,14 @@ public interface LineCommentService {
     List<LineComment> findAll();
 
     /**
+     * Get all the lineComments from Invoice Id.
+     *
+     * @param id of the invoice.
+     * @return the list of entities.
+     */
+    List<LineComment> findInvoiceLines(Long id);
+
+    /**
      * Get the "id" lineComment.
      *
      * @param id the id of the entity.

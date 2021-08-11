@@ -9,6 +9,10 @@
     "upcomingAppointments": "Próximas citas",
     "appointmentDetail": "Detalle",
     "appointmentDelete": "Cancelar cita",
+    "appointmentDateChange": "Cambiar fecha",
+    "appointmentDateChangeModal": {
+      "title": "Cambiar la fecha de la cita"
+    },
     "profile": {
       "identification": "Identificación:",
       "phone": "Teléfono:",
@@ -22,11 +26,12 @@
     "ailments": "Padecimientos",
     "messages": {
       "cancelAppointmentTitle": "Cita cancelada",
-      "cancelAppointmentMsj": "Esta cita ha sido cancelada, será removida del calendario."
+      "cancelAppointmentMsj": "Esta cita ha sido cancelada, será removida del calendario.",
+      "updatedAppointmentDatetitle": "Cambio de fecha",
+      "updatedAppointmentDateMsj": "La fecha de la cita fue Cambiada con éxito."
     },
     "btnNewContact": "Agregar nuevo contacto",
     "personalInfo": "Información personal",
     "viewPatient": "Ver paciente"
-
   }
 }

@@ -27,36 +27,30 @@ export class InvoiceComponent implements OnInit {
   appointmentsPatient: any[] | undefined = [];
   appointmentsDoctor: any[] | undefined = [];
 
-
   constructor(
     protected invoiceService: InvoiceService,
-    protected accountService: AccountService, 
-    protected patientService : PatientService,
-    protected appointmentService : AppointmentService,
-    protected doctorService : DoctorService,
-    protected modalService: NgbModal) { }
-
+    protected accountService: AccountService,
+    protected patientService: PatientService,
+    protected appointmentService: AppointmentService,
+    protected doctorService: DoctorService,
+    protected modalService: NgbModal
+  ) {}
 
   ngOnInit(): void {
-    this.accountService.getAuthenticationState()
-    .subscribe(account => {
+    this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
       if (this.account?.authorities[0] === 'ROLE_PATIENT') {
         this.mergeAccountWithPatient(this.account);
-        
       }
 
       if (this.account?.authorities[0] === 'ROLE_USER') {
-        console.log("cuenta", this.account)
         this.mergeAccountWithDoctor(this.account);
       }
 
-      if (this.account?.authorities[0] === 'ROLE_ADMIN'){
+      if (this.account?.authorities[0] === 'ROLE_ADMIN') {
         this.loadAll();
       }
     });
-
-    
   }
 
   mergeAccountWithPatient(account: Account): void {
@@ -95,7 +89,7 @@ export class InvoiceComponent implements OnInit {
 
   getInvoices(): void {
     this.invoiceService.query().subscribe(data => {
-      if(this.account?.authorities[0] === 'ROLE_PATIENT' ){
+      if (this.account?.authorities[0] === 'ROLE_PATIENT') {
         this.appointmentsPatient?.forEach(appointment => {
           if (data.body !== null) {
             data.body.forEach(element => {
@@ -106,7 +100,6 @@ export class InvoiceComponent implements OnInit {
           }
         });
       } else {
-
         this.appointmentsDoctor?.forEach(appointment => {
           if (data.body !== null) {
             data.body.forEach(element => {
@@ -117,10 +110,8 @@ export class InvoiceComponent implements OnInit {
           }
         });
       }
-      
     });
   }
-  
 
   trackId(index: number, item: IInvoice): number {
     return item.id!;

@@ -1,17 +1,17 @@
 interface InternalUserData {
   activated: boolean;
   authorities: string[];
-  createdBy: string
+  createdBy: string;
   createdDate: Date;
-  email: string
-  firstName: string
-  id: number
-  imageUrl: string
-  langKey: string
-  lastModifiedBy: string
+  email: string;
+  firstName: string;
+  id: number;
+  imageUrl: string;
+  langKey: string;
+  lastModifiedBy: string;
   lastModifiedDate: Date;
-  lastName: string
-  login: string
+  lastName: string;
+  login: string;
 }
 
 interface PatientUserData {
@@ -26,19 +26,21 @@ interface DoctorUserData {
   id: number;
   internalUser: InternalUserData;
   specialty: string;
+  phone: string;
+  secondSurname: string;
+  doctorCode: string;
 }
 
 abstract class PersonalData {
   public activated = false;
   public firstName = '';
   public email = '';
-  public id = -1
+  public id = -1;
   public langKey = 'es';
   public lastName = '';
   public login = '';
   public authorities: string[];
   public imageUrl: string;
-
 
   protected constructor({ activated, firstName, email, id, langKey, lastName, login, authorities, imageUrl }: InternalUserData) {
     this.activated = activated;
@@ -52,18 +54,18 @@ abstract class PersonalData {
     this.imageUrl = imageUrl;
   }
 
-  get internalUserData(): {}{
+  get internalUserData(): {} {
     return {
       login: this.login,
       firstName: this.firstName,
       lastName: this.lastName,
       email: this.email,
-      langKey: this.langKey
+      langKey: this.langKey,
     };
   }
 
   get fullName(): string {
-    return `${this.firstName} ${this.lastName}`
+    return `${this.firstName} ${this.lastName}`;
   }
 }
 
@@ -71,47 +73,69 @@ class Patient extends PersonalData {
   public patientId: number;
   public phone: string;
   public secondSurname: string;
+  public token: string;
 
-  constructor({ id, internalUser, secondSurname, phone }: PatientUserData) {
+  constructor({ id, internalUser, secondSurname, phone, token }: PatientUserData) {
     super(internalUser);
     this.patientId = id;
     this.phone = phone;
     this.secondSurname = secondSurname;
+    this.token = token;
+  }
+
+  get fullName(): string {
+    return `${this.firstName} ${this.lastName} ${this.secondSurname || ""}`;
   }
 
   get patientData(): {} {
     return {
       id: this.patientId,
       internalUser: {
-        id: this.id
+        id: this.id,
       },
       phone: this.phone,
-      secondSurname: this.secondSurname
+      secondSurname: this.secondSurname,
+      token: this.token,
+    };
+  }
+  setToken(token: string): void{
+    this.token = token;
+  }
+}
+
+class Doctor extends PersonalData {
+  public doctorId: number;
+  public specialty: string;
+  public phone: string;
+  public secondSurname: string;
+  public doctorCode: string;
+
+  constructor({ id, internalUser, specialty, secondSurname, phone, doctorCode }: DoctorUserData) {
+    super(internalUser);
+    this.doctorId = id;
+    this.specialty = specialty;
+    this.phone = phone;
+    this.secondSurname = secondSurname;
+    this.doctorCode = doctorCode;
+  }
+
+  get fullName(): string {
+    return `${this.firstName} ${this.lastName} ${this.secondSurname || ""}`;
+  }
+
+  get doctorData(): {} {
+    return {
+      specialty: this.specialty,
+      phone: this.phone,
+      secondSurname: this.secondSurname,
     };
   }
 }
 
-class Doctor extends PersonalData{
-  public doctorId: number;
-  public specialty: string;
-
-  constructor({id, internalUser, specialty}: DoctorUserData) {
-    super(internalUser);
-    this.doctorId = id;
-    this.specialty = specialty;
-  }
-
-  get doctorData(): {}{
-    return {
-      specialty: this.specialty
-    }
-  }
-}
-
-class Account extends PersonalData{
+class Account extends PersonalData {
   constructor(accountData: InternalUserData) {
     super(accountData);
   }
 }
 
-export { Account, Patient, Doctor }
+export { Account, Patient, Doctor };

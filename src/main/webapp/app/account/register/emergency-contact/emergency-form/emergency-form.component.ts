@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { emergencyContactRegisterData } from '../../register.model';
 
 @Component({
   selector: 'medi-emergency-form',
@@ -7,13 +8,14 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./emergency-form.component.scss'],
 })
 export class EmergencyFormComponent {
+  @Input() showTitleCount = true;
   public index = 0;
   public emergencyContactForm = this.fb.group({
     name: ['', [Validators.required]],
     lastname: ['', [Validators.required]],
     secondlastname: [''],
     phone: ['', [Validators.required]],
-    email: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
     relationship: ['', [Validators.required]],
   });
   public parentReference: any;
@@ -22,12 +24,7 @@ export class EmergencyFormComponent {
     this.parentReference = '';
   }
 
-  public addContactData({name, email, phone, relationShip: relationship}: {
-    name: string,
-    phone: string,
-    email: string,
-    relationShip: string
-  }): void {
+  public addContactData({ name, email, phone, relationShip: relationship }: emergencyContactRegisterData): void {
     this.emergencyContactForm.patchValue({
       name: name.split(` `)[0],
       lastname: name.split(` `)[1],
@@ -35,19 +32,19 @@ export class EmergencyFormComponent {
       phone,
       email,
       relationship,
-    })
+    });
   }
 
   public removeContact(): void {
     this.parentReference.removeForm(this.index);
   }
 
-  setInitData(parent: any, pIndex: number): void {
+  public setInitData(parent: any, pIndex: number): void {
     this.index = pIndex;
     this.parentReference = parent;
   }
 
-  clearForm(): void{
+  public clearForm(): void {
     this.emergencyContactForm.reset();
   }
 }

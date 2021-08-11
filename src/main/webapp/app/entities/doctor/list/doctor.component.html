@@ -7,30 +7,35 @@
       <div class="table-responsive" id="entities" *ngIf="doctors && doctors.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
           <thead>
-          <tr>
-            <th scope="col"><span mediTranslate="medilabApp.doctor.list.completeName">Complete Name</span></th>
-            <th scope="col"><span mediTranslate="medilabApp.doctor.list.email">Complete Name</span></th>
-            <th scope="col"><span mediTranslate="medilabApp.doctor.specialty">Specialty</span></th>
-            <th scope="col"></th>
-          </tr>
+            <tr>
+              <th scope="col"><span mediTranslate="medilabApp.doctor.list.completeName">Complete Name</span></th>
+              <th scope="col"><span mediTranslate="medilabApp.doctor.list.email">Complete Name</span></th>
+              <th scope="col"><span mediTranslate="medilabApp.doctor.specialty">Specialty</span></th>
+              <th scope="col"></th>
+            </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let doctor of doctors; trackBy: trackId" data-cy="entityTable">
-            <td>
-              {{ doctor.fullName }}
-            </td>
-            <td>{{ doctor.email }}</td>
-            <td>{{ doctor.specialty }}</td>
+            <tr *ngFor="let doctor of doctors; trackBy: trackId" data-cy="entityTable">
+              <td>
+                {{ doctor.fullName }}
+              </td>
+              <td>{{ doctor.email }}</td>
+              <td>{{ doctor.specialty }}</td>
 
-            <td class="text-right">
-              <div>
-                <button type="submit" [routerLink]="['/doctor', doctor.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
-                  <fa-icon icon="calendar-alt"></fa-icon>
-                  <span class="d-none d-md-inline" mediTranslate="medilabApp.doctor.list.btnDate">Edit</span>
-                </button>
-              </div>
-            </td>
-          </tr>
+              <td class="text-right">
+                <div>
+                  <button
+                    type="submit"
+                    [routerLink]="['/doctor', doctor.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="calendar-alt"></fa-icon>
+                    <span class="d-none d-md-inline" mediTranslate="medilabApp.doctor.list.btnDate">Edit</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -39,7 +44,6 @@
 </section>
 
 <div>
-
   <medi-alert-error></medi-alert-error>
 
   <medi-alert></medi-alert>
@@ -47,5 +51,4 @@
   <div class="alert alert-warning" id="no-result" *ngIf="doctors?.length === 0">
     <span mediTranslate="medilabApp.doctor.home.notFound">No doctors found</span>
   </div>
-
 </div>

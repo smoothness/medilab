@@ -31,9 +31,6 @@ public class Patient implements Serializable {
     @Column(name = "token")
     private String token;
 
-    @Column(name = "active")
-    private Boolean active;
-
     @OneToOne
     @JoinColumn(unique = true)
     private User internalUser;
@@ -42,6 +39,11 @@ public class Patient implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "patient" }, allowSetters = true)
     private Set<EmergencyContact> emergencyContacts = new HashSet<>();
+
+    @OneToMany(mappedBy = "patient")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "patient" }, allowSetters = true)
+    private Set<Binnacle> binnacles = new HashSet<>();
 
     @OneToMany(mappedBy = "patient")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -109,19 +111,6 @@ public class Patient implements Serializable {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public Boolean getActive() {
-        return this.active;
-    }
-
-    public Patient active(Boolean active) {
-        this.active = active;
-        return this;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
     }
 
     public User getInternalUser() {
@@ -288,7 +277,6 @@ public class Patient implements Serializable {
             ", secondSurname='" + getSecondSurname() + "'" +
             ", phone='" + getPhone() + "'" +
             ", token='" + getToken() + "'" +
-            ", active='" + getActive() + "'" +
             "}";
     }
 }

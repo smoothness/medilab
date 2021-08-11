@@ -15,14 +15,16 @@
         "ailment": "Ailment",
         "appointmentTreatmentAilment": "Appointment Treatment Ailment",
         "medicalExams": "Medical Exams",
-        "invoice": "Invoice",
+        "invoice": "Factura",
+        "invoices": "Lista de Facturas",
         "lineComment": "Line Comment",
         "binnacle": "Binnacle",
         "rating": "Rating",
         "ratingUser": "Rating User",
         "comment": "Comment",
         "commentUser": "Comment User",
-        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
+        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
+        "ailmentReport": "Reporte de padecimientos"
       },
       "account": {
         "main": "Cuenta",

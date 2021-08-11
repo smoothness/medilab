@@ -9,4 +9,7 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface BinnacleRepository extends JpaRepository<Binnacle, Long> {}
+public interface BinnacleRepository extends JpaRepository<Binnacle, Long> {
+
+
+}
