@@ -8,9 +8,11 @@ import {
   ViewChild,
   Input,
 } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+
+
 import { EmergencyFormComponent } from './emergency-form/emergency-form.component';
 import { EmergencyContact } from './../register.model';
-import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'medi-emergency-contact',

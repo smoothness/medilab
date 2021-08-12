@@ -61,6 +61,7 @@
             </ul>
           </div>
 
+          <!-- Buttons Section -->
           <div class="card-footer">
             <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
               <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span mediTranslate="entity.action.back">Back</span>
@@ -73,6 +74,15 @@
               *ngIf="showAddMedicalExam(appointment.status)">
               <fa-icon icon="plus"></fa-icon>
               <span mediTranslate="medilabApp.medicalExams.btnAdd">add</span>
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="showRegisterDiagnosisModal()"
+              *ngIf="isDoctor">
+              <fa-icon icon="plus"></fa-icon>
+              <span>add diagnosis</span>
             </button>
           </div>
         </div>

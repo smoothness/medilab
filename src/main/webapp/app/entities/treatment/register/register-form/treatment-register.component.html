@@ -1,0 +1,32 @@
+<section>
+  <div class="mb-1 text-center">
+    <h3 class="text-primary">Tratamiento</h3>
+  </div>
+  <form name="editForm" role="form" autocomplete="off" [formGroup]="registerForm">
+    <div class="form-group">
+      <label class="form-control-label text-white" mediTranslate="medilabApp.treatment.medicines" for="fieldMedicines">Medicines</label>
+      <input type="text" class="form-control" name="medicines" id="fieldMedicines" data-cy="medicines" formControlName="medicines" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-control-label text-white" mediTranslate="medilabApp.treatment.duration" for="fieldDuration">Duration</label>
+      <input type="text" class="form-control" name="duration" id="fieldDuration" data-cy="duration" formControlName="duration" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-control-label text-white" mediTranslate="medilabApp.treatment.specifications" for="fieldSpecifications"
+      >Specifications</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        name="specifications"
+        id="fieldSpecifications"
+        data-cy="specifications"
+        formControlName="specifications"
+      />
+    </div>
+
+
+  </form>
+</section>

@@ -31,6 +31,8 @@ public interface AppointmentTreatmentAilmentService {
      */
     List<AppointmentTreatmentAilment> findAll();
 
+    List<AppointmentTreatmentAilment> findAllDiagnosisByPatient(Long id);
+
     /**
      * Get the "id" appointmentTreatmentAilment.
      *

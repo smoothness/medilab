@@ -1,0 +1,39 @@
+
+<div class="col-12">
+  <div>
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      (click)="toggle()"
+      [attr.aria-expanded]="!isCollapsed"
+    >
+      Ver tratamientos
+    </button>
+  </div>
+
+  <div>
+    <div class="card border-0" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+      <div>
+        <div class="card-body bg-dark">
+          <table>
+            <thead>
+            <tr>
+              <th scope="col"><span mediTranslate="medilabApp.appointmentTreatmentAilment.treatment">Ailment</span></th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <td>
+              {{treatment.medicines}}
+            </td>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

@@ -160,6 +160,13 @@ public class AppointmentTreatmentAilmentResource {
         return ResponseUtil.wrapOrNotFound(appointmentTreatmentAilment);
     }
 
+
+    @GetMapping("/appointment-treatment-ailments/patient/{id}")
+    public ResponseEntity<List<AppointmentTreatmentAilment>> getAllDiagnosisByPatient(@PathVariable Long id) {
+        List<AppointmentTreatmentAilment> diagnosis = appointmentTreatmentAilmentService.findAllDiagnosisByPatient(id);
+        return ResponseEntity.ok(diagnosis);
+    }
+
     /**
      * {@code DELETE  /appointment-treatment-ailments/:id} : delete the "id" appointmentTreatmentAilment.
      *

@@ -7,6 +7,7 @@ import { IMedicalExams } from "../../medical-exams/medical-exams.model";
 import { MedicalExamsService } from "../../medical-exams/service/medical-exams.service";
 import { AccountService } from "../../../core/auth/account.service";
 import {Doctor, Patient} from "../../../core/auth/account.model";
+import {AppointmentTreatmentAilmentRegisterComponent} from "../../appointment-treatment-ailment/register/appointment-treatment-ailment-register.component";
 
 @Component({
   selector: 'medi-appointment-detail',
@@ -67,12 +68,14 @@ export class AppointmentDetailComponent implements OnInit {
 
   public showAddMedicalExam(status: any): boolean {
     let show = false;
-
-    if (this.isDoctor && status === 'PENDING'){
+    if (this.isDoctor && status === 'PENDING') {
       show = true;
     }
-
     return show;
+  }
+
+  public showRegisterDiagnosisModal(): void {
+    const modalRef = this.modalService.open(AppointmentTreatmentAilmentRegisterComponent, { centered: true });
   }
 
   public getAppointmentExams(): void {

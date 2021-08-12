@@ -1,0 +1,44 @@
+<section>
+  <div class="card bg-dark">
+    <div class="card-header text-center p-0 m-0">
+      <h2 class="text-primary py-2">Registro de diagnostico</h2>
+    </div>
+    <div class="card-body">
+      <form name="editForm" role="form" autocomplete="off" (submit)="save()" [formGroup]="registerForm">
+        <div class="form-group">
+          <label class="form-control-label text-white" for="fieldAilment">Padecimiento</label>
+          <select class="form-control" id="fieldAilment" data-cy="ailment" name="ailment" formControlName="ailment">
+            <option
+              [ngValue]="ailment.id === registerForm.get('ailment')!.value?.id ? registerForm.get('ailment')!.value : ailment"
+              *ngFor="let ailment of ailments"
+            >
+              {{ ailment.name }}
+            </option>
+          </select>
+        </div>
+
+
+        <div class="form-group">
+          <label class="form-control-label text-white" for="fieldDescription" mediTranslate="medilabApp.medicalExams.description">Example textarea</label>
+          <textarea class="form-control" id="fieldDescription" rows="3" formControlName="description"></textarea>
+        </div>
+        <div class="col-12 my-2">
+          <medi-treatment-create-form></medi-treatment-create-form>
+        </div>
+
+
+        <div>
+          <button
+            type="submit"
+            id="saveEntity"
+            data-cy="entityCreateSaveButton"
+            [disabled]="registerForm.invalid"
+            class="btn btn-primary col-12"
+          >
+            <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

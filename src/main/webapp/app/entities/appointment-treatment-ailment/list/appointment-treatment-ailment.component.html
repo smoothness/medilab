@@ -1,81 +1,38 @@
-<div>
+<div class="card bg-dark col-10">
   <h2 id="page-heading" data-cy="AppointmentTreatmentAilmentHeading">
-    <span mediTranslate="medilabApp.appointmentTreatmentAilment.home.title">Appointment Treatment Ailments</span>
-
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span mediTranslate="medilabApp.appointmentTreatmentAilment.home.refreshListLabel">Refresh List</span>
-      </button>
-
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-appointment-treatment-ailment"
-        [routerLink]="['/appointment-treatment-ailment/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span mediTranslate="medilabApp.appointmentTreatmentAilment.home.createLabel"> Create a new Appointment Treatment Ailment </span>
-      </button>
-    </div>
+    <span>DIAGNOSTICO</span>
   </h2>
-
-  <medi-alert-error></medi-alert-error>
-
-  <medi-alert></medi-alert>
-
-  <div class="alert alert-warning" id="no-result" *ngIf="appointmentTreatmentAilments?.length === 0">
-    <span mediTranslate="medilabApp.appointmentTreatmentAilment.home.notFound">No appointmentTreatmentAilments found</span>
-  </div>
 
   <div class="table-responsive" id="entities" *ngIf="appointmentTreatmentAilments && appointmentTreatmentAilments.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr>
-          <th scope="col"><span mediTranslate="global.field.id">ID</span></th>
-          <th scope="col"><span mediTranslate="medilabApp.appointmentTreatmentAilment.description">Description</span></th>
-          <th scope="col"><span mediTranslate="medilabApp.appointmentTreatmentAilment.removed">Removed</span></th>
+
           <th scope="col"><span mediTranslate="medilabApp.appointmentTreatmentAilment.ailment">Ailment</span></th>
-          <th scope="col"><span mediTranslate="medilabApp.appointmentTreatmentAilment.treatment">Treatment</span></th>
-          <th scope="col"><span mediTranslate="medilabApp.appointmentTreatmentAilment.appointment">Appointment</span></th>
+          <th scope="col"></th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let appointmentTreatmentAilment of appointmentTreatmentAilments; trackBy: trackId" data-cy="entityTable">
+        <tr *ngFor="let diagnosis of appointmentTreatmentAilments" data-cy="entityTable">
           <td>
-            <a [routerLink]="['/appointment-treatment-ailment', appointmentTreatmentAilment.id, 'view']">{{
-              appointmentTreatmentAilment.id
-            }}</a>
+            {{diagnosis.ailment?.name}}
           </td>
-          <td>{{ appointmentTreatmentAilment.description }}</td>
-          <td>{{ appointmentTreatmentAilment.removed }}</td>
-          <td>
-            <div *ngIf="appointmentTreatmentAilment.ailment">
-              <a [routerLink]="['/ailment', appointmentTreatmentAilment.ailment?.id, 'view']">{{
-                appointmentTreatmentAilment.ailment?.id
-              }}</a>
+
+          <!-- Treatment table -->
+          <td class="text-center col-8" >
+            <div *ngIf="diagnosis.treatment">
+              <medi-show-treatment-toggle [treatment]="diagnosis.treatment"></medi-show-treatment-toggle>
             </div>
+
           </td>
-          <td>
-            <div *ngIf="appointmentTreatmentAilment.treatment">
-              <a [routerLink]="['/treatment', appointmentTreatmentAilment.treatment?.id, 'view']">{{
-                appointmentTreatmentAilment.treatment?.id
-              }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="appointmentTreatmentAilment.appointment">
-              <a [routerLink]="['/appointment', appointmentTreatmentAilment.appointment?.id, 'view']">{{
-                appointmentTreatmentAilment.appointment?.id
-              }}</a>
-            </div>
-          </td>
+
+          <!-- Buttons Section -->
           <td class="text-right">
             <div class="btn-group">
               <button
                 type="submit"
-                [routerLink]="['/appointment-treatment-ailment', appointmentTreatmentAilment.id, 'view']"
+                [routerLink]="['/appointment-treatment-ailment', diagnosis.id, 'view']"
                 class="btn btn-info btn-sm"
                 data-cy="entityDetailsButton"
               >
@@ -85,7 +42,7 @@
 
               <button
                 type="submit"
-                [routerLink]="['/appointment-treatment-ailment', appointmentTreatmentAilment.id, 'edit']"
+                [routerLink]="['/appointment-treatment-ailment', diagnosis.id, 'edit']"
                 class="btn btn-primary btn-sm"
                 data-cy="entityEditButton"
               >
@@ -95,7 +52,7 @@
 
               <button
                 type="submit"
-                (click)="delete(appointmentTreatmentAilment)"
+                (click)="delete(diagnosis)"
                 class="btn btn-danger btn-sm"
                 data-cy="entityDeleteButton"
               >

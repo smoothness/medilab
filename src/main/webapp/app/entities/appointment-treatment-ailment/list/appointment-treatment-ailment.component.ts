@@ -13,8 +13,12 @@ import { AppointmentTreatmentAilmentDeleteDialogComponent } from '../delete/appo
 export class AppointmentTreatmentAilmentComponent implements OnInit {
   appointmentTreatmentAilments?: IAppointmentTreatmentAilment[];
   isLoading = false;
+  public isCollapsed = true;
 
-  constructor(protected appointmentTreatmentAilmentService: AppointmentTreatmentAilmentService, protected modalService: NgbModal) {}
+  constructor(
+    protected appointmentTreatmentAilmentService: AppointmentTreatmentAilmentService,
+    protected modalService: NgbModal
+  ) {}
 
   loadAll(): void {
     this.isLoading = true;
@@ -32,6 +36,10 @@ export class AppointmentTreatmentAilmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAll();
+
+    this.appointmentTreatmentAilmentService.findByPatient(5).subscribe((res) => {
+      console.log('AQUII',res);
+    })
   }
 
   trackId(index: number, item: IAppointmentTreatmentAilment): number {

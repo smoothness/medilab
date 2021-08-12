@@ -45,23 +45,4 @@ export class TreatmentService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  addTreatmentToCollectionIfMissing(
-    treatmentCollection: ITreatment[],
-    ...treatmentsToCheck: (ITreatment | null | undefined)[]
-  ): ITreatment[] {
-    const treatments: ITreatment[] = treatmentsToCheck.filter(isPresent);
-    if (treatments.length > 0) {
-      const treatmentCollectionIdentifiers = treatmentCollection.map(treatmentItem => getTreatmentIdentifier(treatmentItem)!);
-      const treatmentsToAdd = treatments.filter(treatmentItem => {
-        const treatmentIdentifier = getTreatmentIdentifier(treatmentItem);
-        if (treatmentIdentifier == null || treatmentCollectionIdentifiers.includes(treatmentIdentifier)) {
-          return false;
-        }
-        treatmentCollectionIdentifiers.push(treatmentIdentifier);
-        return true;
-      });
-      return [...treatmentsToAdd, ...treatmentCollection];
-    }
-    return treatmentCollection;
-  }
 }

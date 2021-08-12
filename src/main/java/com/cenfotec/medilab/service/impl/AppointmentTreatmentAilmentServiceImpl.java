@@ -61,6 +61,12 @@ public class AppointmentTreatmentAilmentServiceImpl implements AppointmentTreatm
 
     @Override
     @Transactional(readOnly = true)
+    public List<AppointmentTreatmentAilment> findAllDiagnosisByPatient(Long id) {
+        return appointmentTreatmentAilmentRepository.findAllDiagnosisByPatient(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Optional<AppointmentTreatmentAilment> findOne(Long id) {
         log.debug("Request to get AppointmentTreatmentAilment : {}", id);
         return appointmentTreatmentAilmentRepository.findById(id);
