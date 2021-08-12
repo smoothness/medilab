@@ -1,6 +1,6 @@
 <section>
-  <div class="mb-1 text-center">
-    <h3 class="text-primary">Tratamiento</h3>
+  <div class="mb-1 text-center" *ngIf="showTitle">
+    <h3 class="text-primary">Tratamiento {{index + 1}}</h3>
   </div>
   <form name="editForm" role="form" autocomplete="off" [formGroup]="registerForm">
     <div class="form-group">
@@ -17,16 +17,20 @@
       <label class="form-control-label text-white" mediTranslate="medilabApp.treatment.specifications" for="fieldSpecifications"
       >Specifications</label
       >
-      <input
+      <textarea
         type="text"
         class="form-control"
         name="specifications"
         id="fieldSpecifications"
         data-cy="specifications"
         formControlName="specifications"
-      />
+      ></textarea>
     </div>
 
 
   </form>
+
+  <div>
+    <button class="btn btn-danger" (click)="removeForm()" >Delete</button>
+  </div>
 </section>

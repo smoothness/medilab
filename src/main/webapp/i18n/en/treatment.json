@@ -22,7 +22,8 @@
       "medicines": "Medicines",
       "duration": "Duration",
       "removed": "Removed",
-      "appointmentTreatmentAilment": "Appointment Treatment Ailment"
+      "appointmentTreatmentAilment": "Appointment Treatment Ailment",
+      "add": "Add treatment"
     }
   }
 }

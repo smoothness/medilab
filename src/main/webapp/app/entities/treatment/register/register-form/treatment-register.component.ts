@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -6,10 +6,10 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
   templateUrl: './treatment-register.component.html',
   styleUrls: ['./treatment-register.component.scss']
 })
-export class TreatmentRegisterComponent implements OnInit {
+export class TreatmentRegisterComponent {
+  public showTitle = false;
   public parentReference: any;
   public index = 0;
-
   public registerForm: FormGroup = this.fb.group({
     medicines: ['',[Validators.required]],
     duration: ['',[Validators.required]],
@@ -18,17 +18,27 @@ export class TreatmentRegisterComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.parentReference = '';
-
   }
 
-  ngOnInit(): void {
-    console.log("");
+  public get formState(): boolean {
+    return this.registerForm.invalid;
+  }
 
+  public get treatmentFormData(): any {
+    return this.registerForm.value;
   }
 
   public setInitData(parent: any, pIndex: number): void {
-    this.index = pIndex;
     this.parentReference = parent;
+    this.updateIndex(pIndex)
+  }
+
+  public removeForm(): void {
+    this.parentReference.removeForm(this.index);
+  }
+
+  public updateIndex(index: number): void {
+    this.index = index;
   }
 
 }
