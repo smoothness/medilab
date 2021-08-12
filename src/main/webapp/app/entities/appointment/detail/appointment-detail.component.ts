@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { MedicalExamnsRegisterComponent } from "../../medical-exams/register/medical-examns-register.component";
-import { IMedicalExams } from "../../medical-exams/medical-exams.model";
-import { MedicalExamsService } from "../../medical-exams/service/medical-exams.service";
-import { AccountService } from "../../../core/auth/account.service";
-import {Doctor, Patient} from "../../../core/auth/account.model";
+import { MedicalExamnsRegisterComponent } from '../../medical-exams/register/medical-examns-register.component';
+import { IMedicalExams } from '../../medical-exams/medical-exams.model';
+import { MedicalExamsService } from '../../medical-exams/service/medical-exams.service';
+import { AccountService } from '../../../core/auth/account.service';
+import { Doctor, Patient } from '../../../core/auth/account.model';
 
 @Component({
   selector: 'medi-appointment-detail',
@@ -35,7 +35,7 @@ export class AppointmentDetailComponent implements OnInit {
 
   get showButtons(): boolean {
     let show = true;
-    if (this.currentUser instanceof Patient){
+    if (this.currentUser instanceof Patient) {
       show = false;
     }
     return show;
@@ -55,7 +55,17 @@ export class AppointmentDetailComponent implements OnInit {
     });
   }
 
-  public showRegisterMedicalExamModal(): void{
+  public showRegisterMedicalExamModal(): void {
+    const modalRef = this.modalService.open(MedicalExamnsRegisterComponent, { centered: true });
+    modalRef.componentInstance.appointment = this.appointment;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'register') {
+        this.getAppointmentExams();
+      }
+    });
+  }
+
+  public showRegisterInvoiceModal(): void {
     const modalRef = this.modalService.open(MedicalExamnsRegisterComponent, { centered: true });
     modalRef.componentInstance.appointment = this.appointment;
     modalRef.closed.subscribe(reason => {
@@ -68,7 +78,7 @@ export class AppointmentDetailComponent implements OnInit {
   public showAddMedicalExam(status: any): boolean {
     let show = false;
 
-    if (this.isDoctor && status === 'PENDING'){
+    if (this.isDoctor && status === 'PENDING') {
       show = true;
     }
 
@@ -82,7 +92,7 @@ export class AppointmentDetailComponent implements OnInit {
   }
 
   public loadMedicalExams(updated: boolean): void {
-    if(updated){
+    if (updated) {
       this.getAppointmentExams();
     }
   }
