@@ -1,19 +1,33 @@
 package com.cenfotec.medilab.web.rest;
 
+import com.cenfotec.medilab.domain.Binnacle;
 import com.cenfotec.medilab.domain.Patient;
+import com.cenfotec.medilab.domain.User;
 import com.cenfotec.medilab.repository.PatientRepository;
+import com.cenfotec.medilab.repository.UserRepository;
+import com.cenfotec.medilab.service.BinnacleService;
 import com.cenfotec.medilab.service.PatientService;
 import com.cenfotec.medilab.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Random;
+import javax.validation.Valid;
+
+import com.cenfotec.medilab.web.rest.errors.InvalidTokenException;
+import com.cenfotec.medilab.web.rest.vm.TokenVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import tech.jhipster.security.RandomUtil;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
@@ -28,10 +42,19 @@ public class PatientResource {
 
     private static final String ENTITY_NAME = "patient";
 
+    @Autowired
+    UserRepository userRepository;
+
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final PatientService patientService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private BinnacleService binnacleService;
 
     private final PatientRepository patientRepository;
 
@@ -53,11 +76,16 @@ public class PatientResource {
         if (patient.getId() != null) {
             throw new BadRequestAlertException("A new patient cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        Optional<User> thisUser = userRepository.findById(patient.getInternalUser().getId());
+
+        if (thisUser == null) {
+            throw new BadRequestAlertException("User dont exist", "User", "idexists");
+        }
+
+        patient.setInternalUser(thisUser.get());
         Patient result = patientService.save(patient);
-        return ResponseEntity
-            .created(new URI("/api/patients/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok(result);
     }
 
     /**
@@ -152,6 +180,19 @@ public class PatientResource {
         return ResponseUtil.wrapOrNotFound(patient);
     }
 
+    @GetMapping("/patient/{id}")
+    public ResponseEntity<Patient> getPatientByInternalUser(@PathVariable Long id) {
+        log.debug("REST request to get Patient : {}", id);
+        Patient patient = patientService.findByInternalUser(id);
+        return ResponseEntity.ok(patient);
+    }
+
+    @GetMapping("/patient-appointment/{id}")
+    public ResponseEntity<Patient> getPatientByAppointment(@PathVariable Long id) {
+        Patient patient = patientService.findPatientByAppointment(id);
+        return ResponseEntity.ok(patient);
+    }
+
     /**
      * {@code DELETE  /patients/:id} : delete the "id" patient.
      *
@@ -166,5 +207,65 @@ public class PatientResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @PostMapping(path = "/token/{id}")
+    public ResponseEntity<Patient> createToken(@PathVariable Long id, @RequestBody Patient patient) {
+        if(patient.getId() == null){
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, patient.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!patientRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        patient.setToken(generateToken());
+        Patient updatedPatient = patientRepository.save(patient);
+        return ResponseEntity.ok(updatedPatient);
+    }
+
+    @PostMapping(path = "/token")
+    public ResponseEntity<Patient> queryByToken(@RequestBody TokenVM tokenVM) {
+        Optional<Patient> patient = isInvalidToken(tokenVM.getKey());
+        if (!patient.isPresent()) {
+            throw new InvalidTokenException();
+        }
+        patient.get().setToken(null);
+
+        saveBinnacle(tokenVM.getDoctorCode(), patient.get());
+
+        Patient patientConsulted = this.patientRepository.save(patient.get());
+
+        return ResponseEntity.ok(patientConsulted);
+    }
+
+    private Optional<Patient> isInvalidToken(String key) {
+        Optional<Patient> patient = patientService.findPatientByToken(key);
+        return patient;
+    }
+
+    private String generateToken() {
+        Random ran = new Random();
+        int top = 5;
+        char data = ' ';
+        String dat = "";
+
+        for (int i=0; i <= top; i++) {
+            data = (char)(ran.nextInt(25)+97);
+            dat = data + dat;
+        }
+        return dat.toUpperCase();
+    }
+
+
+    private void saveBinnacle(String doctorCode, Patient patient){
+        Binnacle binnacle = new Binnacle();
+        binnacle.setPatient(patient);
+        binnacle.setDate(LocalDate.now());
+        binnacle.setDoctorCode(doctorCode);
+        binnacleService.save(binnacle);
     }
 }

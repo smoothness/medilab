@@ -1,40 +1,37 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { errorRoute } from './layouts/error/error.route';
-import { navbarRoute } from './layouts/navbar/navbar.route';
-import { DEBUG_INFO_ENABLED } from 'app/app.constants';
-import { Authority } from 'app/config/authority.constants';
+import { registerRoute } from './account/register/register.route';
 
-import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
+import { DEBUG_INFO_ENABLED } from './app.constants';
+import { LayoutsRoutesModule } from './layouts/layouts-routes.module';
+import { activateRoute } from './account/activate/activate.route';
+import { passwordResetFinishRoute } from './account/password-reset/finish/password-reset-finish.route';
+import { passwordResetInitRoute } from './account/password-reset/init/password-reset-init.route';
 
-const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
+const mainRoutes: Routes = [
+  {
+    path: 'home',
+    loadChildren: () => import('./landing/landing.module').then(m => m.LandingModule),
+  },
+  {
+    path: 'token',
+    loadChildren: () => import('./get-patient-by-token/get-patient-by-token.module').then(m => m.GetPatientByTokenModule),
+  },
+  {
+    path: '',
+    loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
+  },
+  registerRoute,
+  activateRoute,
+  passwordResetFinishRoute,
+  passwordResetInitRoute,
+  ...errorRoute,
+];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(
-      [
-        {
-          path: 'admin',
-          data: {
-            authorities: [Authority.ADMIN],
-          },
-          canActivate: [UserRouteAccessService],
-          loadChildren: () => import('./admin/admin-routing.module').then(m => m.AdminRoutingModule),
-        },
-        {
-          path: 'account',
-          loadChildren: () => import('./account/account.module').then(m => m.AccountModule),
-        },
-        {
-          path: 'login',
-          loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
-        },
-        ...LAYOUT_ROUTES,
-      ],
-      { enableTracing: DEBUG_INFO_ENABLED }
-    ),
-  ],
+  imports: [RouterModule.forRoot(mainRoutes, { enableTracing: DEBUG_INFO_ENABLED }), LayoutsRoutesModule],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

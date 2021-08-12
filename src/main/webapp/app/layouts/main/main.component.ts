@@ -4,11 +4,12 @@ import { Router, ActivatedRouteSnapshot, NavigationEnd } from '@angular/router';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import * as dayjs from 'dayjs';
 
-import { AccountService } from 'app/core/auth/account.service';
+import { AccountService } from './../../core/auth/account.service';
 
 @Component({
   selector: 'medi-main',
   templateUrl: './main.component.html',
+  styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
   private renderer: Renderer2;

@@ -73,6 +73,12 @@ public class EmergencyContactServiceImpl implements EmergencyContactService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<EmergencyContact> findByPatientId(Long id) {
+        return emergencyContactRepository.findByPatientId(id);
+    }
+
+    @Override
     public void delete(Long id) {
         log.debug("Request to delete EmergencyContact : {}", id);
         emergencyContactRepository.deleteById(id);

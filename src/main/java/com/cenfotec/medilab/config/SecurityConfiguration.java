@@ -120,13 +120,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/account/reset-password/init").permitAll()
             .antMatchers("/api/account/reset-password/finish").permitAll()
+            .antMatchers("/api/patients").permitAll()
+            .antMatchers("/api/emergency-contacts").permitAll()
+            .antMatchers("/api/emergency-contacts-patient/**").permitAll()
+            .antMatchers("/api/ailments-patient/**").permitAll()
+            .antMatchers("/api/medical-exams/**").permitAll()
+            .antMatchers("/api/token").permitAll()
             .antMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/**").authenticated()
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/health/**").permitAll()
             .antMatchers("/management/info").permitAll()
             .antMatchers("/management/prometheus").permitAll()
-            .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN);
+            .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/main/ailment").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/main/ailment/**").hasAuthority(AuthoritiesConstants.ADMIN);
         // @formatter:on
     }
 }

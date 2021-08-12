@@ -39,9 +39,6 @@ class PatientResourceIT {
     private static final String DEFAULT_TOKEN = "AAAAAAAAAA";
     private static final String UPDATED_TOKEN = "BBBBBBBBBB";
 
-    private static final Boolean DEFAULT_ACTIVE = false;
-    private static final Boolean UPDATED_ACTIVE = true;
-
     private static final String ENTITY_API_URL = "/api/patients";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -69,8 +66,7 @@ class PatientResourceIT {
         Patient patient = new Patient()
             .secondSurname(DEFAULT_SECOND_SURNAME)
             .phone(DEFAULT_PHONE)
-            .token(DEFAULT_TOKEN)
-            .active(DEFAULT_ACTIVE);
+            .token(DEFAULT_TOKEN);
         return patient;
     }
 
@@ -84,8 +80,7 @@ class PatientResourceIT {
         Patient patient = new Patient()
             .secondSurname(UPDATED_SECOND_SURNAME)
             .phone(UPDATED_PHONE)
-            .token(UPDATED_TOKEN)
-            .active(UPDATED_ACTIVE);
+            .token(UPDATED_TOKEN);
         return patient;
     }
 
@@ -115,7 +110,6 @@ class PatientResourceIT {
         assertThat(testPatient.getSecondSurname()).isEqualTo(DEFAULT_SECOND_SURNAME);
         assertThat(testPatient.getPhone()).isEqualTo(DEFAULT_PHONE);
         assertThat(testPatient.getToken()).isEqualTo(DEFAULT_TOKEN);
-        assertThat(testPatient.getActive()).isEqualTo(DEFAULT_ACTIVE);
     }
 
     @Test
@@ -155,8 +149,7 @@ class PatientResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(patient.getId().intValue())))
             .andExpect(jsonPath("$.[*].secondSurname").value(hasItem(DEFAULT_SECOND_SURNAME)))
             .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE)))
-            .andExpect(jsonPath("$.[*].token").value(hasItem(DEFAULT_TOKEN)))
-            .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())));
+            .andExpect(jsonPath("$.[*].token").value(hasItem(DEFAULT_TOKEN)));
     }
 
     @Test
@@ -173,8 +166,7 @@ class PatientResourceIT {
             .andExpect(jsonPath("$.id").value(patient.getId().intValue()))
             .andExpect(jsonPath("$.secondSurname").value(DEFAULT_SECOND_SURNAME))
             .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE))
-            .andExpect(jsonPath("$.token").value(DEFAULT_TOKEN))
-            .andExpect(jsonPath("$.active").value(DEFAULT_ACTIVE.booleanValue()));
+            .andExpect(jsonPath("$.token").value(DEFAULT_TOKEN));
     }
 
     @Test
@@ -196,7 +188,7 @@ class PatientResourceIT {
         Patient updatedPatient = patientRepository.findById(patient.getId()).get();
         // Disconnect from session so that the updates on updatedPatient are not directly saved in db
         em.detach(updatedPatient);
-        updatedPatient.secondSurname(UPDATED_SECOND_SURNAME).phone(UPDATED_PHONE).token(UPDATED_TOKEN).active(UPDATED_ACTIVE);
+        updatedPatient.secondSurname(UPDATED_SECOND_SURNAME).phone(UPDATED_PHONE).token(UPDATED_TOKEN);
 
         restPatientMockMvc
             .perform(
@@ -214,7 +206,6 @@ class PatientResourceIT {
         assertThat(testPatient.getSecondSurname()).isEqualTo(UPDATED_SECOND_SURNAME);
         assertThat(testPatient.getPhone()).isEqualTo(UPDATED_PHONE);
         assertThat(testPatient.getToken()).isEqualTo(UPDATED_TOKEN);
-        assertThat(testPatient.getActive()).isEqualTo(UPDATED_ACTIVE);
     }
 
     @Test
@@ -289,7 +280,7 @@ class PatientResourceIT {
         Patient partialUpdatedPatient = new Patient();
         partialUpdatedPatient.setId(patient.getId());
 
-        partialUpdatedPatient.secondSurname(UPDATED_SECOND_SURNAME).phone(UPDATED_PHONE).token(UPDATED_TOKEN).active(UPDATED_ACTIVE);
+        partialUpdatedPatient.secondSurname(UPDATED_SECOND_SURNAME).phone(UPDATED_PHONE).token(UPDATED_TOKEN);
 
         restPatientMockMvc
             .perform(
@@ -307,7 +298,6 @@ class PatientResourceIT {
         assertThat(testPatient.getSecondSurname()).isEqualTo(UPDATED_SECOND_SURNAME);
         assertThat(testPatient.getPhone()).isEqualTo(UPDATED_PHONE);
         assertThat(testPatient.getToken()).isEqualTo(UPDATED_TOKEN);
-        assertThat(testPatient.getActive()).isEqualTo(UPDATED_ACTIVE);
     }
 
     @Test
@@ -322,7 +312,7 @@ class PatientResourceIT {
         Patient partialUpdatedPatient = new Patient();
         partialUpdatedPatient.setId(patient.getId());
 
-        partialUpdatedPatient.secondSurname(UPDATED_SECOND_SURNAME).phone(UPDATED_PHONE).token(UPDATED_TOKEN).active(UPDATED_ACTIVE);
+        partialUpdatedPatient.secondSurname(UPDATED_SECOND_SURNAME).phone(UPDATED_PHONE).token(UPDATED_TOKEN);
 
         restPatientMockMvc
             .perform(
@@ -340,7 +330,6 @@ class PatientResourceIT {
         assertThat(testPatient.getSecondSurname()).isEqualTo(UPDATED_SECOND_SURNAME);
         assertThat(testPatient.getPhone()).isEqualTo(UPDATED_PHONE);
         assertThat(testPatient.getToken()).isEqualTo(UPDATED_TOKEN);
-        assertThat(testPatient.getActive()).isEqualTo(UPDATED_ACTIVE);
     }
 
     @Test

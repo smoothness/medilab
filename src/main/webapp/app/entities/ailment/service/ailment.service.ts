@@ -32,6 +32,15 @@ export class AilmentService {
     return this.http.get<IAilment>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  getAilmentReport(): Observable<EntityResponseType> {
+    return this.http.get<IAilment>(`${this.resourceUrl}/ailmentReport`, { observe: 'response' });
+  }
+
+
+  findAllAilmentsPacient(id: number): Observable<EntityResponseType> {
+    return this.http.get<IAilment>(`${this.resourceUrl}-patient/${id}`, { observe: 'response' });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IAilment[]>(this.resourceUrl, { params: options, observe: 'response' });

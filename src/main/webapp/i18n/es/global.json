@@ -8,21 +8,23 @@
       "entities": {
         "main": "Entidades",
         "patient": "Patient",
-        "doctor": "Doctor",
+        "doctor": "Lista de médicos",
         "appointment": "Appointment",
         "emergencyContact": "Emergency Contact",
         "treatment": "Treatment",
         "ailment": "Ailment",
         "appointmentTreatmentAilment": "Appointment Treatment Ailment",
         "medicalExams": "Medical Exams",
-        "invoice": "Invoice",
+        "invoice": "Factura",
+        "invoices": "Lista de Facturas",
         "lineComment": "Line Comment",
         "binnacle": "Binnacle",
         "rating": "Rating",
         "ratingUser": "Rating User",
         "comment": "Comment",
         "commentUser": "Comment User",
-        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
+        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
+        "ailmentReport": "Reporte de padecimientos"
       },
       "account": {
         "main": "Cuenta",
@@ -30,8 +32,8 @@
         "password": "Contraseña",
         "sessions": "Sesiones",
         "login": "Iniciar sesión",
-        "logout": "Cerrar la sesión",
-        "register": "Crear una cuenta"
+        "logout": "Cerrar sesión",
+        "register": "Crear cuenta"
       },
       "admin": {
         "main": "Administración",
@@ -48,8 +50,8 @@
       "language": "Idioma"
     },
     "form": {
-      "username.label": "Usuario",
-      "username.placeholder": "Nombre de usuario",
+      "identification.label": "Identificación",
+      "identification.placeholder": "Su cédula de identidad",
       "currentpassword.label": "Contraseña actual",
       "currentpassword.placeholder": "Contraseña actual",
       "newpassword.label": "Nueva contraseña",
@@ -57,7 +59,17 @@
       "confirmpassword.label": "Confirmación de la nueva contraseña",
       "confirmpassword.placeholder": "Confirmación de la nueva contraseña",
       "email.label": "Correo electrónico",
-      "email.placeholder": "Su correo electrónico"
+      "email.placeholder": "Su correo electrónico",
+      "name.label": "Nombre",
+      "name.placeholder": "Su nombre",
+      "lastname.label": "Apellido",
+      "lastname.placeholder": "Su apellido",
+      "secondlastname.label": "Segundo apellido",
+      "secondlastname.placeholder": "Su segundo apellido",
+      "phone.label": "Teléfono",
+      "phone.placeholder": "Su teléfono",
+      "relationship": "Parentesco",
+      "userType": "Tipo de usuario"
     },
     "messages": {
       "info": {
@@ -151,5 +163,6 @@
       "not.image": "Se esperaba que el fichero fuera una imagen pero se encontro \"{{ fileType }}\""
     }
   },
+  "swalBtn": "Aceptar",
   "footer": "Pie de página"
 }

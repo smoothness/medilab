@@ -76,7 +76,6 @@ public class UserService {
     }
 
     public Optional<User> completePasswordReset(String newPassword, String key) {
-        log.debug("Reset user password for reset key {}", key);
         return userRepository
             .findOneByResetKey(key)
             .filter(user -> user.getResetDate().isAfter(Instant.now().minusSeconds(86400)))
@@ -110,7 +109,7 @@ public class UserService {
             .findOneByLogin(userDTO.getLogin().toLowerCase())
             .ifPresent(
                 existingUser -> {
-                    boolean removed = removeNonActivatedUser(existingUser);
+                    boolean removed = false;
                     if (!removed) {
                         throw new UsernameAlreadyUsedException();
                     }
@@ -120,7 +119,7 @@ public class UserService {
             .findOneByEmailIgnoreCase(userDTO.getEmail())
             .ifPresent(
                 existingUser -> {
-                    boolean removed = removeNonActivatedUser(existingUser);
+                    boolean removed = false;
                     if (!removed) {
                         throw new EmailAlreadyUsedException();
                     }
@@ -143,11 +142,11 @@ public class UserService {
         // new user gets registration key
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         Set<Authority> authorities = new HashSet<>();
-        authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
+        authorityRepository.findById(AuthoritiesConstants.PATIENT).ifPresent(authorities::add);
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
         this.clearUserCaches(newUser);
-        log.debug("Created Information for User: {}", newUser);
+
         return newUser;
     }
 
@@ -192,7 +191,7 @@ public class UserService {
         }
         userRepository.save(user);
         this.clearUserCaches(user);
-        log.debug("Created Information for User: {}", user);
+
         return user;
     }
 
@@ -303,6 +302,11 @@ public class UserService {
     @Transactional(readOnly = true)
     public Page<UserDTO> getAllPublicUsers(Pageable pageable) {
         return userRepository.findAllByIdNotNullAndActivatedIsTrue(pageable).map(UserDTO::new);
+    }
+
+    @Transactional(readOnly = true)
+    public User getUserById(Long id) {
+        return userRepository.findById(id).get();
     }
 
     @Transactional(readOnly = true)

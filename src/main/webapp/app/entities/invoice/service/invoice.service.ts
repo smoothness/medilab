@@ -33,6 +33,10 @@ export class InvoiceService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  payInvoice(id: number): Observable<any> {
+    return this.http.put(`${this.resourceUrl}/payment/${id}`, { observe: 'response' });
+  }
+
   partialUpdate(invoice: IInvoice): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(invoice);
     return this.http

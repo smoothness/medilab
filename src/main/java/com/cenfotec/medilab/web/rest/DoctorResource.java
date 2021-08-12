@@ -152,6 +152,12 @@ public class DoctorResource {
         return ResponseUtil.wrapOrNotFound(doctor);
     }
 
+    @GetMapping("/doctor/{id}")
+    public ResponseEntity<Doctor> getDoctorByInternalUser(@PathVariable Long id) {
+        Doctor doctor = doctorService.findByInternalUser(id);
+        return ResponseEntity.ok(doctor);
+    }
+
     /**
      * {@code DELETE  /doctors/:id} : delete the "id" doctor.
      *

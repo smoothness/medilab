@@ -2,11 +2,11 @@
   "medilabApp": {
     "doctor": {
       "home": {
-        "title": "Doctors",
+        "title": "Doctors list",
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Doctor",
         "createOrEditLabel": "Create or edit a Doctor",
-        "notFound": "No Doctors found"
+        "notFound": "No doctors found"
       },
       "created": "A new Doctor is created with identifier {{ param }}",
       "updated": "A Doctor is updated with identifier {{ param }}",
@@ -23,7 +23,12 @@
       "internalUser": "Internal User",
       "ratingUser": "Rating User",
       "commentUser": "Comment User",
-      "internalUser": "Internal User"
+      "internalUser": "Internal User",
+      "list": {
+        "completeName": "Doctor name",
+        "email": "Email",
+        "btnDate": "Request an appointment"
+      }
     }
   }
 }

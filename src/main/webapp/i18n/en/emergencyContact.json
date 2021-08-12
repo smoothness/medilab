@@ -17,12 +17,29 @@
       "detail": {
         "title": "Emergency Contact"
       },
+      "deleteConfirm": {
+        "title": "Are you sure?",
+        "text": "You won't be able to revert this.",
+        "confirmButtonText": "Confirm",
+        "cancelButtonText": "Cancel",
+        "titleSuccess": "Has been successfully removed."
+      },
       "id": "ID",
       "name": "Name",
       "phone": "Phone",
       "email": "Email",
-      "relationShip": "Relation Ship",
-      "patient": "Patient"
+      "relationShip": "Relationship",
+      "patient": "Patient",
+      "success": "Contact updated successfully.",
+      "error": "The contact could not be modified.",
+      "registerSuccess": "Contact has been successfully registered."
+    },
+    "deleteConfirm": {
+      "title": "Are you sure?",
+      "text": "You won't be able to revert this.",
+      "confirmButtonText": "Confirm",
+      "cancelButtonText": "Cancel",
+      "titleSuccess": "Has been successfully removed."
     }
   }
 }

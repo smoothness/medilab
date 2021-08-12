@@ -8,7 +8,7 @@
       "entities": {
         "main": "Entities",
         "patient": "Patient",
-        "doctor": "Doctor",
+        "doctor": "Doctors list",
         "appointment": "Appointment",
         "emergencyContact": "Emergency Contact",
         "treatment": "Treatment",
@@ -16,13 +16,15 @@
         "appointmentTreatmentAilment": "Appointment Treatment Ailment",
         "medicalExams": "Medical Exams",
         "invoice": "Invoice",
+        "invoices": "List of invoices",
         "lineComment": "Line Comment",
         "binnacle": "Binnacle",
         "rating": "Rating",
         "ratingUser": "Rating User",
         "comment": "Comment",
         "commentUser": "Comment User",
-        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
+        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
+        "ailmentReport": "Ailments report"
       },
       "account": {
         "main": "Account",
@@ -48,8 +50,8 @@
       "language": "Language"
     },
     "form": {
-      "username.label": "Username",
-      "username.placeholder": "Your username",
+      "identification.label": "Identification",
+      "identification.placeholder": "Your identification",
       "currentpassword.label": "Current password",
       "currentpassword.placeholder": "Current password",
       "newpassword.label": "New password",
@@ -57,7 +59,17 @@
       "confirmpassword.label": "New password confirmation",
       "confirmpassword.placeholder": "Confirm the new password",
       "email.label": "Email",
-      "email.placeholder": "Your email"
+      "email.placeholder": "Your email",
+      "name.label": "Name",
+      "name.placeholder": "Your name",
+      "lastname.label": "Lastname",
+      "lastname.placeholder": "Your lastname",
+      "secondlastname.label": "Second lastname",
+      "secondlastname.placeholder": "Your second lastname",
+      "phone.label": "Phone",
+      "phone.placeholder": "Your phone",
+      "relationship": "Relationship",
+      "userType": "Type of user"
     },
     "messages": {
       "info": {
@@ -152,5 +164,6 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     }
   },
+  "swalBtn": "Ok",
   "footer": "This is your footer"
 }

@@ -1,46 +1,50 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
-import { IEmergencyContact, EmergencyContact } from '../emergency-contact.model';
+import {ContactData, IEmergencyContact} from '../emergency-contact.model';
 import { EmergencyContactService } from '../service/emergency-contact.service';
 import { IPatient } from 'app/entities/patient/patient.model';
 import { PatientService } from 'app/entities/patient/service/patient.service';
+import { EmergencyFormComponent } from '../../../account/register/emergency-contact/emergency-form/emergency-form.component';
+import { SweetAlertService } from '../../../shared/services/sweet-alert.service';
 
 @Component({
   selector: 'medi-emergency-contact-update',
   templateUrl: './emergency-contact-update.component.html',
+  styleUrls: ['./emergency-contact-update.component.scss'],
 })
-export class EmergencyContactUpdateComponent implements OnInit {
+export class EmergencyContactUpdateComponent {
+  @ViewChild('formElement', { static: true, read: EmergencyFormComponent })
+  public container!: EmergencyFormComponent;
+  public emergencyContactData?: any;
+
   isSaving = false;
-
-  patientsSharedCollection: IPatient[] = [];
-
-  editForm = this.fb.group({
-    id: [],
-    name: [],
-    phone: [],
-    email: [],
-    relationShip: [],
-    patient: [],
-  });
 
   constructor(
     protected emergencyContactService: EmergencyContactService,
     protected patientService: PatientService,
     protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
+    public activeModal: NgbActiveModal,
+    protected fb: FormBuilder,
+    public sweetAlertService: SweetAlertService
   ) {}
 
-  ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ emergencyContact }) => {
-      this.updateForm(emergencyContact);
+  public get contactForm(): FormGroup {
+    return this.container.emergencyContactForm;
+  }
 
-      this.loadRelationshipsOptions();
-    });
+  public get contactData(): ContactData {
+    return <ContactData>this.contactForm.value;
+  }
+
+  setEmergencyContactData(emergencyContact: any): void {
+    this.emergencyContactData = emergencyContact;
+    this.container.addContactData(emergencyContact);
   }
 
   previousState(): void {
@@ -49,12 +53,17 @@ export class EmergencyContactUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
-    const emergencyContact = this.createFromForm();
-    if (emergencyContact.id !== undefined) {
-      this.subscribeToSaveResponse(this.emergencyContactService.update(emergencyContact));
-    } else {
-      this.subscribeToSaveResponse(this.emergencyContactService.create(emergencyContact));
-    }
+    this.overrideEmergencyContactData();
+    this.subscribeToSaveResponse(this.emergencyContactService.update(this.emergencyContactData));
+  }
+
+  overrideEmergencyContactData(): void {
+    this.emergencyContactData.relationShip = this.container.emergencyContactForm.value.relationship;
+    this.emergencyContactData.email = this.container.emergencyContactForm.value.email;
+    this.emergencyContactData.phone = this.container.emergencyContactForm.value.phone;
+    this.emergencyContactData.name = `${<string>this.container.emergencyContactForm.value.name} ${<string>(
+      this.container.emergencyContactForm.value.lastname
+    )} ${<string>this.container.emergencyContactForm.value.secondlastname}`;
   }
 
   trackPatientById(index: number, item: IPatient): number {
@@ -63,58 +72,20 @@ export class EmergencyContactUpdateComponent implements OnInit {
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IEmergencyContact>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
-      () => this.onSaveSuccess(),
-      () => this.onSaveError()
+      () => {
+        this.sweetAlertService.showMsjSuccess('reset.done', 'medilabApp.emergencyContact.success').then(() => {
+          this.activeModal.dismiss('Cross click');
+        });
+      },
+      () => {
+        this.sweetAlertService.showMsjError('register.messages.error.error', 'medilabApp.emergencyContact.error').then(() => {
+          this.activeModal.dismiss('Cross click');
+        });
+      }
     );
-  }
-
-  protected onSaveSuccess(): void {
-    this.previousState();
-  }
-
-  protected onSaveError(): void {
-    // Api for inheritance.
   }
 
   protected onSaveFinalize(): void {
     this.isSaving = false;
-  }
-
-  protected updateForm(emergencyContact: IEmergencyContact): void {
-    this.editForm.patchValue({
-      id: emergencyContact.id,
-      name: emergencyContact.name,
-      phone: emergencyContact.phone,
-      email: emergencyContact.email,
-      relationShip: emergencyContact.relationShip,
-      patient: emergencyContact.patient,
-    });
-
-    this.patientsSharedCollection = this.patientService.addPatientToCollectionIfMissing(
-      this.patientsSharedCollection,
-      emergencyContact.patient
-    );
-  }
-
-  protected loadRelationshipsOptions(): void {
-    this.patientService
-      .query()
-      .pipe(map((res: HttpResponse<IPatient[]>) => res.body ?? []))
-      .pipe(
-        map((patients: IPatient[]) => this.patientService.addPatientToCollectionIfMissing(patients, this.editForm.get('patient')!.value))
-      )
-      .subscribe((patients: IPatient[]) => (this.patientsSharedCollection = patients));
-  }
-
-  protected createFromForm(): IEmergencyContact {
-    return {
-      ...new EmergencyContact(),
-      id: this.editForm.get(['id'])!.value,
-      name: this.editForm.get(['name'])!.value,
-      phone: this.editForm.get(['phone'])!.value,
-      email: this.editForm.get(['email'])!.value,
-      relationShip: this.editForm.get(['relationShip'])!.value,
-      patient: this.editForm.get(['patient'])!.value,
-    };
   }
 }

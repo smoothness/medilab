@@ -67,8 +67,20 @@ public class AilmentServiceImpl implements AilmentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<Ailment> findAllPatientAilments(Long id) {
+        return ailmentRepository.findAllPatientAilments(id);
+    }
+
+    @Override
     public void delete(Long id) {
         log.debug("Request to delete Ailment : {}", id);
         ailmentRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Object> getAilmentsReport() {
+        return ailmentRepository.getAilmentsReport();
     }
 }

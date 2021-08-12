@@ -1,27 +1,23 @@
 {
   "medilabApp": {
     "medicalExams": {
-      "home": {
-        "title": "Medical Exams",
-        "refreshListLabel": "Refrescar lista",
-        "createLabel": "Crear nuevo Medical Exams",
-        "createOrEditLabel": "Crear o editar Medical Exams",
-        "notFound": "Ningún Medical Exams encontrado"
-      },
-      "created": "Un nuevo Medical Exams ha sido creado con el identificador {{ param }}",
-      "updated": "Un Medical Exams ha sido actualizado con el identificador {{ param }}",
-      "deleted": "Un Medical Exams ha sido eliminado con el identificador {{ param }}",
+      "register": "Registro de examen médico",
+      "update": "Modificación de examen médico",
+      "created": "Se ha registrado el examen médico exitosamente",
+      "updated": "Se ha actualizado el examen médico exitosamente",
+      "deleted": "Se ha eliminado el examen médico exitosamente",
       "delete": {
         "question": "¿Seguro que quiere eliminar Medical Exams {{ id }}?"
       },
       "detail": {
-        "title": "Medical Exams"
+        "title": "Exámenes médicos"
       },
       "id": "ID",
-      "name": "Name",
-      "description": "Description",
+      "name": "Nombre",
+      "description": "Descripción",
       "removed": "Removed",
-      "appointment": "Appointment"
+      "appointment": "Appointment",
+      "btnAdd": "Add medical exam"
     }
   }
 }

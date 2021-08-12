@@ -42,9 +42,6 @@ public class DoctorServiceImpl implements DoctorService {
                     if (doctor.getSpecialty() != null) {
                         existingDoctor.setSpecialty(doctor.getSpecialty());
                     }
-                    if (doctor.getActive() != null) {
-                        existingDoctor.setActive(doctor.getActive());
-                    }
 
                     return existingDoctor;
                 }
@@ -64,6 +61,12 @@ public class DoctorServiceImpl implements DoctorService {
     public Optional<Doctor> findOne(Long id) {
         log.debug("Request to get Doctor : {}", id);
         return doctorRepository.findById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Doctor findByInternalUser(Long id) {
+        return doctorRepository.findByInternalUser(id);
     }
 
     @Override

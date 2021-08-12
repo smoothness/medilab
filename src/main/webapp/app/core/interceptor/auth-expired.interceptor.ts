@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
-import { LoginService } from 'app/login/login.service';
+import { LoginService } from './../../login/service/login.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { AccountService } from 'app/core/auth/account.service';
 
@@ -28,7 +28,7 @@ export class AuthExpiredInterceptor implements HttpInterceptor {
             }
             this.stateStorageService.storeUrl(this.router.routerState.snapshot.url);
             this.loginService.logout();
-            this.router.navigate(['/login']);
+            this.router.navigate(['/']);
           }
         },
       })

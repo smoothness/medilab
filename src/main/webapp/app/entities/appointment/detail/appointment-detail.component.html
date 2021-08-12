@@ -1,48 +1,88 @@
-<div class="row justify-content-center">
-  <div class="col-8">
-    <div *ngIf="appointment">
-      <h2 data-cy="appointmentDetailsHeading"><span mediTranslate="medilabApp.appointment.detail.title">Appointment</span></h2>
-
-      <hr />
-
-      <medi-alert-error></medi-alert-error>
-
-      <medi-alert></medi-alert>
-
-      <dl class="row-md jh-entity-details">
-        <dt><span mediTranslate="global.field.id">ID</span></dt>
-        <dd>
-          <span>{{ appointment.id }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.appointment.date">Date</span></dt>
-        <dd>
-          <span>{{ appointment.date | formatMediumDate }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.appointment.status">Status</span></dt>
-        <dd>
-          <span mediTranslate="{{ 'medilabApp.Status.' + appointment.status }}">{{ appointment.status }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.appointment.patient">Patient</span></dt>
-        <dd>
-          <div *ngIf="appointment.patient">
-            <a [routerLink]="['/patient', appointment.patient?.id, 'view']">{{ appointment.patient?.id }}</a>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-8">
+      <div *ngIf="appointment">
+        <div class="card bg-dark">
+          <div class="card-header">
+            <h5 data-cy="appointmentDetailsHeading" mediTranslate="medilabApp.appointment.detail.title">Detalle de la cita</h5>
           </div>
-        </dd>
-        <dt><span mediTranslate="medilabApp.appointment.doctor">Doctor</span></dt>
-        <dd>
-          <div *ngIf="appointment.doctor">
-            <a [routerLink]="['/doctor', appointment.doctor?.id, 'view']">{{ appointment.doctor?.id }}</a>
+          <div class="card-body">
+            <ul class="list-group" *ngIf="appointment.userType === 'doctor'">
+              <li class="list-group-item">
+                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.date">Fecha: </span>
+                <span>{{ appointment.date | formatMediumDate }}</span>
+              </li>
+              <li class="list-group-item">
+                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.status">Estado de la cita: </span>
+                <span>{{ appointment.status | status}}</span>
+              </li>
+              <li class="list-group-item">
+                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.patient">Paciente: </span>
+                <a [routerLink]="['/main/patient', appointment.patient?.id, 'view']">
+                  {{ appointment.patient?.internalUser?.completeName }} {{ appointment.patient?.secondSurname }}
+                </a>
+              </li>
+              <li class="list-group-item">
+                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.phone">Teléfono: </span>
+                <span>{{ appointment.patient?.phone }}</span>
+              </li>
+              <li class="list-group-item">
+                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.email">Correo electrónico: </span>
+                <span>{{ appointment.patient?.internalUser?.email }}</span>
+              </li>
+            </ul>
+            <ul class="list-group" *ngIf="appointment.userType === 'patient'">
+              <li class="list-group-item">
+                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.date">Fecha: </span>
+                <span>{{ appointment.date | formatMediumDate }}</span>
+              </li>
+              <li class="list-group-item">
+                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.status">Estado de la cita: </span>
+                <span>{{ appointment.status | status }}</span>
+              </li>
+              <li class="list-group-item">
+                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.doctor">Doctor: </span>
+                <a [routerLink]="['/main/doctor', appointment.doctor?.id, 'view']">
+                  {{ appointment.doctor.internalUser?.completeName }} {{ appointment.doctor.secondSurname }}
+                </a>
+              </li>
+              <li class="list-group-item">
+                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.specialty">Especialidad: </span>
+                <span> {{ appointment.doctor?.specialty }}</span>
+              </li>
+              <li class="list-group-item">
+                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.phone">Teléfono: </span>
+                <span>{{ appointment.doctor.phone }}</span>
+              </li>
+              <li class="list-group-item">
+                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.email">Correo electrónico: </span>
+                <span>{{ appointment.doctor.internalUser?.email }}</span>
+              </li>
+            </ul>
           </div>
-        </dd>
-      </dl>
 
-      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span mediTranslate="entity.action.back">Back</span>
-      </button>
+          <div class="card-footer">
+            <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+              <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span mediTranslate="entity.action.back">Back</span>
+            </button>
 
-      <button type="button" [routerLink]="['/appointment', appointment.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span mediTranslate="entity.action.edit">Edit</span>
-      </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="showRegisterMedicalExamModal()"
+              *ngIf="showAddMedicalExam(appointment.status)">
+              <fa-icon icon="plus"></fa-icon>
+              <span mediTranslate="medilabApp.medicalExams.btnAdd">add</span>
+            </button>
+          </div>
+        </div>
+        <!-- close card -->
+      </div>
     </div>
+
+    <div class="col-8 mt-4" *ngIf="medicalExams.length > 0">
+      <medi-medical-exams [medicalExams]="medicalExams" [showButtons]="showButtons" (updateList)="loadMedicalExams($event)"></medi-medical-exams>
+    </div>
+
   </div>
 </div>

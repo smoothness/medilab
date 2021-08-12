@@ -1,58 +1,105 @@
-<div class="row justify-content-center">
-  <div class="col-8">
-    <div *ngIf="invoice">
-      <h2 data-cy="invoiceDetailsHeading"><span mediTranslate="medilabApp.invoice.detail.title">Invoice</span></h2>
+<div class="container">
+  <div class="row" id="pdfTable" #pdfTable>
+    <div class="col-10 card bg-dark my-4 mx-auto">
+      <div class="my-4">
+        <div class="mx-auto text-center">
+          <h4 data-cy="patientDetailsHeading" mediTranslate="medilabApp.invoice.invoiceNumber"></h4>
+          <h4>{{ invoice?.id }}</h4>
+        </div>
 
-      <hr />
-
-      <medi-alert-error></medi-alert-error>
-
-      <medi-alert></medi-alert>
-
-      <dl class="row-md jh-entity-details">
-        <dt><span mediTranslate="global.field.id">ID</span></dt>
-        <dd>
-          <span>{{ invoice.id }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.invoice.date">Date</span></dt>
-        <dd>
-          <span>{{ invoice.date | formatMediumDate }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.invoice.subtotal">Subtotal</span></dt>
-        <dd>
-          <span>{{ invoice.subtotal }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.invoice.taxes">Taxes</span></dt>
-        <dd>
-          <span>{{ invoice.taxes }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.invoice.discount">Discount</span></dt>
-        <dd>
-          <span>{{ invoice.discount }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.invoice.total">Total</span></dt>
-        <dd>
-          <span>{{ invoice.total }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.invoice.status">Status</span></dt>
-        <dd>
-          <span mediTranslate="{{ 'medilabApp.Status.' + invoice.status }}">{{ invoice.status }}</span>
-        </dd>
-        <dt><span mediTranslate="medilabApp.invoice.appointment">Appointment</span></dt>
-        <dd>
-          <div *ngIf="invoice.appointment">
-            <a [routerLink]="['/appointment', invoice.appointment?.id, 'view']">{{ invoice.appointment?.id }}</a>
+      <div class="float-right m-top">
+        <button
+          id="btnPdf"
+          class="btn btn-primary"
+          *ngIf="isVisible"
+          mediTranslate="medilabApp.invoice.download"
+          (click)="downloadInvoiceAsPDF()"
+        >
+          Export To PDF
+        </button>
+      </div>
+      </div>
+      <div class="card-body">
+        <div class="col-12">
+          <div class="text-center mb-4">
+            <h4 mediTranslate="medilabApp.invoice.invoiceDetail"></h4>
           </div>
-        </dd>
-      </dl>
+          <div class="text-center mb-4">
+            <h4 class="text-primary" mediTranslate="medilabApp.invoice.status"></h4>
+            <h5 *ngIf="invoice">{{ invoice.status | invoicePipe }}</h5>
+          </div>
+          <div class="table-responsive col-5 mx-auto text-center">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <td scope="row" class="text-primary font-weight-bold" mediTranslate="medilabApp.invoice.date"></td>
+                  <td id="invoiceDate">{{ invoice.date | formatMediumDate }}</td>
+                </tr>
+                <tr>
+                  <td scope="row" class="text-primary font-weight-bold" mediTranslate="home.profile.phone"></td>
+                  <td>{{ patient.internalUser?.completeName }} {{ patient.secondSurname }}</td>
+                </tr>
+                <tr>
+                  <td scope="row" class="text-primary font-weight-bold" mediTranslate="home.profile.email"></td>
+                  <td>{{ patient.internalUser?.login }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span mediTranslate="entity.action.back">Back</span>
-      </button>
+        <div class="col-12">
+          <div class="text-center my-4">
+            <h4 mediTranslate="medilabApp.invoice.lineComment"></h4>
+          </div>
+          <div class="table-responsive col-5 mx-auto text-center">
+            <table class="table table-bordered">
+              <thead>
+                <td class="text-primary font-weight-bold" mediTranslate="medilabApp.invoice.quantity"></td>
+                <td class="text-primary font-weight-bold" mediTranslate="medilabApp.invoice.description"></td>
+                <td class="text-primary font-weight-bold" mediTranslate="medilabApp.invoice.unitPrice"></td>
+              </thead>
+              <tbody>
+                <tr *ngFor="let lineComment of invoice.lineComments">
+                  <td>{{ lineComment.quantity }}</td>
+                  <td>{{ lineComment.description }}</td>
+                  <td>$ {{ lineComment.unitPrice }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div></div>
+          </div>
+        </div>
 
-      <button type="button" [routerLink]="['/invoice', invoice.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span mediTranslate="entity.action.edit">Edit</span>
-      </button>
+        <div class="col-12">
+          <div id="totalDetail" class="table-responsive mr-0 col-5 mx-auto">
+            <table class="table table-bordered text-center">
+              <tbody>
+                <tr>
+                  <td scope="row" class="text-primary font-weight-bold" mediTranslate="medilabApp.invoice.subtotal"></td>
+                  <td *ngIf="invoice">$ {{ invoice.subtotal }}</td>
+                </tr>
+                <tr>
+                  <td scope="row" class="text-primary font-weight-bold" mediTranslate="medilabApp.invoice.taxes"></td>
+                  <td *ngIf="invoice">$ {{ invoice.taxes }}</td>
+                </tr>
+                <tr>
+                  <td scope="row" class="text-primary font-weight-bold" mediTranslate="medilabApp.invoice.total"></td>
+                  <td *ngIf="invoice">$ {{ invoice.total }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="col-12">
+
+        </div>
+
+        <div *ngIf="validateShow()">
+          <medi-payment-component [invoice]="invoice" (confirmPayment)="setInvoiceStatus($event)"></medi-payment-component>
+        </div>
+      </div>
     </div>
   </div>
 </div>

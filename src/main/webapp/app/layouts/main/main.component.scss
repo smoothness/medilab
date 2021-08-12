@@ -1,0 +1,14 @@
+@import '../../../content/scss/bootstrap-variables';
+
+.ml-layout {
+  display: flex;
+}
+
+.ml-nav {
+  height: 100vh;
+}
+
+.ml-main {
+  color: $white;
+  padding: 2rem;
+}

@@ -1,0 +1,209 @@
+<form name="emergencyContactForm" class="border-bottom py-3" role="form" autocomplete="on" [formGroup]="emergencyContactForm">
+  <div class="text-center" *ngIf="!showTitleCount">
+    <h3 class="text-primary" mediTranslate="register.form.addContact">Register contact</h3>
+  </div>
+
+  <div class="text-center" *ngIf="showTitleCount">
+    <h3 class="text-primary"><span mediTranslate="register.form.contact">Contact</span> {{ index + 1 }}</h3>
+  </div>
+
+  <!-- Name & LastName -->
+  <div class="form-row">
+    <!-- Name -->
+    <div class="form-group col-md-6">
+      <label class="form-control-label" for="name" mediTranslate="global.form.name.label">Nombre</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        placeholder="{{ 'global.form.name.placeholder' | translate }}"
+        formControlName="name"
+        data-cy="name"
+      />
+
+      <!-- Errors -->
+      <div
+        *ngIf="
+          emergencyContactForm.get('name')!.invalid &&
+          (emergencyContactForm.get('name')!.dirty || emergencyContactForm.get('name')!.touched)
+        "
+      >
+        <small
+          class="form-text text-danger"
+          *ngIf="emergencyContactForm.get('name')?.errors?.required"
+          mediTranslate="register.messages.validate.name.required"
+        >
+          Your name is required.
+        </small>
+      </div>
+    </div>
+
+    <!-- Lastname -->
+    <div class="form-group col-md-6">
+      <label class="form-control-label" for="lastname" mediTranslate="global.form.lastname.label">Apellido</label>
+      <input
+        type="text"
+        class="form-control"
+        id="lastname"
+        name="lastname"
+        placeholder="{{ 'global.form.lastname.placeholder' | translate }}"
+        formControlName="lastname"
+        data-cy="lastname"
+      />
+
+      <!-- Errors -->
+      <div
+        *ngIf="
+          emergencyContactForm.get('lastname')!.invalid &&
+          (emergencyContactForm.get('lastname')!.dirty || emergencyContactForm.get('lastname')!.touched)
+        "
+      >
+        <small
+          class="form-text text-danger"
+          *ngIf="emergencyContactForm.get('lastname')?.errors?.required"
+          mediTranslate="register.messages.validate.lastName.required"
+        >
+          Your name is required.
+        </small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Second Last Name & Phone -->
+  <div class="form-row">
+    <!-- Second Lastname -->
+    <div class="form-group col-md-6">
+      <label class="form-control-label" for="secondLastname" mediTranslate="global.form.secondlastname.label">Segundo apellido</label>
+      <input
+        type="text"
+        class="form-control"
+        id="secondlastname"
+        name="secondlastname"
+        formControlName="secondlastname"
+        data-cy="secondlastname"
+      />
+    </div>
+
+    <!-- Phone -->
+    <div class="form-group col-md-6">
+      <label class="form-control-label" for="phone" mediTranslate="global.form.phone.label">Teléfono</label>
+      <input
+        type="phone"
+        class="form-control"
+        id="phone"
+        name="phone"
+        placeholder="{{ 'global.form.phone.placeholder' | translate }}"
+        formControlName="phone"
+        data-cy="phone"
+      />
+
+      <!-- Errors -->
+      <div
+        *ngIf="
+          emergencyContactForm.get('phone')!.invalid &&
+          (emergencyContactForm.get('phone')!.dirty || emergencyContactForm.get('phone')!.touched)
+        "
+      >
+        <small
+          class="form-text text-danger"
+          *ngIf="emergencyContactForm.get('phone')?.errors?.required"
+          mediTranslate="register.messages.validate.phone.required"
+        >
+          Your name is required.
+        </small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email -->
+  <div class="form-group">
+    <label class="form-control-label" for="email" mediTranslate="global.form.email.label">Correo electrónico</label>
+    <input
+      type="email"
+      class="form-control"
+      id="email"
+      name="email"
+      placeholder="{{ 'global.form.email.placeholder' | translate }}"
+      formControlName="email"
+      data-cy="email"
+    />
+
+    <!-- Errors -->
+    <div
+      *ngIf="
+        emergencyContactForm.get('email')!.invalid &&
+        (emergencyContactForm.get('email')!.dirty || emergencyContactForm.get('email')!.touched)
+      "
+    >
+      <small
+        class="form-text text-danger"
+        *ngIf="emergencyContactForm.get('email')?.errors?.required"
+        mediTranslate="global.messages.validate.email.required"
+      >
+        Your email is required.
+      </small>
+
+      <small
+        class="form-text text-danger"
+        *ngIf="emergencyContactForm.get('email')?.errors?.invalid"
+        mediTranslate="global.messages.validate.email.invalid"
+      >
+        Your email is invalid.
+      </small>
+
+      <small
+        class="form-text text-danger"
+        *ngIf="emergencyContactForm.get('email')?.errors?.minlength"
+        mediTranslate="global.messages.validate.email.minlength"
+      >
+        Your email is required to be at least 5 characters.
+      </small>
+
+      <small
+        class="form-text text-danger"
+        *ngIf="emergencyContactForm.get('email')?.errors?.maxlength"
+        mediTranslate="global.messages.validate.email.maxlength"
+      >
+        Your email cannot be longer than 100 characters.
+      </small>
+    </div>
+  </div>
+
+  <!-- Relationship -->
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <label class="form-control-label" for="relationshipTxt" mediTranslate="global.form.relationship">Parentesco</label>
+
+      <input
+        type="text"
+        class="form-control"
+        id="relationshipTxt"
+        name="relationship"
+        formControlName="relationship"
+        data-cy="relationship"
+      />
+
+      <div
+        *ngIf="
+          emergencyContactForm.get('relationship')!.invalid &&
+          (emergencyContactForm.get('relationship')!.dirty || emergencyContactForm.get('relationship')!.touched)
+        "
+      >
+        <small
+          class="form-text text-danger"
+          *ngIf="emergencyContactForm.get('relationship')?.errors?.required"
+          mediTranslate="register.messages.validate.relationship.required"
+        >
+          Your relationship is required.
+        </small>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <button class="btn btn-danger" (click)="removeContact()" mediTranslate="register.form.delContact" *ngIf="index !== 0">
+      Delete contact
+    </button>
+  </div>
+</form>

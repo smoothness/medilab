@@ -2,27 +2,37 @@
   "medilabApp": {
     "emergencyContact": {
       "home": {
-        "title": "Emergency Contacts",
+        "title": "Contacto en caso de una emergencia",
         "refreshListLabel": "Refrescar lista",
-        "createLabel": "Crear nuevo Emergency Contact",
-        "createOrEditLabel": "Crear o editar Emergency Contact",
-        "notFound": "Ningún Emergency Contacts encontrado"
+        "createLabel": "Crear un nuevo contactos de emergencia",
+        "createOrEditLabel": "Crear o editar un contacto de emergencia",
+        "notFound": "Ningún contacto de emergencia se ha encontrado"
       },
-      "created": "Un nuevo Emergency Contact ha sido creado con el identificador {{ param }}",
-      "updated": "Un Emergency Contact ha sido actualizado con el identificador {{ param }}",
-      "deleted": "Un Emergency Contact ha sido eliminado con el identificador {{ param }}",
+      "created": "Un nuevo contacto de emergencia ha sido creado con el identificador {{ param }}",
+      "updated": "Un contacto de emergencia ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un contacto de emergencia ha sido eliminado con el identificador {{ param }}",
       "delete": {
-        "question": "¿Seguro que quiere eliminar Emergency Contact {{ id }}?"
+        "question": "¿Seguro que quiere eliminar contacto de emergencia {{ id }}?"
       },
       "detail": {
-        "title": "Emergency Contact"
+        "title": "Contacto en caso de una emergencia"
       },
       "id": "ID",
-      "name": "Name",
-      "phone": "Phone",
-      "email": "Email",
-      "relationShip": "Relation Ship",
-      "patient": "Patient"
+      "name": "Nombre",
+      "phone": "Teléfono",
+      "email": "Correo electrónico",
+      "relationShip": "Parentesco",
+      "patient": "Paciente",
+      "success": "Contacto actualizado exitosamente.",
+      "error": "No se pudo modificar el contacto.",
+      "registerSuccess": "El contacto se ha registrado exitosamente."
+    },
+    "deleteConfirm": {
+      "title": "¿Está seguro?",
+      "text": "No podrá revertir esto",
+      "confirmButtonText": "Confirmar",
+      "cancelButtonText": "Cancelar",
+      "titleSuccess": "Se ha eliminado exitosamente."
     }
   }
 }

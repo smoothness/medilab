@@ -39,6 +39,8 @@ public interface DoctorService {
      */
     Optional<Doctor> findOne(Long id);
 
+    Doctor findByInternalUser(Long id);
+
     /**
      * Delete the "id" doctor.
      *

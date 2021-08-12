@@ -146,6 +146,7 @@ public class AppointmentTreatmentAilmentResource {
         return appointmentTreatmentAilmentService.findAll();
     }
 
+
     /**
      * {@code GET  /appointment-treatment-ailments/:id} : get the "id" appointmentTreatmentAilment.
      *

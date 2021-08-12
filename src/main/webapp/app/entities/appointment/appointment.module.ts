@@ -5,10 +5,26 @@ import { AppointmentDetailComponent } from './detail/appointment-detail.componen
 import { AppointmentUpdateComponent } from './update/appointment-update.component';
 import { AppointmentDeleteDialogComponent } from './delete/appointment-delete-dialog.component';
 import { AppointmentRoutingModule } from './route/appointment-routing.module';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { MedicalExamsModule } from "../medical-exams/medical-exams.module";
+import { AppointmentHistoryComponent } from './history/appointment-history.component';
+import { StatusPipe } from './pipe/status.pipe';
 
 @NgModule({
-  imports: [SharedModule, AppointmentRoutingModule],
-  declarations: [AppointmentComponent, AppointmentDetailComponent, AppointmentUpdateComponent, AppointmentDeleteDialogComponent],
+  imports: [
+    SharedModule,
+    AppointmentRoutingModule,
+    SweetAlert2Module,
+    MedicalExamsModule,
+  ],
+  declarations: [
+    AppointmentComponent,
+    AppointmentDetailComponent,
+    AppointmentUpdateComponent,
+    AppointmentDeleteDialogComponent,
+    AppointmentHistoryComponent,
+    StatusPipe,
+  ],
   entryComponents: [AppointmentDeleteDialogComponent],
 })
 export class AppointmentModule {}

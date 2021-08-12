@@ -158,6 +158,12 @@ public class EmergencyContactResource {
         return ResponseUtil.wrapOrNotFound(emergencyContact);
     }
 
+    @GetMapping("/emergency-contacts-patient/{id}")
+    public ResponseEntity<List<EmergencyContact>> getEmergencyContactByPatientId(@PathVariable Long id) {
+        List<EmergencyContact> emergencyContacts = emergencyContactService.findByPatientId(id);
+        return ResponseEntity.ok(emergencyContacts);
+    }
+
     /**
      * {@code DELETE  /emergency-contacts/:id} : delete the "id" emergencyContact.
      *

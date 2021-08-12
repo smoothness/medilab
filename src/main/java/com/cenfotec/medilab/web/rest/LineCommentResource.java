@@ -142,6 +142,17 @@ public class LineCommentResource {
     }
 
     /**
+     * {@code GET  /line-comments} : get all the lineComments for an invoice.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of lineComments in body.
+     */
+    @GetMapping("/line-comments/{id}/detail")
+    public ResponseEntity<List<LineComment>> findInvoiceLines(@PathVariable Long id) {
+        List<LineComment> lineComment = lineCommentService.findInvoiceLines(id);
+        return ResponseEntity.ok(lineComment);
+    }
+
+    /**
      * {@code GET  /line-comments/:id} : get the "id" lineComment.
      *
      * @param id the id of the lineComment to retrieve.

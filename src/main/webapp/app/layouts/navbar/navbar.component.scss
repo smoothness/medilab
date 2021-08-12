@@ -1,5 +1,6 @@
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
+@import '../../../content/scss/bootstrap-variables';
 
 /* ==========================================================================
 Navbar
@@ -16,7 +17,7 @@ Navbar
 }
 
 .navbar {
-  padding: 0.2rem 1rem;
+  height: 90vh !important;
 
   ul.navbar-nav {
     .nav-item {
@@ -29,6 +30,13 @@ Navbar
   }
 }
 
+.active,
+.list-group-item-dark.list-group-item-action:hover,
+.list-group-item-dark.list-group-item-action:focus{
+  background-color: $secondary !important;
+  color: $brand-light !important;
+}
+
 /* ==========================================================================
 Logo styles
 ========================================================================== */
@@ -39,4 +47,18 @@ Logo styles
   vertical-align: middle;
   background: url('../../../content/images/logo-jhipster.png') no-repeat center center;
   background-size: contain;
+}
+
+.ml-navbar {
+  display: block;
+  height: 100%;
+}
+
+.ml-navbar-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar-nav a {
+  font-size: 0.8rem;
 }

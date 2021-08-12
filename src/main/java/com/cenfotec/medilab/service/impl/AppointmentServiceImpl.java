@@ -67,6 +67,37 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<Appointment> findDoctorAppointments(Long id) {
+        log.debug("Request to get Appointment : {}", id);
+        return appointmentRepository.findByDoctorAppointments(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Appointment> findPatientAppointments(Long id) {
+        return appointmentRepository.findByPatientAppointments(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Appointment> findAppointmentHistoryPatient(Long id) {
+        return appointmentRepository.findAppointmentHistoryPatient(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Appointment> findAppointmentHistoryDoctor(Long id) {
+        return appointmentRepository.findAppointmentHistoryDoctor(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Appointment> findAppointmentsHistory() {
+        return appointmentRepository.findAppointmentsHistory();
+    }
+
+    @Override
     public void delete(Long id) {
         log.debug("Request to delete Appointment : {}", id);
         appointmentRepository.deleteById(id);

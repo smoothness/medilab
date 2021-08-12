@@ -1,23 +1,45 @@
 {
   "register": {
-    "title": "Registro",
+    "title": "Crear cuenta",
+    "tabs": {
+      "personalInfo": "Información personal",
+      "contactInfo": "Información de contacto",
+      "emergencyContact": "Contacto de emergencia"
+    },
     "form": {
-      "button": "Crear la cuenta"
+      "step": "Paso",
+      "of": "de",
+      "button": "Registrar",
+      "next": "Siguiente",
+      "previous": "Anterior",
+      "contact": "Contacto",
+      "addContact": "Añadir contacto de emergencia",
+      "delContact": "Eliminar contacto",
+      "specialty": "Especialidad",
+      "doctorCode": "Código de médico"
     },
     "messages": {
       "validate": {
         "login": {
-          "required": "Su nombre de usuario es obligatorio.",
-          "minlength": "Su nombre de usuario debe tener al menos 1 caracter.",
-          "maxlength": "Su nombre de usuario no puede tener más de 50 caracteres.",
-          "pattern": "Su nombre de usuario no es válido."
-        }
+          "required": "Se requiere la identificación.",
+          "minlength": "La identificación debe tener al menos 9 caracter.",
+          "maxlength": "La identificación no puede tener más de 50 caracteres.",
+          "pattern": "La identificación no es válida."
+        },
+        "name": { "required": "Se requiere un nombre." },
+        "lastName": { "required": "Se requiere un apellido." },
+        "phone": { "required": "Se requiere un número teléfonico." },
+        "email": { "required": "Se requiere un correo electrónico." },
+        "relationship": { "required": "Se requiere un parentesco." }
       },
-      "success": "<strong>¡Registro guardado!</strong> Por favor, revise su correo electrónico para confirmar.",
+      "success": "¡Registro realizado exitosamente!",
+      "emailConfirm": " Por favor, revise su correo electrónico para confirmar.",
+      "successInternal": "",
       "error": {
-        "fail": "<strong>¡El registro ha fallado!</strong> Por favor, inténtelo de nuevo más tarde.",
-        "userexists": "<strong>¡El nombre de usuario ya está registrado!</strong> Por favor, escoja otro usuario.",
-        "emailexists": "<strong>¡El correo electrónico ya está en uso!</strong> Por favor, escoja otro email."
+        "error": "Ha ocurrido un error.",
+        "fail": "¡El registro ha fallado! Por favor, inténtelo de nuevo más tarde.",
+        "userexists": "¡La identificación ya está registrada!",
+        "emailexists": "¡El correo electrónico ya está en uso! Por favor, escoja otro correo electrónico."
       }
     }
   }

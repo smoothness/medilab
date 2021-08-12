@@ -1,23 +1,132 @@
 /* ==========================================================================
 Main page styles
 ========================================================================== */
+@import '../../content/scss/bootstrap-variables';
 
-.hipster {
-  display: inline-block;
-  width: 347px;
-  height: 497px;
-  background: url('../../content/images/jhipster_family_member_0.svg') no-repeat center top;
-  background-size: contain;
+/* PROFILE */
+.ml-profile {
+  margin-top: 1em;
+
+  &__top {
+    display: flex;
+    padding-top: rem;
+
+    > div {
+      flex: 0 0 calc(50% - 0.5rem);
+
+      &:first-child {
+        margin-right: 1rem;
+
+        p {
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  &__user-text {
+    color: $brand-light;
+  }
+
+  &__agenda {
+    li {
+      align-items: center;
+      display: flex;
+
+      > div:not(:last-of-type) {
+        display: flex;
+        flex-direction: column;
+
+        time {
+          color: $brand;
+          font-size: 0.75rem;
+        }
+      }
+
+      > svg {
+        margin-right: 1rem;
+      }
+
+      a {
+        margin-left: auto;
+      }
+
+      button {
+        margin-left: auto;
+      }
+    }
+  }
+
+  &__appointment-patient-info,
+  &__appointment-doctor-info {
+    align-items: center;
+    display: flex;
+  }
+
+  &__appointment-patient-info-ctas {
+    display: flex;
+    margin-left: auto;
+  }
 }
 
-/* wait autoprefixer update to allow simple generation of high pixel density media query */
-@media only screen and (-webkit-min-device-pixel-ratio: 2),
-  only screen and (-moz-min-device-pixel-ratio: 2),
-  only screen and (-o-min-device-pixel-ratio: 2/1),
-  only screen and (min-resolution: 192dpi),
-  only screen and (min-resolution: 2dppx) {
-  .hipster {
-    background: url('../../content/images/jhipster_family_member_0.svg') no-repeat center top;
-    background-size: contain;
+.card-body {
+  flex: 0 0 auto;
+
+  p {
+    font-size: 0.875rem;
+  }
+
+  .info-title {
+    color: $brand;
+    font-weight: bold;
+    margin: 0;
+  }
+}
+
+/* Modal */
+
+.modal-content {
+  margin-top: 6rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #101010 !important;
+
+  .card-header,
+  b,
+  span {
+    color: #fff;
+  }
+
+  span {
+    margin-left: auto;
+  }
+}
+
+/* Ailments */
+
+.ml-ailment {
+  margin-top: 1em;
+
+  svg {
+    margin-right: 1rem;
+  }
+
+  button {
+    margin-left: auto;
+  }
+
+  li {
+    align-items: center;
+    display: flex;
+  }
+}
+
+.change-date-modal {
+  &__button-container {
+    margin-top: 1rem;
+
+    button {
+      width: 100%;
+    }
   }
 }

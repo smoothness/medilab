@@ -2,25 +2,31 @@
   "medilabApp": {
     "ailment": {
       "home": {
-        "title": "Ailments",
+        "title": "Lista de padecimientos",
         "refreshListLabel": "Refrescar lista",
-        "createLabel": "Crear nuevo Ailment",
-        "createOrEditLabel": "Crear o editar Ailment",
-        "notFound": "Ningún Ailments encontrado"
+        "createLabel": "Crear nuevo padecimiento",
+        "createOrEditLabel": "Crear o editar padecimiento",
+        "notFound": "Ningún padecimiento encontrado"
       },
-      "created": "Un nuevo Ailment ha sido creado con el identificador {{ param }}",
-      "updated": "Un Ailment ha sido actualizado con el identificador {{ param }}",
-      "deleted": "Un Ailment ha sido eliminado con el identificador {{ param }}",
+      "created": "El padecimiento se ha registrado  exitosamente",
+      "updated": "El padecimiento se ha actualizado exitosamente",
+      "deleted": "El padecimiento se ha eliminado exitosamente",
       "delete": {
-        "question": "¿Seguro que quiere eliminar Ailment {{ id }}?"
+        "question": "¿Seguro que quiere eliminar el padecimiento {{ id }}?"
       },
-      "detail": {
-        "title": "Ailment"
-      },
+      "title": "Padecimientos",
       "id": "ID",
-      "name": "Name",
-      "removed": "Removed",
-      "appointmentTreatmentAilment": "Appointment Treatment Ailment"
+      "name": "Nombre",
+      "removed": "Activo",
+      "appointmentTreatmentAilment": "Appointment Treatment Ailment",
+      "active": "Sí",
+      "inactive": "No",
+      "activate": "Activar",
+      "deactivate": "Desactivar",
+      "ailmentName": "Nombre del padecimiento",
+      "quantityPatients": "Cantidad de pacientes",
+      "detail": "Detalle",
+      "viewReport": "Ver pacientes"
     }
   }
 }

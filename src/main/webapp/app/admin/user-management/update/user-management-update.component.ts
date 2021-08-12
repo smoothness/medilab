@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { LANGUAGES } from 'app/config/language.constants';
 import { User } from '../user-management.model';
 import { UserManagementService } from '../service/user-management.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'medi-user-mgmt-update',
@@ -35,7 +36,12 @@ export class UserManagementUpdateComponent implements OnInit {
     authorities: [],
   });
 
-  constructor(private userService: UserManagementService, private route: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    private userService: UserManagementService,
+    private route: ActivatedRoute,
+    private fb: FormBuilder,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit(): void {
     this.route.data.subscribe(({ user }) => {

@@ -3,7 +3,6 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as dayjs from 'dayjs';
-
 import { isPresent } from 'app/core/util/operators';
 import { DATE_FORMAT } from 'app/config/input.constants';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
@@ -46,6 +45,26 @@ export class AppointmentService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  findDoctorAppointments(doctorId: number): Observable<EntityResponseType> {
+    return this.http.get<IAppointment>(`${this.resourceUrl}-doctor/${doctorId}`, { observe: 'response' });
+  }
+
+  findDoctorAppointmentsHistory(doctorId: number): Observable<EntityResponseType> {
+    return this.http.get<IAppointment>(`${this.resourceUrl}-doctor/history/${doctorId}`, { observe: 'response' });
+  }
+
+  findPatientAppointments(patientId: number): Observable<EntityResponseType> {
+    return this.http.get<IAppointment>(`${this.resourceUrl}-patient/${patientId}`, { observe: 'response' });
+  }
+
+  findPatientAppointmentsHistory(patientId: number): Observable<EntityResponseType> {
+    return this.http.get<IAppointment>(`${this.resourceUrl}-patient/history/${patientId}`, { observe: 'response' });
+  }
+
+  findAppointmentsHistory(): Observable<EntityResponseType> {
+    return this.http.get<IAppointment>(`${this.resourceUrl}/history`, { observe: 'response' });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
@@ -78,8 +97,9 @@ export class AppointmentService {
   }
 
   protected convertDateFromClient(appointment: IAppointment): IAppointment {
+    appointment.date = dayjs(String(appointment.date));
     return Object.assign({}, appointment, {
-      date: appointment.date?.isValid() ? appointment.date.format(DATE_FORMAT) : undefined,
+      date: appointment.date.isValid() ? appointment.date.format(DATE_FORMAT) : undefined,
     });
   }
 
