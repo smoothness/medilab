@@ -7,6 +7,7 @@ import { IMedicalExams } from '../../medical-exams/medical-exams.model';
 import { MedicalExamsService } from '../../medical-exams/service/medical-exams.service';
 import { AccountService } from '../../../core/auth/account.service';
 import { Doctor, Patient } from '../../../core/auth/account.model';
+import { LineCommentUpdateComponent } from 'app/entities/line-comment/update/line-comment-update.component';
 
 @Component({
   selector: 'medi-appointment-detail',
@@ -66,7 +67,7 @@ export class AppointmentDetailComponent implements OnInit {
   }
 
   public showRegisterInvoiceModal(): void {
-    const modalRef = this.modalService.open(MedicalExamnsRegisterComponent, { centered: true });
+    const modalRef = this.modalService.open(LineCommentUpdateComponent, { centered: true });
     modalRef.componentInstance.appointment = this.appointment;
     modalRef.closed.subscribe(reason => {
       if (reason === 'register') {

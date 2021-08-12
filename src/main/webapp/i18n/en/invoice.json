@@ -4,7 +4,7 @@
       "home": {
         "title": "Invoices",
         "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Invoice",
+        "createLabel": "Register of an invoice",
         "createOrEditLabel": "Create or edit a Invoice",
         "notFound": "No invoices found"
       },

@@ -4,7 +4,7 @@
       "home": {
         "title": "Facturas",
         "refreshListLabel": "Refrescar lista",
-        "createLabel": "Crear nueva factura",
+        "createLabel": "Registro de la factura",
         "createOrEditLabel": "Crear o editar factura",
         "notFound": "Ninguna factura ha sido encontrada"
       },
