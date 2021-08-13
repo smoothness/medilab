@@ -11,6 +11,7 @@ import { IInvoice } from 'app/entities/invoice/invoice.model';
 import { InvoiceService } from 'app/entities/invoice/service/invoice.service';
 import * as dayjs from 'dayjs';
 import { Status } from '../../enumerations/status.model';
+import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
 
 @Component({
   selector: 'medi-line-comment-update',
@@ -38,7 +39,8 @@ export class LineCommentUpdateComponent {
     protected lineCommentService: LineCommentService,
     protected invoiceService: InvoiceService,
     protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
+    protected appointmentService: AppointmentService
   ) {}
 
   previousState(): void {
@@ -48,47 +50,36 @@ export class LineCommentUpdateComponent {
   saveComment(): void {
     this.isSaving = true;
     const lineComment = this.createFromForm();
-    if (lineComment.id !== undefined) {
-      this.subscribeToSaveResponseInvoice(this.lineCommentService.update(lineComment));
-    } else {
-      //La fecha por defecto es la del sistema a la hora de crear la factura
-      const now = dayjs();
-      this.invoice.date = now;
-      //al ser una factura nueva el status por defecto debe ser PENDING
-      this.invoice.status = Status.PENDING;
-      this.invoice.appointment = this.appointment;
+    //La fecha por defecto es la del sistema a la hora de crear la factura
+    const now = dayjs();
+    this.invoice.date = now;
+    //al ser una factura nueva el status por defecto debe ser PENDING
+    this.invoice.status = Status.PENDING;
+    this.invoice.appointment = this.appointment;
+    this.appointment.status = Status.FINISHED;
 
-      if (lineComment.unitPrice && lineComment.quantity !== undefined) {
-        this.invoice.subtotal = lineComment.quantity * lineComment.unitPrice;
-        this.invoice.taxes = this.invoice.subtotal * 0.13;
-        this.invoice.total = this.invoice.taxes + this.invoice.subtotal;
-        this.invoice.discount = 0;
-      }
-
-      this.subscribeToSaveResponseInvoice(this.invoiceService.create(this.invoice));
-
-      lineComment.invoiceCode = this.invoiceData;
-
-      //eslint-disable-next-line no-console
-      console.log(lineComment.invoiceCode);
-
-      this.subscribeToSaveResponseInvoice(this.lineCommentService.create(lineComment));
+    if (lineComment.unitPrice && lineComment.quantity !== undefined) {
+      this.invoice.subtotal = lineComment.quantity * lineComment.unitPrice;
+      this.invoice.taxes = this.invoice.subtotal * 0.13;
+      this.invoice.total = this.invoice.taxes + this.invoice.subtotal;
+      this.invoice.discount = 0;
     }
+
+    this.appointmentService.update(this.appointment).subscribe(data => {
+      this.invoiceService.create(this.invoice).subscribe(invoiceData => {
+        console.log('invoiceData', invoiceData);
+        lineComment.invoiceCode = invoiceData.body;
+        this.lineCommentService.create(lineComment);
+        console.log('lineComment', lineComment);
+      });
+    });
   }
 
   trackInvoiceById(index: number, item: IInvoice): number {
     return item.id!;
   }
 
-  protected subscribeToSaveResponseInvoice(result: Observable<HttpResponse<IInvoice>>): IInvoice | null | undefined {
-    result.subscribe(data => {
-      this.invoiceData = data.body;
-    });
-
-    return this.invoiceData;
-  }
-
-  protected createFromForm(): ILineComment {
+  createFromForm(): ILineComment {
     return {
       ...new LineComment(),
       description: this.registerCommentForm.get(['description'])!.value,
