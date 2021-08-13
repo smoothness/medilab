@@ -10,10 +10,9 @@
               <span mediTranslate="home.welcome">Bienvenido&nbsp;</span>
               <span class="ml-profile__user-text">{{ currentUser.fullName }}</span>
             </div>
-            <medi-notifications></medi-notifications>
+            <medi-notifications [user]="notificationUser"></medi-notifications>
           </h5>
           <div class="card-body">
-
             <!-- START Top left card / Patient Block -->
             <div *ngIf="isPatient">
               <a
@@ -24,7 +23,6 @@
               >
                 Solicitar una cita
               </a>
-
             </div>
             <!-- END Top left card / Patient Block -->
             <!-- START Top left card / Doctor Block -->
@@ -48,7 +46,6 @@
         <!-- open user profile -->
         <div class="card bg-dark">
           <medi-user-profile [user]="currentUser"></medi-user-profile>
-
         </div>
         <!-- close user profile -->
       </section>
@@ -77,7 +74,9 @@
                   <div class="ml-profile__agenda-data">
                     <time>{{ appointment.date | date }}</time>
                     <div class="ml-profile__appointment-doctor-info">
-                      <b class="mr-2">Dr. {{ appointment.doctor.internalUser?.completeName }} {{ appointment.doctor.secondSurname || "" }}</b>
+                      <b class="mr-2"
+                        >Dr. {{ appointment.doctor.internalUser?.completeName }} {{ appointment.doctor.secondSurname || '' }}</b
+                      >
                       <span class="badge bg-primary">{{ appointment.doctor.specialty }}</span>
                     </div>
                   </div>

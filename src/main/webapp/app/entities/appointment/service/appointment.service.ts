@@ -16,24 +16,24 @@ export type EntityArrayResponseType = HttpResponse<IAppointment[]>;
 
 @Injectable({ providedIn: 'root' })
 export class AppointmentService {
-  notification: Subject<any>;
+  // notification: Subject<any>;
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/appointments');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {
-    this.notification = new Subject<any>();
+    // this.notification = new Subject<any>();
   }
 
-  createNotificationSubjectPayload(data: any, eventTrigger: string): any {
-    return Object.assign({}, data, { action: eventTrigger });
-  }
+  // createNotificationSubjectPayload(data: any, eventTrigger: string): any {
+  //   return Object.assign({}, data, { action: eventTrigger });
+  // }
 
   create(appointment: IAppointment): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(appointment);
     return this.http.post<IAppointment>(this.resourceUrl, copy, { observe: 'response' }).pipe(
       map((res: EntityResponseType) => {
         const response = this.convertDateFromServer(res);
-        const notificationPayload = this.createNotificationSubjectPayload(response, 'create');
-        this.notification.next(notificationPayload);
+        // const notificationPayload = this.createNotificationSubjectPayload(response, 'create');
+        // this.notification.next(notificationPayload);
         return response;
       })
     );
@@ -45,9 +45,10 @@ export class AppointmentService {
       .put<IAppointment>(`${this.resourceUrl}/${getAppointmentIdentifier(appointment) as number}`, copy, { observe: 'response' })
       .pipe(
         map((res: EntityResponseType) => {
-          const notificationPayload = this.createNotificationSubjectPayload(res, action);
-          this.notification.next(notificationPayload);
-          return this.convertDateFromServer(res);
+          const response = this.convertDateFromServer(res);
+          // const notificationPayload = this.createNotificationSubjectPayload(res, action);
+          // this.notification.next(notificationPayload);
+          return response;
         })
       );
   }

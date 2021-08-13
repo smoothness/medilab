@@ -1,3 +1,42 @@
+@import '../../../content/scss/bootstrap-variables';
+
 .ml-notifications {
   display: inline-block;
+  position: relative;
+}
+
+.notifications-dropdown-menu {
+  position: absolute;
+  top: 2.5rem;
+  left: 0;
+  width: 200%;
+  z-index: 99;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    &:first-child {
+      li:first-child {
+        background-color: $brand;
+      }
+    }
+
+    &:last-child {
+      li:first-child {
+        background-color: $warning;
+      }
+    }
+  }
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    background-color: $brand-light;
+    border-bottom: 1px solid $gray-700;
+    color: $black;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
 }

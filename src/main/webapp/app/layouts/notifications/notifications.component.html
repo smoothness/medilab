@@ -1,3 +1,30 @@
 <div class="ml-notifications">
-  <button type="button" class="btn btn-secondary">Notifications <span class="badge badge-light">499909876</span></button>
+  <!-- <pre><code style="background-color: yellow; color: black">{{ user | json }}</code></pre> -->
+  <!-- <pre><code style="background-color: yellow; color: black">{{ canceledAppointments | json }}</code></pre>
+  <pre><code style="background-color: cyan; color: black">{{ updatedAppointments | json }}</code></pre> -->
+  <div class="dropdown">
+    <button type="button" class="btn btn-secondary dropdown-toggle" (click)="expanded = !expanded">
+      <span>Notifications</span>
+      <span class="badge badge-light">
+        <!-- {{ canceledAppointments.length + updatedAppointments.length }} -->
+        {{ allAppointments.length }}
+      </span>
+    </button>
+    <div *ngIf="expanded === true" class="notifications-dropdown-menu">
+      <ul>
+        <li>Updated appointments</li>
+        <li *ngFor="let updated of updatedAppointments">
+          <span>{{ updated?.date | date }}</span>
+          <span>{{ updated?.doctor?.internalUser?.firstName }} {{ updated?.doctor?.internalUser?.lastName }}</span>
+        </li>
+      </ul>
+      <ul>
+        <li>Canceled appointments</li>
+        <li *ngFor="let canceled of canceledAppointments">
+          <span>{{ canceled?.date | date }}</span>
+          <span>{{ canceled?.doctor?.internalUser?.firstName }} {{ canceled?.doctor?.internalUser?.lastName }}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>

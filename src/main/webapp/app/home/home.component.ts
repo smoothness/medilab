@@ -24,6 +24,10 @@ import { EmergencyContactRegisterComponent } from '../entities/emergency-contact
 import { IMedicalExams } from '../entities/medical-exams/medical-exams.model';
 import { MedicalExamsService } from '../entities/medical-exams/service/medical-exams.service';
 
+type notificationUser = {
+  name: string;
+  id: number;
+};
 @Component({
   selector: 'medi-home',
   templateUrl: './home.component.html',
@@ -75,6 +79,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public get emergencyContactsTotal(): number {
     return this.emergencyContacts.length;
+  }
+
+  public get notificationUser(): any {
+    return this.currentUser; /* eslint-disable-line @typescript-eslint/no-unsafe-return */
   }
 
   ngOnInit(): void {
@@ -201,6 +209,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       })
       .then(() => {
         appointment.status = Status.CANCELED;
+        appointment.canceled = true;
         this.appointmentService.update(appointment, 'cancel').subscribe(() => {
           this.sweetAlertService.showMsjInfo('home.messages.cancelAppointmentTitle', 'home.messages.cancelAppointmentMsj').then(() => {
             this.getAppointmentsDoctor();
@@ -274,6 +283,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     const newAppointment = {
       ...this.appointmentToChangeDate,
       date: this.updatedDate.value,
+      updated: true,
     };
     this.appointmentService.update(newAppointment, 'dateChange').subscribe(() => {
       this.sweetAlertService
