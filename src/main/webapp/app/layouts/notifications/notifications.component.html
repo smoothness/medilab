@@ -6,11 +6,17 @@
     <button type="button" class="btn btn-secondary dropdown-toggle" (click)="expanded = !expanded">
       <span>Notifications</span>
       <span class="badge badge-light">
-        <!-- {{ canceledAppointments.length + updatedAppointments.length }} -->
-        {{ allAppointments.length }}
+        {{ pendingAppointments.length + canceledAppointments.length + updatedAppointments.length }}
       </span>
     </button>
     <div *ngIf="expanded === true" class="notifications-dropdown-menu">
+      <ul>
+        <li>Pending appointments</li>
+        <li *ngFor="let pending of pendingAppointments">
+          <span>{{ pending?.date | date }}</span>
+          <span>{{ pending?.doctor?.internalUser?.firstName }} {{ pending?.doctor?.internalUser?.lastName }}</span>
+        </li>
+      </ul>
       <ul>
         <li>Updated appointments</li>
         <li *ngFor="let updated of updatedAppointments">

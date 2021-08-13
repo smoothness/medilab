@@ -19,6 +19,12 @@
 
     &:first-child {
       li:first-child {
+        background-color: $highlight;
+      }
+    }
+
+    &:nth-child(2) {
+      li:first-child {
         background-color: $brand;
       }
     }
@@ -38,5 +44,9 @@
     color: $black;
     font-size: 0.875rem;
     padding: 0.5rem 1rem;
+
+    &:first-child {
+      color: $white;
+    }
   }
 }

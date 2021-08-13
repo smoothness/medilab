@@ -13,6 +13,7 @@ export class NotificationsComponent implements OnInit {
   @Input() public user: any;
   expanded = false;
   allAppointments: any[] = [];
+  pendingAppointments: any[] = [];
   updatedAppointments: any[] = [];
   canceledAppointments: any[] = [];
 
@@ -44,7 +45,10 @@ export class NotificationsComponent implements OnInit {
 
   sortAppointments(): void {
     this.allAppointments.forEach((appointment: any) => {
-      if (appointment.updated) {
+      if (appointment.status === 'PENDING') {
+        this.pendingAppointments.push(appointment);
+      }
+      if (appointment.updated && !appointment.canceled) {
         this.updatedAppointments.push(appointment);
       }
       if (appointment.canceled) {
@@ -53,11 +57,3 @@ export class NotificationsComponent implements OnInit {
     });
   }
 }
-
-// eslint-disable-next-line @angular-eslint/use-lifecycle-interface
-//   public ngOnChanges(change: any): void {
-//     if (change) {
-//       this.user = change.user.currentValue.patientId;
-//       this.initNotifications();
-//     };
-//  }

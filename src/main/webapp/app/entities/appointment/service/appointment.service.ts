@@ -9,48 +9,27 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import { IAppointment, getAppointmentIdentifier } from '../appointment.model';
 
-import { Subject } from 'rxjs';
-
 export type EntityResponseType = HttpResponse<IAppointment>;
 export type EntityArrayResponseType = HttpResponse<IAppointment[]>;
 
 @Injectable({ providedIn: 'root' })
 export class AppointmentService {
-  // notification: Subject<any>;
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/appointments');
 
-  constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {
-    // this.notification = new Subject<any>();
-  }
-
-  // createNotificationSubjectPayload(data: any, eventTrigger: string): any {
-  //   return Object.assign({}, data, { action: eventTrigger });
-  // }
+  constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   create(appointment: IAppointment): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(appointment);
-    return this.http.post<IAppointment>(this.resourceUrl, copy, { observe: 'response' }).pipe(
-      map((res: EntityResponseType) => {
-        const response = this.convertDateFromServer(res);
-        // const notificationPayload = this.createNotificationSubjectPayload(response, 'create');
-        // this.notification.next(notificationPayload);
-        return response;
-      })
-    );
+    return this.http
+      .post<IAppointment>(this.resourceUrl, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
-  update(appointment: IAppointment, action = 'unknown'): Observable<EntityResponseType> {
+  update(appointment: IAppointment): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(appointment);
     return this.http
       .put<IAppointment>(`${this.resourceUrl}/${getAppointmentIdentifier(appointment) as number}`, copy, { observe: 'response' })
-      .pipe(
-        map((res: EntityResponseType) => {
-          const response = this.convertDateFromServer(res);
-          // const notificationPayload = this.createNotificationSubjectPayload(res, action);
-          // this.notification.next(notificationPayload);
-          return response;
-        })
-      );
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   partialUpdate(appointment: IAppointment): Observable<EntityResponseType> {
