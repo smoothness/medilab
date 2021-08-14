@@ -7,7 +7,8 @@
     "requestAppointment": "Solicitar una cita",
     "createNewAppointment": "Crear una nueva cita",
     "upcomingAppointments": "Próximas citas",
-    "appointmentDetail": "Detalle",
+    "appointmentDetail": "Ver cita",
+    "patientDetail": "Ver paciente",
     "appointmentDelete": "Cancelar cita",
     "appointmentDateChange": "Cambiar fecha",
     "appointmentDateChangeModal": {

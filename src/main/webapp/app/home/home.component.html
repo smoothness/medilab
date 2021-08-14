@@ -5,22 +5,22 @@
       <section class="ml-profile__top">
         <!-- open top left card -->
         <div class="card bg-dark">
-          <div class="card-header">
-            <h5>
-              <span mediTranslate="home.welcome">Bienvenido: </span>
-              <span class="ml-profile__user-text">{{ currentUser.fullName }}</span>
-            </h5>
-          </div>
+          <h5 class="card-header">
+            <span mediTranslate="home.welcome">Bienvenido: </span>
+            <span class="ml-profile__user-text">{{ currentUser.fullName }}</span>
+          </h5>
           <div class="card-body">
-
             <!-- START Top left card / Patient Block -->
-            <div class="text-center mt-3 mb-5" *ngIf="isPatient">
-              <div *ngIf="currentUser.token">
-                <h3 class="text-primary" mediTranslate="token.yourToken"></h3>
-                <h3>{{this.currentUser?.token}}</h3>
-              </div>
+            <div *ngIf="isPatient">
+              <a
+                target="_blank"
+                class="btn btn-secondary"
+                mediTranslate="home.requestAppointment"
+                href="https://wa.me/50688885353?text=Solicito%20una%20cita%20con%20el%20doctor"
+              >
+                Solicitar una cita
+              </a>
             </div>
-
             <!-- END Top left card / Patient Block -->
             <!-- START Top left card / Doctor Block -->
             <div *ngIf="isDoctor">
@@ -37,24 +37,12 @@
             <!-- END Top left card / Doctor Block -->
           </div>
           <!-- close card body -->
-          <div class="card-footer  my-2" *ngIf="isPatient">
-            <medi-token [currentUser]="currentUser" (user)="getToken($event)"></medi-token>
-            <a
-              target="_blank"
-              class="btn btn-secondary col-12"
-              mediTranslate="home.requestAppointment"
-              href="https://wa.me/50688885353?text=Solicito%20una%20cita%20con%20el%20doctor"
-            >
-              Solicitar una cita
-            </a>
-          </div>
         </div>
         <!-- close top left card -->
 
         <!-- open user profile -->
         <div class="card bg-dark">
           <medi-user-profile [user]="currentUser"></medi-user-profile>
-
         </div>
         <!-- close user profile -->
       </section>
@@ -63,7 +51,7 @@
       <section class="ml-profile__bottom">
         <!-- START body patient Block -->
         <div class="mt-3" *ngIf="isPatient">
-          <div class="card bg-dark mb-3" *ngIf="appointmentsPatient.length>0">
+          <div class="card bg-dark mb-3">
             <h5 class="card-header" mediTranslate="home.upcomingAppointments">Próximas citas</h5>
             <div class="card-body">
               <ul class="list-group ml-profile__agenda">
@@ -83,23 +71,22 @@
                   <div class="ml-profile__agenda-data">
                     <time>{{ appointment.date | date }}</time>
                     <div class="ml-profile__appointment-doctor-info">
-                      <b class="mr-2">Dr. {{ appointment.doctor.internalUser?.completeName }} {{ appointment.doctor.secondSurname || "" }}</b>
+                      <b class="mr-2"
+                        >Dr. {{ appointment.doctor.internalUser?.completeName }} {{ appointment.doctor.secondSurname || '' }}</b
+                      >
                       <span class="badge bg-primary">{{ appointment.doctor.specialty }}</span>
                     </div>
                   </div>
-                  <a
-                    class="btn btn-secondary btn-sm mr-1"
-                    mediTranslate="home.appointmentDetail"
-                    [routerLink]="['/main/appointment', appointment.id, 'view']"
-                  >
-                    Detalle
+                  <a class="btn btn-secondary btn-sm mr-1" [routerLink]="['/main/appointment', appointment.id, 'view']">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span mediTranslate="home.appointmentDetail">Ver cita</span>
                   </a>
                 </li>
               </ul>
             </div>
           </div>
           <!--AILMENT-->
-          <div class="card bg-dark mb-3" *ngIf="ailmentsPatient.length > 0">
+          <div class="card bg-dark mb-3">
             <h5 class="card-header" mediTranslate="home.ailments">Padecimientos</h5>
             <div class="card-body">
               <ul class="list-group ml-ailment">
@@ -243,29 +230,23 @@
                   </div>
                 </div>
                 <div class="ml-profile__appointment-patient-info-ctas">
-                  <a
-                    class="btn btn-secondary btn-sm mr-1"
-                    mediTranslate="home.appointmentDetail"
-                    [routerLink]="['/main/appointment', appointment.id, 'view']"
-                  >
-                    Detalle
+                  <a class="btn btn-secondary btn-sm mr-1" [routerLink]="['/main/appointment', appointment.id, 'view']">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span mediTranslate="home.appointmentDetail">Ver cita</span>
                   </a>
                   <button
                     class="btn btn-primary btn-sm mr-1"
                     mediTranslate="home.viewPatient"
                     [routerLink]="['/main/patient', appointment.patient.id, 'view']"
                   >
-                    View Patient
+                    <fa-icon icon="eye"></fa-icon>
+                    <span mediTranslate="home.patientDetail">Ver paciente</span>
                   </button>
-                  <button
-                    class="btn btn-tertiary btn-sm mr-1"
-                    mediTranslate="home.appointmentDateChange"
-                    (click)="openChangeDateModal(changeDateModal, i)"
-                  >
-                    Cambiar fecha
+                  <button class="btn btn-tertiary btn-sm mr-1" (click)="openChangeDateModal(changeDateModal, i)">
+                    <span mediTranslate="home.appointmentDateChange">Cambiar fecha</span>
                   </button>
                   <button class="btn btn-danger btn-sm" mediTranslate="home.appointmentDelete" (click)="cancelAppointment(appointment)">
-                    Cancelar cita
+                    <span mediTranslate="home.appointmentDelete">Cancelar cita</span>
                   </button>
                 </div>
               </li>
