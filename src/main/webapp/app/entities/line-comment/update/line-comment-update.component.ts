@@ -2,8 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
 
 import { ILineComment, LineComment } from '../line-comment.model';
 import { LineCommentService } from '../service/line-comment.service';
@@ -12,6 +10,7 @@ import { InvoiceService } from 'app/entities/invoice/service/invoice.service';
 import * as dayjs from 'dayjs';
 import { Status } from '../../enumerations/status.model';
 import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
+import { SweetAlertService } from 'app/shared/services/sweet-alert.service';
 
 @Component({
   selector: 'medi-line-comment-update',
@@ -40,14 +39,20 @@ export class LineCommentUpdateComponent {
     protected invoiceService: InvoiceService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder,
-    protected appointmentService: AppointmentService
-  ) {}
+    protected appointmentService: AppointmentService,
+    public sweetAlertService: SweetAlertService
+  ) {
+    this.invoice.lineComments = [];
+    this.invoice.lineComments.push(new LineComment());
+  }
 
   previousState(): void {
     window.history.back();
   }
 
   saveComment(): void {
+    console.log('Save', this.invoice.lineComments);
+    /*
     this.isSaving = true;
     const lineComment = this.createFromForm();
     //La fecha por defecto es la del sistema a la hora de crear la factura
@@ -65,6 +70,7 @@ export class LineCommentUpdateComponent {
       this.invoice.discount = 0;
     }
 
+    
     this.appointmentService.update(this.appointment).subscribe(data => {
       this.invoiceService.create(this.invoice).subscribe(invoiceData => {
         console.log('invoiceData', invoiceData);
@@ -72,7 +78,7 @@ export class LineCommentUpdateComponent {
         this.lineCommentService.create(lineComment);
         console.log('lineComment', lineComment);
       });
-    });
+    }); */
   }
 
   trackInvoiceById(index: number, item: IInvoice): number {
@@ -87,5 +93,27 @@ export class LineCommentUpdateComponent {
       unitPrice: this.registerCommentForm.get(['unitPrice'])!.value,
       invoiceCode: this.registerCommentForm.get(['invoiceCode'])!.value,
     };
+  }
+
+  addLine(): void {
+    this.invoice.lineComments?.push(new LineComment());
+
+    console.log('linne', this.invoice.lineComments);
+  }
+
+  deleteLine(lineComment: LineComment, index: number): void {
+    this.sweetAlertService
+      .showConfirmMsg({
+        title: 'medilabApp.deleteConfirm.title',
+        text: 'medilabApp.deleteConfirm.text',
+        confirmButtonText: 'medilabApp.deleteConfirm.confirmButtonText',
+        cancelButtonText: 'medilabApp.deleteConfirm.cancelButtonText',
+      })
+      .then(result => {
+        if (result) {
+          this.invoice.lineComments?.splice(index, 1);
+          console.log('linne', this.invoice.lineComments);
+        }
+      });
   }
 }

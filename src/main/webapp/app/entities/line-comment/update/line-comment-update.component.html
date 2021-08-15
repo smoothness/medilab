@@ -1,5 +1,92 @@
 <section>
   <div class="card bg-dark">
+    <form #resumeForm="ngForm" autocomplete="off">
+      <!-- Education -->
+      <div class="card-body">
+        <div class="d-flex justify-content-between card-title mb-5">
+          <h4 class="d-flex align-items-center text-white" mediTranslate="medilabApp.invoice.home.createLabel">Factura</h4>
+          <button class="btn btn-primary" (click)="addLine()" [disabled]="resumeForm.invalid">+ Agregar Línea</button>
+        </div>
+        <div class="row justify-content-between">
+          <div class="col-md-3">
+            <h4 class="d-flex align-items-center text-white" mediTranslate="medilabApp.lineComment.description"></h4>
+          </div>
+          <div class="col-md-3">
+            <h4 class="d-flex align-items-center text-white" mediTranslate="medilabApp.lineComment.quantity"></h4>
+          </div>
+          <div class="col-md-3">
+            <h4 class="d-flex align-items-center text-white" mediTranslate="medilabApp.lineComment.unitPrice"></h4>
+          </div>
+          <div class="col-md-3"></div>
+        </div>
+        <div class="row align-items-center justify-content-between" *ngFor="let ed of invoice.lineComments; let i = index">
+          <div class="col-md-3">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                name="description{{ i }}"
+                [(ngModel)]="ed.description"
+                placeholder="description"
+                #description="ngModel"
+                required
+                [ngClass]="{ 'is-invalid': description.invalid && (description.touched || resumeForm.submitted) }"
+              />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <input
+                type="number"
+                class="form-control"
+                name="quantity{{ i }}"
+                [(ngModel)]="ed.quantity"
+                placeholder="quantity"
+                #quantity="ngModel"
+                required
+                [ngClass]="{ 'is-invalid': quantity.invalid && (quantity.touched || resumeForm.submitted) }"
+              />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <input
+                type="number"
+                class="form-control"
+                name="unitPrice{{ i }}"
+                [(ngModel)]="ed.unitPrice"
+                placeholder="unitPrice"
+                #unitPrice="ngModel"
+                required
+                [ngClass]="{ 'is-invalid': unitPrice.invalid && (unitPrice.touched || resumeForm.submitted) }"
+              />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <button class="btn btn-danger" (click)="deleteLine(ed, i)">Eliminar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div>
+      <button
+        type="submit"
+        id="saveEntity"
+        data-cy="entityCreateSaveButton"
+        [disabled]="resumeForm.invalid"
+        class="btn btn-primary col-12"
+        (click)="saveComment()"
+      >
+        <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
+      </button>
+    </div>
+  </div>
+
+  <!--
+
+  <div class="card bg-dark">
     <div class="card-header text-center p-0 m-0">
       <h2 class="text-primary py-2" mediTranslate="medilabApp.invoice.home.createLabel"></h2>
     </div>
@@ -56,5 +143,5 @@
         </div>
       </form>
     </div>
-  </div>
+  </div> -->
 </section>
