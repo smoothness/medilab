@@ -4,6 +4,9 @@
       <h2 mediTranslate="medilabApp.doctor.home.title"></h2>
     </div>
     <div class="mt-4">
+      <div class="alert alert-warning text-center" id="no-result" *ngIf="doctors.length === 0">
+        <span class="h5 text-dark" mediTranslate="medilabApp.doctor.home.notFound">No doctors found</span>
+      </div>
       <div class="table-responsive" id="entities" *ngIf="doctors && doctors.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
           <thead>
@@ -42,13 +45,3 @@
     </div>
   </div>
 </section>
-
-<div>
-  <medi-alert-error></medi-alert-error>
-
-  <medi-alert></medi-alert>
-
-  <div class="alert alert-warning" id="no-result" *ngIf="doctors?.length === 0">
-    <span mediTranslate="medilabApp.doctor.home.notFound">No doctors found</span>
-  </div>
-</div>

@@ -11,7 +11,7 @@ import { Doctor } from '../../../core/auth/account.model';
   templateUrl: './doctor.component.html',
 })
 export class DoctorComponent implements OnInit {
-  doctors?: Doctor[];
+  doctors: Doctor[] = [];
   isLoading = false;
 
   constructor(protected doctorService: DoctorService, protected modalService: NgbModal) {}

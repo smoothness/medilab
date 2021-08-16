@@ -1,12 +1,15 @@
 <section>
   <div class="container">
     <div class="row">
-      <div class="cold-md-10 mx-auto my-5 card bg-dark">
+      <div class="col-md-10 mx-auto my-5 card bg-dark">
         <div class="text-center mt-3">
           <h2 mediTranslate="medilabApp.invoice.home.title"></h2>
         </div>
 
         <div class="mt-4">
+          <div class="alert alert-warning text-center" id="no-result" *ngIf="!invoices?.length">
+            <span class="h5 text-dark" mediTranslate="medilabApp.invoice.home.notFound">No invoices found</span>
+          </div>
           <div class="table-responsive" id="entities" *ngIf="invoices && invoices.length">
             <table class="table table-striped" aria-describedby="page-heading">
               <thead>
@@ -55,6 +58,4 @@
   </div>
 </section>
 
-<div class="alert alert-warning" id="no-result" *ngIf="!invoices?.length">
-  <span mediTranslate="medilabApp.invoice.home.notFound">No invoices found</span>
-</div>
+

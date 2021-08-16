@@ -28,7 +28,8 @@
       "about": "Nosotros",
       "account": "Cuenta",
       "register": "Registrese",
-      "login": "Iniciar sesión"
+      "login": "Iniciar sesión",
+      "token": "Consulta de paciente"
     }
   }
 }

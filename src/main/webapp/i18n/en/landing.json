@@ -28,7 +28,8 @@
       "about": "About",
       "account": "Account",
       "register": "Register",
-      "login": "Log in"
+      "login": "Log in",
+      "token": "Consult patient"
     }
   }
 }

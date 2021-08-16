@@ -55,6 +55,11 @@ public interface AppointmentService {
      */
     List<Appointment> findPatientAppointments(Long id);
 
+
+    List<Appointment> findAppointmentHistoryPatient(Long id);
+    List<Appointment> findAppointmentHistoryDoctor(Long id);
+    List<Appointment> findAppointmentsHistory();
+
     /**
      * Delete the "id" appointment.
      *

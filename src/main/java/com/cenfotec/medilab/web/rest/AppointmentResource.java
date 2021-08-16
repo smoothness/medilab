@@ -178,6 +178,27 @@ public class AppointmentResource {
         return ResponseEntity.ok(appointments);
     }
 
+
+
+    @GetMapping("/appointments-patient/history/{id}")
+    public ResponseEntity<List<Appointment>> getAppointmentHistoryPatient(@PathVariable Long id) {
+        List<Appointment> appointments = appointmentService.findAppointmentHistoryPatient(id);
+        return ResponseEntity.ok(appointments);
+    }
+
+
+    @GetMapping("/appointments-doctor/history/{id}")
+    public ResponseEntity<List<Appointment>> getAppointmentHistoryDoctor(@PathVariable Long id) {
+        List<Appointment> appointments = appointmentService.findAppointmentHistoryDoctor(id);
+        return ResponseEntity.ok(appointments);
+    }
+
+    @GetMapping("/appointments/history")
+    public ResponseEntity<List<Appointment>> getAppointmentsHistory() {
+        List<Appointment> appointments = appointmentService.findAppointmentsHistory();
+        return ResponseEntity.ok(appointments);
+    }
+
     /**
      * {@code DELETE  /appointments/:id} : delete the "id" appointment.
      *

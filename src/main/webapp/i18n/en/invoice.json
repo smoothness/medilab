@@ -6,7 +6,7 @@
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Invoice",
         "createOrEditLabel": "Create or edit a Invoice",
-        "notFound": "No Invoices found"
+        "notFound": "No invoices found"
       },
       "created": "A new Invoice was created with identifier {{ param }}",
       "updated": "An Invoice was updated with identifier {{ param }}",
@@ -33,7 +33,8 @@
       "pending": "Pending",
       "paid": "Paid",
       "canceled": "Canceled",
-      "invoiceNumber": "Invoice number"
+      "invoiceNumber": "Invoice number",
+      "download": "Download invoice"
     }
   }
 }

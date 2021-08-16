@@ -80,12 +80,9 @@
                       <span class="badge bg-primary">{{ appointment.doctor.specialty }}</span>
                     </div>
                   </div>
-                  <a
-                    class="btn btn-secondary btn-sm mr-1"
-                    mediTranslate="home.appointmentDetail"
-                    [routerLink]="['/main/appointment', appointment.id, 'view']"
-                  >
-                    Detalle
+                  <a class="btn btn-secondary btn-sm mr-1" [routerLink]="['/main/appointment', appointment.id, 'view']">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span mediTranslate="home.appointmentDetail">Ver cita</span>
                   </a>
                 </li>
               </ul>
@@ -237,29 +234,23 @@
                   </div>
                 </div>
                 <div class="ml-profile__appointment-patient-info-ctas">
-                  <a
-                    class="btn btn-secondary btn-sm mr-1"
-                    mediTranslate="home.appointmentDetail"
-                    [routerLink]="['/main/appointment', appointment.id, 'view']"
-                  >
-                    Detalle
+                  <a class="btn btn-secondary btn-sm mr-1" [routerLink]="['/main/appointment', appointment.id, 'view']">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span mediTranslate="home.appointmentDetail">Ver cita</span>
                   </a>
                   <button
                     class="btn btn-primary btn-sm mr-1"
                     mediTranslate="home.viewPatient"
                     [routerLink]="['/main/patient', appointment.patient.id, 'view']"
                   >
-                    View Patient
+                    <fa-icon icon="eye"></fa-icon>
+                    <span mediTranslate="home.patientDetail">Ver paciente</span>
                   </button>
-                  <button
-                    class="btn btn-tertiary btn-sm mr-1"
-                    mediTranslate="home.appointmentDateChange"
-                    (click)="openChangeDateModal(changeDateModal, i)"
-                  >
-                    Cambiar fecha
+                  <button class="btn btn-tertiary btn-sm mr-1" (click)="openChangeDateModal(changeDateModal, i)">
+                    <span mediTranslate="home.appointmentDateChange">Cambiar fecha</span>
                   </button>
                   <button class="btn btn-danger btn-sm" mediTranslate="home.appointmentDelete" (click)="cancelAppointment(appointment)">
-                    Cancelar cita
+                    <span mediTranslate="home.appointmentDelete">Cancelar cita</span>
                   </button>
                 </div>
               </li>

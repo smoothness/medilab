@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   authority: string | undefined;
   appointmentsDoctor: any[] = [];
   appointmentsPatient: any[] = [];
-  ailmentsPatient: any[] | undefined = [];
+  ailmentsPatient: any[]  = [];
   closeModal: string | undefined;
   ailment: any;
   updatedDate = new FormControl('');
@@ -82,13 +82,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.autenticatedAccount();
+    this.authenticatedAccount();
   }
 
   /**
    * @description this method is responsible for bringing the authenticated user.
    */
-  public autenticatedAccount(): void {
+  public authenticatedAccount(): void {
     this.accountService.formatUserIdentity().subscribe(user => {
       this.currentUser = user;
       this.getAppointmentsByUser();
@@ -183,16 +183,12 @@ export class HomeComponent implements OnInit, OnDestroy {
         if (data.body !== null) {
           data.body.forEach(element => {
             if (element.appointment?.id === appointment.id) {
-              this.ailmentsPatient?.push(element);
+              this.ailmentsPatient.push(element);
             }
           });
         }
       });
     });
-  }
-
-  login(): void {
-    this.router.navigate(['/login']);
   }
 
   cancelAppointment(appointment: IAppointment): void {
@@ -252,6 +248,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.emergencyContacts = res.body;
       });
     });
+  }
+
+  public getToken(newToken: string): void {
+    this.currentUser.setToken(newToken);
+    this.authenticatedAccount();
   }
 
   loadAllAppoiments(): void {

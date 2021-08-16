@@ -5,23 +5,18 @@ import { Authority } from 'app/config/authority.constants';
 const routes: Routes = [
   {
     path: 'patient',
-    data: { pageTitle: 'medilabApp.patient.home.title' },
+    data: { authorities: [Authority.ADMIN, Authority.USER] , pageTitle: 'medilabApp.patient.home.title' },
     loadChildren: () => import('./patient/patient.module').then(m => m.PatientModule),
   },
   {
     path: 'doctor',
-    data: { pageTitle: 'medilabApp.doctor.home.title' },
+    data: { authorities: [Authority.ADMIN, Authority.PATIENT] , pageTitle: 'medilabApp.doctor.home.title' },
     loadChildren: () => import('./doctor/doctor.module').then(m => m.DoctorModule),
   },
   {
     path: 'appointment',
     data: { pageTitle: 'medilabApp.appointment.home.title' },
     loadChildren: () => import('./appointment/appointment.module').then(m => m.AppointmentModule),
-  },
-  {
-    path: 'emergency-contact',
-    data: { pageTitle: 'medilabApp.emergencyContact.home.title' },
-    loadChildren: () => import('./emergency-contact/emergency-contact.module').then(m => m.EmergencyContactModule),
   },
   {
     path: 'treatment',
@@ -38,11 +33,6 @@ const routes: Routes = [
     data: { pageTitle: 'medilabApp.appointmentTreatmentAilment.home.title' },
     loadChildren: () =>
       import('./appointment-treatment-ailment/appointment-treatment-ailment.module').then(m => m.AppointmentTreatmentAilmentModule),
-  },
-  {
-    path: 'medical-exams',
-    data: { pageTitle: 'medilabApp.medicalExams.home.title' },
-    loadChildren: () => import('./medical-exams/medical-exams.module').then(m => m.MedicalExamsModule),
   },
   {
     path: 'invoice',
