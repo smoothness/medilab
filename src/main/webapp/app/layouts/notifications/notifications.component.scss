@@ -6,47 +6,65 @@
 }
 
 .notifications-dropdown-menu {
+  background-color: $dark-bgd;
+  left: -5px;
+  padding: 0.5rem 1rem;
   position: absolute;
   top: 2.5rem;
-  left: 0;
-  width: 200%;
+  width: 240%;
   z-index: 99;
+
+  @media (max-width: 63rem) {
+    left: -220px;
+  }
 
   ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    color: $white;
+    font-size: 0.875rem;
+
+    li {
+      padding: 0 0 0 1.15rem;
+      position: relative;
+
+      &::after {
+        content: '';
+        display: block;
+        height: 5px;
+        width: 5px;
+        border-radius: 50%;
+        position: absolute;
+        left: 0;
+        top: calc(50% - 2px);
+      }
+
+      &:not(:last-of-type) {
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    span {
+      display: block;
+    }
 
     &:first-child {
-      li:first-child {
-        background-color: $highlight;
+      li::after {
+        background-color: $warning;
       }
     }
 
     &:nth-child(2) {
-      li:first-child {
+      li::after {
         background-color: $brand;
       }
     }
 
     &:last-child {
-      li:first-child {
-        background-color: $warning;
+      li::after {
+        background-color: $highlight;
       }
-    }
-  }
-
-  li {
-    display: flex;
-    justify-content: space-between;
-    background-color: $brand-light;
-    border-bottom: 1px solid $gray-700;
-    color: $black;
-    font-size: 0.875rem;
-    padding: 0.5rem 1rem;
-
-    &:first-child {
-      color: $white;
     }
   }
 }

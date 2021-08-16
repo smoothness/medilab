@@ -1,7 +1,4 @@
 <div class="ml-notifications">
-  <!-- <pre><code style="background-color: yellow; color: black">{{ user | json }}</code></pre> -->
-  <!-- <pre><code style="background-color: yellow; color: black">{{ canceledAppointments | json }}</code></pre>
-  <pre><code style="background-color: cyan; color: black">{{ updatedAppointments | json }}</code></pre> -->
   <div class="dropdown">
     <button type="button" class="btn btn-secondary dropdown-toggle" (click)="expanded = !expanded">
       <span>Notifications</span>
@@ -10,27 +7,48 @@
       </span>
     </button>
     <div *ngIf="expanded === true" class="notifications-dropdown-menu">
-      <ul>
-        <li>Pending appointments</li>
-        <li *ngFor="let pending of pendingAppointments">
-          <span>{{ pending?.date | date }}</span>
-          <span>{{ pending?.doctor?.internalUser?.firstName }} {{ pending?.doctor?.internalUser?.lastName }}</span>
-        </li>
-      </ul>
-      <ul>
-        <li>Updated appointments</li>
-        <li *ngFor="let updated of updatedAppointments">
-          <span>{{ updated?.date | date }}</span>
-          <span>{{ updated?.doctor?.internalUser?.firstName }} {{ updated?.doctor?.internalUser?.lastName }}</span>
-        </li>
-      </ul>
-      <ul>
-        <li>Canceled appointments</li>
-        <li *ngFor="let canceled of canceledAppointments">
-          <span>{{ canceled?.date | date }}</span>
-          <span>{{ canceled?.doctor?.internalUser?.firstName }} {{ canceled?.doctor?.internalUser?.lastName }}</span>
-        </li>
-      </ul>
+      <div *ngIf="userType === 'doctor'; else patientBlock">
+        <ul>
+          <li *ngFor="let pending of pendingAppointments">
+            <span>Cita pendiente con el paciente {{ pending?.patient?.internalUser?.completeName }}</span>
+            <span class="text-muted">{{ pending?.date | date }}</span>
+          </li>
+        </ul>
+        <ul>
+          <li *ngFor="let updated of updatedAppointments">
+            <span>Cita modificada con el paciente {{ updated?.patient?.internalUser?.completeName }}</span>
+            <span class="text-muted">{{ updated?.date | date }}</span>
+          </li>
+        </ul>
+        <ul>
+          <li *ngFor="let canceled of canceledAppointments">
+            <span>Cita cancelada con el paciente {{ canceled?.patient?.internalUser?.completeName }}</span>
+            <span class="text-muted">{{ canceled?.date | date }}</span>
+          </li>
+        </ul>
+      </div>
+      <ng-template #patientBlock>
+        <div>
+          <ul>
+            <li *ngFor="let pending of pendingAppointments">
+              <span>Cita pendiente con el médico {{ pending?.doctor?.internalUser?.completeName }}</span>
+              <span class="text-muted">{{ pending?.date | date }}</span>
+            </li>
+          </ul>
+          <ul>
+            <li *ngFor="let updated of updatedAppointments">
+              <span>Cita modificada con el médico {{ updated?.doctor?.internalUser?.completeName }}</span>
+              <span class="text-muted">{{ updated?.date | date }}</span>
+            </li>
+          </ul>
+          <ul>
+            <li *ngFor="let canceled of canceledAppointments">
+              <span>Cita cancelada con el médico {{ canceled?.doctor?.internalUser?.completeName }}</span>
+              <span class="text-muted">{{ canceled?.date | date }}</span>
+            </li>
+          </ul>
+        </div>
+      </ng-template>
     </div>
   </div>
 </div>
