@@ -8,7 +8,7 @@
         "createOrEditLabel": "Crear o editar factura",
         "notFound": "Ninguna factura ha sido encontrada"
       },
-      "created": "Una nueva factura ha sido creada con el identificador {{ param }}",
+      "created": "Factura creada con éxito",
       "updated": "Una factura ha sido actualizada con el identificador {{ param }}",
       "deleted": "Una factura ha sido eliminada con el identificador {{ param }}",
       "delete": {

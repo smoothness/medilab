@@ -8,7 +8,7 @@
         "createOrEditLabel": "Create or edit a Invoice",
         "notFound": "No invoices found"
       },
-      "created": "A new Invoice was created with identifier {{ param }}",
+      "created": "Invoice successfully created",
       "updated": "An Invoice was updated with identifier {{ param }}",
       "deleted": "An Invoice was deleted with identifier {{ param }}",
       "delete": {

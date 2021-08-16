@@ -69,11 +69,6 @@ export class AppointmentDetailComponent implements OnInit {
   public showRegisterInvoiceModal(): void {
     const modalRef = this.modalService.open(LineCommentUpdateComponent, { centered: true });
     modalRef.componentInstance.appointment = this.appointment;
-    modalRef.closed.subscribe(reason => {
-      if (reason === 'register') {
-        this.getAppointmentExams();
-      }
-    });
   }
 
   public showAddMedicalExam(status: any): boolean {

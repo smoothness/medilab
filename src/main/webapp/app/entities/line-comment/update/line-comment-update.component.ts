@@ -11,6 +11,7 @@ import * as dayjs from 'dayjs';
 import { Status } from '../../enumerations/status.model';
 import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
 import { SweetAlertService } from 'app/shared/services/sweet-alert.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'medi-line-comment-update',
@@ -24,6 +25,8 @@ export class LineCommentUpdateComponent {
   isSaving = false;
 
   invoicesSharedCollection: IInvoice[] = [];
+
+  subtotal = 0;
 
   registerCommentForm = this.fb.group({
     id: [],
@@ -40,7 +43,8 @@ export class LineCommentUpdateComponent {
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder,
     protected appointmentService: AppointmentService,
-    public sweetAlertService: SweetAlertService
+    public sweetAlertService: SweetAlertService,
+    public activeModal: NgbActiveModal
   ) {
     this.invoice.lineComments = [];
     this.invoice.lineComments.push(new LineComment());
@@ -52,33 +56,29 @@ export class LineCommentUpdateComponent {
 
   saveComment(): void {
     console.log('Save', this.invoice.lineComments);
-    /*
+
     this.isSaving = true;
-    const lineComment = this.createFromForm();
+
     //La fecha por defecto es la del sistema a la hora de crear la factura
     const now = dayjs();
     this.invoice.date = now;
+
     //al ser una factura nueva el status por defecto debe ser PENDING
     this.invoice.status = Status.PENDING;
     this.invoice.appointment = this.appointment;
     this.appointment.status = Status.FINISHED;
 
-    if (lineComment.unitPrice && lineComment.quantity !== undefined) {
-      this.invoice.subtotal = lineComment.quantity * lineComment.unitPrice;
-      this.invoice.taxes = this.invoice.subtotal * 0.13;
-      this.invoice.total = this.invoice.taxes + this.invoice.subtotal;
-      this.invoice.discount = 0;
-    }
+    this.invoice.lineComments?.forEach(lineComment => {
+      if (lineComment.unitPrice && lineComment.quantity !== undefined) {
+        this.subtotal = this.subtotal + lineComment.quantity * lineComment.unitPrice;
+      }
 
-    
-    this.appointmentService.update(this.appointment).subscribe(data => {
-      this.invoiceService.create(this.invoice).subscribe(invoiceData => {
-        console.log('invoiceData', invoiceData);
-        lineComment.invoiceCode = invoiceData.body;
-        this.lineCommentService.create(lineComment);
-        console.log('lineComment', lineComment);
-      });
-    }); */
+      this.setInvoiceAmmount(this.subtotal);
+    });
+
+    this.subtotal = 0;
+
+    this.saveInvoiceService();
   }
 
   trackInvoiceById(index: number, item: IInvoice): number {
@@ -97,8 +97,6 @@ export class LineCommentUpdateComponent {
 
   addLine(): void {
     this.invoice.lineComments?.push(new LineComment());
-
-    console.log('linne', this.invoice.lineComments);
   }
 
   deleteLine(lineComment: LineComment, index: number): void {
@@ -112,8 +110,29 @@ export class LineCommentUpdateComponent {
       .then(result => {
         if (result) {
           this.invoice.lineComments?.splice(index, 1);
-          console.log('linne', this.invoice.lineComments);
         }
       });
+  }
+
+  //Se actualizan los montos de la factura
+  setInvoiceAmmount(subtotal: number): void {
+    this.invoice.subtotal = subtotal;
+    this.invoice.taxes = this.invoice.subtotal * 0.13;
+    this.invoice.total = this.invoice.taxes + this.invoice.subtotal;
+    this.invoice.discount = 0;
+  }
+
+  saveInvoiceService(): void {
+    this.appointmentService.update(this.appointment).subscribe(data => {
+      this.invoiceService.create(this.invoice).subscribe(invoiceData => {
+        this.invoice.lineComments?.forEach(lineComment => {
+          lineComment.invoiceCode = invoiceData.body;
+          this.lineCommentService.create(lineComment).subscribe(() => {
+            this.sweetAlertService.showMsjSuccess('reset.done', 'medilabApp.invoice.created');
+            this.activeModal.close('register');
+          });
+        });
+      });
+    });
   }
 }

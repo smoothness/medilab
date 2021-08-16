@@ -27,7 +27,6 @@
                 class="form-control"
                 name="description{{ i }}"
                 [(ngModel)]="ed.description"
-                placeholder="description"
                 #description="ngModel"
                 required
                 [ngClass]="{ 'is-invalid': description.invalid && (description.touched || resumeForm.submitted) }"
@@ -41,7 +40,6 @@
                 class="form-control"
                 name="quantity{{ i }}"
                 [(ngModel)]="ed.quantity"
-                placeholder="quantity"
                 #quantity="ngModel"
                 required
                 [ngClass]="{ 'is-invalid': quantity.invalid && (quantity.touched || resumeForm.submitted) }"
@@ -55,7 +53,6 @@
                 class="form-control"
                 name="unitPrice{{ i }}"
                 [(ngModel)]="ed.unitPrice"
-                placeholder="unitPrice"
                 #unitPrice="ngModel"
                 required
                 [ngClass]="{ 'is-invalid': unitPrice.invalid && (unitPrice.touched || resumeForm.submitted) }"
@@ -64,7 +61,7 @@
           </div>
           <div class="col-md-3">
             <div class="form-group">
-              <button class="btn btn-danger" (click)="deleteLine(ed, i)">Eliminar</button>
+              <button class="btn btn-danger" (click)="deleteLine(ed, i)" mediTranslate="medilabApp.lineComment.deleteLine"></button>
             </div>
           </div>
         </div>
