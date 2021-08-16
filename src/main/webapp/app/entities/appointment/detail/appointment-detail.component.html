@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-8">
+    <div class="col-10">
       <div *ngIf="appointment">
         <div class="card bg-dark">
           <div class="card-header">
@@ -14,7 +14,7 @@
               </li>
               <li class="list-group-item">
                 <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.status">Estado de la cita: </span>
-                <span>{{ appointment.status | status}}</span>
+                <span>{{ appointment.status | status }}</span>
               </li>
               <li class="list-group-item">
                 <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.patient">Paciente: </span>
@@ -70,7 +70,8 @@
               type="button"
               class="btn btn-secondary"
               (click)="showRegisterMedicalExamModal()"
-              *ngIf="showAddMedicalExam(appointment.status)">
+              *ngIf="showAddMedicalExam(appointment.status)"
+            >
               <fa-icon icon="plus"></fa-icon>
               <span mediTranslate="medilabApp.medicalExams.btnAdd">add</span>
             </button>
@@ -81,8 +82,11 @@
     </div>
 
     <div class="col-8 mt-4" *ngIf="medicalExams.length > 0">
-      <medi-medical-exams [medicalExams]="medicalExams" [showButtons]="showButtons" (updateList)="loadMedicalExams($event)"></medi-medical-exams>
+      <medi-medical-exams
+        [medicalExams]="medicalExams"
+        [showButtons]="showButtons"
+        (updateList)="loadMedicalExams($event)"
+      ></medi-medical-exams>
     </div>
-
   </div>
 </div>

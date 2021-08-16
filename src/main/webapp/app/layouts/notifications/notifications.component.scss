@@ -3,6 +3,28 @@
 .ml-notifications {
   display: inline-block;
   position: relative;
+  margin-right: 0.4rem;
+
+  &__button {
+    background-color: transparent;
+    border: 0 none;
+
+    &:focus,
+    &:focus-visible {
+      border: 0 none;
+      outline: 0;
+    }
+
+    &:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .badge {
+      position: relative;
+      top: -1px;
+    }
+  }
 }
 
 .notifications-dropdown-menu {
@@ -15,7 +37,8 @@
   z-index: 99;
 
   @media (max-width: 63rem) {
-    left: -220px;
+    left: -14.5rem;
+    width: 280%;
   }
 
   ul {

@@ -1,6 +1,12 @@
 <div class="ml-notifications">
   <div class="dropdown">
-    <button type="button" class="btn btn-secondary dropdown-toggle" (click)="expanded = !expanded">
+    <button
+      type="button"
+      class="ml-notifications__button nav-link font-weight-normal"
+      (click)="expanded = !expanded"
+      [disabled]="pendingAppointments.length + canceledAppointments.length + updatedAppointments.length === 0 ? true : false"
+    >
+      <fa-icon icon="bell"></fa-icon>
       <span>Notifications</span>
       <span class="badge badge-light">
         {{ pendingAppointments.length + canceledAppointments.length + updatedAppointments.length }}
