@@ -1,0 +1,93 @@
+@import '../../../content/scss/bootstrap-variables';
+
+.ml-notifications {
+  display: inline-block;
+  position: relative;
+  margin-right: 0.4rem;
+
+  &__button {
+    background-color: transparent;
+    border: 0 none;
+
+    &:focus,
+    &:focus-visible {
+      border: 0 none;
+      outline: 0;
+    }
+
+    &:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .badge {
+      position: relative;
+      top: -1px;
+    }
+  }
+}
+
+.notifications-dropdown-menu {
+  background-color: $dark-bgd;
+  left: -5px;
+  padding: 0.5rem 1rem;
+  position: absolute;
+  top: 2.5rem;
+  width: 240%;
+  z-index: 99;
+
+  @media (max-width: 63rem) {
+    left: -14.5rem;
+    width: 280%;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    color: $white;
+    font-size: 0.875rem;
+
+    li {
+      padding: 0 0 0 1.15rem;
+      position: relative;
+
+      &::after {
+        content: '';
+        display: block;
+        height: 5px;
+        width: 5px;
+        border-radius: 50%;
+        position: absolute;
+        left: 0;
+        top: calc(50% - 2px);
+      }
+
+      &:not(:last-of-type) {
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    span {
+      display: block;
+    }
+
+    &:first-child {
+      li::after {
+        background-color: $warning;
+      }
+    }
+
+    &:nth-child(2) {
+      li::after {
+        background-color: $brand;
+      }
+    }
+
+    &:last-child {
+      li::after {
+        background-color: $highlight;
+      }
+    }
+  }
+}

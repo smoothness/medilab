@@ -9,7 +9,7 @@ import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
 import { PatientService } from 'app/entities/patient/service/patient.service';
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
-import { Doctor, Patient} from './../core/auth/account.model';
+import { Doctor, Patient } from './../core/auth/account.model';
 
 import { AppointmentTreatmentAilmentService } from 'app/entities/appointment-treatment-ailment/service/appointment-treatment-ailment.service';
 import { IAppointmentTreatmentAilment } from 'app/entities/appointment-treatment-ailment/appointment-treatment-ailment.model';
@@ -21,8 +21,8 @@ import { EmergencyContactService } from 'app/entities/emergency-contact/service/
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactUpdateComponent } from '../entities/emergency-contact/update/emergency-contact-update.component';
 import { EmergencyContactRegisterComponent } from '../entities/emergency-contact/register/emergency-contact-register.component';
-import {IMedicalExams} from "../entities/medical-exams/medical-exams.model";
-import {MedicalExamsService} from "../entities/medical-exams/service/medical-exams.service";
+import { IMedicalExams } from '../entities/medical-exams/medical-exams.model';
+import { MedicalExamsService } from '../entities/medical-exams/service/medical-exams.service';
 
 @Component({
   selector: 'medi-home',
@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   authority: string | undefined;
   appointmentsDoctor: any[] = [];
   appointmentsPatient: any[] = [];
-  ailmentsPatient: any[]  = [];
+  ailmentsPatient: any[] = [];
   closeModal: string | undefined;
   ailment: any;
   updatedDate = new FormControl('');
@@ -78,6 +78,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     return this.emergencyContacts.length;
   }
 
+  public get notificationUser(): any {
+    return this.currentUser; /* eslint-disable-line @typescript-eslint/no-unsafe-return */
+  }
+
   ngOnInit(): void {
     this.authenticatedAccount();
   }
@@ -96,7 +100,7 @@ export class HomeComponent implements OnInit, OnDestroy {
    * @description This method is responsible for bringing all the appointments according to the role of the authenticated user
    */
   public getAppointmentsByUser(): void {
-    if(this.isPatient){
+    if (this.isPatient) {
       this.getAppointmentsPatient();
       this.getMedicalExams();
       this.getAilmentsPatient();
@@ -188,7 +192,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
     });
   }
-
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -265,12 +268,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     const newAppointment = {
       ...this.appointmentToChangeDate,
       date: this.updatedDate.value,
+      updated: true,
     };
     this.appointmentService.update(newAppointment).subscribe(() => {
-      this.sweetAlertService.showMsjInfo('home.messages.updatedAppointmentDatetitle', 'home.messages.updatedAppointmentDateMsj').then(() => {
-        this.getAppointmentsDoctor();
-        this.modalService.dismissAll();
-      });
+      this.sweetAlertService
+        .showMsjSuccess('home.messages.updatedAppointmentDatetitle', 'home.messages.updatedAppointmentDateMsj')
+        .then(() => {
+          this.getAppointmentsDoctor();
+          this.modalService.dismissAll();
+        });
     });
   }
 
