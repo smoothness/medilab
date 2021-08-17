@@ -31,7 +31,7 @@ const mainRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(mainRoutes, { enableTracing: DEBUG_INFO_ENABLED }), LayoutsRoutesModule],
+  imports: [RouterModule.forRoot(mainRoutes), LayoutsRoutesModule],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

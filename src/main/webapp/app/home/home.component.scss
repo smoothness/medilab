@@ -7,6 +7,13 @@ Main page styles
 .ml-profile {
   margin-top: 1em;
 
+  .card-header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    height: 4rem;
+  }
+
   &__top {
     display: flex;
     padding-top: rem;
@@ -66,6 +73,15 @@ Main page styles
   &__appointment-patient-info-ctas {
     display: flex;
     margin-left: auto;
+  }
+
+  &__notifications {
+    display: flex;
+    align-items: center;
+
+    button {
+      margin-left: auto;
+    }
   }
 }
 

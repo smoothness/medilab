@@ -6,8 +6,10 @@
         <!-- open top left card -->
         <div class="card bg-dark">
           <h5 class="card-header">
-            <span mediTranslate="home.welcome">Bienvenido: </span>
-            <span class="ml-profile__user-text">{{ currentUser.fullName }}</span>
+            <div>
+              <span mediTranslate="home.welcome">Bienvenido&nbsp;</span>
+              <span class="ml-profile__user-text">{{ currentUser.fullName }}</span>
+            </div>
           </h5>
           <div class="card-body">
             <!-- START Top left card / Patient Block -->
@@ -85,6 +87,7 @@
               </ul>
             </div>
           </div>
+
           <!--AILMENT-->
           <div class="card bg-dark mb-3">
             <h5 class="card-header" mediTranslate="home.ailments">Padecimientos</h5>

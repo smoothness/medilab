@@ -1,0 +1,60 @@
+<div class="ml-notifications">
+  <div class="dropdown">
+    <button
+      type="button"
+      class="ml-notifications__button nav-link font-weight-normal"
+      (click)="expanded = !expanded"
+      [disabled]="pendingAppointments.length + canceledAppointments.length + updatedAppointments.length === 0 ? true : false"
+    >
+      <fa-icon icon="bell"></fa-icon>
+      <span>Notifications</span>
+      <span class="badge badge-light">
+        {{ pendingAppointments.length + canceledAppointments.length + updatedAppointments.length }}
+      </span>
+    </button>
+    <div *ngIf="expanded === true" class="notifications-dropdown-menu">
+      <div *ngIf="userType === 'doctor'; else patientBlock">
+        <ul>
+          <li *ngFor="let pending of pendingAppointments">
+            <span>Cita pendiente con el paciente {{ pending?.patient?.internalUser?.completeName }}</span>
+            <span class="text-muted">{{ pending?.date | date }}</span>
+          </li>
+        </ul>
+        <ul>
+          <li *ngFor="let updated of updatedAppointments">
+            <span>Cita modificada con el paciente {{ updated?.patient?.internalUser?.completeName }}</span>
+            <span class="text-muted">{{ updated?.date | date }}</span>
+          </li>
+        </ul>
+        <ul>
+          <li *ngFor="let canceled of canceledAppointments">
+            <span>Cita cancelada con el paciente {{ canceled?.patient?.internalUser?.completeName }}</span>
+            <span class="text-muted">{{ canceled?.date | date }}</span>
+          </li>
+        </ul>
+      </div>
+      <ng-template #patientBlock>
+        <div>
+          <ul>
+            <li *ngFor="let pending of pendingAppointments">
+              <span>Cita pendiente con el médico {{ pending?.doctor?.internalUser?.completeName }}</span>
+              <span class="text-muted">{{ pending?.date | date }}</span>
+            </li>
+          </ul>
+          <ul>
+            <li *ngFor="let updated of updatedAppointments">
+              <span>Cita modificada con el médico {{ updated?.doctor?.internalUser?.completeName }}</span>
+              <span class="text-muted">{{ updated?.date | date }}</span>
+            </li>
+          </ul>
+          <ul>
+            <li *ngFor="let canceled of canceledAppointments">
+              <span>Cita cancelada con el médico {{ canceled?.doctor?.internalUser?.completeName }}</span>
+              <span class="text-muted">{{ canceled?.date | date }}</span>
+            </li>
+          </ul>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
