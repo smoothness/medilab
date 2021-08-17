@@ -24,9 +24,16 @@
               </td>
               <td>{{ doctor.email }}</td>
               <td>{{ doctor.specialty }}</td>
-
               <td class="text-right">
-                <div>
+                <a
+                  target="_blank"
+                  class="btn btn-secondary"
+                  href="https://wa.me/50688885353?text=Solicito%20una%20cita%20con%20el%20doctor"
+                >
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                  <span class="d-none d-md-inline" mediTranslate="medilabApp.doctor.list.btnDate">Solicitar una cita</span>
+                </a>
+                <!-- <div>
                   <button
                     type="submit"
                     [routerLink]="['/doctor', doctor.id, 'edit']"
@@ -36,7 +43,7 @@
                     <fa-icon icon="calendar-alt"></fa-icon>
                     <span class="d-none d-md-inline" mediTranslate="medilabApp.doctor.list.btnDate">Edit</span>
                   </button>
-                </div>
+                </div> -->
               </td>
             </tr>
           </tbody>
