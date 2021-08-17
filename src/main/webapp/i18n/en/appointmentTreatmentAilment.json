@@ -2,12 +2,13 @@
   "medilabApp": {
     "appointmentTreatmentAilment": {
       "home": {
-        "title": "diagnosiss",
+        "title": "Diagnosis",
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new diagnosis",
         "createOrEditLabel": "Create or edit a diagnosis",
         "notFound": "No diagnosis found"
       },
+      "register": "Diagnostic register",
       "created": "A new diagnosis is created with identifier {{ param }}",
       "updated": "A diagnosis is updated with identifier {{ param }}",
       "deleted": "A diagnosis is deleted with identifier {{ param }}",
@@ -26,7 +27,9 @@
       "diagnosis": "Detailed Diagnosis",
       "date": "Date",
       "duration": "Duration",
-      "specification": "Specification"
+      "specification": "Specification",
+      "add": "Add diagnosis",
+      "select": "Choose an option"
     }
   }
 }

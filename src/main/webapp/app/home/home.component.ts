@@ -9,7 +9,7 @@ import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
 import { PatientService } from 'app/entities/patient/service/patient.service';
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
-import { Doctor, Patient} from './../core/auth/account.model';
+import { Doctor, Patient } from './../core/auth/account.model';
 
 import { AppointmentTreatmentAilmentService } from 'app/entities/appointment-treatment-ailment/service/appointment-treatment-ailment.service';
 import { IAppointmentTreatmentAilment } from 'app/entities/appointment-treatment-ailment/appointment-treatment-ailment.model';
@@ -21,8 +21,8 @@ import { EmergencyContactService } from 'app/entities/emergency-contact/service/
 import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
 import { EmergencyContactUpdateComponent } from '../entities/emergency-contact/update/emergency-contact-update.component';
 import { EmergencyContactRegisterComponent } from '../entities/emergency-contact/register/emergency-contact-register.component';
-import {IMedicalExams} from "../entities/medical-exams/medical-exams.model";
-import {MedicalExamsService} from "../entities/medical-exams/service/medical-exams.service";
+import { IMedicalExams } from '../entities/medical-exams/medical-exams.model';
+import { MedicalExamsService } from '../entities/medical-exams/service/medical-exams.service';
 
 @Component({
   selector: 'medi-home',
@@ -42,28 +42,29 @@ export class HomeComponent implements OnInit, OnDestroy {
   authority: string | undefined;
   appointmentsDoctor: any[] = [];
   appointmentsPatient: any[] = [];
-  ailmentsPatient: any[]  = [];
+  ailmentsPatient: any[] = [];
   closeModal: string | undefined;
   ailment: any;
   updatedDate = new FormControl('');
   appointmentToChangeDate: IAppointment | null = null;
   currentUser: any = {};
   patientMedicalExams: IMedicalExams[] = [];
+  patientDiagnosis: IAppointmentTreatmentAilment[] = [];
 
   private readonly destroy$ = new Subject<void>();
 
   constructor(
     private router: Router,
     protected modalService: NgbModal,
-    private sweetAlertService: SweetAlertService,
+    private doctorService: DoctorService,
     private accountService: AccountService,
     private patientService: PatientService,
-    private doctorService: DoctorService,
+    private sweetAlertService: SweetAlertService,
     private appointmentService: AppointmentService,
+    private medicalExamsService: MedicalExamsService,
     private emergencyContactService: EmergencyContactService,
     private appointmentTreatmentAilmentService: AppointmentTreatmentAilmentService,
-    private medicalExamsService: MedicalExamsService
-  ) {}
+) {}
 
   public get isPatient(): boolean {
     return this.currentUser instanceof Patient;
@@ -75,6 +76,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public get emergencyContactsTotal(): number {
     return this.emergencyContacts.length;
+  }
+
+  public get notificationUser(): any {
+    return this.currentUser; /* eslint-disable-line @typescript-eslint/no-unsafe-return */
   }
 
   ngOnInit(): void {
@@ -95,11 +100,12 @@ export class HomeComponent implements OnInit, OnDestroy {
    * @description This method is responsible for bringing all the appointments according to the role of the authenticated user
    */
   public getAppointmentsByUser(): void {
-    if(this.isPatient){
+    if (this.isPatient) {
       this.getAppointmentsPatient();
       this.getMedicalExams();
       this.getAilmentsPatient();
       this.loadAllEmergencyContact();
+      this.getPatientDiagnoses();
     }else if(this.isDoctor) {
       this.getAppointmentsDoctor();
     }
@@ -186,25 +192,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
     });
   }
-
-  cancelAppointment(appointment: IAppointment): void {
-    this.sweetAlertService
-      .showConfirmMsg({
-        title: 'medilabApp.deleteConfirm.title',
-        text: 'medilabApp.deleteConfirm.text',
-        confirmButtonText: 'medilabApp.deleteConfirm.confirmButtonText',
-        cancelButtonText: 'medilabApp.deleteConfirm.cancelButtonText',
-      })
-      .then(res => {
-        appointment.status = Status.CANCELED;
-        this.appointmentService.update(appointment).subscribe(() => {
-          this.sweetAlertService.showMsjInfo('home.messages.cancelAppointmentTitle', 'home.messages.cancelAppointmentMsj').then(() => {
-            this.getAppointmentsDoctor();
-          });
-        });
-      });
-  }
-
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -250,6 +237,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.authenticatedAccount();
   }
 
+  public getPatientDiagnoses(): void {
+    this.appointmentTreatmentAilmentService.findByPatient(this.currentUser.patientId).subscribe((res: any) => {
+      this.patientDiagnosis = res.body;
+    });
+  }
+
   loadAllAppoiments(): void {
     this.isLoadingAppointmentTreatmentAilment = true;
 
@@ -275,12 +268,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     const newAppointment = {
       ...this.appointmentToChangeDate,
       date: this.updatedDate.value,
+      updated: true,
     };
     this.appointmentService.update(newAppointment).subscribe(() => {
-      this.sweetAlertService.showMsjInfo('home.messages.updatedAppointmentDatetitle', 'home.messages.updatedAppointmentDateMsj').then(() => {
-        this.getAppointmentsDoctor();
-        this.modalService.dismissAll();
-      });
+      this.sweetAlertService
+        .showMsjSuccess('home.messages.updatedAppointmentDatetitle', 'home.messages.updatedAppointmentDateMsj')
+        .then(() => {
+          this.getAppointmentsDoctor();
+          this.modalService.dismissAll();
+        });
     });
   }
 
@@ -307,6 +303,12 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.loadAllEmergencyContact();
       }
     });
+  }
+
+  public updateList(update: boolean): void {
+    if (update){
+      this.getAppointmentsDoctor();
+    }
   }
 
   open(content: any, ailment: any): void {

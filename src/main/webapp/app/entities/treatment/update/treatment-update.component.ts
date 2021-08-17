@@ -1,87 +1,118 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { ITreatment, Treatment } from '../treatment.model';
 import { TreatmentService } from '../service/treatment.service';
+import {SweetAlertService} from "../../../shared/services/sweet-alert.service";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {AppointmentTreatmentAilmentService} from "../../appointment-treatment-ailment/service/appointment-treatment-ailment.service";
+import {
+  AppointmentTreatmentAilment,
+  IAppointmentTreatmentAilment
+} from "../../appointment-treatment-ailment/appointment-treatment-ailment.model";
 
 @Component({
   selector: 'medi-treatment-update',
   templateUrl: './treatment-update.component.html',
 })
 export class TreatmentUpdateComponent implements OnInit {
-  isSaving = false;
+  @Input() treatment: ITreatment = {};
+  @Input() isRegister = false;
+  @Input() ailment = {};
+  @Input() appointment = {};
 
   editForm = this.fb.group({
-    id: [],
-    specifications: [],
-    medicines: [],
-    duration: [],
-    removed: [],
+    specifications: ['',[Validators.required]],
+    medicines: ['',[Validators.required]],
+    duration: ['',[Validators.required]],
   });
 
-  constructor(protected treatmentService: TreatmentService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
+  constructor(
+    public activeModal: NgbActiveModal,
+    protected fb: FormBuilder,
+    protected sweetAlertService: SweetAlertService,
+    protected treatmentService: TreatmentService,
+    protected diagnosisService: AppointmentTreatmentAilmentService,
+    ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ treatment }) => {
-      this.updateForm(treatment);
-    });
-  }
-
-  previousState(): void {
-    window.history.back();
-  }
-
-  save(): void {
-    this.isSaving = true;
-    const treatment = this.createFromForm();
-    if (treatment.id !== undefined) {
-      this.subscribeToSaveResponse(this.treatmentService.update(treatment));
-    } else {
-      this.subscribeToSaveResponse(this.treatmentService.create(treatment));
+    if (!this.isRegister) {
+      this.fillForm();
     }
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<ITreatment>>): void {
-    result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
-      () => this.onSaveSuccess(),
-      () => this.onSaveError()
+  public save(): void {
+    if(this.isRegister){
+      this.createTreatment();
+    }else {
+      this.updateTreatment();
+    }
+  }
+
+  protected createTreatment(): void {
+    const treatment = this.createTreatmentToRegister();
+    this.treatmentService.create(treatment).subscribe((treatmentCreated: any) => {
+      this.addDiagnosis(treatmentCreated.body);
+    },
+      () => {
+        this.sweetAlertService.showMsjError('register.messages.error.error', 'medilabApp.treatment.error');
+      }
     );
   }
 
-  protected onSaveSuccess(): void {
-    this.previousState();
+  protected addDiagnosis(treatment: ITreatment): void {
+    const newDiagnosis = new AppointmentTreatmentAilment("", this.ailment, treatment, this.appointment);
+      this.diagnosisService.create(newDiagnosis).subscribe(() => {
+        this.sweetAlertService.showMsjSuccess('reset.done', 'medilabApp.treatment.created').then(() => {
+          this.activeModal.close('register');
+        });
+      });
   }
 
-  protected onSaveError(): void {
-    // Api for inheritance.
+  protected updateTreatment(): void {
+    const treatment = this.createTreatmentToUpdate();
+    this.treatmentService.update(treatment).subscribe(() => {
+        this.sweetAlertService.showMsjSuccess('reset.done', 'medilabApp.treatment.updated').then(() => {
+          this.activeModal.close('updated');
+        })
+      },
+      () => {
+        this.sweetAlertService.showMsjError('register.messages.error.error', 'medilabApp.treatment.error');
+      }
+    );
   }
 
-  protected onSaveFinalize(): void {
-    this.isSaving = false;
-  }
-
-  protected updateForm(treatment: ITreatment): void {
+  protected fillForm(): void {
     this.editForm.patchValue({
-      id: treatment.id,
-      specifications: treatment.specifications,
-      medicines: treatment.medicines,
-      duration: treatment.duration,
-      removed: treatment.removed,
+      specifications: this.treatment.specifications,
+      medicines: this.treatment.medicines,
+      duration: this.treatment.duration,
     });
   }
 
-  protected createFromForm(): ITreatment {
+  protected createTreatmentToUpdate(): ITreatment {
     return {
       ...new Treatment(),
-      id: this.editForm.get(['id'])!.value,
+      id: this.treatment.id,
       specifications: this.editForm.get(['specifications'])!.value,
       medicines: this.editForm.get(['medicines'])!.value,
       duration: this.editForm.get(['duration'])!.value,
-      removed: this.editForm.get(['removed'])!.value,
+      removed: false,
     };
   }
+
+  protected createTreatmentToRegister(): ITreatment {
+    return {
+      ...new Treatment(),
+      specifications: this.editForm.get(['specifications'])!.value,
+      medicines: this.editForm.get(['medicines'])!.value,
+      duration: this.editForm.get(['duration'])!.value,
+      removed: false,
+    };
+  }
+
 }

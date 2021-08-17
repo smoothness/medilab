@@ -1,6 +1,7 @@
 package com.cenfotec.medilab.web.rest;
 
 import com.cenfotec.medilab.domain.Treatment;
+import com.cenfotec.medilab.repository.AppointmentTreatmentAilmentRepository;
 import com.cenfotec.medilab.repository.TreatmentRepository;
 import com.cenfotec.medilab.service.TreatmentService;
 import com.cenfotec.medilab.web.rest.errors.BadRequestAlertException;
@@ -11,6 +12,7 @@ import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +36,9 @@ public class TreatmentResource {
     private final TreatmentService treatmentService;
 
     private final TreatmentRepository treatmentRepository;
+
+    @Autowired
+    private AppointmentTreatmentAilmentRepository diagnosisRepository;
 
     public TreatmentResource(TreatmentService treatmentService, TreatmentRepository treatmentRepository) {
         this.treatmentService = treatmentService;
@@ -94,6 +99,8 @@ public class TreatmentResource {
             .body(result);
     }
 
+
+
     /**
      * {@code PATCH  /treatments/:id} : Partial updates given fields of an existing treatment, field will ignore if it is null
      *
@@ -141,6 +148,12 @@ public class TreatmentResource {
         return treatmentService.findAll();
     }
 
+    @GetMapping("/treatments/ailment/{ailmentId}/{appointmentId}")
+    public List<Treatment> getTreatmentsByAilment(@PathVariable(name = "ailmentId") Long ailmentId,
+                                                  @PathVariable(name = "appointmentId") Long appointmentId) {
+        return treatmentService.findAllTreatmentsByAilment(ailmentId, appointmentId);
+    }
+
     /**
      * {@code GET  /treatments/:id} : get the "id" treatment.
      *
@@ -164,6 +177,16 @@ public class TreatmentResource {
     public ResponseEntity<Void> deleteTreatment(@PathVariable Long id) {
         log.debug("REST request to delete Treatment : {}", id);
         treatmentService.delete(id);
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
+    }
+
+    @DeleteMapping("/treatments/removed/{id}")
+    public ResponseEntity<Void> updateRemoved(@PathVariable Long id) {
+        treatmentRepository.updateRemoved(id);
+        diagnosisRepository.deleteByTreatment(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

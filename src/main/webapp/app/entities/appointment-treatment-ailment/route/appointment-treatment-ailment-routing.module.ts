@@ -9,11 +9,6 @@ import { AppointmentTreatmentAilmentRoutingResolveService } from './appointment-
 
 const appointmentTreatmentAilmentRoute: Routes = [
   {
-    path: '',
-    component: AppointmentTreatmentAilmentComponent,
-    canActivate: [UserRouteAccessService],
-  },
-  {
     path: ':id/view',
     component: AppointmentTreatmentAilmentDetailComponent,
     resolve: {

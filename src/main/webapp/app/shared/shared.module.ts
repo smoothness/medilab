@@ -17,7 +17,8 @@ import { SortByDirective } from './sort/sort-by.directive';
 import { SortDirective } from './sort/sort.directive';
 import { ItemCountComponent } from './pagination/item-count.component';
 import { HeaderComponent } from './header/header.component';
-import {PaymentComponent} from "./payment/payment.component";
+import { PaymentComponent } from "./payment/payment.component";
+import { CancelButtonComponent } from "./cancel-button/cancel-button.component";
 import { LanguageSettingComponent } from './language-setting/language-setting.component';
 import { AccountSettingComponent } from './account-setting/account-setting.component';
 
@@ -39,6 +40,7 @@ import { AccountSettingComponent } from './account-setting/account-setting.compo
     AccountSettingComponent,
     HeaderComponent,
     PaymentComponent,
+    CancelButtonComponent
   ],
   exports: [
     SharedLibsModule,
@@ -57,6 +59,7 @@ import { AccountSettingComponent } from './account-setting/account-setting.compo
     AccountSettingComponent,
     HeaderComponent,
     PaymentComponent,
+    CancelButtonComponent
   ],
 })
 export class SharedModule {
