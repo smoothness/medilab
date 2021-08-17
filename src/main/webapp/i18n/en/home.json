@@ -7,7 +7,8 @@
     "requestAppointment": "Request an appointment",
     "createNewAppointment": "Create a new appointment",
     "upcomingAppointments": "Upcoming appointments",
-    "appointmentDetail": "Detail",
+    "appointmentDetail": "Show appointment",
+    "patientDetail": "Show patient",
     "appointmentDelete": "Cancel appointment",
     "appointmentDateChange": "Change date",
     "appointmentDateChangeModal": {
