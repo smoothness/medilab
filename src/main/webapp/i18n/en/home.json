@@ -18,7 +18,8 @@
       "phone": "Phone:",
       "email": "Email:",
       "specialty": "Specialty:",
-      "rating": "Rating"
+      "rating": "Rating",
+      "name": "Name:"
     },
     "logged": {
       "message": "You are logged in as user \"{{username}}\"."

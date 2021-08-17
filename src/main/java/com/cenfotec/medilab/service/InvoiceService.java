@@ -47,4 +47,20 @@ public interface InvoiceService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Get the  invoice with "id".
+     *
+     * @param id the id of the entity.
+     * @return the entity.
+     */
+    Optional<Invoice> findPendingInvoicesByAppointmentID(Long id);
+
+    /**
+     * Get the  invoice with "id".
+     *
+     * @param id the id of the entity.
+     * @return the entity.
+     */
+    List<Invoice> findInvoicesByAppointmentID(Long id);
 }

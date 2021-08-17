@@ -14,37 +14,38 @@
             <table class="table table-striped" aria-describedby="page-heading">
               <thead>
                 <tr>
-                  <th scope="col"><span mediTranslate="global.field.id">Número</span></th>
+                  <th scope="col"><span mediTranslate="medilabApp.invoice.id">Número</span></th>
                   <th scope="col"><span mediTranslate="medilabApp.invoice.date">Date</span></th>
                   <th scope="col"><span mediTranslate="medilabApp.invoice.total">Total</span></th>
                   <th scope="col"><span mediTranslate="medilabApp.invoice.status">Status</span></th>
-                  <th scope="col"><span mediTranslate="medilabApp.invoice.appointment">Appointment</span></th>
                   <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let invoice of invoices; trackBy: trackId" data-cy="entityTable">
-                  <td>
-                    <a [routerLink]="['/invoice', invoice.id, 'view']">{{ invoice.id }}</a>
-                  </td>
-                  <td>{{ invoice.date | formatMediumDate }}</td>
+                <tr *ngFor="let invoice of invoices" data-cy="entityTable">
+                  <td>{{ invoice.id }}</td>
+                  <td>{{ invoice.date | date }}</td>
                   <td>{{ invoice.total }}</td>
-                  <td mediTranslate="{{ 'medilabApp.Status.' + invoice.status }}">{{ invoice.status }}</td>
-                  <td>
-                    <div *ngIf="invoice.appointment">
-                      <a [routerLink]="['/appointment', invoice.appointment?.id, 'view']">{{ invoice.appointment?.id }}</a>
-                    </div>
-                  </td>
+                  <td>{{ invoice.status | invoicePipe }}</td>
                   <td class="text-right">
                     <div class="btn-group">
                       <button
                         type="submit"
-                        [routerLink]="['/main/invoice', invoice.id, 'view']"
-                        class="btn btn-info btn-sm"
+                        [routerLink]="['/main/appointment', invoice.appointment.id, 'view']"
+                        class="btn btn-info mr-1"
                         data-cy="entityDetailsButton"
                       >
                         <fa-icon icon="eye"></fa-icon>
-                        <span class="d-none d-md-inline" mediTranslate="entity.action.view">View</span>
+                        <span class="d-none d-md-inline" mediTranslate="medilabApp.appointment.action.view">View</span>
+                      </button>
+                      <button
+                        type="submit"
+                        [routerLink]="['/main/invoice', invoice.id, 'view']"
+                        class="btn btn-info"
+                        data-cy="entityDetailsButton"
+                      >
+                        <fa-icon icon="eye"></fa-icon>
+                        <span class="d-none d-md-inline" mediTranslate="medilabApp.invoice.action.view">View</span>
                       </button>
                     </div>
                   </td>
@@ -57,5 +58,3 @@
     </div>
   </div>
 </section>
-
-

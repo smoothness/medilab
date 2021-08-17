@@ -7,12 +7,13 @@ import { InvoiceService } from '../service/invoice.service';
 import { InvoiceDeleteDialogComponent } from '../delete/invoice-delete-dialog.component';
 
 import { AccountService } from 'app/core/auth/account.service';
-import { Account } from 'app/core/auth/account.model';
+import { Account, Doctor, Patient } from 'app/core/auth/account.model';
 
 import { PatientService } from 'app/entities/patient/service/patient.service';
 
 import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'medi-invoice',
@@ -22,10 +23,8 @@ export class InvoiceComponent implements OnInit {
   invoices?: any[] | undefined = [];
   isLoading = false;
   account: Account | null = null;
-  thePatient: any;
-  theDoctor: any;
-  appointmentsPatient: any[] | undefined = [];
-  appointmentsDoctor: any[] | undefined = [];
+  currentUser: any = {};
+  appointments: any[] = [];
 
   constructor(
     protected invoiceService: InvoiceService,
@@ -36,85 +35,119 @@ export class InvoiceComponent implements OnInit {
     protected modalService: NgbModal
   ) {}
 
+  public get isPatient(): boolean {
+    return this.currentUser instanceof Patient;
+  }
+
+  public get isDoctor(): boolean {
+    return this.currentUser instanceof Doctor;
+  }
+
   ngOnInit(): void {
-    this.accountService.getAuthenticationState().subscribe(account => {
-      this.account = account;
-      if (this.account?.authorities[0] === 'ROLE_PATIENT') {
-        this.mergeAccountWithPatient(this.account);
-      }
+    this.authenticatedAccount();
+    //this.getInvoicesHistory();
 
-      if (this.account?.authorities[0] === 'ROLE_USER') {
-        this.mergeAccountWithDoctor(this.account);
-      }
+    console.log('appointmentsDoctor', this.appointments);
+  }
+  /*
+  getInvoicesHistoryDoctor(): void {
+    this.appointmentsDoctor?.forEach( appointment => {
+      this.invoiceService.findInvoicesByAppointmentID(appointment.doctor.)
+    })
+  }
 
-      if (this.account?.authorities[0] === 'ROLE_ADMIN') {
-        this.loadAll();
-      }
+  getInvoicesHistoryPatient(): void {
+    console.log("appointmentsDoctor", this.appointmentsDoctor);
+    console.log("appointmentsPatient", this.appointmentsPatient);
+
+
+  }*/
+
+  public authenticatedAccount(): void {
+    this.accountService.formatUserIdentity().subscribe(user => {
+      this.currentUser = user;
+      this.getAppointmentHistoryByUser();
     });
   }
 
-  mergeAccountWithPatient(account: Account): void {
-    this.patientService.query().subscribe(res => {
-      this.thePatient = res.body?.find(patient => patient.internalUser?.id === account.id);
-      this.appointmentService.query().subscribe(data => {
-        this.appointmentsPatient = data.body?.filter(appointment => {
-          this.accountService.retrieveUserById(Number(appointment.doctor?.id)).subscribe(doctor => {
-            Object.assign(appointment.doctor, doctor);
-          });
-          return appointment.patient?.id === this.thePatient?.id;
+  public getAppointmentHistoryByUser(): void {
+    if (this.isPatient) {
+      this.getPatientAppointmentHistory();
+    } else if (this.isDoctor) {
+      this.getDoctorAppointmentHistory();
+    } else {
+      this.loadAll();
+    }
+  }
+
+  public getPatientAppointmentHistory(): void {
+    this.appointmentService.findPatientAppointmentsHistory(this.currentUser.patientId).subscribe((appointments: any) => {
+      let index = 0;
+      this.appointments = appointments.body;
+      this.formatDoctorData(this.appointments).subscribe(data => {
+        this.appointments[index].doctor = data;
+        index++;
+      });
+      this.appointments.forEach(appointment => {
+        this.invoiceService.findInvoicesByAppointmentID(appointment.id).subscribe((res: any) => {
+          this.invoices = res.body;
+          console.log('body', this.invoices);
         });
-        this.getInvoices();
       });
     });
   }
 
-  mergeAccountWithDoctor(account: Account): void {
-    this.doctorService.query().subscribe(res => {
-      this.theDoctor = res.body?.find(doctor => doctor.internalUser?.id === account.id);
-      this.appointmentService.query().subscribe(data => {
-        this.appointmentsDoctor = data.body?.filter(appointment => {
-          // the information returned from the server of the doctor is incorrect
-          // it is based on the doctor id, not the internal user id
-          // same with the patient, that's why it is needed the patient internal user id
-          // to query with the internal user id for the actual patient
-          this.patientService.find(Number(appointment.patient?.id)).subscribe(patient => {
-            Object.assign(appointment.patient, patient.body);
-          });
-          return appointment.doctor?.id === this.theDoctor?.internalUser.id && appointment.status !== 'CANCELED';
-        });
-      });
-      this.getInvoices();
-    });
-  }
-
-  getInvoices(): void {
-    this.invoiceService.query().subscribe(data => {
-      if (this.account?.authorities[0] === 'ROLE_PATIENT') {
-        this.appointmentsPatient?.forEach(appointment => {
-          if (data.body !== null) {
-            data.body.forEach(element => {
-              if (element.appointment?.id === appointment.id) {
-                this.invoices?.push(element);
-              }
-            });
-          }
-        });
-      } else {
-        this.appointmentsDoctor?.forEach(appointment => {
-          if (data.body !== null) {
-            data.body.forEach(element => {
-              if (element.appointment?.id === appointment.id) {
-                this.invoices?.push(element);
-              }
-            });
-          }
+  public formatDoctorData(appointments: any): Observable<any> {
+    return new Observable(subscriber => {
+      for (const appointment of appointments[Symbol.iterator]()) {
+        this.doctorService.find(appointment.doctor.id).subscribe(doctor => {
+          subscriber.next(doctor.body);
         });
       }
     });
   }
 
-  trackId(index: number, item: IInvoice): number {
-    return item.id!;
+  public getDoctorAppointmentHistory(): void {
+    this.appointmentService.findDoctorAppointmentsHistory(this.currentUser.doctorId).subscribe((appointments: any) => {
+      let index = 0;
+      this.appointments = appointments.body;
+      this.formatPatientData(this.appointments).subscribe(data => {
+        this.appointments[index].patient = data;
+        index++;
+      });
+      this.appointments.forEach(appointment => {
+        this.invoiceService.findInvoicesByAppointmentID(appointment.id).subscribe((res: any) => {
+          this.invoices = res.body;
+          console.log('body', this.invoices);
+        });
+      });
+    });
+  }
+
+  public formatPatientData(appointments: any): Observable<any> {
+    return new Observable(subscriber => {
+      for (const appointment of appointments[Symbol.iterator]()) {
+        this.patientService.find(appointment.patient.id).subscribe(patient => {
+          subscriber.next(patient.body);
+        });
+      }
+    });
+  }
+
+  public getAppointmentHistory(): void {
+    this.appointmentService.findAppointmentsHistory().subscribe((appointments: any) => {
+      let index = 0;
+      this.appointments = appointments.body;
+      this.formatDoctorData(this.appointments).subscribe(data => {
+        this.appointments[index].doctor = data;
+        index++;
+      });
+      let index2 = 0;
+      this.formatPatientData(this.appointments).subscribe(data => {
+        this.appointments[index2].patient = data;
+        index2++;
+      });
+    });
   }
 
   loadAll(): void {
@@ -140,5 +173,9 @@ export class InvoiceComponent implements OnInit {
         this.loadAll();
       }
     });
+  }
+
+  trackId(index: number, item: IInvoice): number {
+    return item.id!;
   }
 }

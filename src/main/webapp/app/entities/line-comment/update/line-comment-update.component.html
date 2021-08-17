@@ -1,23 +1,22 @@
 <section>
   <div class="card bg-dark">
     <form #resumeForm="ngForm" autocomplete="off">
-      <!-- Education -->
       <div class="card-body">
         <div class="d-flex justify-content-between card-title mb-5">
           <h4 class="d-flex align-items-center text-white" mediTranslate="medilabApp.invoice.home.createLabel">Factura</h4>
           <button class="btn btn-primary" (click)="addLine()" [disabled]="resumeForm.invalid">+ Agregar Línea</button>
         </div>
         <div class="row justify-content-between">
-          <div class="col-md-3">
-            <h4 class="d-flex align-items-center text-white" mediTranslate="medilabApp.lineComment.description"></h4>
+          <div class="col-md">
+            <h4 class="align-items-center text-white w-auto" mediTranslate="medilabApp.lineComment.description"></h4>
           </div>
-          <div class="col-md-3">
-            <h4 class="d-flex align-items-center text-white" mediTranslate="medilabApp.lineComment.quantity"></h4>
+          <div class="col-md">
+            <h4 class="align-items-center text-white w-auto" mediTranslate="medilabApp.lineComment.quantity"></h4>
           </div>
-          <div class="col-md-3">
-            <h4 class="d-flex align-items-center text-white" mediTranslate="medilabApp.lineComment.unitPrice"></h4>
+          <div class="col-md">
+            <h4 class="align-items-center text-white w-auto" mediTranslate="medilabApp.lineComment.unitPrice"></h4>
           </div>
-          <div class="col-md-3"></div>
+          <div class="col-md"></div>
         </div>
         <div class="row align-items-center justify-content-between" *ngFor="let ed of invoice.lineComments; let i = index">
           <div class="col-md-3">
@@ -80,65 +79,4 @@
       </button>
     </div>
   </div>
-
-  <!--
-
-  <div class="card bg-dark">
-    <div class="card-header text-center p-0 m-0">
-      <h2 class="text-primary py-2" mediTranslate="medilabApp.invoice.home.createLabel"></h2>
-    </div>
-    <div class="card-body">
-      <form name="registerInvoiceForm" role="form" autocomplete="off" (submit)="saveComment()" [formGroup]="registerCommentForm">
-        <div class="form-group" [hidden]="registerCommentForm.get('id')!.value == null">
-          <input
-            type="number"
-            class="form-control"
-            type="hidden"
-            name="id"
-            id="field_id"
-            data-cy="id"
-            formControlName="id"
-            [readonly]="true"
-          />
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label text-white" mediTranslate="medilabApp.lineComment.description" for="field_description"
-            >Description</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="description"
-            id="field_description"
-            data-cy="description"
-            formControlName="description"
-          />
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label text-white" mediTranslate="medilabApp.lineComment.quantity" for="field_quantity">Quantity</label>
-          <input type="number" class="form-control" name="quantity" id="field_quantity" data-cy="quantity" formControlName="quantity" />
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label text-white" mediTranslate="medilabApp.lineComment.unitPrice" for="field_unitPrice"
-            >Unit Price</label
-          >
-          <input type="number" class="form-control" name="unitPrice" id="field_unitPrice" data-cy="unitPrice" formControlName="unitPrice" />
-        </div>
-        <div>
-          <button
-            type="submit"
-            id="saveEntity"
-            data-cy="entityCreateSaveButton"
-            [disabled]="registerCommentForm.invalid"
-            class="btn btn-primary col-12"
-          >
-            <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
-          </button>
-        </div>
-      </form>
-    </div>
-  </div> -->
 </section>

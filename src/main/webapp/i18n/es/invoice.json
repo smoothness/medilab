@@ -17,7 +17,7 @@
       "detail": {
         "title": "Factura"
       },
-      "id": "ID",
+      "id": "Código",
       "date": "Fecha",
       "subtotal": "Subtotal",
       "taxes": "Impuesto 13%",
@@ -34,7 +34,10 @@
       "paid": "Pagada",
       "canceled": "Anulada",
       "invoiceNumber": "Factura número",
-      "download": "Descargar factura"
+      "download": "Descargar factura",
+      "action": {
+        "view": "Ver factura"
+      }
     }
   }
 }

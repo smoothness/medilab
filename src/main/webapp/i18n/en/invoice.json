@@ -17,7 +17,7 @@
       "detail": {
         "title": "Invoice"
       },
-      "id": "ID",
+      "id": "Code",
       "date": "Date",
       "subtotal": "Subtotal",
       "taxes": "Tax 13%",
@@ -34,7 +34,10 @@
       "paid": "Paid",
       "canceled": "Canceled",
       "invoiceNumber": "Invoice number",
-      "download": "Download invoice"
+      "download": "Download invoice",
+      "action": {
+        "view": "View Invoice"
+      }
     }
   }
 }

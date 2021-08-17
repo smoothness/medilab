@@ -18,7 +18,8 @@
       "phone": "Teléfono:",
       "email": "Correo electrónico:",
       "specialty": "Especialidad:",
-      "rating": "Clasificación"
+      "rating": "Clasificación",
+      "name": "Nombre:"
     },
     "logged": {
       "message": "Está conectado como \"{{username}}\"."

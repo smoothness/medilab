@@ -39,7 +39,9 @@
         "canceled": "Canceled",
         "pending": "Pending",
         "finished": "Done"
-      }
+      },
+      "invoicePending": "View pending invoice",
+      "viewInvoice": "View invoice"
     }
   }
 }

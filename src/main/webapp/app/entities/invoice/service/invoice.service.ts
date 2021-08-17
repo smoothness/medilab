@@ -9,6 +9,7 @@ import { DATE_FORMAT } from 'app/config/input.constants';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IInvoice, getInvoiceIdentifier } from '../invoice.model';
+import { IAppointment } from '../../appointment/appointment.model';
 
 export type EntityResponseType = HttpResponse<IInvoice>;
 export type EntityArrayResponseType = HttpResponse<IInvoice[]>;
@@ -50,6 +51,12 @@ export class InvoiceService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  checkPending(id: number): Observable<EntityResponseType> {
+    return this.http
+      .get<IInvoice>(`${this.resourceUrl}/pending/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
@@ -76,6 +83,10 @@ export class InvoiceService {
       return [...invoicesToAdd, ...invoiceCollection];
     }
     return invoiceCollection;
+  }
+
+  findInvoicesByAppointmentID(id: number): Observable<EntityResponseType> {
+    return this.http.get<IInvoice>(`${this.resourceUrl}/history/${id}`, { observe: 'response' });
   }
 
   protected convertDateFromClient(invoice: IInvoice): IInvoice {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AccountService } from 'app/core/auth/account.service';
 
@@ -11,21 +11,21 @@ import { Patient } from '../../../core/auth/account.model';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { FormatMediumDatetimePipe } from 'app/shared/date/format-medium-datetime.pipe';
+import { formatDate } from '@angular/common';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'medi-invoice-detail',
   templateUrl: './invoice-detail.component.html',
-  styleUrls: ['./invoice-detail.component.scss']
+  styleUrls: ['./invoice-detail.component.scss'],
 })
 export class InvoiceDetailComponent implements OnInit {
-  @ViewChild('pdfTable')
-  pdfTable!: ElementRef;
-
+  @Input() invoicePending: any;
   invoice: any = {};
   patient: any = {};
   currentUser: any = {};
   isVisible = true;
+  addCol = false;
 
   formatMediumDatetimePipe = new FormatMediumDatetimePipe();
 
@@ -39,8 +39,15 @@ export class InvoiceDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.autenticatedAccount();
-    this.getInvoiceData();
+    if (this.invoicePending) {
+      this.invoice = this.invoicePending;
+      this.getPatientInvoice();
+      this.getLinesInvoice();
+    } else {
+      this.addCol = true;
+      this.autenticatedAccount();
+      this.getInvoiceData();
+    }
   }
 
   getInvoiceData(): void {
@@ -86,7 +93,7 @@ export class InvoiceDetailComponent implements OnInit {
   public validateShow(): boolean {
     let show = false;
     if (this.currentUser instanceof Patient) {
-      if (this.invoice.status !== 'PAID') {
+      if (this.invoice.status === 'PENDING') {
         show = true;
       }
     }
@@ -131,7 +138,7 @@ export class InvoiceDetailComponent implements OnInit {
             ],
             [
               {
-                text: `Fecha: ${this.formatMediumDatetimePipe.transform(this.invoice.date)}`,
+                text: `Fecha: ${(this.invoice.date = formatDate(this.invoice.date, 'dd-MM-yyyy', 'en-US'))}`,
                 alignment: 'right',
               },
             ],

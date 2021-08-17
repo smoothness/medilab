@@ -8,9 +8,14 @@
               <h5 data-cy="appointmentDetailsHeading" mediTranslate="medilabApp.appointment.detail.title">Detalle de la cita</h5>
             </div>
             <div class="ml-auto">
-              <button type="button" class="btn btn-secondary" (click)="showRegisterInvoiceModal()" *ngIf="isDoctor">
+              <button type="button" class="btn btn-secondary" (click)="showRegisterInvoiceModal()" *ngIf="showRegisterInvoiceBtn()">
                 <fa-icon icon="plus"></fa-icon>
                 <span mediTranslate="medilabApp.medicalExams.btnInvoice">add</span>
+              </button>
+              <button type="button" class="btn btn-secondary" (click)="showInvoiceDetail()" *ngIf="!showRegisterInvoiceBtn()">
+                <fa-icon icon="eye"></fa-icon>
+                <span mediTranslate="medilabApp.appointment.invoicePending" *ngIf="!isPending"></span>
+                <span mediTranslate="medilabApp.appointment.viewInvoice" *ngIf="isPending"></span>
               </button>
             </div>
           </div>

@@ -35,7 +35,6 @@ export class LineCommentUpdateComponent {
     unitPrice: ['', [Validators.required]],
     invoiceCode: [''],
   });
-  private invoiceData: IInvoice | null | undefined;
 
   constructor(
     protected lineCommentService: LineCommentService,

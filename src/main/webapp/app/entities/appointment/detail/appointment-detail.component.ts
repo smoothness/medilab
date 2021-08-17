@@ -8,6 +8,9 @@ import { MedicalExamsService } from '../../medical-exams/service/medical-exams.s
 import { AccountService } from '../../../core/auth/account.service';
 import { Doctor, Patient } from '../../../core/auth/account.model';
 import { LineCommentUpdateComponent } from 'app/entities/line-comment/update/line-comment-update.component';
+import { InvoiceService } from '../../invoice/service/invoice.service';
+import { InvoiceDetailComponent } from '../../invoice/detail/invoice-detail.component';
+import { IInvoice } from '../../invoice/invoice.model';
 
 @Component({
   selector: 'medi-appointment-detail',
@@ -18,12 +21,15 @@ export class AppointmentDetailComponent implements OnInit {
   medicalExams: IMedicalExams[] = [];
   currentUser: any;
   userType = 'doctor';
+  invoicePending: any;
+  isPending = false;
 
   constructor(
     protected activatedRoute: ActivatedRoute,
     protected modalService: NgbModal,
     private accountService: AccountService,
-    private medicalExamsService: MedicalExamsService
+    private medicalExamsService: MedicalExamsService,
+    protected invoiceService: InvoiceService
   ) {}
 
   public get isPatient(): boolean {
@@ -48,6 +54,25 @@ export class AppointmentDetailComponent implements OnInit {
       this.appointment = appointment;
       this.getAppointmentExams();
     });
+    this.isPendingInvoice();
+  }
+
+  public isPendingInvoice(): void {
+    this.invoiceService.checkPending(this.appointment.id).subscribe(res => {
+      this.invoicePending = res.body;
+      if (this.invoicePending.status === 'PAID') {
+        this.isPending = true;
+      }
+    });
+  }
+
+  showRegisterInvoiceBtn(): boolean {
+    let show = false;
+
+    if (this.isDoctor && this.invoicePending.id === null) {
+      show = true;
+    }
+    return show;
   }
 
   public autenticatedAccount(): void {
@@ -69,6 +94,11 @@ export class AppointmentDetailComponent implements OnInit {
   public showRegisterInvoiceModal(): void {
     const modalRef = this.modalService.open(LineCommentUpdateComponent, { centered: true });
     modalRef.componentInstance.appointment = this.appointment;
+  }
+
+  public showInvoiceDetail(): void {
+    const modalRef = this.modalService.open(InvoiceDetailComponent, { size: 'lg', centered: true });
+    modalRef.componentInstance.invoicePending = this.invoicePending;
   }
 
   public showAddMedicalExam(status: any): boolean {
