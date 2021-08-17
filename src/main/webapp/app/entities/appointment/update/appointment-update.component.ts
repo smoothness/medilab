@@ -13,6 +13,7 @@ import { PatientService } from 'app/entities/patient/service/patient.service';
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { IDoctor } from 'app/entities/doctor/doctor.model';
+import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'medi-appointment-update',
@@ -26,6 +27,7 @@ export class AppointmentUpdateComponent implements OnInit {
   doctorId: number | undefined;
   doctor: IDoctor | null = null;
   patientsCollection: any[] | null = [];
+  todayDate: NgbDateStruct;
 
   editForm = this.fb.group({
     id: [],
@@ -42,7 +44,14 @@ export class AppointmentUpdateComponent implements OnInit {
     protected doctorService: DoctorService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
-  ) {}
+  ) {
+    const today = new Date();
+    this.todayDate = {
+      day: today.getDate() + 1,
+      month: today.getMonth() + 1,
+      year: today.getFullYear(),
+    };
+  }
 
   ngOnInit(): void {
     this.doctorId = Number(window.location.pathname.substring(window.location.pathname.lastIndexOf('=') + 1));
@@ -51,7 +60,6 @@ export class AppointmentUpdateComponent implements OnInit {
 
     this.activatedRoute.data.subscribe(({ appointment }) => {
       this.updateForm(appointment);
-      // this.loadRelationshipsOptions();
     });
 
     this.accountService.getAuthenticationState().subscribe(account => {

@@ -18,6 +18,7 @@
           <div class="form-group">
             <label class="form-control-label" mediTranslate="medilabApp.appointment.date" for="field_date">Date</label>
             <div class="input-group">
+              <!-- <ngb-datepicker (select)="onDateSelect($event)" [(ngModel)]="datePickerModel"[minDate]="todayDate"></ngb-datepicker> -->
               <input
                 id="field_date"
                 data-cy="date"
@@ -26,6 +27,7 @@
                 name="date"
                 ngbDatepicker
                 #dateDp="ngbDatepicker"
+                [minDate]="todayDate"
                 formControlName="date"
               />
               <span class="input-group-append">
