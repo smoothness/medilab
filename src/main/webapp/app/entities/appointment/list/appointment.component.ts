@@ -46,7 +46,6 @@ export class AppointmentComponent implements OnInit {
   public authenticatedAccount(): void {
     this.accountService.formatUserIdentity().subscribe(user => {
       this.currentUser = user;
-      console.log(this.appointments);
     });
   }
 
