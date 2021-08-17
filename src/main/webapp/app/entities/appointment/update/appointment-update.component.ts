@@ -13,6 +13,7 @@ import { PatientService } from 'app/entities/patient/service/patient.service';
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { IDoctor } from 'app/entities/doctor/doctor.model';
+import { Status } from 'app/entities/enumerations/status.model';
 
 @Component({
   selector: 'medi-appointment-update',
@@ -51,7 +52,6 @@ export class AppointmentUpdateComponent implements OnInit {
 
     this.activatedRoute.data.subscribe(({ appointment }) => {
       this.updateForm(appointment);
-      // this.loadRelationshipsOptions();
     });
 
     this.accountService.getAuthenticationState().subscribe(account => {
@@ -126,7 +126,7 @@ export class AppointmentUpdateComponent implements OnInit {
       ...new Appointment(),
       id: this.editForm.get(['id'])!.value,
       date: this.editForm.get(['date'])!.value,
-      status: this.editForm.get(['status'])!.value,
+      status: Status.PENDING,
       patient: this.editForm.get(['patient'])!.value,
       doctor: this.doctor,
     };
