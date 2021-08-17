@@ -47,7 +47,7 @@ export class AppointmentUpdateComponent implements OnInit {
   ) {
     const today = new Date();
     this.todayDate = {
-      day: today.getDate() + 1,
+      day: today.getDate(),
       month: today.getMonth() + 1,
       year: today.getFullYear(),
     };
