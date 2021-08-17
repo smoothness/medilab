@@ -62,7 +62,7 @@ export class AppointmentComponent implements OnInit {
       date: this.updatedDate.value,
     };
     this.appointmentService.update(newAppointment).subscribe(() => {
-      this.sweetAlertService.showMsjInfo('home.messages.updatedAppointmentDatetitle', 'home.messages.updatedAppointmentDateMsj').then(() => {
+      this.sweetAlertService.showMsjSuccess('home.messages.updatedAppointmentDatetitle', 'home.messages.updatedAppointmentDateMsj').then(() => {
         this.updateList.emit(true);
         this.modalService.dismissAll();
       });
@@ -81,7 +81,7 @@ export class AppointmentComponent implements OnInit {
         if (res) {
           appointment.status = Status.CANCELED;
           this.appointmentService.update(appointment).subscribe(() => {
-            this.sweetAlertService.showMsjInfo('home.messages.cancelAppointmentTitle', 'home.messages.cancelAppointmentMsj').then(() => {
+            this.sweetAlertService.showMsjSuccess('home.messages.cancelAppointmentTitle', 'home.messages.cancelAppointmentMsj').then(() => {
               this.updateList.emit(true);
             });
           });
