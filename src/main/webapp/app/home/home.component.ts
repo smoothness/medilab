@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   authority: string | undefined;
   appointmentsDoctor: any[] = [];
   appointmentsPatient: any[] = [];
-  ailmentsPatient: any[]  = [];
+  ailmentsPatient: any[] = [];
   closeModal: string | undefined;
   ailment: any;
   updatedDate = new FormControl('');
@@ -203,7 +203,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         appointment.status = Status.CANCELED;
         appointment.canceled = true;
         this.appointmentService.update(appointment).subscribe(() => {
-          this.sweetAlertService.showMsjInfo('home.messages.cancelAppointmentTitle', 'home.messages.cancelAppointmentMsj').then(() => {
+          this.sweetAlertService.showMsjSuccess('home.messages.cancelAppointmentTitle', 'home.messages.cancelAppointmentMsj').then(() => {
             this.getAppointmentsDoctor();
           });
         });
@@ -284,7 +284,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     };
     this.appointmentService.update(newAppointment).subscribe(() => {
       this.sweetAlertService
-        .showMsjInfo('home.messages.updatedAppointmentDatetitle', 'home.messages.updatedAppointmentDateMsj')
+        .showMsjSuccess('home.messages.updatedAppointmentDatetitle', 'home.messages.updatedAppointmentDateMsj')
         .then(() => {
           this.getAppointmentsDoctor();
           this.modalService.dismissAll();
