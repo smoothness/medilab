@@ -173,6 +173,18 @@ public class InvoiceResource {
         }
     }
 
+    @GetMapping("/invoices/patient/{id}")
+    public ResponseEntity<List<Invoice>> getInvoicesByPatient(@PathVariable Long id) {
+        List<Invoice> patientInvoices = invoiceService.findInvoicesByPatient(id);
+        return ResponseEntity.ok(patientInvoices);
+    }
+
+    @GetMapping("/invoices/doctor/{id}")
+    public ResponseEntity<List<Invoice>> getInvoicesByDoctor(@PathVariable Long id) {
+        List<Invoice> doctorInvoices = invoiceService.findInvoicesByDoctor(id);
+        return ResponseEntity.ok(doctorInvoices);
+    }
+
     @PutMapping("/invoices/payment/{id}")
     public ResponseEntity<Invoice> payInvoice(@PathVariable Long id) {
         invoiceService.payInvoice(id);

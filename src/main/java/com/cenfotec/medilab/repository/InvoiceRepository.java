@@ -24,4 +24,25 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
 
     @Query(value = "SELECT * FROM invoice where invoice.appointment_id = :id", nativeQuery = true)
     List<Invoice> findInvoicesByAppointmentID(@Param("id") Long id);
+
+
+    @Query(value = "SELECT invoice.id, invoice.appointment_id, invoice.date, invoice.discount, invoice.status, invoice.subtotal, invoice.taxes, invoice.total FROM invoice" +
+        " INNER JOIN appointment as app" +
+        " ON app.id = invoice.appointment_id" +
+        " Inner join patient as pa" +
+        " On pa.id = app.patient_id" +
+        " WHERE pa.id = :id" +
+        " group by invoice.id", nativeQuery = true)
+    List<Invoice> findInvoicesByPatient(@Param("id") Long id);
+
+    @Query(value = "SELECT invoice.id, invoice.appointment_id, invoice.date, invoice.discount, invoice.status, invoice.subtotal, invoice.taxes, invoice.total FROM invoice" +
+        " INNER JOIN appointment as app" +
+        " ON app.id = invoice.appointment_id" +
+        " Inner join doctor" +
+        " On doctor.id = app.doctor_id" +
+        " WHERE doctor.id = :id" +
+        " group by invoice.id", nativeQuery = true)
+    List<Invoice> findInvoicesByDoctor(@Param("id") Long id);
+
+
 }

@@ -89,6 +89,14 @@ export class InvoiceService {
     return this.http.get<IInvoice>(`${this.resourceUrl}/history/${id}`, { observe: 'response' });
   }
 
+  findInvoicesByDoctor(id: number): Observable<EntityResponseType> {
+    return this.http.get<IInvoice>(`${this.resourceUrl}/doctor/${id}`, { observe: 'response' });
+  }
+
+  findInvoicesByPatient(id: number): Observable<EntityResponseType> {
+    return this.http.get<IInvoice>(`${this.resourceUrl}/patient/${id}`, { observe: 'response' });
+  }
+
   protected convertDateFromClient(invoice: IInvoice): IInvoice {
     return Object.assign({}, invoice, {
       date: invoice.date?.isValid() ? invoice.date.format(DATE_FORMAT) : undefined,

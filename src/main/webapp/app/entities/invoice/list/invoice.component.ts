@@ -20,7 +20,7 @@ import { Observable } from 'rxjs';
   templateUrl: './invoice.component.html',
 })
 export class InvoiceComponent implements OnInit {
-  invoices?: any[] | undefined = [];
+  invoices: any[] = [];
   isLoading = false;
   account: Account | null = null;
   currentUser: any = {};
@@ -45,23 +45,7 @@ export class InvoiceComponent implements OnInit {
 
   ngOnInit(): void {
     this.authenticatedAccount();
-    //this.getInvoicesHistory();
-
-    console.log('appointmentsDoctor', this.appointments);
   }
-  /*
-  getInvoicesHistoryDoctor(): void {
-    this.appointmentsDoctor?.forEach( appointment => {
-      this.invoiceService.findInvoicesByAppointmentID(appointment.doctor.)
-    })
-  }
-
-  getInvoicesHistoryPatient(): void {
-    console.log("appointmentsDoctor", this.appointmentsDoctor);
-    console.log("appointmentsPatient", this.appointmentsPatient);
-
-
-  }*/
 
   public authenticatedAccount(): void {
     this.accountService.formatUserIdentity().subscribe(user => {
@@ -81,60 +65,18 @@ export class InvoiceComponent implements OnInit {
   }
 
   public getPatientAppointmentHistory(): void {
-    this.appointmentService.findPatientAppointmentsHistory(this.currentUser.patientId).subscribe((appointments: any) => {
-      let index = 0;
-      this.appointments = appointments.body;
-      this.formatDoctorData(this.appointments).subscribe(data => {
-        this.appointments[index].doctor = data;
-        index++;
-      });
-      this.appointments.forEach(appointment => {
-        this.invoiceService.findInvoicesByAppointmentID(appointment.id).subscribe((res: any) => {
-          this.invoices = res.body;
-          console.log('body', this.invoices);
-        });
-      });
-    });
-  }
-
-  public formatDoctorData(appointments: any): Observable<any> {
-    return new Observable(subscriber => {
-      for (const appointment of appointments[Symbol.iterator]()) {
-        this.doctorService.find(appointment.doctor.id).subscribe(doctor => {
-          subscriber.next(doctor.body);
-        });
-      }
-    });
+    this.invoiceService.findInvoicesByPatient(this.currentUser.patientId).subscribe((res: any) => {
+      this.invoices = res.body;
+    })
   }
 
   public getDoctorAppointmentHistory(): void {
-    this.appointmentService.findDoctorAppointmentsHistory(this.currentUser.doctorId).subscribe((appointments: any) => {
-      let index = 0;
-      this.appointments = appointments.body;
-      this.formatPatientData(this.appointments).subscribe(data => {
-        this.appointments[index].patient = data;
-        index++;
-      });
-      this.appointments.forEach(appointment => {
-        this.invoiceService.findInvoicesByAppointmentID(appointment.id).subscribe((res: any) => {
-          this.invoices = res.body;
-          console.log('body', this.invoices);
-        });
-      });
-    });
+    this.invoiceService.findInvoicesByDoctor(this.currentUser.doctorId).subscribe((res: any) => {
+      this.invoices = res.body;
+    })
   }
 
-  public formatPatientData(appointments: any): Observable<any> {
-    return new Observable(subscriber => {
-      for (const appointment of appointments[Symbol.iterator]()) {
-        this.patientService.find(appointment.patient.id).subscribe(patient => {
-          subscriber.next(patient.body);
-        });
-      }
-    });
-  }
-
-  public getAppointmentHistory(): void {
+  /*public getAppointmentHistory(): void {
     this.appointmentService.findAppointmentsHistory().subscribe((appointments: any) => {
       let index = 0;
       this.appointments = appointments.body;
@@ -148,7 +90,7 @@ export class InvoiceComponent implements OnInit {
         index2++;
       });
     });
-  }
+  }*/
 
   loadAll(): void {
     this.isLoading = true;

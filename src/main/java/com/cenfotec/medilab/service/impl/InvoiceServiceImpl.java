@@ -93,6 +93,18 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<Invoice> findInvoicesByPatient(Long id) {
+        return invoiceRepository.findInvoicesByPatient(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Invoice> findInvoicesByDoctor(Long id) {
+        return invoiceRepository.findInvoicesByDoctor(id);
+    }
+
+    @Override
     public void payInvoice(Long id) {
         invoiceRepository.payInvoice(id);
     }

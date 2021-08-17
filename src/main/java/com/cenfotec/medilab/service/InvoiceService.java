@@ -63,4 +63,6 @@ public interface InvoiceService {
      * @return the entity.
      */
     List<Invoice> findInvoicesByAppointmentID(Long id);
+    List<Invoice> findInvoicesByPatient(Long id);
+    List<Invoice> findInvoicesByDoctor(Long id);
 }
