@@ -12,17 +12,18 @@ export interface IAppointmentTreatmentAilment {
 }
 
 export class AppointmentTreatmentAilment implements IAppointmentTreatmentAilment {
+  removed?: boolean | null;
+
   constructor(
-    public id?: number,
     public description?: string | null,
-    public removed?: boolean | null,
     public ailment?: IAilment | null,
     public treatment?: ITreatment | null,
     public appointment?: IAppointment | null
   ) {
-    this.removed = this.removed ?? false;
+    this.removed = false;
   }
 }
+
 
 export function getAppointmentTreatmentAilmentIdentifier(appointmentTreatmentAilment: IAppointmentTreatmentAilment): number | undefined {
   return appointmentTreatmentAilment.id;

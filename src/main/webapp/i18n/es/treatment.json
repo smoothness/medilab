@@ -1,28 +1,21 @@
 {
   "medilabApp": {
     "treatment": {
-      "home": {
-        "title": "Treatments",
-        "refreshListLabel": "Refrescar lista",
-        "createLabel": "Crear nuevo Treatment",
-        "createOrEditLabel": "Crear o editar Treatment",
-        "notFound": "Ningún Treatments encontrado"
-      },
-      "created": "Un nuevo Treatment ha sido creado con el identificador {{ param }}",
-      "updated": "Un Treatment ha sido actualizado con el identificador {{ param }}",
+      "titleUpdate": "Actualizar tratamiento",
+      "titleRegister": "Registro de tratamiento",
+      "view": "Ver los tratamientos",
+      "created": "Se ha registrado el tratamiento exitosamente.",
+      "updated": "Se ha actualizado el tratamiento exitosamente.",
       "deleted": "Un Treatment ha sido eliminado con el identificador {{ param }}",
-      "delete": {
-        "question": "¿Seguro que quiere eliminar Treatment {{ id }}?"
-      },
-      "detail": {
-        "title": "Treatment"
-      },
+      "error": "No se pudo modificar el tratamiento",
       "id": "ID",
-      "specifications": "Specifications",
-      "medicines": "Medicines",
-      "duration": "Duration",
+      "specifications": "Especificaciones",
+      "medicines": "Medicamento",
+      "duration": "Duración",
       "removed": "Removed",
-      "appointmentTreatmentAilment": "Appointment Treatment Ailment"
+      "appointmentTreatmentAilment": "Appointment Treatment Ailment",
+      "add": "Agregar tratamiento",
+      "notFound": "Ningún tratamiento encontrado"
     }
   }
 }

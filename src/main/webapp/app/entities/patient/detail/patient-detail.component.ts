@@ -5,6 +5,8 @@ import { Patient } from './../../../core/auth/account.model';
 import { AilmentService } from '../../ailment/service/ailment.service';
 import { IMedicalExams } from "../../medical-exams/medical-exams.model";
 import { MedicalExamsService } from "../../medical-exams/service/medical-exams.service";
+import {IAppointmentTreatmentAilment} from "../../appointment-treatment-ailment/appointment-treatment-ailment.model";
+import {AppointmentTreatmentAilmentService} from "../../appointment-treatment-ailment/service/appointment-treatment-ailment.service";
 
 @Component({
   selector: 'medi-patient-detail',
@@ -16,11 +18,13 @@ export class PatientDetailComponent implements OnInit {
   isLoaded = false;
   ailments: any = [];
   patientMedicalExams: IMedicalExams[] = [];
+  patientDiagnosis: IAppointmentTreatmentAilment[] = [];
 
   constructor(
     protected activatedRoute: ActivatedRoute,
     private ailmentService: AilmentService,
     private medicalExamsService: MedicalExamsService,
+    private appointmentTreatmentAilmentService: AppointmentTreatmentAilmentService,
   ) {}
 
   ngOnInit(): void {
@@ -28,7 +32,7 @@ export class PatientDetailComponent implements OnInit {
       this.getByUrl();
     }else{
       this.getMedicalExams();
-      this.getAilments();
+      this.getPatientDiagnoses();
     }
   }
 
@@ -36,7 +40,7 @@ export class PatientDetailComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ patient }) => {
       this.patient = new Patient(patient);
       this.getMedicalExams();
-      this.getAilments();
+      this.getPatientDiagnoses();
     });
   }
 
@@ -50,6 +54,12 @@ export class PatientDetailComponent implements OnInit {
   public getMedicalExams(): void {
     this.medicalExamsService.findByPatient(<number>this.patient?.patientId).subscribe((patientMedicalExams: any) => {
       this.patientMedicalExams = patientMedicalExams.body;
+    });
+  }
+
+  public getPatientDiagnoses(): void {
+    this.appointmentTreatmentAilmentService.findByPatient(<number>this.patient?.patientId).subscribe((res: any) => {
+      this.patientDiagnosis = res.body;
     });
   }
 

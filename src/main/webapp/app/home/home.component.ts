@@ -49,21 +49,22 @@ export class HomeComponent implements OnInit, OnDestroy {
   appointmentToChangeDate: IAppointment | null = null;
   currentUser: any = {};
   patientMedicalExams: IMedicalExams[] = [];
+  patientDiagnosis: IAppointmentTreatmentAilment[] = [];
 
   private readonly destroy$ = new Subject<void>();
 
   constructor(
     private router: Router,
     protected modalService: NgbModal,
-    private sweetAlertService: SweetAlertService,
+    private doctorService: DoctorService,
     private accountService: AccountService,
     private patientService: PatientService,
-    private doctorService: DoctorService,
+    private sweetAlertService: SweetAlertService,
     private appointmentService: AppointmentService,
+    private medicalExamsService: MedicalExamsService,
     private emergencyContactService: EmergencyContactService,
     private appointmentTreatmentAilmentService: AppointmentTreatmentAilmentService,
-    private medicalExamsService: MedicalExamsService
-  ) {}
+) {}
 
   public get isPatient(): boolean {
     return this.currentUser instanceof Patient;
@@ -104,7 +105,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.getMedicalExams();
       this.getAilmentsPatient();
       this.loadAllEmergencyContact();
-    } else if (this.isDoctor) {
+      this.getPatientDiagnoses();
+    }else if(this.isDoctor) {
       this.getAppointmentsDoctor();
     }
     this.loadAllAppoiments();
@@ -190,26 +192,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
     });
   }
-
-  cancelAppointment(appointment: IAppointment): void {
-    this.sweetAlertService
-      .showConfirmMsg({
-        title: 'medilabApp.deleteConfirm.title',
-        text: 'medilabApp.deleteConfirm.text',
-        confirmButtonText: 'medilabApp.deleteConfirm.confirmButtonText',
-        cancelButtonText: 'medilabApp.deleteConfirm.cancelButtonText',
-      })
-      .then(() => {
-        appointment.status = Status.CANCELED;
-        appointment.canceled = true;
-        this.appointmentService.update(appointment).subscribe(() => {
-          this.sweetAlertService.showMsjSuccess('home.messages.cancelAppointmentTitle', 'home.messages.cancelAppointmentMsj').then(() => {
-            this.getAppointmentsDoctor();
-          });
-        });
-      });
-  }
-
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -253,6 +235,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   public getToken(newToken: string): void {
     this.currentUser.setToken(newToken);
     this.authenticatedAccount();
+  }
+
+  public getPatientDiagnoses(): void {
+    this.appointmentTreatmentAilmentService.findByPatient(this.currentUser.patientId).subscribe((res: any) => {
+      this.patientDiagnosis = res.body;
+    });
   }
 
   loadAllAppoiments(): void {
@@ -315,6 +303,12 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.loadAllEmergencyContact();
       }
     });
+  }
+
+  public updateList(update: boolean): void {
+    if (update){
+      this.getAppointmentsDoctor();
+    }
   }
 
   open(content: any, ailment: any): void {

@@ -22,6 +22,6 @@ export class Treatment implements ITreatment {
   }
 }
 
-export function getTreatmentIdentifier(treatment: ITreatment): number | undefined {
+export function getTreatmentIdentifier(treatment: ITreatment): any{
   return treatment.id;
 }

@@ -8,15 +8,17 @@ import { PatientRoutingModule } from './route/patient-routing.module';
 import { LayoutsModule } from "../../layouts/layouts.module";
 import { EmergencyContactModule } from "../emergency-contact/emergency-contact.module";
 import { MedicalExamsModule } from "../medical-exams/medical-exams.module";
+import { AppointmentTreatmentAilmentModule } from "../appointment-treatment-ailment/appointment-treatment-ailment.module";
 
 
 @NgModule({
   imports: [
     SharedModule,
-    PatientRoutingModule,
     LayoutsModule,
+    MedicalExamsModule,
+    PatientRoutingModule,
     EmergencyContactModule,
-    MedicalExamsModule
+    AppointmentTreatmentAilmentModule
   ],
   declarations: [
     PatientComponent,

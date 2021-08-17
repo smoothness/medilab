@@ -1,63 +1,52 @@
-<div class="row justify-content-center">
-  <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="medi-treatment-heading" data-cy="TreatmentCreateUpdateHeading" mediTranslate="medilabApp.treatment.home.createOrEditLabel">
-        Create or edit a Treatment
-      </h2>
-
-      <div>
-        <medi-alert-error></medi-alert-error>
-
-        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
-          <label class="form-control-label" mediTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+<section>
+  <div class="card bg-dark p-5">
+    <div class="mb-3 text-center">
+      <h3 class="text-primary" mediTranslate="medilabApp.treatment.titleUpdate" *ngIf="!isRegister"></h3>
+      <h3 class="text-primary" mediTranslate="medilabApp.treatment.titleRegister" *ngIf="isRegister"></h3>
+    </div>
+    <!--Form-->
+    <div class="text-justify">
+      <form name="registerForm" role="form" autocomplete="off" (ngSubmit)="save()" [formGroup]="editForm">
+        <div class="form-group">
+          <label class="form-control-label text-white" mediTranslate="medilabApp.treatment.medicines" for="fieldMedicines">Medicines</label>
+          <input type="text" class="form-control" name="medicines" id="fieldMedicines" data-cy="medicines" formControlName="medicines" />
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" mediTranslate="medilabApp.treatment.specifications" for="field_specifications"
-            >Specifications</label
+          <label class="form-control-label text-white" mediTranslate="medilabApp.treatment.duration" for="fieldDuration">Duration</label>
+          <input type="text" class="form-control" name="duration" id="fieldDuration" data-cy="duration" formControlName="duration" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label text-white" mediTranslate="medilabApp.treatment.specifications" for="fieldSpecifications"
+          >Specifications</label
           >
-          <input
+          <textarea
             type="text"
             class="form-control"
             name="specifications"
-            id="field_specifications"
+            id="fieldSpecifications"
             data-cy="specifications"
             formControlName="specifications"
-          />
+          ></textarea>
         </div>
 
-        <div class="form-group">
-          <label class="form-control-label" mediTranslate="medilabApp.treatment.medicines" for="field_medicines">Medicines</label>
-          <input type="text" class="form-control" name="medicines" id="field_medicines" data-cy="medicines" formControlName="medicines" />
+        <div class="row m-0 p-0 my-2">
+          <div class="col p-0 mr-1">
+            <medi-cancel-button></medi-cancel-button>
+          </div>
+          <div class="col p-0 ml-1">
+            <button
+              type="submit"
+              class="btn btn-secondary w-100"
+              [disabled]="editForm.invalid"
+            >
+              <fa-icon icon="save"></fa-icon>
+              <span mediTranslate="entity.action.save"></span>
+            </button>
+         </div>
         </div>
-
-        <div class="form-group">
-          <label class="form-control-label" mediTranslate="medilabApp.treatment.duration" for="field_duration">Duration</label>
-          <input type="text" class="form-control" name="duration" id="field_duration" data-cy="duration" formControlName="duration" />
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" mediTranslate="medilabApp.treatment.removed" for="field_removed">Removed</label>
-          <input type="checkbox" class="form-check" name="removed" id="field_removed" data-cy="removed" formControlName="removed" />
-        </div>
-      </div>
-
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span mediTranslate="entity.action.cancel">Cancel</span>
-        </button>
-
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
-        </button>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
-</div>
+</section>

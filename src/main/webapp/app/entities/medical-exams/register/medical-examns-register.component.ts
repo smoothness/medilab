@@ -4,7 +4,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { MedicalExamsService } from "../service/medical-exams.service";
 import { IMedicalExams } from "../medical-exams.model";
-import {SweetAlertService} from "../../../shared/services/sweet-alert.service";
+import { SweetAlertService } from "../../../shared/services/sweet-alert.service";
 
 @Component({
   selector: 'medi-register-medical-exams',

@@ -9,6 +9,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { MedicalExamsModule } from "../medical-exams/medical-exams.module";
 import { AppointmentHistoryComponent } from './history/appointment-history.component';
 import { StatusPipe } from './pipe/status.pipe';
+import {AppointmentTreatmentAilmentModule} from "../appointment-treatment-ailment/appointment-treatment-ailment.module";
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { StatusPipe } from './pipe/status.pipe';
     AppointmentRoutingModule,
     SweetAlert2Module,
     MedicalExamsModule,
+    AppointmentTreatmentAilmentModule,
   ],
   declarations: [
     AppointmentComponent,
@@ -26,5 +28,6 @@ import { StatusPipe } from './pipe/status.pipe';
     StatusPipe,
   ],
   entryComponents: [AppointmentDeleteDialogComponent],
+  exports: [ AppointmentComponent ],
 })
 export class AppointmentModule {}

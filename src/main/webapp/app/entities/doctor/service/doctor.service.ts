@@ -15,7 +15,10 @@ export type EntityArrayResponseType = HttpResponse<IDoctor[]>;
 export class DoctorService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/doctors');
 
-  constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
+  constructor(
+    protected http: HttpClient,
+    protected applicationConfigService: ApplicationConfigService,
+  ) {}
 
   create(doctor: IDoctor): Observable<EntityResponseType> {
     return this.http.post<IDoctor>(this.resourceUrl, doctor, { observe: 'response' });
@@ -53,7 +56,6 @@ export class DoctorService {
           const formatted = new Doctor(doctors[i]);
           doctors[i] = formatted;
         }
-        console.log(doctors);
         subscriber.next(doctors);
         subscriber.complete();
       });

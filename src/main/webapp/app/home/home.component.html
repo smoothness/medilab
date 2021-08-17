@@ -5,46 +5,64 @@
       <section class="ml-profile__top">
         <!-- open top left card -->
         <div class="card bg-dark">
-          <h5 class="card-header">
-            <div>
-              <span mediTranslate="home.welcome">Bienvenido&nbsp;</span>
+          <div class="card-header">
+            <h5>
+              <span mediTranslate="home.welcome">Bienvenido: </span>
               <span class="ml-profile__user-text">{{ currentUser.fullName }}</span>
-            </div>
-          </h5>
+            </h5>
+          </div>
           <div class="card-body">
+
             <!-- START Top left card / Patient Block -->
+            <div class="text-center mt-3 mb-5" *ngIf="isPatient">
+              <div *ngIf="currentUser.token">
+                <h3 class="text-primary" mediTranslate="token.yourToken"></h3>
+                <h3>{{this.currentUser?.token}}</h3>
+              </div>
+            </div>
+
+            <!-- END Top left card / Patient Block -->
+            <!-- START Top left card / Doctor Block -->
+            <div class="text-center mt-3 mb-5" *ngIf="isDoctor">
+              <h3 class="text-primary" mediTranslate="medilabApp.doctor.doctorCode"></h3>
+              <h3>{{this.currentUser?.doctorCode}}</h3>
+
+            </div>
+            <!-- END Top left card / Doctor Block -->
+          </div>
+          <!-- close card body -->
+          <div class="card-footer  my-2" >
             <div *ngIf="isPatient">
+              <medi-token [currentUser]="currentUser" (user)="getToken($event)"></medi-token>
               <a
                 target="_blank"
-                class="btn btn-secondary"
+                class="btn btn-secondary col-12"
                 mediTranslate="home.requestAppointment"
                 href="https://wa.me/50688885353?text=Solicito%20una%20cita%20con%20el%20doctor"
               >
                 Solicitar una cita
               </a>
             </div>
-            <!-- END Top left card / Patient Block -->
-            <!-- START Top left card / Doctor Block -->
+
             <div *ngIf="isDoctor">
               <button
                 id="jh-create-entity"
                 data-cy="entityCreateButton"
-                class="btn btn-primary jh-create-entity create-appointment"
+                class="btn btn-primary col-12 jh-create-entity create-appointment"
                 [routerLink]="['/main/appointment/new', { doctorId: currentUser.doctorId }]"
               >
                 <fa-icon icon="plus"></fa-icon>
                 <span mediTranslate="home.createNewAppointment">Crear una nueva cita</span>
               </button>
             </div>
-            <!-- END Top left card / Doctor Block -->
           </div>
-          <!-- close card body -->
         </div>
         <!-- close top left card -->
 
         <!-- open user profile -->
         <div class="card bg-dark">
           <medi-user-profile [user]="currentUser"></medi-user-profile>
+
         </div>
         <!-- close user profile -->
       </section>
@@ -52,74 +70,12 @@
       <!-- open profile bottom or body section -->
       <section class="ml-profile__bottom">
         <!-- START body patient Block -->
-        <div class="mt-3" *ngIf="isPatient">
-          <div class="card bg-dark mb-3">
-            <h5 class="card-header" mediTranslate="home.upcomingAppointments">Próximas citas</h5>
-            <div class="card-body">
-              <ul class="list-group ml-profile__agenda">
-                <li class="list-group-item" *ngFor="let appointment of appointmentsPatient; let i = index">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-calendar"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"
-                    />
-                  </svg>
-                  <div class="ml-profile__agenda-data">
-                    <time>{{ appointment.date | date }}</time>
-                    <div class="ml-profile__appointment-doctor-info">
-                      <b class="mr-2"
-                        >Dr. {{ appointment.doctor.internalUser?.completeName }} {{ appointment.doctor.secondSurname || '' }}</b
-                      >
-                      <span class="badge bg-primary">{{ appointment.doctor.specialty }}</span>
-                    </div>
-                  </div>
-                  <a class="btn btn-secondary btn-sm mr-1" [routerLink]="['/main/appointment', appointment.id, 'view']">
-                    <fa-icon icon="eye"></fa-icon>
-                    <span mediTranslate="home.appointmentDetail">Ver cita</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <!--AILMENT-->
-          <div class="card bg-dark mb-3">
-            <h5 class="card-header" mediTranslate="home.ailments">Padecimientos</h5>
-            <div class="card-body">
-              <ul class="list-group ml-ailment">
-                <li class="list-group-item" *ngFor="let ailment of ailmentsPatient; let i = index">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-bag-plus"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z"
-                    />
-                    <path
-                      d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"
-                    />
-                  </svg>
-                  <div class="ml-ailment-data">
-                    <b>{{ ailment.ailment.name }}</b>
-                  </div>
-                  <button class="btn btn-secondary btn-sm mr-1" (click)="openAilmentModal(addAilmentModal, ailment)">Detalle</button>
-                </li>
-              </ul>
-            </div>
+        <div class="my-3" *ngIf="isPatient">
+          <div class="col-12 m-0 p-0 my-4">
+          <medi-appointment [appointments]="appointmentsPatient" (updateList)="updateList($event)"></medi-appointment>
           </div>
           <!-- EMERGENCY CONTACTS -->
-          <div class="card bg-dark">
+          <div class="card bg-dark my-4">
             <h5 class="card-header">
               <span mediTranslate="medilabApp.emergencyContact.home.title" class="m-0 p-0">Contact(s) en caso de una emergencia</span>
               <div class="d-flex justify-content-end m-0 p-0">
@@ -142,11 +98,11 @@
               <div class="table-responsive" id="entities" *ngIf="emergencyContacts && emergencyContacts.length > 0">
                 <table class="table table-striped table-hover" aria-describedby="page-heading">
                   <thead>
-                    <tr>
-                      <th scope="col"><span mediTranslate="medilabApp.emergencyContact.name">Name</span></th>
-                      <th scope="col"><span mediTranslate="medilabApp.emergencyContact.phone">Phone</span></th>
-                      <th scope="col"><span mediTranslate="medilabApp.emergencyContact.email">Email</span></th>
-                      <th scope="col"><span mediTranslate="medilabApp.emergencyContact.relationShip">Relationship</span></th>
+                    <tr class="text-primary">
+                      <th scope="col" class="h6"><span mediTranslate="medilabApp.emergencyContact.name">Name</span></th>
+                      <th scope="col" class="h6"><span mediTranslate="medilabApp.emergencyContact.phone">Phone</span></th>
+                      <th scope="col" class="h6"><span mediTranslate="medilabApp.emergencyContact.email">Email</span></th>
+                      <th scope="col" class="h6"><span mediTranslate="medilabApp.emergencyContact.relationShip">Relationship</span></th>
                       <th scope="col"></th>
                     </tr>
                   </thead>
@@ -185,76 +141,22 @@
               </div>
             </div>
           </div>
-
+          <!-- DIAGNOSIS -->
+          <div class="col-12 m-0 p-0 my-4">
+            <medi-appointment-treatment-ailment [appointmentTreatmentAilments]="patientDiagnosis"></medi-appointment-treatment-ailment>
+          </div>
+          <!-- MEDICAL EXAMS -->
           <div class="my-4" *ngIf="patientMedicalExams.length > 0">
             <medi-medical-exams [medicalExams]="patientMedicalExams" [showButtons]="false"></medi-medical-exams>
           </div>
+
         </div>
+
         <!-- END body patient Block -->
 
         <!-- START body doctor Block -->
         <div class="card bg-dark mt-3" *ngIf="isDoctor">
-          <h5 class="card-header" mediTranslate="home.upcomingAppointments">Próximas citas</h5>
-          <div class="card-body">
-            <ul class="list-group ml-profile__agenda">
-              <li class="list-group-item" *ngFor="let appointment of appointmentsDoctor; let i = index" [id]="i">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-calendar"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"
-                  />
-                </svg>
-                <div class="ml-profile__agenda-data">
-                  <time>{{ appointment.date | date }}</time>
-                  <div class="ml-profile__appointment-patient-info">
-                    <b class="mr-4">{{ appointment.patient.internalUser?.completeName }} {{ appointment.patient.secondSurname }}</b>
-                    <span class="badge bg-secondary">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        class="bi bi-phone"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"
-                        />
-                        <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-                      </svg>
-                      {{ appointment.patient.phone }}
-                    </span>
-                  </div>
-                </div>
-                <div class="ml-profile__appointment-patient-info-ctas">
-                  <a class="btn btn-secondary btn-sm mr-1" [routerLink]="['/main/appointment', appointment.id, 'view']">
-                    <fa-icon icon="eye"></fa-icon>
-                    <span mediTranslate="home.appointmentDetail">Ver cita</span>
-                  </a>
-                  <button
-                    class="btn btn-primary btn-sm mr-1"
-                    mediTranslate="home.viewPatient"
-                    [routerLink]="['/main/patient', appointment.patient.id, 'view']"
-                  >
-                    <fa-icon icon="eye"></fa-icon>
-                    <span mediTranslate="home.patientDetail">Ver paciente</span>
-                  </button>
-                  <button class="btn btn-tertiary btn-sm mr-1" (click)="openChangeDateModal(changeDateModal, i)">
-                    <span mediTranslate="home.appointmentDateChange">Cambiar fecha</span>
-                  </button>
-                  <button class="btn btn-danger btn-sm" mediTranslate="home.appointmentDelete" (click)="cancelAppointment(appointment)">
-                    <span mediTranslate="home.appointmentDelete">Cancelar cita</span>
-                  </button>
-                </div>
-              </li>
-            </ul>
-          </div>
+          <medi-appointment [appointments]="appointmentsDoctor" (updateList)="updateList($event)"></medi-appointment>
         </div>
         <!-- END body doctor Block -->
       </section>
@@ -262,91 +164,3 @@
   </div>
   <!-- closes bootstrap container -->
 </div>
-
-<ng-template #changeDateModal>
-  <div class="change-date-modal">
-    <div class="mt-3">
-      <div class="card bg-dark">
-        <h5 class="card-header" mediTranslate="home.appointmentDateChangeModal.title">Cambiar la fecha de la cita</h5>
-        <div class="card-body">
-          <form>
-            <div class="form-group">
-              <div class="input-group">
-                <input
-                  class="form-control"
-                  [formControl]="updatedDate"
-                  placeholder="dd/mm/yyyy"
-                  name="dp"
-                  ngbDatepicker
-                  #dateDp="ngbDatepicker"
-                />
-                <span class="input-group-append">
-                  <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()">
-                    <fa-icon icon="calendar-alt"></fa-icon>
-                  </button>
-                </span>
-              </div>
-              <div class="change-date-modal__button-container">
-                <button type="button" class="btn btn-primary" (click)="handleChangeDate()">Cambiar</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</ng-template>
-
-<ng-template #addAilmentModal let-modal>
-  <div>
-    <div class="mt-3">
-      <div class="card bg-dark mb-3">
-        <h5 class="card-header" mediTranslate="medilabApp.appointmentTreatmentAilment.diagnosis">Diagnóstico detallado</h5>
-        <div class="card-body">
-          <ul class="list-group ml-profile__agenda">
-            <li class="list-group-item">
-              <div class="modal_card">
-                <div class="modal_data_info">
-                  <b class="mr-2" mediTranslate="medilabApp.appointmentTreatmentAilment.date">Fecha</b>
-                </div>
-                <span class="badge bg-secondary" id="details">{{ ailment.appointment.date }}</span>
-              </div>
-            </li>
-            <li class="list-group-item">
-              <div class="modal_card">
-                <div class="modal_data_info">
-                  <b class="mr-2" mediTranslate="medilabApp.appointmentTreatmentAilment.ailment">Padecimiento</b>
-                </div>
-                <span class="badge bg-secondary" id="details">{{ ailment.ailment.name }}</span>
-              </div>
-            </li>
-            <li class="list-group-item">
-              <div class="modal_card">
-                <div class="modal_data_info">
-                  <b class="mr-2" mediTranslate="medilabApp.appointmentTreatmentAilment.treatment">Tratamiento</b>
-                </div>
-                <span class="badge bg-secondary" id="details">{{ ailment.treatment.medicines }}</span>
-              </div>
-            </li>
-            <li class="list-group-item">
-              <div class="modal_card">
-                <div class="modal_data_info">
-                  <b class="mr-2" mediTranslate="medilabApp.appointmentTreatmentAilment.duration">Duración</b>
-                </div>
-                <span class="badge bg-secondary" id="details">{{ ailment.treatment.duration }}</span>
-              </div>
-            </li>
-            <li class="list-group-item">
-              <div class="modal_card">
-                <div class="modal_data_info">
-                  <b class="mr-2" mediTranslate="medilabApp.appointmentTreatmentAilment.specification">Especificación</b>
-                </div>
-                <span class="badge bg-secondary" id="details">{{ ailment.treatment.specifications }}</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</ng-template>

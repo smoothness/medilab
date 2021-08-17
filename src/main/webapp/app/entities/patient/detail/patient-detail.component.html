@@ -13,19 +13,13 @@
       </div>
     </div>
 
+    <div class="col-12 m-0 p-0 my-4" *ngIf="patientDiagnosis.length > 0">
+      <medi-appointment-treatment-ailment [appointmentTreatmentAilments]="patientDiagnosis"></medi-appointment-treatment-ailment>
+    </div>
+
     <div class="my-4" *ngIf="patientMedicalExams.length > 0">
       <medi-medical-exams [medicalExams]="patientMedicalExams" [showButtons]="false"></medi-medical-exams>
     </div>
-
-    <!--DIAGNOSIS -->
-    <div class="row p-0 m-0 card-body my-4">
-      <div class="col-12 card bg-dark">
-        <div class="text-center my-4">
-          <h1>AQUI VA EL COMPONENTE REUTILIZABLE DE LOS DIGANOSTICOS (PADECIMIENTO Y TRATAMIENTO) EN UN CARD</h1>
-        </div>
-      </div>
-    </div>
-
   </div>
 </section>
 </div>
