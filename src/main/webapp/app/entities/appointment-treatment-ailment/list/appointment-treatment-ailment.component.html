@@ -1,68 +1,54 @@
-<div class="card bg-dark col-10">
-  <h2 id="page-heading" data-cy="AppointmentTreatmentAilmentHeading">
-    <span>DIAGNOSTICO</span>
-  </h2>
+<div class="row m-0 p-0">
+  <div class="card bg-dark w-100 m-0 p-0">
+    <div class="card-header">
+      <h5 mediTranslate="medilabApp.appointmentTreatmentAilment.home.title"></h5>
+    </div>
+    <div class="card-body">
+      <div class="table" id="entities" *ngIf="appointmentTreatmentAilments && appointmentTreatmentAilments.length > 0">
+        <table class="table table-striped table-hover" aria-describedby="page-heading">
+          <thead>
+          <tr >
+            <th scope="col" class="h6 text-primary">
+              <span mediTranslate="medilabApp.appointmentTreatmentAilment.ailment"></span>
+            </th>
+            <th scope="col" class="h6 text-primary">
+              <span mediTranslate="medilabApp.appointmentTreatmentAilment.description"></span>
+            </th>
+            <th scope="col"></th>
+            <th scope="col" *ngIf="isDoctor"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let diagnosis of appointmentTreatmentAilments" data-cy="entityTable">
+            <td> {{diagnosis.ailment?.name}} </td>
+            <td> {{diagnosis.description}} </td>
 
-  <div class="table-responsive" id="entities" *ngIf="appointmentTreatmentAilments && appointmentTreatmentAilments.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
-      <thead>
-        <tr>
+            <!-- Treatment table -->
+            <td class="text-center" >
+              <div>
+                <medi-show-treatment-toggle [ailment]="diagnosis.ailment" [appointment]="diagnosis.appointment"></medi-show-treatment-toggle>
+              </div>
+            </td>
 
-          <th scope="col"><span mediTranslate="medilabApp.appointmentTreatmentAilment.ailment">Ailment</span></th>
-          <th scope="col"></th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let diagnosis of appointmentTreatmentAilments" data-cy="entityTable">
-          <td>
-            {{diagnosis.ailment?.name}}
-          </td>
-
-          <!-- Treatment table -->
-          <td class="text-center col-8" >
-            <div *ngIf="diagnosis.treatment">
-              <medi-show-treatment-toggle [treatment]="diagnosis.treatment"></medi-show-treatment-toggle>
-            </div>
-
-          </td>
-
-          <!-- Buttons Section -->
-          <td class="text-right">
-            <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/appointment-treatment-ailment', diagnosis.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" mediTranslate="entity.action.view">View</span>
-              </button>
-
-              <button
-                type="submit"
-                [routerLink]="['/appointment-treatment-ailment', diagnosis.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" mediTranslate="entity.action.edit">Edit</span>
-              </button>
-
-              <button
-                type="submit"
-                (click)="delete(diagnosis)"
-                class="btn btn-danger btn-sm"
-                data-cy="entityDeleteButton"
-              >
-                <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            <!-- Buttons Section -->
+            <td class="text-right" *ngIf="isDoctor">
+              <div class="btn-group">
+                <button
+                  type="submit"
+                  (click)="delete(diagnosis)"
+                  class="btn btn-danger btn-sm"
+                  data-cy="entityDeleteButton"
+                >
+                  <span><fa-icon icon="trash-alt"></fa-icon></span>
+                  <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
+

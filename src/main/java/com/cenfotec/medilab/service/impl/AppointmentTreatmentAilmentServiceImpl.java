@@ -67,6 +67,12 @@ public class AppointmentTreatmentAilmentServiceImpl implements AppointmentTreatm
 
     @Override
     @Transactional(readOnly = true)
+    public List<AppointmentTreatmentAilment> findAllDiagnosisByAppointment(Long id) {
+        return appointmentTreatmentAilmentRepository.findAllDiagnosisByAppointment(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Optional<AppointmentTreatmentAilment> findOne(Long id) {
         log.debug("Request to get AppointmentTreatmentAilment : {}", id);
         return appointmentTreatmentAilmentRepository.findById(id);
@@ -76,5 +82,10 @@ public class AppointmentTreatmentAilmentServiceImpl implements AppointmentTreatm
     public void delete(Long id) {
         log.debug("Request to delete AppointmentTreatmentAilment : {}", id);
         appointmentTreatmentAilmentRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteByAilmentAndAppointment(Long ailmentId, Long appointmentId) {
+        appointmentTreatmentAilmentRepository.deleteByAilmentAndAppointment(ailmentId, appointmentId);
     }
 }

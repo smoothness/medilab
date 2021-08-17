@@ -1,6 +1,6 @@
 <section>
-  <div class="card bg-dark">
-    <div class="card-header text-center p-0 m-0">
+  <div class="card bg-dark p-5">
+    <div class="text-center p-0 m-0">
       <h2 class="text-primary py-2" mediTranslate="medilabApp.medicalExams.register"></h2>
     </div>
     <div class="card-body">
@@ -14,16 +14,21 @@
           <label class="form-control-label text-white" for="fieldDescription" mediTranslate="medilabApp.medicalExams.description">Example textarea</label>
           <textarea class="form-control" id="fieldDescription" rows="3" formControlName="description"></textarea>
         </div>
-        <div>
-          <button
-            type="submit"
-            id="saveEntity"
-            data-cy="entityCreateSaveButton"
-            [disabled]="registerForm.invalid"
-            class="btn btn-primary col-12"
-          >
-            <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
-          </button>
+        <div class="row m-0 p-0 mt-3">
+          <div class="col p-0 mr-1">
+            <medi-cancel-button></medi-cancel-button>
+          </div>
+          <div class="col p-0 ml-1">
+            <button
+              type="submit"
+              id="saveEntity"
+              data-cy="entityCreateSaveButton"
+              [disabled]="registerForm.invalid"
+              class="btn btn-primary w-100"
+            >
+              <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
+            </button>
+          </div>
         </div>
       </form>
     </div>

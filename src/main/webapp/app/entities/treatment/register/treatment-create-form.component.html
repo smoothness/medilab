@@ -1,12 +1,12 @@
  <div class="row m-0 p-0">
-    <div class="col-12 text-center m-0 p-0 my-2">
-      <button class="btn btn-info w-100" (click)="createComponent()">
+    <div class="col-12 text-center m-0 p-0 my-2" *ngIf="!isSingleRegister">
+      <button type="button" class="btn btn-info w-100" (click)="createComponent()">
         <fa-icon icon="plus-circle"></fa-icon>
         <span class="ml-1" mediTranslate="medilabApp.treatment.add"> Agregar tratamiento</span>
       </button>
     </div>
 
-    <div class="col-12">
+    <div class="col-12 p-0 m-0">
       <ng-container #containerForms></ng-container>
     </div>
   </div>

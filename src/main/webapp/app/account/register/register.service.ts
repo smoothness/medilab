@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { ApplicationConfigService } from './../../core/config/application-config.service';
 import { User } from './register.model';
-import {EmergencyContact} from "../../entities/emergency-contact/emergency-contact.model";
+import { EmergencyContact } from "../../entities/emergency-contact/emergency-contact.model";
 
 @Injectable({ providedIn: 'root' })
 export class RegisterService {

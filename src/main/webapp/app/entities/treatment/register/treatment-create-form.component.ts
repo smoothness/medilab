@@ -6,7 +6,7 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import {Form, FormGroup} from '@angular/forms';
 
 import {TreatmentRegisterComponent} from "./register-form/treatment-register.component"
 
@@ -16,25 +16,30 @@ import {TreatmentRegisterComponent} from "./register-form/treatment-register.com
   styleUrls: ['./treatment-create-form.component.scss']
 })
 export class TreatmentCreateFormComponent {
-  @Input() showRegisterTitle = false;
   @ViewChild('containerForms', { static: true, read: ViewContainerRef })
   public formsParent!: ViewContainerRef;
+
+  @Input() showRegisterTitle = false;
+  @Input() isSingleRegister = false;
+
   public formTreatmentsComponents: ComponentRef<TreatmentRegisterComponent>[] = [];
 
-  constructor(private formCreator: ComponentFactoryResolver) {
+  constructor(private formCreator: ComponentFactoryResolver) { }
 
+  public get isAllValid(): boolean {
+    return this.treatmentsForms.every(form => form.valid === true);
   }
 
   public get treatmentsData(): any[] {
     return Array.from(this.formTreatmentsComponents, component => component.instance.treatmentFormData);
   }
 
-  public get treatmentsForms(): any[] {
-    return Array.from(this.formTreatmentsComponents, component => component.instance.registerForm);
+  public get treatmentsForms(): FormGroup[] {
+    return Array.from(this.treatmentsComponents, component => component.registerForm);
   }
 
-  public get isAllValid(): boolean {
-    return this.treatmentsForms.every(form => form.valid === true);
+  public get treatmentsComponents(): TreatmentRegisterComponent[] {
+    return Array.from(this.formTreatmentsComponents, component => component.instance);
   }
 
   public get formFactory(): ComponentFactory<TreatmentRegisterComponent> {
@@ -59,10 +64,19 @@ export class TreatmentCreateFormComponent {
     this.updateFormTreatmentsIndex();
   }
 
+  public resetForms(): void {
+    for (let i = 0; i < this.formTreatmentsComponents.length; i++) {
+      const currentElement = this.formTreatmentsComponents[i];
+      currentElement.destroy();
+      this.formTreatmentsComponents.splice(i, 1);
+    }
+  }
+
   protected updateFormTreatmentsIndex(): void {
     for (let i = 0; i < this.formTreatmentsComponents.length; i++) {
       const currentElement = this.formTreatmentsComponents[i];
       currentElement.instance.updateIndex(i);
     }
   }
+
 }

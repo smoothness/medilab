@@ -1,14 +1,17 @@
 <section>
-  <div class="card bg-dark">
-    <div class="card-header text-center p-0 m-0">
-      <h2 class="text-primary py-2">Registro de diagnostico</h2>
+  <div class="card bg-dark p-5">
+    <div class="mb-3 text-center">
+    <h3 class="text-primary" mediTranslate="medilabApp.appointmentTreatmentAilment.register">Registro de diagnostico</h3>
     </div>
     <div class="card-body">
-      <form name="editForm" role="form" autocomplete="off" (submit)="save()" [formGroup]="registerForm">
+      <form name="registerForm" role="form" autocomplete="off" (submit)="save()" [formGroup]="registerForm">
         <div class="form-group">
-          <label class="form-control-label text-white" for="fieldAilment">Padecimiento</label>
+          <label
+            class="form-control-label text-white"
+            for="fieldAilment"
+            mediTranslate="medilabApp.appointmentTreatmentAilment.ailment"></label>
           <select class="form-control" id="fieldAilment" data-cy="ailment" name="ailment" formControlName="ailment">
-            <option value="">{{ 'medilabApp.medicalExams.description' | translate}}</option>
+            <option value="">{{ 'medilabApp.appointmentTreatmentAilment.select' | translate}}</option>
             <option
               [ngValue]="ailment.id === registerForm.get('ailment')!.value?.id ? registerForm.get('ailment')!.value : ailment"
               *ngFor="let ailment of ailments"
@@ -17,27 +20,32 @@
             </option>
           </select>
         </div>
-
-
         <div class="form-group">
-          <label class="form-control-label text-white" for="fieldDescription" mediTranslate="medilabApp.medicalExams.description">Example textarea</label>
+          <label
+            class="form-control-label text-white"
+            for="fieldDescription"
+            mediTranslate="medilabApp.medicalExams.description"></label>
           <textarea class="form-control" id="fieldDescription" rows="3" formControlName="description"></textarea>
         </div>
         <div class="col-12 m-0 p-0 my-2">
           <medi-treatment-create-form #treatmentComponent [showRegisterTitle]="true"></medi-treatment-create-form>
         </div>
 
-
-        <div>
-          <button
-            type="submit"
-            id="saveEntity"
-            data-cy="entityCreateSaveButton"
-            [disabled]="!isValidRegisterData"
-            class="btn btn-primary col-12"
-          >
-            <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
-          </button>
+        <div class="row m-0 p-0 my-2">
+          <div class="col p-0 mr-1">
+            <medi-cancel-button></medi-cancel-button>
+          </div>
+          <div class="col p-0 ml-1">
+            <button
+              type="submit"
+              id="saveEntity"
+              data-cy="entityCreateSaveButton"
+              [disabled]="!isValidRegisterData"
+              class="btn btn-primary w-100"
+            >
+              <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
+            </button>
+          </div>
         </div>
       </form>
     </div>

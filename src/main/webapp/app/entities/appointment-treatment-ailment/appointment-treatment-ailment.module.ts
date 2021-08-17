@@ -12,19 +12,22 @@ import { TreatmentModule } from "../treatment/treatment.module";
 
 
 @NgModule({
-  imports: [
-    SharedModule,
-    AppointmentTreatmentAilmentRoutingModule,
-    TreatmentModule
-  ],
-  declarations: [
-    AppointmentTreatmentAilmentComponent,
-    AppointmentTreatmentAilmentDetailComponent,
-    AppointmentTreatmentAilmentUpdateComponent,
-    AppointmentTreatmentAilmentDeleteDialogComponent,
-    ShowTreatmentToggleComponent,
-    AppointmentTreatmentAilmentRegisterComponent
-  ],
-  entryComponents: [AppointmentTreatmentAilmentDeleteDialogComponent],
+    imports: [
+        SharedModule,
+        AppointmentTreatmentAilmentRoutingModule,
+        TreatmentModule
+    ],
+    declarations: [
+        AppointmentTreatmentAilmentComponent,
+        AppointmentTreatmentAilmentDetailComponent,
+        AppointmentTreatmentAilmentUpdateComponent,
+        AppointmentTreatmentAilmentDeleteDialogComponent,
+        ShowTreatmentToggleComponent,
+        AppointmentTreatmentAilmentRegisterComponent
+    ],
+    entryComponents: [AppointmentTreatmentAilmentDeleteDialogComponent],
+    exports: [
+        AppointmentTreatmentAilmentComponent
+    ]
 })
 export class AppointmentTreatmentAilmentModule {}

@@ -2,18 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
-import { AppointmentComponent } from '../list/appointment.component';
 import { AppointmentDetailComponent } from '../detail/appointment-detail.component';
 import { AppointmentUpdateComponent } from '../update/appointment-update.component';
 import { AppointmentRoutingResolveService } from './appointment-routing-resolve.service';
 import {AppointmentHistoryComponent} from "../history/appointment-history.component";
 
 const appointmentRoute: Routes = [
-  {
-    path: '',
-    component: AppointmentComponent,
-    canActivate: [UserRouteAccessService],
-  },
   {
     path: 'history',
     component:AppointmentHistoryComponent,

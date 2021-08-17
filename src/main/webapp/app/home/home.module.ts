@@ -8,6 +8,8 @@ import { HomeComponent } from './home.component';
 import { LayoutsModule } from '../layouts/layouts.module';
 import { MedicalExamsModule } from "../entities/medical-exams/medical-exams.module";
 import { TokenModule } from "../token/token.module";
+import {AppointmentModule} from "../entities/appointment/appointment.module";
+import {AppointmentTreatmentAilmentModule} from "../entities/appointment-treatment-ailment/appointment-treatment-ailment.module";
 
 @NgModule({
     imports: [
@@ -16,7 +18,9 @@ import { TokenModule } from "../token/token.module";
         RouterModule.forChild([HOME_ROUTE]),
         LayoutsModule,
         MedicalExamsModule,
-        TokenModule
+        TokenModule,
+        AppointmentModule,
+        AppointmentTreatmentAilmentModule
     ],
   declarations: [ HomeComponent ],
   exports: [ HomeComponent ],
