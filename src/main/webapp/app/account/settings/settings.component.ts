@@ -124,7 +124,5 @@ export class SettingsComponent implements OnInit {
     this.account.phone = this.contactInfoForm.get('phone')!.value;
 
     this.account.langKey = this.settingsForm.get('langKey')!.value;
-
-    console.log('updated data', this.account);
   }
 }

@@ -93,11 +93,20 @@ export class InvoiceComponent implements OnInit {
           invoice.status = Status.CANCELED;
           this.invoiceService.cancelPendingInvoice(<number>invoice.id).subscribe(resApi => {
             this.sweetAlertService
-              .showMsjSuccess('home.messages.cancelAppointmentTitle', 'home.messages.cancelAppointmentMsj')
-              .then(() => {});
+              .showMsjSuccess('home.messages.cancelInvoiceTitle', 'home.messages.cancelInvoiceMsj')
+              .then(() => undefined);
           });
         }
       });
+  }
+
+  public checkInvoiceStatus(invoiceStatus: string): boolean {
+    let show = false;
+
+    if (this.isDoctor && invoiceStatus === 'PENDING') {
+      show = true;
+    }
+    return show;
   }
 
   loadAll(): void {
