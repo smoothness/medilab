@@ -69,7 +69,7 @@ export class AppointmentDetailComponent implements OnInit {
   showRegisterInvoiceBtn(): boolean {
     let show = false;
 
-    if (this.isDoctor && this.invoicePending.id === null) {
+    if (this.isDoctor && this.invoicePending?.id === null) {
       show = true;
     }
     return show;
@@ -92,7 +92,7 @@ export class AppointmentDetailComponent implements OnInit {
   }
 
   public showRegisterInvoiceModal(): void {
-    const modalRef = this.modalService.open(LineCommentUpdateComponent, { centered: true });
+    const modalRef = this.modalService.open(LineCommentUpdateComponent, { size: 'lg', centered: true });
     modalRef.componentInstance.appointment = this.appointment;
   }
 

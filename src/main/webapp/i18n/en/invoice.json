@@ -35,6 +35,7 @@
       "canceled": "Canceled",
       "invoiceNumber": "Invoice number",
       "download": "Download invoice",
+      "addLine": "+ Add line",
       "action": {
         "view": "View Invoice"
       }

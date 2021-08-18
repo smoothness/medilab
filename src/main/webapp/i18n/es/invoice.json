@@ -35,6 +35,7 @@
       "canceled": "Anulada",
       "invoiceNumber": "Factura número",
       "download": "Descargar factura",
+      "addLine": "+ Agregar línea",
       "action": {
         "view": "Ver factura"
       }

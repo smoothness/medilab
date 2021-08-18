@@ -4,7 +4,9 @@
       <div class="card-body">
         <div class="d-flex justify-content-between card-title mb-5">
           <h4 class="d-flex align-items-center text-white" mediTranslate="medilabApp.invoice.home.createLabel">Factura</h4>
-          <button class="btn btn-primary" (click)="addLine()" [disabled]="resumeForm.invalid">+ Agregar Línea</button>
+          <button class="btn btn-primary" (click)="addLine()" [disabled]="resumeForm.invalid" mediTranslate="medilabApp.invoice.addLine">
+            + Agregar Línea
+          </button>
         </div>
         <div class="row justify-content-between">
           <div class="col-md">
@@ -66,17 +68,22 @@
         </div>
       </div>
     </form>
-    <div>
-      <button
-        type="submit"
-        id="saveEntity"
-        data-cy="entityCreateSaveButton"
-        [disabled]="resumeForm.invalid"
-        class="btn btn-primary col-12"
-        (click)="saveComment()"
-      >
-        <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
-      </button>
+    <div class="row m-0 p-0 my-3">
+      <div class="col p-0 mr-1">
+        <medi-cancel-button></medi-cancel-button>
+      </div>
+      <div class="col p-0 ml-1">
+        <button
+          type="submit"
+          id="saveEntity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="resumeForm.invalid"
+          class="btn btn-primary col-12"
+          (click)="saveComment()"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
     </div>
   </div>
 </section>
