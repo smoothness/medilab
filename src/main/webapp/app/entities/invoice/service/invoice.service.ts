@@ -38,6 +38,10 @@ export class InvoiceService {
     return this.http.put(`${this.resourceUrl}/payment/${id}`, { observe: 'response' });
   }
 
+  cancelPendingInvoice(id: number): Observable<any> {
+    return this.http.put(`${this.resourceUrl}/cancel/${id}`, { observe: 'response' });
+  }
+
   partialUpdate(invoice: IInvoice): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(invoice);
     return this.http

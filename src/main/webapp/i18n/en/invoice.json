@@ -37,7 +37,8 @@
       "download": "Download invoice",
       "addLine": "+ Add line",
       "action": {
-        "view": "View Invoice"
+        "view": "View Invoice",
+        "cancel": "Cancel invoice"
       }
     }
   }

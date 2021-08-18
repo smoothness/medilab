@@ -37,7 +37,8 @@
       "download": "Descargar factura",
       "addLine": "+ Agregar línea",
       "action": {
-        "view": "Ver factura"
+        "view": "Ver factura",
+        "cancel": "Cancelar factura"
       }
     }
   }

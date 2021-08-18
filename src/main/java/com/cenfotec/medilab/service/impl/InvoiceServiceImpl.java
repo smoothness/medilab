@@ -110,6 +110,11 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
+    public void cancelPendingInvoice(Long id) {
+        invoiceRepository.cancelPendingInvoice(id);
+    }
+
+    @Override
     public void delete(Long id) {
         log.debug("Request to delete Invoice : {}", id);
         invoiceRepository.deleteById(id);

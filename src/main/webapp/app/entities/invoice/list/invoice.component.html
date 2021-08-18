@@ -28,6 +28,10 @@
                 <td>{{ invoice.status | invoicePipe }}</td>
                 <td class="text-right">
                   <div class="btn-group">
+                    <button (click)="cancelPedingInvoice(invoice)" class="btn btn-danger mr-1" data-cy="entityDetailsButton">
+                      <fa-icon icFon="exclamation"></fa-icon>
+                      <span class="d-none d-md-inline" mediTranslate="medilabApp.invoice.action.cancel">View</span>
+                    </button>
                     <button
                       type="submit"
                       [routerLink]="['/main/appointment', invoice.appointment.id, 'view']"

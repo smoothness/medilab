@@ -194,6 +194,15 @@ public class InvoiceResource {
             .build();
     }
 
+    @PutMapping("/invoices/cancel/{id}")
+    public ResponseEntity<Invoice> cancelPendingInvoice(@PathVariable Long id) {
+        invoiceService.cancelPendingInvoice(id);
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
+    }
+
     @GetMapping("/invoices/history/{id}")
     public ResponseEntity<List<Invoice>> findInvoicesByAppointmentID(@PathVariable Long id) {
         List<Invoice> invoices = invoiceService.findInvoicesByAppointmentID(id);

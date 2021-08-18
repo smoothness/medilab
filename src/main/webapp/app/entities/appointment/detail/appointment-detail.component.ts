@@ -10,10 +10,9 @@ import { Doctor, Patient } from '../../../core/auth/account.model';
 import { LineCommentUpdateComponent } from 'app/entities/line-comment/update/line-comment-update.component';
 import { InvoiceService } from '../../invoice/service/invoice.service';
 import { InvoiceDetailComponent } from '../../invoice/detail/invoice-detail.component';
-import { IInvoice } from '../../invoice/invoice.model';
-import { AppointmentTreatmentAilmentRegisterComponent } from "../../appointment-treatment-ailment/register/appointment-treatment-ailment-register.component";
-import { AppointmentTreatmentAilmentService } from "../../appointment-treatment-ailment/service/appointment-treatment-ailment.service";
-import { IAppointmentTreatmentAilment } from "../../appointment-treatment-ailment/appointment-treatment-ailment.model";
+import { AppointmentTreatmentAilmentRegisterComponent } from '../../appointment-treatment-ailment/register/appointment-treatment-ailment-register.component';
+import { AppointmentTreatmentAilmentService } from '../../appointment-treatment-ailment/service/appointment-treatment-ailment.service';
+import { IAppointmentTreatmentAilment } from '../../appointment-treatment-ailment/appointment-treatment-ailment.model';
 
 @Component({
   selector: 'medi-appointment-detail',
@@ -35,7 +34,6 @@ export class AppointmentDetailComponent implements OnInit {
     private medicalExamsService: MedicalExamsService,
     protected invoiceService: InvoiceService,
     private diagnosisService: AppointmentTreatmentAilmentService
-
   ) {}
 
   public get isPatient(): boolean {
@@ -139,7 +137,7 @@ export class AppointmentDetailComponent implements OnInit {
   }
 
   public loadDiagnosis(updated: boolean): void {
-    if(updated){
+    if (updated) {
       this.getAppointmentDiagnosis();
     }
   }

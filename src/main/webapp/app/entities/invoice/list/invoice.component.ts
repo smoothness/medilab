@@ -13,8 +13,9 @@ import { PatientService } from 'app/entities/patient/service/patient.service';
 
 import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
-import { Observable } from 'rxjs';
 import { InvoiceDetailComponent } from '../detail/invoice-detail.component';
+import { Status } from '../../enumerations/status.model';
+import { SweetAlertService } from '../../../shared/services/sweet-alert.service';
 
 @Component({
   selector: 'medi-invoice',
@@ -33,7 +34,8 @@ export class InvoiceComponent implements OnInit {
     protected patientService: PatientService,
     protected appointmentService: AppointmentService,
     protected doctorService: DoctorService,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected sweetAlertService: SweetAlertService
   ) {}
 
   public get isPatient(): boolean {
@@ -77,21 +79,27 @@ export class InvoiceComponent implements OnInit {
     });
   }
 
-  /*public getAppointmentHistory(): void {
-    this.appointmentService.findAppointmentsHistory().subscribe((appointments: any) => {
-      let index = 0;
-      this.appointments = appointments.body;
-      this.formatDoctorData(this.appointments).subscribe(data => {
-        this.appointments[index].doctor = data;
-        index++;
+  public cancelPedingInvoice(invoice: IInvoice): void {
+    console.log('invoice', invoice);
+    this.sweetAlertService
+      .showConfirmMsg({
+        title: 'medilabApp.deleteConfirm.title',
+        text: 'medilabApp.deleteConfirm.text',
+        confirmButtonText: 'medilabApp.deleteConfirm.confirmButtonText',
+        cancelButtonText: 'medilabApp.deleteConfirm.cancelButtonText',
+      })
+      .then(res => {
+        if (res) {
+          invoice.status = Status.CANCELED;
+          this.invoiceService.cancelPendingInvoice(<number>invoice.id).subscribe(resApi => {
+            this.sweetAlertService.showMsjSuccess('home.messages.cancelAppointmentTitle', 'home.messages.cancelAppointmentMsj').then(() => {
+              //Aquí va el recargar tabla
+              console.log('res', resApi);
+            });
+          });
+        }
       });
-      let index2 = 0;
-      this.formatPatientData(this.appointments).subscribe(data => {
-        this.appointments[index2].patient = data;
-        index2++;
-      });
-    });
-  }*/
+  }
 
   loadAll(): void {
     this.isLoading = true;
@@ -124,8 +132,6 @@ export class InvoiceComponent implements OnInit {
 
   public showInvoiceDetail(invoice: IInvoice): void {
     const modalRef = this.modalService.open(InvoiceDetailComponent, { size: 'lg', centered: true });
-    console.log('invoice', invoice);
     modalRef.componentInstance.invoicePending = invoice;
-    console.log('invoicePending', modalRef.componentInstance.invoicePending);
   }
 }

@@ -41,6 +41,8 @@ public interface InvoiceService {
 
     void payInvoice(Long id);
 
+    void cancelPendingInvoice(Long id);
+
     /**
      * Delete the "id" invoice.
      *
