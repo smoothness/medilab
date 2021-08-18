@@ -14,6 +14,7 @@ import { PatientService } from 'app/entities/patient/service/patient.service';
 import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
 import { Observable } from 'rxjs';
+import { InvoiceDetailComponent } from '../detail/invoice-detail.component';
 
 @Component({
   selector: 'medi-invoice',
@@ -67,13 +68,13 @@ export class InvoiceComponent implements OnInit {
   public getPatientAppointmentHistory(): void {
     this.invoiceService.findInvoicesByPatient(this.currentUser.patientId).subscribe((res: any) => {
       this.invoices = res.body;
-    })
+    });
   }
 
   public getDoctorAppointmentHistory(): void {
     this.invoiceService.findInvoicesByDoctor(this.currentUser.doctorId).subscribe((res: any) => {
       this.invoices = res.body;
-    })
+    });
   }
 
   /*public getAppointmentHistory(): void {
@@ -119,5 +120,12 @@ export class InvoiceComponent implements OnInit {
 
   trackId(index: number, item: IInvoice): number {
     return item.id!;
+  }
+
+  public showInvoiceDetail(invoice: IInvoice): void {
+    const modalRef = this.modalService.open(InvoiceDetailComponent, { size: 'lg', centered: true });
+    console.log('invoice', invoice);
+    modalRef.componentInstance.invoicePending = invoice;
+    console.log('invoicePending', modalRef.componentInstance.invoicePending);
   }
 }
