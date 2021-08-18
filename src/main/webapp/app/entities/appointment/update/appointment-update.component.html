@@ -35,15 +35,6 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="form-control-label" mediTranslate="medilabApp.appointment.status" for="field_status">Status</label>
-            <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status" ngModel="PENDING">
-              <option value="CANCELED">{{ 'medilabApp.Status.CANCELED' | translate }}</option>
-              <option value="PENDING">{{ 'medilabApp.Status.PENDING' | translate }}</option>
-              <option value="PAID">{{ 'medilabApp.Status.PAID' | translate }}</option>
-              <option value="FINISHED">{{ 'medilabApp.Status.FINISHED' | translate }}</option>
-            </select>
-          </div>
-          <div class="form-group">
             <label class="form-control-label" mediTranslate="medilabApp.appointment.patient" for="field_patient">Patient</label>
             <select class="form-control" id="field_patient" data-cy="patient" name="patient" formControlName="patient">
               <option [ngValue]="null"></option>
