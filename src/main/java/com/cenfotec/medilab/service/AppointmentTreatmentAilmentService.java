@@ -31,6 +31,10 @@ public interface AppointmentTreatmentAilmentService {
      */
     List<AppointmentTreatmentAilment> findAll();
 
+    List<AppointmentTreatmentAilment> findAllDiagnosisByPatient(Long id);
+
+    List<AppointmentTreatmentAilment> findAllDiagnosisByAppointment(Long id);
+
     /**
      * Get the "id" appointmentTreatmentAilment.
      *
@@ -45,5 +49,6 @@ public interface AppointmentTreatmentAilmentService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+    void deleteByAilmentAndAppointment(Long ailmentId, Long appointmentId);
 
 }

@@ -14,21 +14,29 @@
         "question": "¿Seguro que quiere eliminar la cita {{ id }}?"
       },
       "detail": {
-        "title": "Detalle de la cita"
+        "title": "Detalle de la cita",
+        "date": "Fecha: ",
+        "status": "Estado de la cita: ",
+        "appointmentTreatmentAilment": "Dolencia, tratamiento",
+        "medicalExams": "Exámenes médicos",
+        "patient": "Paciente: ",
+        "doctor": "Doctor: ",
+        "phone": "Teléfono: ",
+        "email": "Correo electrónico: ",
+        "specialty": "Especialidad: "
       },
-      "id": "ID",
-      "date": "Fecha: ",
-      "status": "Estado de la cita: ",
-      "appointmentTreatmentAilment": "Dolencia, tratamiento",
-      "medicalExams": "Exámenes médicos",
-      "patient": "Paciente ",
-      "doctor": "Doctor ",
-      "phone": "Teléfono ",
-      "email": "Correo electrónico ",
-      "specialty": "Especialidad: ",
+
+
 
       "history": {
-        "title": "Historial de citas"
+        "title": "Historial de citas",
+        "date": "Fecha",
+        "status": "Estado de la cita",
+        "patient": "Paciente",
+        "doctor": "Doctor",
+        "phone": "Teléfono",
+        "email": "Correo electrónico",
+        "specialty": "Especialidad"
       },
       "action": {
         "view": "Ver cita",

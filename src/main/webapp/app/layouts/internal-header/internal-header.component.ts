@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VERSION } from './../../app.constants';
+import { AccountService } from 'app/core/auth/account.service';
 
 @Component({
   selector: 'medi-internal-header',
@@ -7,13 +8,23 @@ import { VERSION } from './../../app.constants';
   styleUrls: ['./internal-header.component.scss'],
 })
 export class InternalHeaderComponent implements OnInit {
+  currentUser: any = {};
   isNavbarCollapsed = true;
   version = '';
+
+  constructor(private accountService: AccountService) {}
+
+  public get notificationUser(): any {
+    return this.currentUser; /* eslint-disable-line @typescript-eslint/no-unsafe-return */
+  }
 
   ngOnInit(): void {
     if (VERSION) {
       this.version = VERSION.toLowerCase().startsWith('v') ? VERSION : 'v' + VERSION;
     }
+    this.accountService.formatUserIdentity().subscribe(user => {
+      this.currentUser = user;
+    });
   }
 
   /**

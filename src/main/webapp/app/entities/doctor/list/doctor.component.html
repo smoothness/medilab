@@ -10,11 +10,11 @@
       <div class="table-responsive" id="entities" *ngIf="doctors && doctors.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
           <thead>
-            <tr>
-              <th scope="col"><span mediTranslate="medilabApp.doctor.list.completeName">Complete Name</span></th>
-              <th scope="col"><span mediTranslate="medilabApp.doctor.list.email">Complete Name</span></th>
-              <th scope="col"><span mediTranslate="medilabApp.doctor.specialty">Specialty</span></th>
-              <th scope="col"></th>
+            <tr class="text-primary">
+              <th scope="col" class="h6"><span mediTranslate="medilabApp.doctor.list.completeName">Complete Name</span></th>
+              <th scope="col" class="h6"><span mediTranslate="medilabApp.doctor.list.email">Complete Name</span></th>
+              <th scope="col" class="h6"><span mediTranslate="medilabApp.doctor.specialty">Specialty</span></th>
+              <th scope="col" class="h6"></th>
             </tr>
           </thead>
           <tbody>
@@ -24,19 +24,15 @@
               </td>
               <td>{{ doctor.email }}</td>
               <td>{{ doctor.specialty }}</td>
-
               <td class="text-right">
-                <div>
-                  <button
-                    type="submit"
-                    [routerLink]="['/doctor', doctor.id, 'edit']"
-                    class="btn btn-primary btn-sm"
-                    data-cy="entityEditButton"
-                  >
-                    <fa-icon icon="calendar-alt"></fa-icon>
-                    <span class="d-none d-md-inline" mediTranslate="medilabApp.doctor.list.btnDate">Edit</span>
-                  </button>
-                </div>
+                <a
+                  target="_blank"
+                  class="btn btn-secondary"
+                  href="https://wa.me/50688885353?text=Solicito%20una%20cita%20con%20el%20doctor"
+                >
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                  <span class="d-none d-md-inline" mediTranslate="medilabApp.doctor.list.btnDate">Solicitar una cita</span>
+                </a>
               </td>
             </tr>
           </tbody>

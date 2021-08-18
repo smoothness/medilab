@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IMedicalExams } from '../medical-exams.model';
-import {SweetAlertService} from "../../../shared/services/sweet-alert.service";
+import { SweetAlertService } from "../../../shared/services/sweet-alert.service";
 import { MedicalExamsService } from '../service/medical-exams.service';
 import { MedicalExamsUpdateComponent } from "../update/medical-exams-update.component";
 

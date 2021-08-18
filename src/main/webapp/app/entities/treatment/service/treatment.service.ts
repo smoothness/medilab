@@ -26,6 +26,10 @@ export class TreatmentService {
     });
   }
 
+  updateRemoved(treatmentId: number): Observable<{}> {
+    return this.http.delete(`${this.resourceUrl}/removed/${treatmentId}`, {observe: 'response'});
+  }
+
   partialUpdate(treatment: ITreatment): Observable<EntityResponseType> {
     return this.http.patch<ITreatment>(`${this.resourceUrl}/${getTreatmentIdentifier(treatment) as number}`, treatment, {
       observe: 'response',
@@ -34,6 +38,10 @@ export class TreatmentService {
 
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<ITreatment>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  findByAilment(ailmentId: number, appointmentId: number): Observable<EntityResponseType> {
+    return this.http.get<ITreatment>(`${this.resourceUrl}/ailment/${ailmentId}/${appointmentId}`, { observe: 'response' });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {
@@ -45,23 +53,4 @@ export class TreatmentService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  addTreatmentToCollectionIfMissing(
-    treatmentCollection: ITreatment[],
-    ...treatmentsToCheck: (ITreatment | null | undefined)[]
-  ): ITreatment[] {
-    const treatments: ITreatment[] = treatmentsToCheck.filter(isPresent);
-    if (treatments.length > 0) {
-      const treatmentCollectionIdentifiers = treatmentCollection.map(treatmentItem => getTreatmentIdentifier(treatmentItem)!);
-      const treatmentsToAdd = treatments.filter(treatmentItem => {
-        const treatmentIdentifier = getTreatmentIdentifier(treatmentItem);
-        if (treatmentIdentifier == null || treatmentCollectionIdentifiers.includes(treatmentIdentifier)) {
-          return false;
-        }
-        treatmentCollectionIdentifiers.push(treatmentIdentifier);
-        return true;
-      });
-      return [...treatmentsToAdd, ...treatmentCollection];
-    }
-    return treatmentCollection;
-  }
 }

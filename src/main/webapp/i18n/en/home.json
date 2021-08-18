@@ -1,13 +1,14 @@
 {
   "home": {
-    "title": "Welcome, Java Hipster!",
+    "title": "Welcome",
     "subtitle": "This is your homepage",
     "welcome": "Welcome: ",
     "viewLastAppointment": "View last appointment",
     "requestAppointment": "Request an appointment",
     "createNewAppointment": "Create a new appointment",
     "upcomingAppointments": "Upcoming appointments",
-    "appointmentDetail": "Detail",
+    "appointmentDetail": "Show appointment",
+    "patientDetail": "Show patient",
     "appointmentDelete": "Cancel appointment",
     "appointmentDateChange": "Change date",
     "appointmentDateChangeModal": {

@@ -1,0 +1,60 @@
+<section>
+  <!--Accordion-->
+  <ngb-accordion #acc="ngbAccordion" type="dark" (shown)="toggleIconState()" (hidden)="toggleIconState()">
+    <ngb-panel cardClass="bg-dark text-center">
+      <!--Title -->
+      <ng-template ngbPanelTitle>
+        <div class="mb-1 text-center" *ngIf="showTitle">
+          <h3 class="text-primary">Tratamiento {{index + 1}}</h3>
+
+          <span *ngIf="isVisible">
+            <fa-icon icon="eye"></fa-icon>
+          </span>
+
+          <span *ngIf="!isVisible">
+            <fa-icon icon="eye-slash"></fa-icon>
+          </span>
+        </div>
+      </ng-template>
+      <!--Content-->
+      <ng-template ngbPanelContent>
+        <!--Form-->
+        <div class="text-justify">
+          <form name="registerForm" role="form" autocomplete="off" [formGroup]="registerForm">
+            <div class="form-group">
+              <label class="form-control-label text-white" mediTranslate="medilabApp.treatment.medicines" for="fieldMedicines">Medicines</label>
+              <input type="text" class="form-control" name="medicines" id="fieldMedicines" data-cy="medicines" formControlName="medicines" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-control-label text-white" mediTranslate="medilabApp.treatment.duration" for="fieldDuration">Duration</label>
+              <input type="text" class="form-control" name="duration" id="fieldDuration" data-cy="duration" formControlName="duration" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-control-label text-white" mediTranslate="medilabApp.treatment.specifications" for="fieldSpecifications"
+              >Specifications</label
+              >
+              <textarea
+                type="text"
+                class="form-control"
+                name="specifications"
+                id="fieldSpecifications"
+                data-cy="specifications"
+                formControlName="specifications"
+              ></textarea>
+            </div>
+          </form>
+        </div>
+
+        <!--Button-->
+        <div>
+          <button class="btn btn-danger col-12" (click)="removeForm()" >
+            <fa-icon icon="trash-alt"></fa-icon>
+            <span>Delete</span>
+          </button>
+        </div>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+</section>

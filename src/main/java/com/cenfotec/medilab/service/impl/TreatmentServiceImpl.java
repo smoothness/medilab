@@ -67,6 +67,12 @@ public class TreatmentServiceImpl implements TreatmentService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<Treatment> findAllTreatmentsByAilment(Long ailmentId, Long appointmentId) {
+        return treatmentRepository.findAllTreatmentsByAilment(ailmentId, appointmentId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Optional<Treatment> findOne(Long id) {
         log.debug("Request to get Treatment : {}", id);
         return treatmentRepository.findById(id);
@@ -76,5 +82,10 @@ public class TreatmentServiceImpl implements TreatmentService {
     public void delete(Long id) {
         log.debug("Request to delete Treatment : {}", id);
         treatmentRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateRemoved(Long id) {
+        treatmentRepository.updateRemoved(id);
     }
 }
