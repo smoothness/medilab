@@ -77,7 +77,7 @@
           type="submit"
           id="saveEntity"
           data-cy="entityCreateSaveButton"
-          [disabled]="resumeForm.invalid"
+          [disabled]="resumeForm.invalid || !emptyLine(invoice)"
           class="btn btn-primary col-12"
           (click)="saveComment()"
         >

@@ -132,4 +132,13 @@ export class LineCommentUpdateComponent {
       });
     });
   }
+
+  public emptyLine(invoice: IInvoice): boolean {
+    let disable = false;
+    if (invoice.lineComments && invoice.lineComments.length > 0) {
+      disable = true;
+    }
+    console.log('disable', disable);
+    return disable;
+  }
 }
