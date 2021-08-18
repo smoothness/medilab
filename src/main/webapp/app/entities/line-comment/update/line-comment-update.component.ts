@@ -54,8 +54,6 @@ export class LineCommentUpdateComponent {
   }
 
   saveComment(): void {
-    console.log('Save', this.invoice.lineComments);
-
     this.isSaving = true;
 
     //La fecha por defecto es la del sistema a la hora de crear la factura

@@ -92,10 +92,9 @@ export class InvoiceComponent implements OnInit {
         if (res) {
           invoice.status = Status.CANCELED;
           this.invoiceService.cancelPendingInvoice(<number>invoice.id).subscribe(resApi => {
-            this.sweetAlertService.showMsjSuccess('home.messages.cancelAppointmentTitle', 'home.messages.cancelAppointmentMsj').then(() => {
-              //Aquí va el recargar tabla
-              console.log('res', resApi);
-            });
+            this.sweetAlertService
+              .showMsjSuccess('home.messages.cancelAppointmentTitle', 'home.messages.cancelAppointmentMsj')
+              .then(() => {});
           });
         }
       });
