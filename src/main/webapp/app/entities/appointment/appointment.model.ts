@@ -13,6 +13,8 @@ export interface IAppointment {
   medicalExams?: IMedicalExams[] | null;
   patient?: IPatient | null;
   doctor?: IDoctor | null;
+  updated?: boolean | null;
+  canceled?: boolean | null;
 }
 
 export class Appointment implements IAppointment {
@@ -23,7 +25,9 @@ export class Appointment implements IAppointment {
     public appointmentTreatmentAilments?: IAppointmentTreatmentAilment[] | null,
     public medicalExams?: IMedicalExams[] | null,
     public patient?: IPatient | null,
-    public doctor?: IDoctor | null
+    public doctor?: IDoctor | null,
+    public updated?: boolean | null,
+    public canceled?: boolean | null
   ) {}
 }
 

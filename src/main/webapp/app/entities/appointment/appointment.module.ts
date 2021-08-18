@@ -10,9 +10,17 @@ import { MedicalExamsModule } from '../medical-exams/medical-exams.module';
 import { AppointmentHistoryComponent } from './history/appointment-history.component';
 import { StatusPipe } from './pipe/status.pipe';
 import { LineCommentModule } from '../line-comment/line-comment.module';
+import {AppointmentTreatmentAilmentModule} from "../appointment-treatment-ailment/appointment-treatment-ailment.module";
 
 @NgModule({
-  imports: [SharedModule, AppointmentRoutingModule, SweetAlert2Module, MedicalExamsModule, LineCommentModule],
+  imports: [
+    SharedModule,
+    AppointmentRoutingModule,
+    SweetAlert2Module,
+    MedicalExamsModule,
+    AppointmentTreatmentAilmentModule,
+    LineCommentModule,
+  ],
   declarations: [
     AppointmentComponent,
     AppointmentDetailComponent,
@@ -22,5 +30,6 @@ import { LineCommentModule } from '../line-comment/line-comment.module';
     StatusPipe,
   ],
   entryComponents: [AppointmentDeleteDialogComponent],
+  exports: [ AppointmentComponent ],
 })
 export class AppointmentModule {}

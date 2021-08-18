@@ -9,11 +9,11 @@
         <span mediTranslate="medilabApp.emergencyContact.home.notFound">No emergencyContacts found</span>
       </div>
       <div class="table-responsive" id="entities" *ngIf="medicalExams && medicalExams.length > 0">
-        <table class="table table-striped" aria-describedby="page-heading">
+        <table class="table table-striped table-hover" aria-describedby="page-heading">
           <thead>
           <tr>
-            <th scope="col"><span mediTranslate="medilabApp.medicalExams.name">Name</span></th>
-            <th scope="col"><span mediTranslate="medilabApp.medicalExams.description">Description</span></th>
+            <th scope="col" class="h6 text-primary"><span mediTranslate="medilabApp.medicalExams.name">Name</span></th>
+            <th scope="col" class="h6 text-primary"><span mediTranslate="medilabApp.medicalExams.description">Description</span></th>
             <th scope="col" *ngIf="showButtons"></th>
           </tr>
           </thead>

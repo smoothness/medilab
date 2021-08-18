@@ -11,6 +11,9 @@ import { LineCommentUpdateComponent } from 'app/entities/line-comment/update/lin
 import { InvoiceService } from '../../invoice/service/invoice.service';
 import { InvoiceDetailComponent } from '../../invoice/detail/invoice-detail.component';
 import { IInvoice } from '../../invoice/invoice.model';
+import { AppointmentTreatmentAilmentRegisterComponent } from "../../appointment-treatment-ailment/register/appointment-treatment-ailment-register.component";
+import { AppointmentTreatmentAilmentService } from "../../appointment-treatment-ailment/service/appointment-treatment-ailment.service";
+import { IAppointmentTreatmentAilment } from "../../appointment-treatment-ailment/appointment-treatment-ailment.model";
 
 @Component({
   selector: 'medi-appointment-detail',
@@ -19,17 +22,20 @@ import { IInvoice } from '../../invoice/invoice.model';
 export class AppointmentDetailComponent implements OnInit {
   appointment: any | null = null;
   medicalExams: IMedicalExams[] = [];
+  diagnosis: IAppointmentTreatmentAilment[] = [];
   currentUser: any;
   userType = 'doctor';
   invoicePending: any;
   isPending = false;
 
   constructor(
-    protected activatedRoute: ActivatedRoute,
     protected modalService: NgbModal,
+    protected activatedRoute: ActivatedRoute,
     private accountService: AccountService,
     private medicalExamsService: MedicalExamsService,
-    protected invoiceService: InvoiceService
+    protected invoiceService: InvoiceService,
+    private diagnosisService: AppointmentTreatmentAilmentService
+
   ) {}
 
   public get isPatient(): boolean {
@@ -53,6 +59,7 @@ export class AppointmentDetailComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ appointment }) => {
       this.appointment = appointment;
       this.getAppointmentExams();
+      this.getAppointmentDiagnosis();
     });
     this.isPendingInvoice();
   }
@@ -101,13 +108,11 @@ export class AppointmentDetailComponent implements OnInit {
     modalRef.componentInstance.invoicePending = this.invoicePending;
   }
 
-  public showAddMedicalExam(status: any): boolean {
+  public showRegisterMedicalExam(status: any): boolean {
     let show = false;
-
     if (this.isDoctor && status === 'PENDING') {
       show = true;
     }
-
     return show;
   }
 
@@ -121,6 +126,28 @@ export class AppointmentDetailComponent implements OnInit {
     if (updated) {
       this.getAppointmentExams();
     }
+  }
+
+  public showRegisterDiagnosisModal(): void {
+    const modalRef = this.modalService.open(AppointmentTreatmentAilmentRegisterComponent, { centered: true });
+    modalRef.componentInstance.appointment = this.appointment;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'register') {
+        this.getAppointmentDiagnosis();
+      }
+    });
+  }
+
+  public loadDiagnosis(updated: boolean): void {
+    if(updated){
+      this.getAppointmentDiagnosis();
+    }
+  }
+
+  public getAppointmentDiagnosis(): void {
+    this.diagnosisService.findByAppointment(this.appointment.id).subscribe((res: any) => {
+      this.diagnosis = res.body;
+    });
   }
 
   previousState(): void {

@@ -44,6 +44,7 @@ export class AppointmentTreatmentAilmentUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
     this.activatedRoute.data.subscribe(({ appointmentTreatmentAilment }) => {
       this.updateForm(appointmentTreatmentAilment);
 
@@ -110,10 +111,6 @@ export class AppointmentTreatmentAilmentUpdateComponent implements OnInit {
       this.ailmentsSharedCollection,
       appointmentTreatmentAilment.ailment
     );
-    this.treatmentsSharedCollection = this.treatmentService.addTreatmentToCollectionIfMissing(
-      this.treatmentsSharedCollection,
-      appointmentTreatmentAilment.treatment
-    );
     this.appointmentsSharedCollection = this.appointmentService.addAppointmentToCollectionIfMissing(
       this.appointmentsSharedCollection,
       appointmentTreatmentAilment.appointment
@@ -132,11 +129,6 @@ export class AppointmentTreatmentAilmentUpdateComponent implements OnInit {
     this.treatmentService
       .query()
       .pipe(map((res: HttpResponse<ITreatment[]>) => res.body ?? []))
-      .pipe(
-        map((treatments: ITreatment[]) =>
-          this.treatmentService.addTreatmentToCollectionIfMissing(treatments, this.editForm.get('treatment')!.value)
-        )
-      )
       .subscribe((treatments: ITreatment[]) => (this.treatmentsSharedCollection = treatments));
 
     this.appointmentService

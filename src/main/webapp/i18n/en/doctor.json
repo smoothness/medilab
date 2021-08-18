@@ -28,7 +28,8 @@
         "completeName": "Doctor name",
         "email": "Email",
         "btnDate": "Request an appointment"
-      }
+      },
+      "doctorCode": "Your doctor code is:"
     }
   }
 }

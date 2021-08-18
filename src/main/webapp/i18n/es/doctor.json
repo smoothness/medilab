@@ -28,7 +28,8 @@
         "completeName": "Nombre del médico",
         "email": "Correo electrónico",
         "btnDate": "Solicitar cita"
-      }
+      },
+      "doctorCode": "Su código de médico es:"
     }
   }
 }

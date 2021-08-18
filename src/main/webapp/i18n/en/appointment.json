@@ -14,21 +14,26 @@
         "question": "Are you sure you want to delete Appointment {{ id }}?"
       },
       "detail": {
-        "title": "Appointment detail"
+        "title": "Appointment detail",
+        "date": "Date: ",
+        "status": "Appointment status: ",
+        "appointmentTreatmentAilment": "Appointment Treatment Ailment",
+        "medicalExams": "Medical Exams",
+        "patient": "Patient: ",
+        "doctor": "Doctor: ",
+        "phone": "Phone number: ",
+        "email": "Email: ",
+        "specialty": "Specialty: "
       },
-      "id": "ID",
-      "date": "Date: ",
-      "status": "Appointment status ",
-      "appointmentTreatmentAilment": "Appointment Treatment Ailment",
-      "medicalExams": "Medical Exams",
-      "patient": "Patient ",
-      "doctor": "Doctor ",
-      "phone": "Phone number: ",
-      "email": "Email: ",
-      "specialty": "Specialty: ",
-
       "history": {
-        "title": "Appointment history"
+        "title": "Appointment history",
+        "date": "Date",
+        "status": "Appointment status",
+        "patient": "Patient",
+        "doctor": "Doctor",
+        "phone": "Phone number",
+        "email": "Email",
+        "specialty": "Specialty"
       },
       "action": {
         "view": "See appointment",

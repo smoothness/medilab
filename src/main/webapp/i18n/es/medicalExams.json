@@ -2,7 +2,7 @@
   "medilabApp": {
     "medicalExams": {
       "register": "Registro de examen médico",
-      "update": "Modificación de examen médico",
+      "update": "Actualizar examen médico",
       "created": "Se ha registrado el examen médico exitosamente",
       "updated": "Se ha actualizado el examen médico exitosamente",
       "deleted": "Se ha eliminado el examen médico exitosamente",
@@ -18,7 +18,8 @@
       "removed": "Removed",
       "appointment": "Appointment",
       "btnAdd": "Add medical exam",
-      "btnInvoice": "Agregar una factura"
+      "btnInvoice": "Agregar una factura",
+      "btnAdd": "Agregar examen médico"
     }
   }
 }
