@@ -8,13 +8,22 @@ import { Pagination } from 'app/core/request/request.model';
 import { IUser } from '../user-management.model';
 import { User as RegisterUser } from './../register/user.model';
 import { User } from './../../../account/register/register.model';
+import {map, mergeMap} from "rxjs/operators";
+import { Account, Doctor, Patient } from "../../../core/auth/account.model";
+import { PatientService } from "../../../entities/patient/service/patient.service";
+import { DoctorService } from "../../../entities/doctor/service/doctor.service";
 
 
 @Injectable({ providedIn: 'root' })
 export class UserManagementService {
   private resourceUrl = this.applicationConfigService.getEndpointFor('api/admin/users');
 
-  constructor(private http: HttpClient, private applicationConfigService: ApplicationConfigService) {}
+  constructor(
+    private http: HttpClient,
+    private patientService: PatientService,
+    private doctorService: DoctorService,
+    private applicationConfigService: ApplicationConfigService
+  ) {}
 
   registerUser(newUser: RegisterUser): Observable<RegisterUser>{
     return new Observable( subscriber => {
@@ -97,6 +106,36 @@ export class UserManagementService {
     return this.http.get<IUser[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
+  getUsersFormatted(): Observable<any> {
+    return this.http.get<IUser[]>(this.resourceUrl, { observe: 'response' }).pipe(
+      mergeMap((users: any) => this.formatUser(users.body)),
+      map((users: any) => users),
+    );
+  }
+
+  formatUser(users: any): Observable<{}> {
+    return new Observable<{}>(subscriber => {
+      for (const user of users[Symbol.iterator]()) {
+        if (user.authorities[0] === 'ROLE_PATIENT') {
+          this.patientService.findOneByInternalUser(user.id).subscribe((res: any) => {
+            res.body.internalUser = user;
+            subscriber.next(new Patient(res.body));
+          });
+        } else {
+          if (user?.authorities[0] === 'ROLE_USER') {
+            if (user.authorities[1] === 'ROLE_ADMIN') {
+              subscriber.next(new Account(user));
+            } else {
+              this.doctorService.findByInternalUser(user.id).subscribe((res: any) => {
+                res.body.internalUser = user;
+                subscriber.next(new Doctor(res.body));
+              });
+            }
+          }
+        }
+      }
+    });
+  }
   delete(login: string): Observable<{}> {
     return this.http.delete(`${this.resourceUrl}/${login}`);
   }

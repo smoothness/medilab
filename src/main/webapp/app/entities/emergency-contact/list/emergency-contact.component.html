@@ -1,6 +1,7 @@
 <div class="card bg-dark my-4">
-  <h5 class="card-header">
-    <span mediTranslate="medilabApp.emergencyContact.home.title" class="m-0 p-0">Contact(s) en caso de una emergencia</span>
+  <div class="card-header">
+    <h5 mediTranslate="medilabApp.emergencyContact.home.title" class="m-0 p-0"></h5>
+
     <div class="d-flex justify-content-end m-0 p-0">
       <button
         *ngIf="emergencyContactsTotal < 3"
@@ -13,7 +14,8 @@
         <span mediTranslate="home.btnNewContact"> Create a new Contact </span>
       </button>
     </div>
-  </h5>
+  </div>
+
   <div class="card-body">
     <div class="alert alert-warning" id="no-result" *ngIf="emergencyContacts?.length === 0">
       <span mediTranslate="medilabApp.emergencyContact.home.notFound">No emergencyContacts found</span>

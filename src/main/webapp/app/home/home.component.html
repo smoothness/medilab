@@ -71,29 +71,41 @@
       <section class="ml-profile__bottom">
         <!-- START body patient Block -->
         <div class="my-3" *ngIf="isPatient">
-          <div class="col-12 m-0 p-0 my-4">
+          <!-- APPOINTMENTS -->
+          <div class="col-12 m-0 p-0 my-4" *ngIf="appointmentsPatient.length">
           <medi-appointment [appointments]="appointmentsPatient" (updateList)="updateList($event)"></medi-appointment>
           </div>
+
           <!-- EMERGENCY CONTACTS -->
-          <medi-emergency-contact [currentUser]="currentUser"></medi-emergency-contact>
-          <!-- DIAGNOSIS -->
           <div class="col-12 m-0 p-0 my-4">
+          <medi-emergency-contact [currentUser]="currentUser"></medi-emergency-contact>
+          </div>
+
+          <!-- DIAGNOSIS -->
+          <div class="col-12 m-0 p-0 my-4" *ngIf="patientDiagnosis.length">
             <medi-appointment-treatment-ailment [appointmentTreatmentAilments]="patientDiagnosis"></medi-appointment-treatment-ailment>
           </div>
+
           <!-- MEDICAL EXAMS -->
           <div class="my-4" *ngIf="patientMedicalExams.length > 0">
             <medi-medical-exams [medicalExams]="patientMedicalExams" [showButtons]="false"></medi-medical-exams>
           </div>
-
         </div>
-
         <!-- END body patient Block -->
 
         <!-- START body doctor Block -->
         <div class="card bg-dark mt-3" *ngIf="isDoctor">
-          <medi-appointment [appointments]="appointmentsDoctor" (updateList)="updateList($event)"></medi-appointment>
+          <div class="col-12 m-0 p-0 my-4" *ngIf="appointmentsDoctor.length">
+            <medi-appointment [appointments]="appointmentsDoctor" (updateList)="updateList($event)"></medi-appointment>
+          </div>
         </div>
         <!-- END body doctor Block -->
+
+        <!-- START body admin Block -->
+        <div class="card bg-dark mt-3" *ngIf="isAdmin">
+          <medi-user-mgmt></medi-user-mgmt>
+        </div>
+        <!-- END body admin Block -->
       </section>
     </div>
   </div>

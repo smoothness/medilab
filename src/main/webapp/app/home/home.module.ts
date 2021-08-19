@@ -2,15 +2,16 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { SharedModule } from './../shared/shared.module';
 import { HOME_ROUTE } from './home.route';
 import { HomeComponent } from './home.component';
-import { LayoutsModule } from '../layouts/layouts.module';
-import { MedicalExamsModule } from "../entities/medical-exams/medical-exams.module";
 import { TokenModule } from "../token/token.module";
+import { SharedModule } from './../shared/shared.module';
+import { LayoutsModule } from '../layouts/layouts.module';
 import { AppointmentModule } from "../entities/appointment/appointment.module";
-import { AppointmentTreatmentAilmentModule } from "../entities/appointment-treatment-ailment/appointment-treatment-ailment.module";
+import { MedicalExamsModule } from "../entities/medical-exams/medical-exams.module";
+import {UserManagementModule} from "../admin/user-management/user-management.module";
 import { EmergencyContactModule } from "../entities/emergency-contact/emergency-contact.module";
+import { AppointmentTreatmentAilmentModule } from "../entities/appointment-treatment-ailment/appointment-treatment-ailment.module";
 
 @NgModule({
     imports: [
@@ -21,6 +22,7 @@ import { EmergencyContactModule } from "../entities/emergency-contact/emergency-
       TokenModule,
       AppointmentModule,
       MedicalExamsModule,
+      UserManagementModule,
       EmergencyContactModule,
       AppointmentTreatmentAilmentModule
     ],
