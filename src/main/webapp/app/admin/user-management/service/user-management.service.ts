@@ -98,7 +98,33 @@ export class UserManagementService {
   }
 
   find(login: string): Observable<IUser> {
-    return this.http.get<IUser>(`${this.resourceUrl}/${login}`);
+    return this.http.get<IUser>(`${this.resourceUrl}/${login}`).pipe(
+      mergeMap((user: any) => this.formatUser(user)));
+  }
+
+  public formatUser(user: any): Observable<{}> {
+    return new Observable<{}>(subscriber => {
+        if (user.authorities[0] === 'ROLE_PATIENT') {
+          this.patientService.findOneByInternalUser(user.id).subscribe((res: any) => {
+            res.body.internalUser = user;
+            subscriber.next(new Patient(res.body));
+            subscriber.complete();
+          });
+        } else {
+          if (user?.authorities[0] === 'ROLE_USER') {
+            if (user.authorities[1] === 'ROLE_ADMIN') {
+              subscriber.next(new Account(user));
+              subscriber.complete();
+            } else {
+              this.doctorService.findByInternalUser(user.id).subscribe((res: any) => {
+                res.body.internalUser = user;
+                subscriber.next(new Doctor(res.body));
+                subscriber.complete();
+              });
+            }
+          }
+        }
+    });
   }
 
   query(req?: Pagination): Observable<HttpResponse<IUser[]>> {
@@ -108,12 +134,12 @@ export class UserManagementService {
 
   getUsersFormatted(): Observable<any> {
     return this.http.get<IUser[]>(this.resourceUrl, { observe: 'response' }).pipe(
-      mergeMap((users: any) => this.formatUser(users.body)),
+      mergeMap((users: any) => this.formatUsers(users.body)),
       map((users: any) => users),
     );
   }
 
-  formatUser(users: any): Observable<{}> {
+  formatUsers(users: any): Observable<{}> {
     return new Observable<{}>(subscriber => {
       for (const user of users[Symbol.iterator]()) {
         if (user.authorities[0] === 'ROLE_PATIENT') {

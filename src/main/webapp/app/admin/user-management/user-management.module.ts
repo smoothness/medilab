@@ -6,8 +6,6 @@ import { SharedModule } from './../../shared/shared.module';
 import { RegisterModule } from './../../account/register/register.module';
 
 import { UserManagementComponent } from './list/user-management.component';
-import { UserManagementDetailComponent } from './detail/user-management-detail.component';
-import { UserManagementUpdateComponent } from './update/user-management-update.component';
 import { UserManagementRegisterComponent } from './register/user-management-register.component';
 
 import { userManagementRoute } from './user-management.route';
@@ -22,13 +20,11 @@ import { RolePipe } from './pipe/role.pipe';
     RouterModule.forChild(userManagementRoute),
   ],
   declarations: [
+    RolePipe,
+    LanguagePipe,
     UserManagementRegisterComponent,
     UserManagementComponent,
-    UserManagementDetailComponent,
-    UserManagementUpdateComponent,
-    LanguagePipe,
-    RolePipe,
   ],
-  exports: [ UserManagementComponent]
+  exports: [ UserManagementComponent ]
 })
 export class UserManagementModule {}

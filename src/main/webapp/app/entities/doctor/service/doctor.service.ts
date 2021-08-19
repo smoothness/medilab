@@ -29,6 +29,7 @@ export class DoctorService {
   }
 
   updateDoctorProfile(doctor: Doctor): Observable<EntityResponseType> {
+    console.log(doctor.doctorData);
     return this.http.put(`${this.resourceUrl}/${doctor.doctorId}`, doctor.doctorData, { observe: 'response' });
   }
 

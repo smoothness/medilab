@@ -41,33 +41,40 @@
             </td>
             <td class="text-right">
               <div class="btn-group">
-                <button type="submit" class="btn btn-info btn-sm" (click)="viewProfile(user)">
+                <button type="submit" class="btn btn-info mr-1" (click)="viewProfile(user)" *ngIf="validateAdmin(user)">
                   <fa-icon icon="eye"></fa-icon>
                   <span class="d-none d-md-inline" mediTranslate="entity.action.view">View</span>
                 </button>
 
-                <button type="submit" [routerLink]="['/main/admin/user-management/', user.login, 'edit']" queryParamsHandling="merge" class="btn btn-primary btn-sm">
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  (click)="redirectEditView(user)"
+                  queryParamsHandling="merge"
+                >
                   <fa-icon icon="pencil-alt"></fa-icon>
                   <span class="d-none d-md-inline" mediTranslate="entity.action.edit">Edit</span>
                 </button>
 
-                <button
-                  class="btn btn-danger btn-sm"
-                  (click)="setActive(user, true)"
-                  *ngIf="!user.activated"
-                  mediTranslate="userManagement.deactivated"
-                >
-                  Deactivated
-                </button>
-                <button
-                  class="btn btn-success btn-sm"
-                  (click)="setActive(user, false)"
-                  *ngIf="user.activated"
-                  [disabled]="!currentAccount || currentAccount.login === user.login"
-                  mediTranslate="userManagement.activated"
-                >
-                  Activated
-                </button>
+                <div *ngIf="!validateUser(user)">
+                  <button
+                    class="btn btn-danger ml-1"
+                    (click)="setActive(user, true)"
+                    *ngIf="!user.activated"
+                    mediTranslate="userManagement.deactivated"
+                  >
+                    Deactivated
+                  </button>
+                  <button
+                    class="btn btn-success ml-1"
+                    (click)="setActive(user, false)"
+                    *ngIf="user.activated"
+                    [disabled]="!currentUser || currentUser.login === user.login"
+                    mediTranslate="userManagement.activated"
+                  >
+                    Activated
+                  </button>
+                </div>
               </div>
             </td>
           </tr>
@@ -78,13 +85,3 @@
 
   </div>
 </section>
-
-
-<div>
-
-
-  <medi-alert-error></medi-alert-error>
-
-  <medi-alert></medi-alert>
-
-</div>

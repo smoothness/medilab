@@ -89,6 +89,7 @@ export class UserManagementRegisterComponent {
         this.sweetAlertService.showMsjSuccess('register.messages.success', 'register.messages.successInternal').then(() => {
           this.registerForm.reset();
           this.contact.clearForm();
+          this.currentStep = 0;
         });
       },
       response => this.processError(response)

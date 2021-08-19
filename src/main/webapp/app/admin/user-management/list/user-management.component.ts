@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { AccountService } from 'app/core/auth/account.service';
-import { Account } from 'app/core/auth/account.model';
+import {Account, Doctor, Patient} from 'app/core/auth/account.model';
 import { UserManagementService } from '../service/user-management.service';
 import { User } from '../user-management.model';
 
@@ -13,7 +13,7 @@ import { User } from '../user-management.model';
   templateUrl: './user-management.component.html',
 })
 export class UserManagementComponent implements OnInit {
-  currentAccount: Account | null = null;
+  currentUser: any;
   users: any[] = [];
   isLoading = false;
 
@@ -26,14 +26,15 @@ export class UserManagementComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.accountService.identity().subscribe(account => {
-      this.currentAccount = account;
+    this.accountService.formatUserIdentity().subscribe(account => {
+      this.currentUser = account;
       this.loadAll();
     });
   }
 
   public loadAll(): void {
     this.isLoading = true;
+    this.users = [];
     this.userService.getUsersFormatted().subscribe((user) => {
       this.users.push(user);
       this.isLoading = false;
@@ -41,18 +42,43 @@ export class UserManagementComponent implements OnInit {
   }
 
   public viewProfile(user: any): void {
-    console.log(user);
+    switch (true) {
+      case user instanceof Patient:
+        this.router.navigate(['/main/patient', user.patientId, 'view']);
+        break;
+
+      case user instanceof Doctor:
+        this.router.navigate(['/main/doctor', user.doctorId, 'view']);
+        break;
+
+      default:
+        break;
+    }
   }
 
+  public redirectEditView(user: any): void {
+   this.router.navigate(['/main/admin/user-management/', user.login, 'edit']);
+  }
 
+  public validateUser(user: any): boolean {
+    let isCurrentUser = false;
+
+    if (user.login === this.currentUser.login){
+      isCurrentUser = true;
+    }
+    return isCurrentUser;
+  }
+
+  public validateAdmin(user: any): boolean {
+    let isAdmin = true;
+
+    if (user instanceof Account){
+      isAdmin = false;
+    }
+    return isAdmin;
+  }
 
   setActive(user: User, isActivated: boolean): void {
     this.userService.update({ ...user, activated: isActivated }).subscribe(() => this.loadAll());
   }
-
-  trackIdentity(index: number, item: User): number {
-    return item.id!;
-  }
-
-
 }
