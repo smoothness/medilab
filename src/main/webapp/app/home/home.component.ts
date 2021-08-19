@@ -2,27 +2,21 @@ import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpResponse } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import { SweetAlertService } from 'app/shared/services/sweet-alert.service';
+
 import { AccountService } from 'app/core/auth/account.service';
-import { Account } from 'app/core/auth/account.model';
-import { PatientService } from 'app/entities/patient/service/patient.service';
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
-import { Doctor, Patient } from './../core/auth/account.model';
-
-import { AppointmentTreatmentAilmentService } from 'app/entities/appointment-treatment-ailment/service/appointment-treatment-ailment.service';
-import { IAppointmentTreatmentAilment } from 'app/entities/appointment-treatment-ailment/appointment-treatment-ailment.model';
-import { IAppointment } from 'app/entities/appointment/appointment.model';
-
-import { Status } from 'app/entities/enumerations/status.model';
+import { SweetAlertService } from 'app/shared/services/sweet-alert.service';
+import { PatientService } from 'app/entities/patient/service/patient.service';
 import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
-import { EmergencyContactService } from 'app/entities/emergency-contact/service/emergency-contact.service';
-import { EmergencyContact, IEmergencyContact } from 'app/entities/emergency-contact/emergency-contact.model';
-import { EmergencyContactUpdateComponent } from '../entities/emergency-contact/update/emergency-contact-update.component';
-import { EmergencyContactRegisterComponent } from '../entities/emergency-contact/register/emergency-contact-register.component';
-import { IMedicalExams } from '../entities/medical-exams/medical-exams.model';
 import { MedicalExamsService } from '../entities/medical-exams/service/medical-exams.service';
+import { AppointmentTreatmentAilmentService } from 'app/entities/appointment-treatment-ailment/service/appointment-treatment-ailment.service';
+
+import { Account } from 'app/core/auth/account.model';
+import { Doctor, Patient } from './../core/auth/account.model';
+import { IAppointment } from 'app/entities/appointment/appointment.model';
+import { IMedicalExams } from '../entities/medical-exams/medical-exams.model';
+import { IAppointmentTreatmentAilment } from 'app/entities/appointment-treatment-ailment/appointment-treatment-ailment.model';
 
 @Component({
   selector: 'medi-home',
@@ -31,23 +25,17 @@ import { MedicalExamsService } from '../entities/medical-exams/service/medical-e
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  currentUser: any = {};
   account: Account | null = null;
-  thePatient: any;
-  theDoctorId = 0;
-  emergencyContacts: IEmergencyContact[] = [];
-  emergencyContact: EmergencyContact | null = null;
-  isLoadingEmergencyContact = false;
-  isLoadingAppointmentTreatmentAilment = false;
-  appointmentTreatmentAilmentNew: IAppointmentTreatmentAilment[] | null = null;
-  authority: string | undefined;
+
   appointmentsDoctor: any[] = [];
   appointmentsPatient: any[] = [];
-  ailmentsPatient: any[] = [];
+
   closeModal: string | undefined;
-  ailment: any;
+
   updatedDate = new FormControl('');
   appointmentToChangeDate: IAppointment | null = null;
-  currentUser: any = {};
+
   patientMedicalExams: IMedicalExams[] = [];
   patientDiagnosis: IAppointmentTreatmentAilment[] = [];
 
@@ -62,7 +50,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     private sweetAlertService: SweetAlertService,
     private appointmentService: AppointmentService,
     private medicalExamsService: MedicalExamsService,
-    private emergencyContactService: EmergencyContactService,
     private appointmentTreatmentAilmentService: AppointmentTreatmentAilmentService,
 ) {}
 
@@ -74,8 +61,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     return this.currentUser instanceof Doctor;
   }
 
-  public get emergencyContactsTotal(): number {
-    return this.emergencyContacts.length;
+  public get isAdmin(): boolean {
+    return this.currentUser instanceof Account;
   }
 
   public get notificationUser(): any {
@@ -103,13 +90,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.isPatient) {
       this.getAppointmentsPatient();
       this.getMedicalExams();
-      this.getAilmentsPatient();
-      this.loadAllEmergencyContact();
       this.getPatientDiagnoses();
     }else if(this.isDoctor) {
       this.getAppointmentsDoctor();
     }
-    this.loadAllAppoiments();
   }
 
   /**
@@ -179,57 +163,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  getAilmentsPatient(): void {
-    this.appointmentTreatmentAilmentService.query().subscribe(data => {
-      this.appointmentsPatient.forEach(appointment => {
-        if (data.body !== null) {
-          data.body.forEach(element => {
-            if (element.appointment?.id === appointment.id) {
-              this.ailmentsPatient.push(element);
-            }
-          });
-        }
-      });
-    });
-  }
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  /**
-   * @description this method takes care of removing an emergency contact
-   * @param emergencyContact
-   */
-  public deleteEmergencyContact(emergencyContact: IEmergencyContact): void {
-    this.sweetAlertService
-      .showConfirmMsg({
-        title: 'medilabApp.deleteConfirm.title',
-        text: 'medilabApp.deleteConfirm.text',
-        confirmButtonText: 'medilabApp.deleteConfirm.confirmButtonText',
-        cancelButtonText: 'medilabApp.deleteConfirm.cancelButtonText',
-      })
-      .then(res => {
-        if (res) {
-          this.emergencyContactService.delete(<number>emergencyContact.id).subscribe(() => {
-            this.sweetAlertService.showMsjSuccess('reset.done', 'medilabApp.deleteConfirm.titleSuccess').then(() => {
-              this.loadAllEmergencyContact();
-            });
-          });
-        }
-      });
-  }
-
-  /**
-   * @description This method is responsible for bringing all the emergency contacts of the authenticated patient.
-   */
-  public loadAllEmergencyContact(): void {
-    this.isLoadingEmergencyContact = true;
-    this.patientService.findOneByInternalUser(this.currentUser.id).subscribe(patient => {
-      this.emergencyContactService.findByPatientId(<number>patient.body?.id).subscribe((res: any) => {
-        this.emergencyContacts = res.body;
-      });
-    });
   }
 
   public getToken(newToken: string): void {
@@ -241,20 +177,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.appointmentTreatmentAilmentService.findByPatient(this.currentUser.patientId).subscribe((res: any) => {
       this.patientDiagnosis = res.body;
     });
-  }
-
-  loadAllAppoiments(): void {
-    this.isLoadingAppointmentTreatmentAilment = true;
-
-    this.appointmentTreatmentAilmentService.query().subscribe(
-      (res: HttpResponse<IAppointmentTreatmentAilment[]>) => {
-        this.isLoadingAppointmentTreatmentAilment = false;
-        this.appointmentTreatmentAilmentNew = res.body ?? [];
-      },
-      () => {
-        this.isLoadingAppointmentTreatmentAilment = false;
-      }
-    );
   }
 
   openChangeDateModal(content: any, clickedElementIndex: any): void {
@@ -280,46 +202,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  /**
-   * @description this method is responsible for displaying the component
-   *  to modify an emergency contact of the authenticated patient.
-   * @param emergencyContact
-   */
-  public showModifyContactModal(emergencyContact: IEmergencyContact): void {
-    const modalRef = this.modalService.open(EmergencyContactUpdateComponent, { centered: true });
-    modalRef.componentInstance.setEmergencyContactData(emergencyContact);
-  }
-
-  /**
-   * @description this method is responsible for displaying the component
-   *  to create a new emergency contact of the authenticated patient.
-   * @param emergencyContact
-   */
-  public showCreateContactModal(): void {
-    const modalRef = this.modalService.open(EmergencyContactRegisterComponent, { centered: true });
-    modalRef.componentInstance.patientId = this.currentUser.patientId;
-    modalRef.closed.subscribe(reason => {
-      if (reason === 'register') {
-        this.loadAllEmergencyContact();
-      }
-    });
-  }
-
   public updateList(update: boolean): void {
     if (update){
       this.getAppointmentsDoctor();
     }
   }
 
-  open(content: any, ailment: any): void {
-    this.modalService.open(content, {
-      windowClass: 'elementoPrueba',
-    });
-    this.ailment = ailment;
-  }
-
-  openAilmentModal(content: any, ailment: any): void {
-    this.modalService.open(content);
-    this.ailment = ailment;
-  }
 }
