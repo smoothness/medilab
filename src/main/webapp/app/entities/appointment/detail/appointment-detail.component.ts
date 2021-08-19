@@ -99,11 +99,17 @@ export class AppointmentDetailComponent implements OnInit {
   public showRegisterInvoiceModal(): void {
     const modalRef = this.modalService.open(LineCommentUpdateComponent, { size: 'lg', centered: true });
     modalRef.componentInstance.appointment = this.appointment;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'register') {
+        this.isPendingInvoice();
+      }
+    });
   }
 
   public showInvoiceDetail(): void {
     const modalRef = this.modalService.open(InvoiceDetailComponent, { size: 'lg', centered: true });
     modalRef.componentInstance.invoicePending = this.invoicePending;
+    modalRef.componentInstance.userCheck = this.currentUser;
   }
 
   public showRegisterMedicalExam(status: any): boolean {

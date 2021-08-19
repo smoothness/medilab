@@ -141,5 +141,6 @@ export class InvoiceComponent implements OnInit {
   public showInvoiceDetail(invoice: IInvoice): void {
     const modalRef = this.modalService.open(InvoiceDetailComponent, { size: 'lg', centered: true });
     modalRef.componentInstance.invoicePending = invoice;
+    modalRef.componentInstance.userCheck = this.currentUser;
   }
 }

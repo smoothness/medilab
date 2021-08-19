@@ -21,6 +21,7 @@ import { formatDate } from '@angular/common';
 })
 export class InvoiceDetailComponent implements OnInit {
   @Input() invoicePending: any;
+  @Input() userCheck: any;
   invoice: any = {};
   patient: any = {};
   currentUser: any = {};
@@ -39,6 +40,11 @@ export class InvoiceDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (this.userCheck) {
+      this.currentUser = this.userCheck;
+    }
+    console.log('userCheck', this.userCheck);
+    console.log('currentUser', this.currentUser);
     if (this.invoicePending) {
       this.invoice = this.invoicePending;
       this.getPatientInvoice();
@@ -47,6 +53,7 @@ export class InvoiceDetailComponent implements OnInit {
       this.addCol = true;
       this.autenticatedAccount();
       this.getInvoiceData();
+      this.validateShow();
     }
   }
 
@@ -92,11 +99,13 @@ export class InvoiceDetailComponent implements OnInit {
 
   public validateShow(): boolean {
     let show = false;
+    console.log('currentUser', this.currentUser);
     if (this.currentUser instanceof Patient) {
       if (this.invoice.status === 'PENDING') {
         show = true;
       }
     }
+    console.log('show', show);
     return show;
   }
 

@@ -4,11 +4,11 @@
       "home": {
         "title": "Invoices",
         "refreshListLabel": "Refresh list",
-        "createLabel": "Register of an invoice",
+        "createLabel": "Invoice register",
         "createOrEditLabel": "Create or edit a Invoice",
         "notFound": "No invoices found"
       },
-      "created": "Invoice successfully created",
+      "created": "The invoice has been created successfully",
       "updated": "An Invoice was updated with identifier {{ param }}",
       "deleted": "An Invoice was deleted with identifier {{ param }}",
       "delete": {
@@ -35,7 +35,7 @@
       "canceled": "Canceled",
       "invoiceNumber": "Invoice number",
       "download": "Download invoice",
-      "addLine": "+ Add line",
+      "addLine": "Add line",
       "action": {
         "view": "View Invoice",
         "cancel": "Cancel invoice"

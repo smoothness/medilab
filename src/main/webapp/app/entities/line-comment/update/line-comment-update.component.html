@@ -1,22 +1,22 @@
 <section>
-  <div class="card bg-dark">
+  <div class="card bg-dark p-5">
     <form #resumeForm="ngForm" autocomplete="off">
       <div class="card-body">
         <div class="d-flex justify-content-between card-title mb-5">
-          <h4 class="d-flex align-items-center text-white" mediTranslate="medilabApp.invoice.home.createLabel">Factura</h4>
-          <button class="btn btn-primary" (click)="addLine()" [disabled]="resumeForm.invalid" mediTranslate="medilabApp.invoice.addLine">
-            + Agregar Línea
+          <h3 class="d-flex align-items-center text-primary" mediTranslate="medilabApp.invoice.home.createLabel"></h3>
+          <button class="btn btn-primary" (click)="addLine()" [disabled]="resumeForm.invalid">
+            <fa-icon icon="plus"></fa-icon>&nbsp;<span mediTranslate="medilabApp.invoice.addLine"></span>
           </button>
         </div>
         <div class="row justify-content-between">
           <div class="col-md">
-            <h4 class="align-items-center text-white w-auto" mediTranslate="medilabApp.lineComment.description"></h4>
+            <h5 class="align-items-center text-white w-auto" mediTranslate="medilabApp.lineComment.description"></h5>
           </div>
           <div class="col-md">
-            <h4 class="align-items-center text-white w-auto" mediTranslate="medilabApp.lineComment.quantity"></h4>
+            <h5 class="align-items-center text-white w-auto" mediTranslate="medilabApp.lineComment.quantity"></h5>
           </div>
           <div class="col-md">
-            <h4 class="align-items-center text-white w-auto" mediTranslate="medilabApp.lineComment.unitPrice"></h4>
+            <h5 class="align-items-center text-white w-auto" mediTranslate="medilabApp.lineComment.unitPrice"></h5>
           </div>
           <div class="col-md"></div>
         </div>
@@ -62,7 +62,12 @@
           </div>
           <div class="col-md-3">
             <div class="form-group">
-              <button class="btn btn-danger" (click)="deleteLine(ed, i)" mediTranslate="medilabApp.lineComment.deleteLine"></button>
+              <button
+                class="btn btn-danger"
+                [disabled]="emptyLineDelete(invoice.lineComments)"
+                (click)="deleteLine(ed, i)"
+                mediTranslate="medilabApp.lineComment.deleteLine"
+              ></button>
             </div>
           </div>
         </div>

@@ -125,12 +125,19 @@ export class LineCommentUpdateComponent {
         this.invoice.lineComments?.forEach(lineComment => {
           lineComment.invoiceCode = invoiceData.body;
           this.lineCommentService.create(lineComment).subscribe(() => {
-            this.sweetAlertService.showMsjSuccess('reset.done', 'medilabApp.invoice.created');
-            this.activeModal.close('register');
+            this.sweetAlertService.showMsjSuccess('reset.done', 'medilabApp.invoice.created').then(res => {
+              if (res) {
+                this.activeModal.close('register');
+              }
+            });
           });
         });
       });
     });
+  }
+
+  public refreshPage(): void {
+    window.location.reload();
   }
 
   public emptyLine(invoice: IInvoice): boolean {
@@ -138,7 +145,14 @@ export class LineCommentUpdateComponent {
     if (invoice.lineComments && invoice.lineComments.length > 0) {
       disable = true;
     }
-    console.log('disable', disable);
+    return disable;
+  }
+
+  public emptyLineDelete(lineComments: any): boolean {
+    let disable = false;
+    if (lineComments && lineComments.length === 1) {
+      disable = true;
+    }
     return disable;
   }
 }
