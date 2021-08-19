@@ -30,7 +30,7 @@
       "cancelAppointmentTitle": "Cita cancelada",
       "cancelAppointmentMsj": "Esta cita ha sido cancelada, será removida del calendario.",
       "updatedAppointmentDatetitle": "Cambio de fecha",
-      "updatedAppointmentDateMsj": "La fecha de la cita fue Cambiada con éxito.",
+      "updatedAppointmentDateMsj": "La fecha de la cita fue cambiada con éxito.",
       "cancelInvoiceMsj": "La factura ha sido cancelada, recuerde emitir otra factura.",
       "cancelInvoiceTitle": "Factura cancelada"
     },

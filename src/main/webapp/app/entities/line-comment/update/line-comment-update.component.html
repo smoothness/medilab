@@ -20,14 +20,14 @@
           </div>
           <div class="col-md"></div>
         </div>
-        <div class="row align-items-center justify-content-between" *ngFor="let ed of invoice.lineComments; let i = index">
+        <div class="row align-items-center justify-content-between" *ngFor="let lineComment of invoice.lineComments; let i = index">
           <div class="col-md-3">
             <div class="form-group">
               <input
                 type="text"
                 class="form-control"
                 name="description{{ i }}"
-                [(ngModel)]="ed.description"
+                [(ngModel)]="lineComment.description"
                 #description="ngModel"
                 required
                 [ngClass]="{ 'is-invalid': description.invalid && (description.touched || resumeForm.submitted) }"
@@ -40,7 +40,7 @@
                 type="number"
                 class="form-control"
                 name="quantity{{ i }}"
-                [(ngModel)]="ed.quantity"
+                [(ngModel)]="lineComment.quantity"
                 #quantity="ngModel"
                 required
                 [ngClass]="{ 'is-invalid': quantity.invalid && (quantity.touched || resumeForm.submitted) }"
@@ -53,7 +53,7 @@
                 type="number"
                 class="form-control"
                 name="unitPrice{{ i }}"
-                [(ngModel)]="ed.unitPrice"
+                [(ngModel)]="lineComment.unitPrice"
                 #unitPrice="ngModel"
                 required
                 [ngClass]="{ 'is-invalid': unitPrice.invalid && (unitPrice.touched || resumeForm.submitted) }"
@@ -65,7 +65,7 @@
               <button
                 class="btn btn-danger"
                 [disabled]="emptyLineDelete(invoice.lineComments)"
-                (click)="deleteLine(ed, i)"
+                (click)="deleteLine(lineComment, i)"
                 mediTranslate="medilabApp.lineComment.deleteLine"
               ></button>
             </div>

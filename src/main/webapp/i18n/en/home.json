@@ -31,10 +31,10 @@
       "cancelAppointmentMsj": "This appointment has been canceled, it will be removed from the calendar.",
       "updatedAppointmentDatetitle": "Date change",
       "updatedAppointmentDateMsj": "The appointment date was changed successfully",
-      "cancelInvoiceMsj": "The invoice was cancel successfully, remember issue another.",
+      "cancelInvoiceMsj": "The invoice was cancel successfully, remember to issue another.",
       "cancelInvoiceTitle": "Invoice canceled"
     },
-    "btnNewContact": "Add new contact",
+    "btnNewContact": "Add a new contact",
     "personalInfo": "Personal Info",
     "viewPatient": "View patient"
   }

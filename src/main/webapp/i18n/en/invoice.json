@@ -4,8 +4,8 @@
       "home": {
         "title": "Invoices",
         "refreshListLabel": "Refresh list",
-        "createLabel": "Invoice register",
-        "createOrEditLabel": "Create or edit a Invoice",
+        "createLabel": "Register an invoice",
+        "createOrEditLabel": "Create or edit an invoice",
         "notFound": "No invoices found"
       },
       "created": "The invoice has been created successfully",
@@ -37,7 +37,7 @@
       "download": "Download invoice",
       "addLine": "Add line",
       "action": {
-        "view": "View Invoice",
+        "view": "View invoice",
         "cancel": "Cancel invoice"
       }
     }

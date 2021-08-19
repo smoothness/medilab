@@ -80,7 +80,6 @@ export class InvoiceComponent implements OnInit {
   }
 
   public cancelPedingInvoice(invoice: IInvoice): void {
-    console.log('invoice', invoice);
     this.sweetAlertService
       .showConfirmMsg({
         title: 'medilabApp.deleteConfirm.title',
@@ -92,9 +91,7 @@ export class InvoiceComponent implements OnInit {
         if (res) {
           invoice.status = Status.CANCELED;
           this.invoiceService.cancelPendingInvoice(<number>invoice.id).subscribe(resApi => {
-            this.sweetAlertService
-              .showMsjSuccess('home.messages.cancelInvoiceTitle', 'home.messages.cancelInvoiceMsj')
-              .then(() => undefined);
+            this.sweetAlertService.showMsjSuccess('home.messages.cancelInvoiceTitle', 'home.messages.cancelInvoiceMsj');
           });
         }
       });

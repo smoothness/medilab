@@ -26,6 +26,7 @@ export class AppointmentDetailComponent implements OnInit {
   userType = 'doctor';
   invoicePending: any;
   isPending = false;
+  haveInvoice = false;
 
   constructor(
     protected modalService: NgbModal,
@@ -67,8 +68,13 @@ export class AppointmentDetailComponent implements OnInit {
       this.invoicePending = res.body;
       if (this.invoicePending.status === 'PAID') {
         this.isPending = true;
+        this.haveInvoice = true;
+      } else if (!this.invoicePending.status) {
+        this.isPending = true;
       }
     });
+    console.log('invoicePending', this.invoicePending);
+    console.log('isPending', this.isPending);
   }
 
   showRegisterInvoiceBtn(): boolean {
