@@ -1,3 +1,6 @@
+<div class="my-2 mx-2">
+  <medi-back-button></medi-back-button>
+</div>
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-10">
@@ -63,10 +66,6 @@
 
           <!-- Buttons Section -->
           <div class="card-footer text-center">
-            <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-              <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span mediTranslate="entity.action.back">Back</span>
-            </button>
-
             <button
               type="button"
               class="btn btn-secondary"
@@ -90,7 +89,7 @@
       </div>
     </div>
 
-    <div class="col-10 my-4">
+    <div class="col-10 my-4" *ngIf="diagnosis.length">
       <medi-appointment-treatment-ailment [appointmentTreatmentAilments]="diagnosis" (updateList)="loadDiagnosis($event)"></medi-appointment-treatment-ailment>
     </div>
 
