@@ -93,7 +93,7 @@
         <!-- END body patient Block -->
 
         <!-- START body doctor Block -->
-        <div class="card bg-dark mt-3" *ngIf="isDoctor">
+        <div class="my-3" *ngIf="isDoctor">
           <div class="col-12 m-0 p-0 my-4" *ngIf="appointmentsDoctor.length">
             <medi-appointment [appointments]="appointmentsDoctor" (updateList)="updateList($event)"></medi-appointment>
           </div>
