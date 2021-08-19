@@ -14,7 +14,7 @@ import { DoctorService } from 'app/entities/doctor/service/doctor.service';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { IDoctor } from 'app/entities/doctor/doctor.model';
 import { Status } from 'app/entities/enumerations/status.model';
-import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'medi-appointment-update',
