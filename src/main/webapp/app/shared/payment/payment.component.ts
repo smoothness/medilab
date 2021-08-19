@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
-import { ILineComment } from "../../entities/line-comment/line-comment.model";
+import {ILineComment, LineComment} from '../../entities/line-comment/line-comment.model';
 
 @Component({
   selector: 'medi-payment-component',
@@ -18,7 +18,8 @@ export class PaymentComponent implements OnInit {
   public showError  = false;
 
   get items(): ILineComment[] {
-    return <ILineComment[]>this.invoice.lineComments
+    this.invoice.lineComments.push(this.createTaxesLineComment());
+    return <ILineComment[]>this.invoice.lineComments;
   }
 
   get itemsFormatted(): any[] {
@@ -96,6 +97,11 @@ export class PaymentComponent implements OnInit {
       onError: () => this.onError(),
       onClick: () => this.onClick(),
     };
+  }
+
+  private createTaxesLineComment(): ILineComment{
+    const taxesLine = new LineComment(undefined, 'Impuesto de venta', 1, this.invoice.taxes, this.invoice.id);
+    return taxesLine;
   }
 
 }
