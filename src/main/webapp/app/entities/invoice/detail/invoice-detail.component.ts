@@ -43,8 +43,6 @@ export class InvoiceDetailComponent implements OnInit {
     if (this.userCheck) {
       this.currentUser = this.userCheck;
     }
-    console.log('userCheck', this.userCheck);
-    console.log('currentUser', this.currentUser);
     if (this.invoicePending) {
       this.invoice = this.invoicePending;
       this.getPatientInvoice();
@@ -99,13 +97,11 @@ export class InvoiceDetailComponent implements OnInit {
 
   public validateShow(): boolean {
     let show = false;
-    console.log('currentUser', this.currentUser);
     if (this.currentUser instanceof Patient) {
       if (this.invoice.status === 'PENDING') {
         show = true;
       }
     }
-    console.log('show', show);
     return show;
   }
 
