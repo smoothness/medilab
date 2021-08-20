@@ -69,16 +69,31 @@
     }
 
     a {
-      color: $gray-500;
       font-weight: normal;
       text-decoration: none;
+
+      div {
+        display: flex;
+
+        > span {
+          color: $gray-500;
+
+          &:first-child {
+            margin-right: 5px;
+          }
+        }
+      }
 
       span:last-of-type {
         color: $gray-600;
       }
 
       &:hover {
-        color: $gray-300;
+        div {
+          > span {
+            color: $gray-300;
+          }
+        }
 
         span:last-of-type {
           color: $gray-500;

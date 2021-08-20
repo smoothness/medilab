@@ -7,7 +7,7 @@
       [disabled]="pendingAppointments.length + canceledAppointments.length + updatedAppointments.length === 0 ? true : false"
     >
       <fa-icon icon="bell"></fa-icon>
-      <span>Notifications</span>
+      <span mediTranslate="notifications.title">Notifications</span>
       <span class="badge badge-light">
         {{ pendingAppointments.length + canceledAppointments.length + updatedAppointments.length }}
       </span>
@@ -17,7 +17,10 @@
         <ul>
           <li *ngFor="let pending of pendingAppointments">
             <a class="notification" [routerLink]="['/main/appointment', pending.id, 'view']" [id]="pending.id">
-              <span>Cita pendiente con el paciente {{ pending?.patientExt?.internalUser?.completeName }}</span>
+              <div>
+                <span mediTranslate="notifications.patient.pending"></span>
+                <span>{{ pending?.patientExt?.internalUser?.completeName }}</span>
+              </div>
               <span>{{ pending?.date | date }}</span>
             </a>
           </li>
@@ -25,7 +28,10 @@
         <ul>
           <li *ngFor="let updated of updatedAppointments">
             <a class="notification" [routerLink]="['/main/appointment', updated.id, 'view']" [id]="updated.id">
-              <span>Cita modificada con el paciente {{ updated?.patientExt?.internalUser?.completeName }}</span>
+              <div>
+                <span mediTranslate="notifications.patient.updated"></span>
+                <span>{{ updated?.patientExt?.internalUser?.completeName }}</span>
+              </div>
               <span>{{ updated?.date | date }}</span>
             </a>
           </li>
@@ -33,7 +39,7 @@
         <ul>
           <li *ngFor="let canceled of canceledAppointments">
             <a class="notification" [routerLink]="['/main/appointment', canceled.id, 'view']" [id]="canceled.id">
-              <span>Cita cancelada con el paciente {{ canceled?.patientExt?.internalUser?.completeName }}</span>
+              <span mediTranslate="notifications.patient.canceled"> {{ canceled?.patientExt?.internalUser?.completeName }}</span>
               <span>{{ canceled?.date | date }}</span>
             </a>
           </li>
