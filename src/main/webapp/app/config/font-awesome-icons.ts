@@ -13,6 +13,8 @@ import {
   faCogs,
   faDatabase,
   faEye,
+  faExclamation,
+  faExclamationCircle,
   faEyeSlash,
   faFlag,
   faFileAlt,
@@ -63,6 +65,7 @@ export const fontAwesomeIcons = [
   faCogs,
   faDatabase,
   faEye,
+  faExclamation,
   faEyeSlash,
   faFlag,
   faFileAlt,
@@ -95,6 +98,6 @@ export const fontAwesomeIcons = [
   faUsers,
   faUsersCog,
   faWrench,
-
+  faExclamationCircle,
   // jhipster-needle-add-icon-import
 ];
