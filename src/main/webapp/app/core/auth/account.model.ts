@@ -125,6 +125,8 @@ class Doctor extends PersonalData {
 
   get doctorData(): {} {
     return {
+      id: this.doctorId,
+      internalUser: { id: this.id },
       specialty: this.specialty,
       phone: this.phone,
       secondSurname: this.secondSurname,

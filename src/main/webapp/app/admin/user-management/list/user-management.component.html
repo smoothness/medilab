@@ -1,124 +1,87 @@
-<div>
-  <h2>
-    <span id="user-management-page-heading" mediTranslate="userManagement.home.title" data-cy="userManagementPageHeading">Users</span>
+<section>
+  <div class="card col-12 bg-dark p-0 m-0">
+    <div class="card-header d-flex ">
+      <h5 data-cy="userManagementPageHeading" mediTranslate="userManagement.home.title"></h5>
 
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span mediTranslate="userManagement.home.refreshListLabel">Refresh List</span>
-      </button>
-      <button class="btn btn-primary jh-create-entity" [routerLink]="['./new']">
-        <fa-icon icon="plus"></fa-icon> <span mediTranslate="userManagement.home.createLabel">Create a new User</span>
-      </button>
+      <div class="justify-content-end">
+        <button class="btn btn-primary jh-create-entity" [routerLink]="['/main/admin/user-management/new']">
+          <fa-icon icon="plus"></fa-icon> <span mediTranslate="userManagement.home.createLabel">Create a new User</span>
+        </button>
+      </div>
     </div>
-  </h2>
 
-  <medi-alert-error></medi-alert-error>
+    <div class="card-body p-0">
+      <div class="alert alert-warning text-center" id="no-result" *ngIf="users.length === 0">
+        <span class="h5 text-dark" mediTranslate="medilabApp.appointment.home.notFound"></span>
+      </div>
 
-  <medi-alert></medi-alert>
+      <div class="table-responsive" *ngIf="users.length !== 0" >
+        <table class="table table-striped" aria-describedby="user-management-page-heading">
+          <thead>
 
-  <div class="table-responsive" *ngIf="users">
-    <table class="table table-striped" aria-describedby="user-management-page-heading">
-      <thead>
-        <tr mediSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="transition.bind(this)">
-          <th scope="col" mediSortBy="id"><span mediTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" mediSortBy="login"><span mediTranslate="userManagement.login">Login</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" mediSortBy="email"><span mediTranslate="userManagement.email">Email</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col"></th>
-          <th scope="col" mediSortBy="langKey">
-            <span mediTranslate="userManagement.langKey">Lang Key</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col"><span mediTranslate="userManagement.profiles">Profiles</span></th>
-          <th scope="col" mediSortBy="createdDate">
-            <span mediTranslate="userManagement.createdDate">Created Date</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" mediSortBy="lastModifiedBy">
-            <span mediTranslate="userManagement.lastModifiedBy">Last Modified By</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" mediSortBy="lastModifiedDate">
-            <span mediTranslate="userManagement.lastModifiedDate">Last Modified Date</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody *ngIf="users">
-        <tr *ngFor="let user of users; trackBy: trackIdentity">
-          <td>
-            <a [routerLink]="['./', user.login, 'view']">{{ user.id }}</a>
-          </td>
-          <td>{{ user.login }}</td>
-          <td>{{ user.email }}</td>
-          <td>
-            <button
-              class="btn btn-danger btn-sm"
-              (click)="setActive(user, true)"
-              *ngIf="!user.activated"
-              mediTranslate="userManagement.deactivated"
-            >
-              Deactivated
-            </button>
-            <button
-              class="btn btn-success btn-sm"
-              (click)="setActive(user, false)"
-              *ngIf="user.activated"
-              [disabled]="!currentAccount || currentAccount.login === user.login"
-              mediTranslate="userManagement.activated"
-            >
-              Activated
-            </button>
-          </td>
-          <td>{{ user.langKey }}</td>
-          <td>
-            <div *ngFor="let authority of user.authorities">
-              <span class="badge badge-info">{{ authority }}</span>
-            </div>
-          </td>
-          <td>{{ user.createdDate | date: 'dd/MM/yy HH:mm' }}</td>
-          <td>{{ user.lastModifiedBy }}</td>
-          <td>{{ user.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</td>
-          <td class="text-right">
-            <div class="btn-group">
-              <button type="submit" [routerLink]="['./', user.login, 'view']" class="btn btn-info btn-sm">
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" mediTranslate="entity.action.view">View</span>
-              </button>
+          <tr class="text-primary">
+            <th scope="col" class="h6" mediTranslate="userManagement.login">Login</th>
+            <th scope="col" class="h6" mediTranslate="userManagement.firstName">Name</th>
+            <th scope="col" class="h6" mediTranslate="userManagement.email">Email</th>
+            <th scope="col" class="h6" mediTranslate="userManagement.langKey">Lang Key</th>
+            <th scope="col" class="h6" mediTranslate="userManagement.profiles">Profiles</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody *ngIf="users">
+          <tr *ngFor="let user of users">
+            <td>{{ user.login }}</td>
+            <td>{{ user.fullName }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.langKey | language }}</td>
+            <td>
+              <div *ngFor="let authority of user.authorities">
+                <span>{{ authority | role }}</span>
+              </div>
+            </td>
+            <td class="text-right">
+              <div class="btn-group">
+                <button type="submit" class="btn btn-info mr-1" (click)="viewProfile(user)" *ngIf="validateAdmin(user)">
+                  <fa-icon icon="eye"></fa-icon>
+                  <span class="d-none d-md-inline" mediTranslate="entity.action.view">View</span>
+                </button>
 
-              <button type="submit" [routerLink]="['./', user.login, 'edit']" queryParamsHandling="merge" class="btn btn-primary btn-sm">
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" mediTranslate="entity.action.edit">Edit</span>
-              </button>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  (click)="redirectEditView(user)"
+                  queryParamsHandling="merge"
+                >
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                  <span class="d-none d-md-inline" mediTranslate="entity.action.edit">Edit</span>
+                </button>
 
-              <button
-                type="button"
-                (click)="deleteUser(user)"
-                class="btn btn-danger btn-sm"
-                [disabled]="!currentAccount || currentAccount.login === user.login"
-              >
-                <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+                <div *ngIf="!validateUser(user)">
+                  <button
+                    class="btn btn-danger ml-1"
+                    (click)="setActive(user, true)"
+                    *ngIf="!user.activated"
+                    mediTranslate="userManagement.deactivated"
+                  >
+                    Deactivated
+                  </button>
+                  <button
+                    class="btn btn-success ml-1"
+                    (click)="setActive(user, false)"
+                    *ngIf="user.activated"
+                    [disabled]="!currentUser || currentUser.login === user.login"
+                    mediTranslate="userManagement.activated"
+                  >
+                    Activated
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
-
-  <div *ngIf="users">
-    <div class="row justify-content-center">
-      <medi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></medi-item-count>
-    </div>
-
-    <div class="row justify-content-center">
-      <ngb-pagination
-        [collectionSize]="totalItems"
-        [(page)]="page"
-        [pageSize]="itemsPerPage"
-        [maxSize]="5"
-        [rotate]="true"
-        [boundaryLinks]="true"
-        (pageChange)="transition()"
-      ></ngb-pagination>
-    </div>
-  </div>
-</div>
+</section>

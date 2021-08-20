@@ -34,6 +34,17 @@
         <span mediTranslate="userManagement.home.createLabel">User management</span>
       </a>
 
+      <!-- AILMENTS -->
+      <a *mediHasAnyAuthority="'ROLE_ADMIN'"
+         class="h5 list-group-item list-group-item-action list-group-item-dark bg-dark text-muted p-0 m-0 p-4 border-0"
+         routerLink="ailment"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <fa-icon icon="clipboard-list" [fixedWidth]="true"></fa-icon>
+        <span mediTranslate="medilabApp.ailment.home.title"></span>
+      </a>
+
       <!-- INVOICE LIST -->
       <a class="h5 list-group-item list-group-item-action list-group-item-dark bg-dark text-muted p-0 m-0 p-4 border-0"
          routerLink="invoice"
@@ -42,6 +53,16 @@
       >
         <fa-icon icon="file-invoice-dollar" [fixedWidth]="true"></fa-icon>
         <span mediTranslate="global.menu.entities.invoices">Doctor</span>
+      </a>
+
+      <!-- APPOINTMENT HISTORY -->
+      <a class="h5 list-group-item list-group-item-action list-group-item-dark bg-dark text-muted p-0 m-0 p-4 border-0"
+         routerLink="appointment/history"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <fa-icon icon="file-medical" [fixedWidth]="true"></fa-icon>
+        <span mediTranslate="medilabApp.appointment.history.title"></span>
       </a>
 
       <!-- AILMENT REPORT -->
@@ -53,16 +74,6 @@
       >
         <fa-icon icon="file-alt" [fixedWidth]="true"></fa-icon>
         <span mediTranslate="global.menu.entities.ailmentReport"></span>
-      </a>
-
-      <!-- APPOINTMENT HISTORY -->
-      <a class="h5 list-group-item list-group-item-action list-group-item-dark bg-dark text-muted p-0 m-0 p-4 border-0"
-         routerLink="appointment/history"
-         routerLinkActive="active"
-         [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <fa-icon icon="file-medical" [fixedWidth]="true"></fa-icon>
-        <span mediTranslate="medilabApp.appointment.history.title"></span>
       </a>
 
     </div>

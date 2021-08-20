@@ -1,19 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
 import {FormBuilder, Validators} from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
 
 import { ITreatment, Treatment } from '../treatment.model';
 import { TreatmentService } from '../service/treatment.service';
-import {SweetAlertService} from "../../../shared/services/sweet-alert.service";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {AppointmentTreatmentAilmentService} from "../../appointment-treatment-ailment/service/appointment-treatment-ailment.service";
-import {
-  AppointmentTreatmentAilment,
-  IAppointmentTreatmentAilment
-} from "../../appointment-treatment-ailment/appointment-treatment-ailment.model";
+import { SweetAlertService } from "../../../shared/services/sweet-alert.service";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { AppointmentTreatmentAilmentService } from "../../appointment-treatment-ailment/service/appointment-treatment-ailment.service";
+import { AppointmentTreatmentAilment } from "../../appointment-treatment-ailment/appointment-treatment-ailment.model";
 
 @Component({
   selector: 'medi-treatment-update',

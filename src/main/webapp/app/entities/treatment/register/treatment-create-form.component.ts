@@ -6,7 +6,7 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {Form, FormGroup} from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 import {TreatmentRegisterComponent} from "./register-form/treatment-register.component"
 

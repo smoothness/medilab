@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
 import { FormBuilder, Validators } from '@angular/forms';
-
 import { TranslateService } from '@ngx-translate/core';
+
 import { AccountService } from './../../core/auth/account.service';
+import { DoctorService } from '../../entities/doctor/service/doctor.service';
+import { SweetAlertService } from '../../shared/services/sweet-alert.service';
 import { PatientService } from '../../entities/patient/service/patient.service';
+import { UserManagementService } from "../../admin/user-management/service/user-management.service";
 
 import { LANGUAGES } from './../../config/language.constants';
 import { Doctor, Patient } from '../../core/auth/account.model';
-import { DoctorService } from '../../entities/doctor/service/doctor.service';
-import { SweetAlertService } from '../../shared/services/sweet-alert.service';
+
 
 @Component({
   selector: 'medi-settings',
@@ -19,6 +22,7 @@ export class SettingsComponent implements OnInit {
   account!: any;
   success = false;
   languages = LANGUAGES;
+  isOwner = false;
   settingsForm = this.fb.group({
     personalInfo: this.fb.group({
       login: [
@@ -43,11 +47,14 @@ export class SettingsComponent implements OnInit {
   });
 
   constructor(
-    private accountService: AccountService,
+    private router: Router,
     private fb: FormBuilder,
-    private translateService: TranslateService,
-    private patientService: PatientService,
     private doctorService: DoctorService,
+    private accountService: AccountService,
+    private patientService: PatientService,
+    protected activatedRoute: ActivatedRoute,
+    private translateService: TranslateService,
+    private userService: UserManagementService,
     private sweetAlertService: SweetAlertService
   ) {}
 
@@ -60,6 +67,22 @@ export class SettingsComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.getByUrl();
+  }
+
+  public getByUrl(): void {
+    this.activatedRoute.data.subscribe(({ user }) => {
+      if(user === undefined) {
+        this.getCurrentUser();
+        this.isOwner = true;
+      } else {
+        this.account = user;
+        this.setFormData();
+      }
+    });
+  }
+
+  public getCurrentUser(): void {
     this.accountService.formatUserIdentity().subscribe((account: any) => {
       if (account) {
         this.account = account;
@@ -68,13 +91,48 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-  save(): void {
+  public save(): void {
+    if (this.isOwner) {
+      this.savePersonalUpdate();
+    }else{
+      this.saveUserUpdate();
+    }
+  }
+
+  public saveUserUpdate(): void {
+    this.success = false;
+    this.updateAccountData();
+
+    this.userService.update(this.account).subscribe((res) => {
+      if (this.account instanceof Patient) {
+        this.patientService.updatePatientProfile(this.account).subscribe(() => {
+          this.updateLanguage();
+          this.sweetAlertService.showMsjSuccess('reset.done', 'settings.messages.success').then(() => {
+            this.router.navigate(['/main']);
+          });
+        });
+      } else if (this.account instanceof Doctor) {
+        this.doctorService.updateDoctorProfile(this.account).subscribe(() => {
+          this.updateLanguage();
+          this.sweetAlertService.showMsjSuccess('reset.done', 'settings.messages.success').then(() => {
+            this.router.navigate(['/main']);
+          });
+        });
+      } else {
+        this.updateLanguage();
+        this.sweetAlertService.showMsjSuccess('reset.done', 'settings.messages.success').then(() => {
+          this.router.navigate(['/main']);
+        });
+      }
+    });
+  }
+
+  savePersonalUpdate(): void {
     this.success = false;
     this.updateAccountData();
 
     this.accountService.save(this.account.internalUserData).subscribe(() => {
       this.accountService.authenticate(this.account);
-
       if (this.account instanceof Patient) {
         this.patientService.updatePatientProfile(this.account).subscribe(() => {
           this.updateLanguage();
@@ -91,6 +149,7 @@ export class SettingsComponent implements OnInit {
       }
     });
   }
+
 
   private updateLanguage(): void {
     if (this.account.langKey !== this.translateService.currentLang) {
