@@ -1,119 +1,158 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
 
 import { ILineComment, LineComment } from '../line-comment.model';
 import { LineCommentService } from '../service/line-comment.service';
 import { IInvoice } from 'app/entities/invoice/invoice.model';
 import { InvoiceService } from 'app/entities/invoice/service/invoice.service';
+import * as dayjs from 'dayjs';
+import { Status } from '../../enumerations/status.model';
+import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
+import { SweetAlertService } from 'app/shared/services/sweet-alert.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'medi-line-comment-update',
   templateUrl: './line-comment-update.component.html',
 })
-export class LineCommentUpdateComponent implements OnInit {
+export class LineCommentUpdateComponent {
+  @Input() appointment: any;
+
+  invoice: IInvoice = {} as IInvoice;
+
   isSaving = false;
 
   invoicesSharedCollection: IInvoice[] = [];
 
-  editForm = this.fb.group({
+  subtotal = 0;
+
+  registerCommentForm = this.fb.group({
     id: [],
-    description: [],
-    quantity: [],
-    unitPrice: [],
-    invoiceCode: [],
+    description: ['', [Validators.required]],
+    quantity: ['', [Validators.required]],
+    unitPrice: ['', [Validators.required]],
+    invoiceCode: [''],
   });
 
   constructor(
     protected lineCommentService: LineCommentService,
     protected invoiceService: InvoiceService,
     protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
-  ) {}
-
-  ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ lineComment }) => {
-      this.updateForm(lineComment);
-
-      this.loadRelationshipsOptions();
-    });
+    protected fb: FormBuilder,
+    protected appointmentService: AppointmentService,
+    public sweetAlertService: SweetAlertService,
+    public activeModal: NgbActiveModal
+  ) {
+    this.invoice.lineComments = [];
+    this.invoice.lineComments.push(new LineComment());
   }
 
   previousState(): void {
     window.history.back();
   }
 
-  save(): void {
+  saveComment(): void {
     this.isSaving = true;
-    const lineComment = this.createFromForm();
-    if (lineComment.id !== undefined) {
-      this.subscribeToSaveResponse(this.lineCommentService.update(lineComment));
-    } else {
-      this.subscribeToSaveResponse(this.lineCommentService.create(lineComment));
-    }
+
+    //La fecha por defecto es la del sistema a la hora de crear la factura
+    const now = dayjs();
+    this.invoice.date = now;
+
+    //al ser una factura nueva el status por defecto debe ser PENDING
+    this.invoice.status = Status.PENDING;
+    this.invoice.appointment = this.appointment;
+    this.appointment.status = Status.FINISHED;
+
+    this.invoice.lineComments?.forEach(lineComment => {
+      if (lineComment.unitPrice && lineComment.quantity !== undefined) {
+        this.subtotal = this.subtotal + lineComment.quantity * lineComment.unitPrice;
+      }
+
+      this.setInvoiceAmmount(this.subtotal);
+    });
+
+    this.subtotal = 0;
+
+    this.saveInvoiceService();
   }
 
   trackInvoiceById(index: number, item: IInvoice): number {
     return item.id!;
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<ILineComment>>): void {
-    result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
-      () => this.onSaveSuccess(),
-      () => this.onSaveError()
-    );
-  }
-
-  protected onSaveSuccess(): void {
-    this.previousState();
-  }
-
-  protected onSaveError(): void {
-    // Api for inheritance.
-  }
-
-  protected onSaveFinalize(): void {
-    this.isSaving = false;
-  }
-
-  protected updateForm(lineComment: ILineComment): void {
-    this.editForm.patchValue({
-      id: lineComment.id,
-      description: lineComment.description,
-      quantity: lineComment.quantity,
-      unitPrice: lineComment.unitPrice,
-      invoiceCode: lineComment.invoiceCode,
-    });
-
-    this.invoicesSharedCollection = this.invoiceService.addInvoiceToCollectionIfMissing(
-      this.invoicesSharedCollection,
-      lineComment.invoiceCode
-    );
-  }
-
-  protected loadRelationshipsOptions(): void {
-    this.invoiceService
-      .query()
-      .pipe(map((res: HttpResponse<IInvoice[]>) => res.body ?? []))
-      .pipe(
-        map((invoices: IInvoice[]) =>
-          this.invoiceService.addInvoiceToCollectionIfMissing(invoices, this.editForm.get('invoiceCode')!.value)
-        )
-      )
-      .subscribe((invoices: IInvoice[]) => (this.invoicesSharedCollection = invoices));
-  }
-
-  protected createFromForm(): ILineComment {
+  createFromForm(): ILineComment {
     return {
       ...new LineComment(),
-      id: this.editForm.get(['id'])!.value,
-      description: this.editForm.get(['description'])!.value,
-      quantity: this.editForm.get(['quantity'])!.value,
-      unitPrice: this.editForm.get(['unitPrice'])!.value,
-      invoiceCode: this.editForm.get(['invoiceCode'])!.value,
+      description: this.registerCommentForm.get(['description'])!.value,
+      quantity: this.registerCommentForm.get(['quantity'])!.value,
+      unitPrice: this.registerCommentForm.get(['unitPrice'])!.value,
+      invoiceCode: this.registerCommentForm.get(['invoiceCode'])!.value,
     };
+  }
+
+  addLine(): void {
+    this.invoice.lineComments?.push(new LineComment());
+  }
+
+  deleteLine(lineComment: LineComment, index: number): void {
+    this.sweetAlertService
+      .showConfirmMsg({
+        title: 'medilabApp.deleteConfirm.title',
+        text: 'medilabApp.deleteConfirm.text',
+        confirmButtonText: 'medilabApp.deleteConfirm.confirmButtonText',
+        cancelButtonText: 'medilabApp.deleteConfirm.cancelButtonText',
+      })
+      .then(result => {
+        if (result) {
+          this.invoice.lineComments?.splice(index, 1);
+        }
+      });
+  }
+
+  //Se actualizan los montos de la factura
+  setInvoiceAmmount(subtotal: number): void {
+    this.invoice.subtotal = subtotal;
+    this.invoice.taxes = this.invoice.subtotal * 0.13;
+    this.invoice.total = this.invoice.taxes + this.invoice.subtotal;
+    this.invoice.discount = 0;
+  }
+
+  saveInvoiceService(): void {
+    this.appointmentService.update(this.appointment).subscribe(data => {
+      this.invoiceService.create(this.invoice).subscribe(invoiceData => {
+        this.invoice.lineComments?.forEach(lineComment => {
+          lineComment.invoiceCode = invoiceData.body;
+          this.lineCommentService.create(lineComment).subscribe(() => {
+            this.sweetAlertService.showMsjSuccess('reset.done', 'medilabApp.invoice.created').then(res => {
+              if (res) {
+                this.activeModal.close('register');
+              }
+            });
+          });
+        });
+      });
+    });
+  }
+
+  public refreshPage(): void {
+    window.location.reload();
+  }
+
+  public emptyLine(invoice: IInvoice): boolean {
+    let disable = false;
+    if (invoice.lineComments && invoice.lineComments.length > 0) {
+      disable = true;
+    }
+    return disable;
+  }
+
+  public emptyLineDelete(lineComments: any): boolean {
+    let disable = false;
+    if (lineComments && lineComments.length === 1) {
+      disable = true;
+    }
+    return disable;
   }
 }
