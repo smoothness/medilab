@@ -48,7 +48,7 @@
             </td>
             <td class="text-right">
               <a
-                class="btn btn-primary btn-sm mr-1"
+                class="btn btn-primary"
                 [routerLink]="['/main/appointment', appointment.id, 'view']"
               >
                 <fa-icon icon="eye"></fa-icon>
@@ -59,7 +59,7 @@
                 <button
                   type="submit"
                   [routerLink]="['/main/doctor', appointment.doctor.id, 'view']"
-                  class="btn btn-primary btn-sm"
+                  class="btn btn-primary"
                   data-cy="entityDetailsButton"
                 >
                   <fa-icon icon="eye"></fa-icon>
@@ -69,7 +69,7 @@
               <!-- VIEW FOR DOCTOR -->
               <div class="btn-group" *ngIf="!isPatient">
                 <button
-                  class="btn btn-primary btn-sm mr-1"
+                  class="btn btn-primary mr-1"
                   mediTranslate="home.viewPatient"
                   [routerLink]="['/main/patient', appointment.patient.id, 'view']"
                 >
@@ -82,7 +82,7 @@
                 >
                   Cambiar fecha
                 </button>
-                <button class="btn btn-danger btn-sm" mediTranslate="home.appointmentDelete" (click)="cancelAppointment(appointment)">
+                <button class="btn btn-danger" mediTranslate="home.appointmentDelete" (click)="cancelAppointment(appointment)">
                   Cancelar cita
                 </button>
               </div>

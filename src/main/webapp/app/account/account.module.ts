@@ -26,5 +26,6 @@ import {ActivateComponent} from "./activate/activate.component";
     SessionsComponent,
     SettingsComponent
   ],
+  exports: [ SettingsComponent ]
 })
 export class AccountModule {}

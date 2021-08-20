@@ -15,13 +15,13 @@
     "detail": {
       "title": "Usuario"
     },
-    "login": "Login",
+    "login": "Identificación ",
     "firstName": "Nombre",
     "lastName": "Apellidos",
-    "email": "Email",
+    "email": "Correo electrónico",
     "activated": "Activado",
     "deactivated": "Desactivado",
-    "profiles": "Perfiles",
+    "profiles": "Roles",
     "langKey": "Idioma",
     "createdBy": "Creado por",
     "createdDate": "Fecha de creación",
@@ -30,6 +30,15 @@
     "selectRole": "Seleccione un tipo de usuario",
     "roleDoctor": "Médico",
     "rolePatient": "Paciente",
-    "roleAdmin": "Administrador"
+    "roleAdmin": "Administrador",
+    "langPipe": {
+      "en": "Inglés",
+      "es": "Español"
+    },
+    "rolePipe": {
+      "roleDoctor": "Médico",
+      "rolePatient": "Paciente",
+      "roleAdmin": "Administrador"
+    }
   }
 }

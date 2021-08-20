@@ -9,11 +9,6 @@ import { EmergencyContactRoutingResolveService } from './emergency-contact-routi
 
 const emergencyContactRoute: Routes = [
   {
-    path: '',
-    component: EmergencyContactComponent,
-    canActivate: [UserRouteAccessService],
-  },
-  {
     path: ':id/view',
     component: EmergencyContactDetailComponent,
     resolve: {
