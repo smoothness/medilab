@@ -22,7 +22,10 @@
       </div>
 
       <div class="col-12 m-0 p-0 my-4" *ngIf="patientDiagnosis.length > 0">
-        <medi-appointment-treatment-ailment [appointmentTreatmentAilments]="patientDiagnosis"></medi-appointment-treatment-ailment>
+        <medi-appointment-treatment-ailment
+          [appointmentTreatmentAilments]="patientDiagnosis"
+          [isProfile]="true"
+        ></medi-appointment-treatment-ailment>
       </div>
 
       <div class="my-4" *ngIf="patientMedicalExams.length > 0">

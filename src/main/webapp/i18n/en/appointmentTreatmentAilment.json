@@ -9,9 +9,10 @@
         "notFound": "No diagnosis found"
       },
       "register": "Diagnostic register",
-      "created": "A new diagnosis is created with identifier {{ param }}",
+      "created": "The diagnosis has been created successfully.",
       "updated": "A diagnosis is updated with identifier {{ param }}",
       "deleted": "A diagnosis is deleted with identifier {{ param }}",
+      "error": "Failed to register diagnosis.",
       "delete": {
         "question": "Are you sure you want to delete diagnosis {{ id }}?"
       },

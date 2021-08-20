@@ -93,13 +93,13 @@
               type="button"
               class="btn btn-secondary"
               (click)="showRegisterMedicalExamModal()"
-              *ngIf="showRegisterMedicalExam(appointment.status)"
+              *ngIf="showRegisterBtns(appointment.status)"
             >
               <fa-icon icon="plus"></fa-icon>
               <span mediTranslate="medilabApp.medicalExams.btnAdd">add</span>
             </button>
 
-            <button type="button" class="btn btn-secondary" (click)="showRegisterDiagnosisModal()" *ngIf="isDoctor">
+            <button type="button" class="btn btn-secondary" (click)="showRegisterDiagnosisModal()" *ngIf="showRegisterBtns(appointment.status)">
               <fa-icon icon="plus"></fa-icon>
               <span mediTranslate="medilabApp.appointmentTreatmentAilment.add"></span>
             </button>
@@ -113,6 +113,7 @@
       <medi-appointment-treatment-ailment
         [appointmentTreatmentAilments]="diagnosis"
         (updateList)="loadDiagnosis($event)"
+        [appointment]="appointment"
       ></medi-appointment-treatment-ailment>
     </div>
 

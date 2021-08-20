@@ -1,15 +1,20 @@
 {
   "notifications": {
     "title": "Notificaciones",
-    "patient": {
-      "pending": "Cita pendiente con el paciente ",
-      "updated": "Cita modificada con el paciente ",
-      "canceled": "Cita cancelada con el paciente "
+    "appointments": {
+      "patient": {
+        "pending": "Cita pendiente con el paciente ",
+        "updated": "Cita modificada con el paciente ",
+        "canceled": "Cita cancelada con el paciente "
+      },
+      "doctor": {
+        "pending": "Cita pendiente con el doctor ",
+        "updated": "Cita modifacda con el doctor ",
+        "canceled": "Cita cancelada con el doctor "
+      }
     },
-    "doctor": {
-      "pending": "Cita pendiente con el doctor ",
-      "updated": "Cita modifacda con el doctor ",
-      "canceled": "Cita cancelada con el doctor "
+    "invoices": {
+      "pending": "La factura número {{ id }} se encuentra pendiente de pago."
     }
   }
 }
