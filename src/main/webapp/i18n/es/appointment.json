@@ -47,7 +47,9 @@
         "canceled": "Cancelada",
         "pending": "Pendiente",
         "finished": "Finalizada"
-      }
+      },
+      "invoicePending": "Ver factura pendiente",
+      "viewInvoice": "Ver factura"
     }
   }
 }

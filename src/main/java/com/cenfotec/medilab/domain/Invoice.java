@@ -45,9 +45,8 @@ public class Invoice implements Serializable {
     @Column(name = "status")
     private Status status;
 
+    @ManyToOne
     @JsonIgnoreProperties(value = { "appointmentTreatmentAilments", "medicalExams", "patient", "doctor" }, allowSetters = true)
-    @OneToOne
-    @JoinColumn(unique = true)
     private Appointment appointment;
 
     @OneToMany(mappedBy = "invoiceCode")
