@@ -33,6 +33,9 @@ public class Appointment implements Serializable {
     @Column(name = "updated")
     private Boolean updated;
 
+    @Column(name = "notified")
+    private Boolean notified;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
@@ -109,6 +112,19 @@ public class Appointment implements Serializable {
 
     public void setUpdated(Boolean updated) {
         this.updated = updated;
+    }
+
+    public Boolean getNotified() {
+        return this.notified;
+    }
+
+    public Appointment notified(Boolean notified) {
+        this.notified = notified;
+        return this;
+    }
+
+    public void setNotified(Boolean notified) {
+        this.notified = notified;
     }
 
     public Status getStatus() {

@@ -7,29 +7,44 @@
       [disabled]="pendingAppointments.length + canceledAppointments.length + updatedAppointments.length === 0 ? true : false"
     >
       <fa-icon icon="bell"></fa-icon>
-      <span>Notifications</span>
+      <span mediTranslate="notifications.title">Notifications</span>
       <span class="badge badge-light">
         {{ pendingAppointments.length + canceledAppointments.length + updatedAppointments.length }}
       </span>
     </button>
-    <div *ngIf="expanded === true" class="notifications-dropdown-menu">
+    <div *ngIf="expanded === true" class="notifications-dropdown-menu" (click)="setNotified($event.target)">
       <div *ngIf="userType === 'doctor'; else patientBlock">
         <ul>
           <li *ngFor="let pending of pendingAppointments">
-            <span>Cita pendiente con el paciente {{ pending?.patient?.internalUser?.completeName }}</span>
-            <span class="text-muted">{{ pending?.date | date }}</span>
+            <a class="notification" [routerLink]="['/main/appointment', pending.id, 'view']" [id]="pending.id">
+              <div>
+                <span mediTranslate="notifications.patient.pending"></span>
+                <span>{{ pending?.patientExt?.internalUser?.completeName }}</span>
+              </div>
+              <span>{{ pending?.date | date }}</span>
+            </a>
           </li>
         </ul>
         <ul>
           <li *ngFor="let updated of updatedAppointments">
-            <span>Cita modificada con el paciente {{ updated?.patient?.internalUser?.completeName }}</span>
-            <span class="text-muted">{{ updated?.date | date }}</span>
+            <a class="notification" [routerLink]="['/main/appointment', updated.id, 'view']" [id]="updated.id">
+              <div>
+                <span mediTranslate="notifications.patient.updated"></span>
+                <span>{{ updated?.patientExt?.internalUser?.completeName }}</span>
+              </div>
+              <span>{{ updated?.date | date }}</span>
+            </a>
           </li>
         </ul>
         <ul>
           <li *ngFor="let canceled of canceledAppointments">
-            <span>Cita cancelada con el paciente {{ canceled?.patient?.internalUser?.completeName }}</span>
-            <span class="text-muted">{{ canceled?.date | date }}</span>
+            <a class="notification" [routerLink]="['/main/appointment', canceled.id, 'view']" [id]="canceled.id">
+              <div>
+                <span mediTranslate="notifications.patient.canceled"></span>
+                <span>{{ canceled?.patientExt?.internalUser?.completeName }}</span>
+              </div>
+              <span>{{ canceled?.date | date }}</span>
+            </a>
           </li>
         </ul>
       </div>
@@ -37,20 +52,35 @@
         <div>
           <ul>
             <li *ngFor="let pending of pendingAppointments">
-              <span>Cita pendiente con el médico {{ pending?.doctor?.internalUser?.completeName }}</span>
-              <span class="text-muted">{{ pending?.date | date }}</span>
+              <a class="notification" [routerLink]="['/main/appointment', pending.id, 'view']" [id]="pending.id">
+                <div>
+                  <span mediTranslate="notifications.doctor.pending"></span>
+                  <span>{{ pending?.doctorExt?.internalUser?.completeName }}</span>
+                </div>
+                <span>{{ pending?.date | date }}</span>
+              </a>
             </li>
           </ul>
           <ul>
             <li *ngFor="let updated of updatedAppointments">
-              <span>Cita modificada con el médico {{ updated?.doctor?.internalUser?.completeName }}</span>
-              <span class="text-muted">{{ updated?.date | date }}</span>
+              <a class="notification" [routerLink]="['/main/appointment', updated.id, 'view']" [id]="updated.id">
+                <div>
+                  <span mediTranslate="notifications.doctor.updated"></span>
+                  <span>{{ updated?.doctorExt?.internalUser?.completeName }}</span>
+                </div>
+                <span>{{ updated?.date | date }}</span>
+              </a>
             </li>
           </ul>
           <ul>
             <li *ngFor="let canceled of canceledAppointments">
-              <span>Cita cancelada con el médico {{ canceled?.doctor?.internalUser?.completeName }}</span>
-              <span class="text-muted">{{ canceled?.date | date }}</span>
+              <a class="notification" [routerLink]="['/main/appointment', canceled.id, 'view']" [id]="canceled.id">
+                <div>
+                  <span mediTranslate="notifications.doctor.cancled"></span>
+                  <span>{{ canceled?.doctorExt?.internalUser?.completeName }}</span>
+                </div>
+                <span>{{ canceled?.date | date }}</span>
+              </a>
             </li>
           </ul>
         </div>

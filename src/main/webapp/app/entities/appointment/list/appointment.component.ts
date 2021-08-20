@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl } from "@angular/forms";
+import { FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { AccountService } from "../../../core/auth/account.service";
+import { AccountService } from '../../../core/auth/account.service';
 import { AppointmentService } from '../service/appointment.service';
-import { SweetAlertService } from "../../../shared/services/sweet-alert.service";
+import { SweetAlertService } from '../../../shared/services/sweet-alert.service';
 
 import { IAppointment } from '../appointment.model';
-import { Status } from "../../enumerations/status.model";
-import { Doctor, Patient } from "../../../core/auth/account.model";
+import { Status } from '../../enumerations/status.model';
+import { Doctor, Patient } from '../../../core/auth/account.model';
 
 @Component({
   selector: 'medi-appointment',
@@ -20,7 +20,6 @@ export class AppointmentComponent implements OnInit {
   currentUser: any;
   appointmentToChangeDate: IAppointment | null = null;
   updatedDate = new FormControl('');
-
 
   constructor(
     protected modalService: NgbModal,
@@ -60,12 +59,15 @@ export class AppointmentComponent implements OnInit {
     const newAppointment = {
       ...this.appointmentToChangeDate,
       date: this.updatedDate.value,
+      updated: true,
     };
     this.appointmentService.update(newAppointment).subscribe(() => {
-      this.sweetAlertService.showMsjSuccess('home.messages.updatedAppointmentDatetitle', 'home.messages.updatedAppointmentDateMsj').then(() => {
-        this.updateList.emit(true);
-        this.modalService.dismissAll();
-      });
+      this.sweetAlertService
+        .showMsjSuccess('home.messages.updatedAppointmentDatetitle', 'home.messages.updatedAppointmentDateMsj')
+        .then(() => {
+          this.updateList.emit(true);
+          this.modalService.dismissAll();
+        });
     });
   }
 
@@ -80,6 +82,7 @@ export class AppointmentComponent implements OnInit {
       .then(res => {
         if (res) {
           appointment.status = Status.CANCELED;
+          appointment.canceled = true;
           this.appointmentService.update(appointment).subscribe(() => {
             this.sweetAlertService.showMsjSuccess('home.messages.cancelAppointmentTitle', 'home.messages.cancelAppointmentMsj').then(() => {
               this.updateList.emit(true);
@@ -88,6 +91,4 @@ export class AppointmentComponent implements OnInit {
         }
       });
   }
-
 }
-

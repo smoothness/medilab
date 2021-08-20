@@ -33,7 +33,7 @@
   padding: 0.5rem 1rem;
   position: absolute;
   top: 2.5rem;
-  width: 240%;
+  width: 250%;
   z-index: 99;
 
   @media (max-width: 63rem) {
@@ -65,6 +65,39 @@
 
       &:not(:last-of-type) {
         margin-bottom: 0.5rem;
+      }
+    }
+
+    a {
+      font-weight: normal;
+      text-decoration: none;
+
+      div {
+        display: flex;
+
+        > span {
+          color: $gray-500;
+
+          &:first-child {
+            margin-right: 5px;
+          }
+        }
+      }
+
+      span:last-of-type {
+        color: $gray-600;
+      }
+
+      &:hover {
+        div {
+          > span {
+            color: $gray-300;
+          }
+        }
+
+        span:last-of-type {
+          color: $gray-500;
+        }
       }
     }
 

@@ -1,0 +1,15 @@
+{
+  "notifications": {
+    "title": "Notifications",
+    "patient": {
+      "pending": "Pending appointment with patient ",
+      "updated": "Modified appointment with patient ",
+      "canceled": "Canceled appointment with patient "
+    },
+    "doctor": {
+      "pending": "Pending appointment with doctor ",
+      "updated": "Updated appointment with doctor ",
+      "canceled": "Canceled appointment with doctor "
+    }
+  }
+}
