@@ -1,60 +1,62 @@
 <section>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-10 mx-auto my-5 card bg-dark">
-        <div class="text-center mt-3">
-          <h2 mediTranslate="medilabApp.invoice.home.title"></h2>
-        </div>
+  <div class="row p-0 m-0">
+    <div class="col-md-10 mx-auto my-5 card bg-dark">
+      <div class="text-center mt-3">
+        <h2 mediTranslate="medilabApp.invoice.home.title"></h2>
+      </div>
 
-        <div class="mt-4">
-          <div class="table-responsive" id="entities" *ngIf="invoices && invoices.length">
-            <table class="table table-striped" aria-describedby="page-heading">
-              <thead>
-                <tr>
-                  <th scope="col"><span mediTranslate="global.field.id">Número</span></th>
-                  <th scope="col"><span mediTranslate="medilabApp.invoice.date">Date</span></th>
-                  <th scope="col"><span mediTranslate="medilabApp.invoice.total">Total</span></th>
-                  <th scope="col"><span mediTranslate="medilabApp.invoice.status">Status</span></th>
-                  <th scope="col"><span mediTranslate="medilabApp.invoice.appointment">Appointment</span></th>
-                  <th scope="col"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let invoice of invoices; trackBy: trackId" data-cy="entityTable">
-                  <td>
-                    <a [routerLink]="['/invoice', invoice.id, 'view']">{{ invoice.id }}</a>
-                  </td>
-                  <td>{{ invoice.date | formatMediumDate }}</td>
-                  <td>{{ invoice.total }}</td>
-                  <td mediTranslate="{{ 'medilabApp.Status.' + invoice.status }}">{{ invoice.status }}</td>
-                  <td>
-                    <div *ngIf="invoice.appointment">
-                      <a [routerLink]="['/appointment', invoice.appointment?.id, 'view']">{{ invoice.appointment?.id }}</a>
-                    </div>
-                  </td>
-                  <td class="text-right">
-                    <div class="btn-group">
-                      <button
-                        type="submit"
-                        [routerLink]="['/main/invoice', invoice.id, 'view']"
-                        class="btn btn-info btn-sm"
-                        data-cy="entityDetailsButton"
-                      >
-                        <fa-icon icon="eye"></fa-icon>
-                        <span class="d-none d-md-inline" mediTranslate="entity.action.view">View</span>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+      <div class="mt-4">
+        <div class="alert alert-warning text-center" id="no-result" *ngIf="!invoices.length">
+          <span class="h5 text-dark" mediTranslate="medilabApp.invoice.home.notFound">No invoices found</span>
+        </div>
+        <div class="table-responsive" id="entities" *ngIf="invoices && invoices.length">
+          <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+              <tr>
+                <th scope="col"><span mediTranslate="medilabApp.invoice.id">Número</span></th>
+                <th scope="col"><span mediTranslate="medilabApp.invoice.date">Date</span></th>
+                <th scope="col"><span mediTranslate="medilabApp.invoice.total">Total</span></th>
+                <th scope="col"><span mediTranslate="medilabApp.invoice.status">Status</span></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let invoice of invoices" data-cy="entityTable">
+                <td>{{ invoice.id }}</td>
+                <td>{{ invoice.date | date }}</td>
+                <td>{{ invoice.total }}</td>
+                <td>{{ invoice.status | invoicePipe }}</td>
+                <td class="text-right">
+                  <div class="btn-group">
+                    <button
+                      (click)="cancelPedingInvoice(invoice)"
+                      class="btn btn-danger mr-1"
+                      data-cy="entityDetailsButton"
+                      *ngIf="checkInvoiceStatus(invoice.status)"
+                    >
+                      <fa-icon icon="exclamation"></fa-icon>
+                      <span class="d-none d-md-inline" mediTranslate="medilabApp.invoice.action.cancel"></span>
+                    </button>
+                    <button
+                      type="submit"
+                      [routerLink]="['/main/appointment', invoice.appointment.id, 'view']"
+                      class="btn btn-info mr-1"
+                      data-cy="entityDetailsButton"
+                    >
+                      <fa-icon icon="eye"></fa-icon>
+                      <span class="d-none d-md-inline" mediTranslate="medilabApp.appointment.action.view">View</span>
+                    </button>
+                    <button type="button" class="btn btn-secondary" (click)="showInvoiceDetail(invoice)">
+                      <fa-icon icon="eye"></fa-icon>
+                      <span mediTranslate="medilabApp.invoice.action.view"></span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
 </section>
-
-<div class="alert alert-warning" id="no-result" *ngIf="!invoices?.length">
-  <span mediTranslate="medilabApp.invoice.home.notFound">No invoices found</span>
-</div>

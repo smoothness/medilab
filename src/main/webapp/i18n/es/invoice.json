@@ -2,13 +2,13 @@
   "medilabApp": {
     "invoice": {
       "home": {
-        "title": "Invoices",
+        "title": "Facturas",
         "refreshListLabel": "Refrescar lista",
-        "createLabel": "Crear nueva factura",
+        "createLabel": "Registro de la factura",
         "createOrEditLabel": "Crear o editar factura",
         "notFound": "Ninguna factura ha sido encontrada"
       },
-      "created": "Una nueva factura ha sido creada con el identificador {{ param }}",
+      "created": "Factura creada con éxito",
       "updated": "Una factura ha sido actualizada con el identificador {{ param }}",
       "deleted": "Una factura ha sido eliminada con el identificador {{ param }}",
       "delete": {
@@ -17,7 +17,7 @@
       "detail": {
         "title": "Factura"
       },
-      "id": "ID",
+      "id": "Código",
       "date": "Fecha",
       "subtotal": "Subtotal",
       "taxes": "Impuesto 13%",
@@ -34,7 +34,12 @@
       "paid": "Pagada",
       "canceled": "Anulada",
       "invoiceNumber": "Factura número",
-      "download": "Descargar factura"
+      "download": "Descargar factura",
+      "addLine": "Agregar línea",
+      "action": {
+        "view": "Ver factura",
+        "cancel": "Cancelar factura"
+      }
     }
   }
 }

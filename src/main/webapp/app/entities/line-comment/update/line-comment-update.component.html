@@ -1,73 +1,94 @@
-<div class="row justify-content-center">
-  <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="medi-line-comment-heading"
-        data-cy="LineCommentCreateUpdateHeading"
-        mediTranslate="medilabApp.lineComment.home.createOrEditLabel"
-      >
-        Create or edit a Line Comment
-      </h2>
-
-      <div>
-        <medi-alert-error></medi-alert-error>
-
-        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
-          <label class="form-control-label" mediTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+<section>
+  <div class="card bg-dark p-5">
+    <form #resumeForm="ngForm" autocomplete="off">
+      <div class="card-body">
+        <div class="d-flex justify-content-between card-title mb-5">
+          <h3 class="d-flex align-items-center text-primary" mediTranslate="medilabApp.invoice.home.createLabel"></h3>
+          <button class="btn btn-primary" (click)="addLine()" [disabled]="resumeForm.invalid">
+            <fa-icon icon="plus"></fa-icon>&nbsp;<span mediTranslate="medilabApp.invoice.addLine"></span>
+          </button>
         </div>
-
-        <div class="form-group">
-          <label class="form-control-label" mediTranslate="medilabApp.lineComment.description" for="field_description">Description</label>
-          <input
-            type="text"
-            class="form-control"
-            name="description"
-            id="field_description"
-            data-cy="description"
-            formControlName="description"
-          />
+        <div class="row justify-content-between">
+          <div class="col-md">
+            <h5 class="align-items-center text-white w-auto" mediTranslate="medilabApp.lineComment.description"></h5>
+          </div>
+          <div class="col-md">
+            <h5 class="align-items-center text-white w-auto" mediTranslate="medilabApp.lineComment.quantity"></h5>
+          </div>
+          <div class="col-md">
+            <h5 class="align-items-center text-white w-auto" mediTranslate="medilabApp.lineComment.unitPrice"></h5>
+          </div>
+          <div class="col-md"></div>
         </div>
-
-        <div class="form-group">
-          <label class="form-control-label" mediTranslate="medilabApp.lineComment.quantity" for="field_quantity">Quantity</label>
-          <input type="number" class="form-control" name="quantity" id="field_quantity" data-cy="quantity" formControlName="quantity" />
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" mediTranslate="medilabApp.lineComment.unitPrice" for="field_unitPrice">Unit Price</label>
-          <input type="number" class="form-control" name="unitPrice" id="field_unitPrice" data-cy="unitPrice" formControlName="unitPrice" />
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" mediTranslate="medilabApp.lineComment.invoiceCode" for="field_invoiceCode">Invoice Code</label>
-          <select class="form-control" id="field_invoiceCode" data-cy="invoiceCode" name="invoiceCode" formControlName="invoiceCode">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="invoiceOption.id === editForm.get('invoiceCode')!.value?.id ? editForm.get('invoiceCode')!.value : invoiceOption"
-              *ngFor="let invoiceOption of invoicesSharedCollection; trackBy: trackInvoiceById"
-            >
-              {{ invoiceOption.id }}
-            </option>
-          </select>
+        <div class="row align-items-center justify-content-between" *ngFor="let lineComment of invoice.lineComments; let i = index">
+          <div class="col-md-3">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                name="description{{ i }}"
+                [(ngModel)]="lineComment.description"
+                #description="ngModel"
+                required
+                [ngClass]="{ 'is-invalid': description.invalid && (description.touched || resumeForm.submitted) }"
+              />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <input
+                type="number"
+                class="form-control"
+                name="quantity{{ i }}"
+                [(ngModel)]="lineComment.quantity"
+                #quantity="ngModel"
+                required
+                [ngClass]="{ 'is-invalid': quantity.invalid && (quantity.touched || resumeForm.submitted) }"
+              />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <input
+                type="number"
+                class="form-control"
+                name="unitPrice{{ i }}"
+                [(ngModel)]="lineComment.unitPrice"
+                #unitPrice="ngModel"
+                required
+                [ngClass]="{ 'is-invalid': unitPrice.invalid && (unitPrice.touched || resumeForm.submitted) }"
+              />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <button
+                class="btn btn-danger"
+                [disabled]="emptyLineDelete(invoice.lineComments)"
+                (click)="deleteLine(lineComment, i)"
+                mediTranslate="medilabApp.lineComment.deleteLine"
+              ></button>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span mediTranslate="entity.action.cancel">Cancel</span>
-        </button>
-
+    </form>
+    <div class="row m-0 p-0 my-3">
+      <div class="col p-0 mr-1">
+        <medi-cancel-button></medi-cancel-button>
+      </div>
+      <div class="col p-0 ml-1">
         <button
           type="submit"
-          id="save-entity"
+          id="saveEntity"
           data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
+          [disabled]="resumeForm.invalid || !emptyLine(invoice)"
+          class="btn btn-primary col-12"
+          (click)="saveComment()"
         >
           <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
         </button>
       </div>
-    </form>
+    </div>
   </div>
-</div>
+</section>

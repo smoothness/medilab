@@ -1,78 +1,107 @@
+<div class="my-2 mx-2">
+  <medi-back-button></medi-back-button>
+</div>
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-8">
+    <div class="col-10">
       <div *ngIf="appointment">
         <div class="card bg-dark">
-          <div class="card-header">
-            <h5 data-cy="appointmentDetailsHeading" mediTranslate="medilabApp.appointment.detail.title">Detalle de la cita</h5>
+          <div class="card-header d-flex">
+            <div>
+              <h5 data-cy="appointmentDetailsHeading" mediTranslate="medilabApp.appointment.detail.title">Detalle de la cita</h5>
+            </div>
+            <div class="ml-auto">
+              <button type="button" class="btn btn-secondary" (click)="showRegisterInvoiceModal()" *ngIf="showRegisterInvoiceBtn()">
+                <fa-icon icon="plus"></fa-icon>
+                <span mediTranslate="medilabApp.medicalExams.btnInvoice">add</span>
+              </button>
+              <div *ngIf="showRegisterInvoiceBtn()">
+                <button type="button" class="btn btn-secondary" (click)="showInvoiceDetail()" *ngIf="!showRegisterInvoiceBtn()">
+                  <fa-icon icon="eye" *ngIf="!isPending || haveInvoice"></fa-icon>
+                  <span mediTranslate="medilabApp.appointment.invoicePending" *ngIf="!isPending"></span>
+                  <span mediTranslate="medilabApp.appointment.viewInvoice" *ngIf="haveInvoice"></span>
+                </button>
+              </div>
+            </div>
           </div>
           <div class="card-body">
             <ul class="list-group" *ngIf="appointment.userType === 'doctor'">
               <li class="list-group-item">
-                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.date">Fecha: </span>
+                <span class="list-group-item__dt text-primary" mediTranslate="medilabApp.appointment.detail.date">Fecha: </span>
                 <span>{{ appointment.date | formatMediumDate }}</span>
               </li>
               <li class="list-group-item">
-                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.status">Estado de la cita: </span>
-                <span>{{ appointment.status | invoicePipe }}</span>
+                <span class="list-group-item__dt text-primary" mediTranslate="medilabApp.appointment.detail.status"
+                  >Estado de la cita:
+                </span>
+                <span>{{ appointment.status | status }}</span>
               </li>
               <li class="list-group-item">
-                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.patient">Paciente: </span>
+                <span class="list-group-item__dt text-primary" mediTranslate="medilabApp.appointment.detail.patient">Paciente: </span>
                 <a [routerLink]="['/main/patient', appointment.patient?.id, 'view']">
                   {{ appointment.patient?.internalUser?.completeName }} {{ appointment.patient?.secondSurname }}
                 </a>
               </li>
               <li class="list-group-item">
-                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.phone">Teléfono: </span>
+                <span class="list-group-item__dt text-primary" mediTranslate="medilabApp.appointment.detail.phone">Teléfono: </span>
                 <span>{{ appointment.patient?.phone }}</span>
               </li>
               <li class="list-group-item">
-                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.email">Correo electrónico: </span>
+                <span class="list-group-item__dt text-primary" mediTranslate="medilabApp.appointment.detail.email"
+                  >Correo electrónico:
+                </span>
                 <span>{{ appointment.patient?.internalUser?.email }}</span>
               </li>
             </ul>
             <ul class="list-group" *ngIf="appointment.userType === 'patient'">
               <li class="list-group-item">
-                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.date">Fecha: </span>
+                <span class="list-group-item__dt text-primary" mediTranslate="medilabApp.appointment.detail.date">Fecha: </span>
                 <span>{{ appointment.date | formatMediumDate }}</span>
               </li>
               <li class="list-group-item">
-                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.status">Estado de la cita: </span>
-                <span>{{ appointment.status | invoicePipe }}</span>
+                <span class="list-group-item__dt text-primary" mediTranslate="medilabApp.appointment.detail.status"
+                  >Estado de la cita:
+                </span>
+                <span>{{ appointment.status | status }}</span>
               </li>
               <li class="list-group-item">
-                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.doctor">Doctor: </span>
+                <span class="list-group-item__dt text-primary" mediTranslate="medilabApp.appointment.detail.doctor">Doctor: </span>
                 <a [routerLink]="['/main/doctor', appointment.doctor?.id, 'view']">
                   {{ appointment.doctor.internalUser?.completeName }} {{ appointment.doctor.secondSurname }}
                 </a>
               </li>
               <li class="list-group-item">
-                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.specialty">Especialidad: </span>
+                <span class="list-group-item__dt text-primary" mediTranslate="medilabApp.appointment.detail.specialty">Especialidad: </span>
                 <span> {{ appointment.doctor?.specialty }}</span>
               </li>
               <li class="list-group-item">
-                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.phone">Teléfono: </span>
+                <span class="list-group-item__dt text-primary" mediTranslate="medilabApp.appointment.detail.phone">Teléfono: </span>
                 <span>{{ appointment.doctor.phone }}</span>
               </li>
               <li class="list-group-item">
-                <span class="list-group-item__dt" mediTranslate="medilabApp.appointment.email">Correo electrónico: </span>
+                <span class="list-group-item__dt text-primary" mediTranslate="medilabApp.appointment.detail.email"
+                  >Correo electrónico:
+                </span>
                 <span>{{ appointment.doctor.internalUser?.email }}</span>
               </li>
             </ul>
           </div>
 
-          <div class="card-footer">
-            <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-              <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span mediTranslate="entity.action.back">Back</span>
-            </button>
-
+          <!-- Buttons Section -->
+          <div class="card-footer text-center">
             <button
               type="button"
               class="btn btn-secondary"
               (click)="showRegisterMedicalExamModal()"
-              *ngIf="isDoctor">
+              *ngIf="showRegisterMedicalExam(appointment.status)"
+            >
               <fa-icon icon="plus"></fa-icon>
               <span mediTranslate="medilabApp.medicalExams.btnAdd">add</span>
+            </button>
+
+            <button type="button" class="btn btn-secondary" (click)="showRegisterDiagnosisModal()" *ngIf="isDoctor">
+              <fa-icon icon="plus"></fa-icon>
+              <span mediTranslate="medilabApp.appointmentTreatmentAilment.add"></span>
             </button>
           </div>
         </div>
@@ -80,9 +109,16 @@
       </div>
     </div>
 
-    <div class="col-8 mt-4" *ngIf="medicalExams.length > 0">
-      <medi-medical-exams [medicalExams]="medicalExams" [showButtons]="showButtons" (updateList)="loadMedicalExams($event)"></medi-medical-exams>
+    <div class="col-10 my-4" *ngIf="diagnosis.length">
+      <medi-appointment-treatment-ailment [appointmentTreatmentAilments]="diagnosis" (updateList)="loadDiagnosis($event)"></medi-appointment-treatment-ailment>
     </div>
 
+    <div class="col-10 mb-4" *ngIf="medicalExams.length > 0">
+      <medi-medical-exams
+        [medicalExams]="medicalExams"
+        [showButtons]="showButtons"
+        (updateList)="loadMedicalExams($event)"
+      ></medi-medical-exams>
+    </div>
   </div>
 </div>

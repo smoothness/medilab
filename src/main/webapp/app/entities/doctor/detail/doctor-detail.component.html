@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
 <section class="row p-0 m-0">
   <div class="col-10 my-4 mx-auto">
     <div class="text-center my-5">
@@ -10,7 +10,10 @@
         <medi-user-profile [user]="doctor" ></medi-user-profile>
       </div>
       <div class="col-6 card bg-dark">
-        <h1>AQUI VA EL COMPONENTE REUTILIZABLE DE LAS CALIFICACIONES DE UN DOCTOR EN UN CARD</h1>
+        <div class="text-center my-auto">
+          <h2 class="text-white" mediTranslate="medilabApp.ratingUser.home.title"></h2>
+          <medi-rating-user-detail [doctor]="doctor" class="h1 text-primary"></medi-rating-user-detail>
+        </div>
       </div>
     </div>
     <div class="row m-0 p-0 card-body my-4">

@@ -4,11 +4,11 @@
       "home": {
         "title": "Invoices",
         "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Invoice",
-        "createOrEditLabel": "Create or edit a Invoice",
-        "notFound": "No Invoices found"
+        "createLabel": "Register an invoice",
+        "createOrEditLabel": "Create or edit an invoice",
+        "notFound": "No invoices found"
       },
-      "created": "A new Invoice was created with identifier {{ param }}",
+      "created": "The invoice has been created successfully",
       "updated": "An Invoice was updated with identifier {{ param }}",
       "deleted": "An Invoice was deleted with identifier {{ param }}",
       "delete": {
@@ -17,7 +17,7 @@
       "detail": {
         "title": "Invoice"
       },
-      "id": "ID",
+      "id": "Code",
       "date": "Date",
       "subtotal": "Subtotal",
       "taxes": "Tax 13%",
@@ -34,7 +34,12 @@
       "paid": "Paid",
       "canceled": "Canceled",
       "invoiceNumber": "Invoice number",
-      "download": "Download invoice"
+      "download": "Download invoice",
+      "addLine": "Add line",
+      "action": {
+        "view": "View invoice",
+        "cancel": "Cancel invoice"
+      }
     }
   }
 }

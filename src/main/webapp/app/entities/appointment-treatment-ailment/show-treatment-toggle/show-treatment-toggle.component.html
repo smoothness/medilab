@@ -1,0 +1,72 @@
+<div class="col-12">
+  <div>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="toggle()"
+      [attr.aria-expanded]="!isCollapsed"
+    >
+      <fa-icon class="eye"></fa-icon>
+      <span mediTranslate="medilabApp.treatment.view"></span>
+    </button>
+  </div>
+
+  <div class="col-12">
+    <div class="card border-0" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+      <div>
+        <div class="card-body bg-dark">
+          <div *ngIf="isDoctor">
+            <button class="btn btn-primary" (click)="showRegisterModal()">
+              <fa-icon icon="plus"></fa-icon>
+              <span mediTranslate="medilabApp.treatment.add"></span>
+            </button>
+          </div>
+
+          <table *ngIf="treatments?.length !== 0">
+            <thead>
+            <tr>
+              <th scope="col" class="text-primary"><span mediTranslate="medilabApp.treatment.medicines"></span></th>
+              <th scope="col" class="text-primary"><span mediTranslate="medilabApp.treatment.specifications"></span></th>
+              <th scope="col" class="text-primary"><span mediTranslate="medilabApp.treatment.duration"></span></th>
+              <th scope="col" *ngIf="isDoctor"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let treatment of treatments" data-cy="entityTable">
+              <td> {{treatment.medicines}} </td>
+              <td> {{treatment.specifications}} </td>
+              <td> {{treatment.duration}} </td>
+              <td class="text-right col-3" *ngIf="isDoctor">
+                <div class="btn-group">
+                  <button
+                    type="submit"
+                    (click)="showEditModal(treatment)"
+                    class="btn btn-secondary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" mediTranslate="entity.action.edit">Edit</span>
+                  </button>
+
+                  <button
+                    type="submit"
+                    (click)="delete(treatment)"
+                    class="btn btn-danger btn-sm"
+                    data-cy="entityDeleteButton"
+                  >
+                    <fa-icon icon="trash-alt"></fa-icon>
+                    <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

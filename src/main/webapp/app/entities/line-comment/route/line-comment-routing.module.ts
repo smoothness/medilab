@@ -9,11 +9,6 @@ import { LineCommentRoutingResolveService } from './line-comment-routing-resolve
 
 const lineCommentRoute: Routes = [
   {
-    path: '',
-    component: LineCommentComponent,
-    canActivate: [UserRouteAccessService],
-  },
-  {
     path: ':id/view',
     component: LineCommentDetailComponent,
     resolve: {

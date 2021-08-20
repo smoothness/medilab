@@ -7,25 +7,26 @@ import { InvoiceService } from '../service/invoice.service';
 import { InvoiceDeleteDialogComponent } from '../delete/invoice-delete-dialog.component';
 
 import { AccountService } from 'app/core/auth/account.service';
-import { Account } from 'app/core/auth/account.model';
+import { Account, Doctor, Patient } from 'app/core/auth/account.model';
 
 import { PatientService } from 'app/entities/patient/service/patient.service';
 
 import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
+import { InvoiceDetailComponent } from '../detail/invoice-detail.component';
+import { Status } from '../../enumerations/status.model';
+import { SweetAlertService } from '../../../shared/services/sweet-alert.service';
 
 @Component({
   selector: 'medi-invoice',
   templateUrl: './invoice.component.html',
 })
 export class InvoiceComponent implements OnInit {
-  invoices?: any[] | undefined = [];
+  invoices: any[] = [];
   isLoading = false;
   account: Account | null = null;
-  thePatient: any;
-  theDoctor: any;
-  appointmentsPatient: any[] | undefined = [];
-  appointmentsDoctor: any[] | undefined = [];
+  currentUser: any = {};
+  appointments: any[] = [];
 
   constructor(
     protected invoiceService: InvoiceService,
@@ -33,88 +34,76 @@ export class InvoiceComponent implements OnInit {
     protected patientService: PatientService,
     protected appointmentService: AppointmentService,
     protected doctorService: DoctorService,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected sweetAlertService: SweetAlertService
   ) {}
 
+  public get isPatient(): boolean {
+    return this.currentUser instanceof Patient;
+  }
+
+  public get isDoctor(): boolean {
+    return this.currentUser instanceof Doctor;
+  }
+
   ngOnInit(): void {
-    this.accountService.getAuthenticationState().subscribe(account => {
-      this.account = account;
-      if (this.account?.authorities[0] === 'ROLE_PATIENT') {
-        this.mergeAccountWithPatient(this.account);
-      }
+    this.authenticatedAccount();
+  }
 
-      if (this.account?.authorities[0] === 'ROLE_USER') {
-        this.mergeAccountWithDoctor(this.account);
-      }
-
-      if (this.account?.authorities[0] === 'ROLE_ADMIN') {
-        this.loadAll();
-      }
+  public authenticatedAccount(): void {
+    this.accountService.formatUserIdentity().subscribe(user => {
+      this.currentUser = user;
+      this.getAppointmentHistoryByUser();
     });
   }
 
-  mergeAccountWithPatient(account: Account): void {
-    this.patientService.query().subscribe(res => {
-      this.thePatient = res.body?.find(patient => patient.internalUser?.id === account.id);
-      this.appointmentService.query().subscribe(data => {
-        this.appointmentsPatient = data.body?.filter(appointment => {
-          this.accountService.retrieveUserById(Number(appointment.doctor?.id)).subscribe(doctor => {
-            Object.assign(appointment.doctor, doctor);
+  public getAppointmentHistoryByUser(): void {
+    if (this.isPatient) {
+      this.getPatientAppointmentHistory();
+    } else if (this.isDoctor) {
+      this.getDoctorAppointmentHistory();
+    } else {
+      this.loadAll();
+    }
+  }
+
+  public getPatientAppointmentHistory(): void {
+    this.invoiceService.findInvoicesByPatient(this.currentUser.patientId).subscribe((res: any) => {
+      this.invoices = res.body;
+    });
+  }
+
+  public getDoctorAppointmentHistory(): void {
+    this.invoiceService.findInvoicesByDoctor(this.currentUser.doctorId).subscribe((res: any) => {
+      this.invoices = res.body;
+    });
+  }
+
+  public cancelPedingInvoice(invoice: IInvoice): void {
+    this.sweetAlertService
+      .showConfirmMsg({
+        title: 'medilabApp.deleteConfirm.title',
+        text: 'medilabApp.deleteConfirm.text',
+        confirmButtonText: 'medilabApp.deleteConfirm.confirmButtonText',
+        cancelButtonText: 'medilabApp.deleteConfirm.cancelButtonText',
+      })
+      .then(res => {
+        if (res) {
+          invoice.status = Status.CANCELED;
+          this.invoiceService.cancelPendingInvoice(<number>invoice.id).subscribe(resApi => {
+            this.sweetAlertService.showMsjSuccess('home.messages.cancelInvoiceTitle', 'home.messages.cancelInvoiceMsj');
           });
-          return appointment.patient?.id === this.thePatient?.id;
-        });
-        this.getInvoices();
+        }
       });
-    });
   }
 
-  mergeAccountWithDoctor(account: Account): void {
-    this.doctorService.query().subscribe(res => {
-      this.theDoctor = res.body?.find(doctor => doctor.internalUser?.id === account.id);
-      this.appointmentService.query().subscribe(data => {
-        this.appointmentsDoctor = data.body?.filter(appointment => {
-          // the information returned from the server of the doctor is incorrect
-          // it is based on the doctor id, not the internal user id
-          // same with the patient, that's why it is needed the patient internal user id
-          // to query with the internal user id for the actual patient
-          this.patientService.find(Number(appointment.patient?.id)).subscribe(patient => {
-            Object.assign(appointment.patient, patient.body);
-          });
-          return appointment.doctor?.id === this.theDoctor?.internalUser.id && appointment.status !== 'CANCELED';
-        });
-      });
-      this.getInvoices();
-    });
-  }
+  public checkInvoiceStatus(invoiceStatus: string): boolean {
+    let show = false;
 
-  getInvoices(): void {
-    this.invoiceService.query().subscribe(data => {
-      if (this.account?.authorities[0] === 'ROLE_PATIENT') {
-        this.appointmentsPatient?.forEach(appointment => {
-          if (data.body !== null) {
-            data.body.forEach(element => {
-              if (element.appointment?.id === appointment.id) {
-                this.invoices?.push(element);
-              }
-            });
-          }
-        });
-      } else {
-        this.appointmentsDoctor?.forEach(appointment => {
-          if (data.body !== null) {
-            data.body.forEach(element => {
-              if (element.appointment?.id === appointment.id) {
-                this.invoices?.push(element);
-              }
-            });
-          }
-        });
-      }
-    });
-  }
-
-  trackId(index: number, item: IInvoice): number {
-    return item.id!;
+    if (this.isDoctor && invoiceStatus === 'PENDING') {
+      show = true;
+    }
+    return show;
   }
 
   loadAll(): void {
@@ -140,5 +129,15 @@ export class InvoiceComponent implements OnInit {
         this.loadAll();
       }
     });
+  }
+
+  trackId(index: number, item: IInvoice): number {
+    return item.id!;
+  }
+
+  public showInvoiceDetail(invoice: IInvoice): void {
+    const modalRef = this.modalService.open(InvoiceDetailComponent, { size: 'lg', centered: true });
+    modalRef.componentInstance.invoicePending = invoice;
+    modalRef.componentInstance.userCheck = this.currentUser;
   }
 }

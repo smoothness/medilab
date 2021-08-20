@@ -16,6 +16,7 @@ export class AppointmentTreatmentAilmentService {
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
+
   create(appointmentTreatmentAilment: IAppointmentTreatmentAilment): Observable<EntityResponseType> {
     return this.http.post<IAppointmentTreatmentAilment>(this.resourceUrl, appointmentTreatmentAilment, { observe: 'response' });
   }
@@ -40,6 +41,14 @@ export class AppointmentTreatmentAilmentService {
     return this.http.get<IAppointmentTreatmentAilment>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  findByPatient(id: number): Observable<EntityResponseType> {
+    return this.http.get<IAppointmentTreatmentAilment>(`${this.resourceUrl}/patient/${id}`, { observe: 'response' });
+  }
+
+  findByAppointment(id: number): Observable<EntityResponseType> {
+    return this.http.get<IAppointmentTreatmentAilment>(`${this.resourceUrl}/appointment/${id}`, { observe: 'response' });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IAppointmentTreatmentAilment[]>(this.resourceUrl, { params: options, observe: 'response' });
@@ -47,6 +56,10 @@ export class AppointmentTreatmentAilmentService {
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  deleteByAilmentAndAppointment(ailmentId: number, appointmentId:number): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/delete/${ailmentId}/${appointmentId}`, { observe: 'response' });
   }
 
   addAppointmentTreatmentAilmentToCollectionIfMissing(

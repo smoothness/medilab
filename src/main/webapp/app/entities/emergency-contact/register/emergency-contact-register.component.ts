@@ -22,12 +22,13 @@ export class EmergencyContactRegisterComponent {
   public emergencyContactData?: any;
 
   public constructor(
-    protected emergencyContactService: EmergencyContactService,
-    protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder,
     public activeModal: NgbActiveModal,
-    public sweetAlertService: SweetAlertService
-  ) {}
+    protected fb: FormBuilder,
+    protected activatedRoute: ActivatedRoute,
+    protected sweetAlertService: SweetAlertService,
+    protected emergencyContactService: EmergencyContactService
+
+) {}
 
   public get contactForm(): FormGroup {
     return this.container.emergencyContactForm;

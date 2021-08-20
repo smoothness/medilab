@@ -5,27 +5,52 @@
         "title": "Appointments",
         "refreshListLabel": "Refresh list",
         "createOrEditAppointment": "Create or edit an appointment",
-        "notFound": "No Appointments found"
+        "notFound": "No appointments found"
       },
       "created": "A new Appointment was created with identifier {{ param }}",
-      "updated": "An Appointment was updated with identifier {{ param }}",
+      "updated": "The appointment has been rescheduled successfully.",
       "deleted": "An Appointment was deleted with identifier {{ param }}",
       "delete": {
         "question": "Are you sure you want to delete Appointment {{ id }}?"
       },
       "detail": {
-        "title": "Appointment detail"
+        "title": "Appointment detail",
+        "date": "Date: ",
+        "status": "Appointment status: ",
+        "appointmentTreatmentAilment": "Appointment Treatment Ailment",
+        "medicalExams": "Medical Exams",
+        "patient": "Patient: ",
+        "doctor": "Doctor: ",
+        "phone": "Phone number: ",
+        "email": "Email: ",
+        "specialty": "Specialty: "
       },
-      "id": "ID",
-      "date": "Date: ",
-      "status": "Appointment status: ",
-      "appointmentTreatmentAilment": "Appointment Treatment Ailment",
-      "medicalExams": "Medical Exams",
-      "patient": "Patient: ",
-      "doctor": "Doctor: ",
-      "phone": "Phone number: ",
-      "email": "Email: ",
-      "specialty": "Specialty: "
+      "history": {
+        "title": "Appointment history",
+        "date": "Date",
+        "status": "Appointment status",
+        "patient": "Patient",
+        "doctor": "Doctor",
+        "phone": "Phone number",
+        "email": "Email",
+        "specialty": "Specialty"
+      },
+      "action": {
+        "view": "See appointment",
+        "doctor": "View doctor",
+        "patient": "View patient"
+      },
+      "pipe": {
+        "canceled": "Canceled",
+        "pending": "Pending",
+        "finished": "Done"
+      },
+      "invoicePending": "View pending invoice",
+      "viewInvoice": "View invoice",
+      "register": {
+        "title": "Set an appointment",
+        "registered": "The appointment has been successfully scheduled."
+      }
     }
   }
 }

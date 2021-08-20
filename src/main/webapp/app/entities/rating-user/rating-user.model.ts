@@ -7,10 +7,18 @@ export interface IRatingUser {
   rating?: IRating | null;
   patient?: IPatient | null;
   doctor?: IDoctor | null;
+  average?: number;
 }
 
 export class RatingUser implements IRatingUser {
-  constructor(public id?: number, public rating?: IRating | null, public patient?: IPatient | null, public doctor?: IDoctor | null) {}
+  constructor(
+    public id?: number,
+    public rating?: IRating | null,
+    public patient?: IPatient | null,
+    public doctor?: IDoctor | null,
+    public average?: number
+  )
+  {}
 }
 
 export function getRatingUserIdentifier(ratingUser: IRatingUser): number | undefined {

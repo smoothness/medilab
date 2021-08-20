@@ -156,6 +156,35 @@ public class InvoiceResource {
         return ResponseUtil.wrapOrNotFound(invoice);
     }
 
+    /**
+     * {@code GET  /invoices/:id} : get the "id" invoice and pending status.
+     *
+     * @param id the id of the invoice to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the invoice, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/invoices/pending/{id}")
+    public ResponseEntity<Invoice> findPendingInvoicesByAppointmentID(@PathVariable Long id) {
+        Optional<Invoice> invoice = invoiceService.findPendingInvoicesByAppointmentID(id);
+        if (invoice.isPresent()) {
+            return ResponseEntity.ok(invoice.get());
+        } else {
+            Invoice invoiceNull = new Invoice();
+            return ResponseEntity.ok(invoiceNull);
+        }
+    }
+
+    @GetMapping("/invoices/patient/{id}")
+    public ResponseEntity<List<Invoice>> getInvoicesByPatient(@PathVariable Long id) {
+        List<Invoice> patientInvoices = invoiceService.findInvoicesByPatient(id);
+        return ResponseEntity.ok(patientInvoices);
+    }
+
+    @GetMapping("/invoices/doctor/{id}")
+    public ResponseEntity<List<Invoice>> getInvoicesByDoctor(@PathVariable Long id) {
+        List<Invoice> doctorInvoices = invoiceService.findInvoicesByDoctor(id);
+        return ResponseEntity.ok(doctorInvoices);
+    }
+
     @PutMapping("/invoices/payment/{id}")
     public ResponseEntity<Invoice> payInvoice(@PathVariable Long id) {
         invoiceService.payInvoice(id);
@@ -163,6 +192,21 @@ public class InvoiceResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @PutMapping("/invoices/cancel/{id}")
+    public ResponseEntity<Invoice> cancelPendingInvoice(@PathVariable Long id) {
+        invoiceService.cancelPendingInvoice(id);
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
+    }
+
+    @GetMapping("/invoices/history/{id}")
+    public ResponseEntity<List<Invoice>> findInvoicesByAppointmentID(@PathVariable Long id) {
+        List<Invoice> invoices = invoiceService.findInvoicesByAppointmentID(id);
+        return ResponseEntity.ok(invoices);
     }
 
     /**

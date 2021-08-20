@@ -1,24 +1,26 @@
 {
   "home": {
-    "title": "¡Bienvenido, Java Hipster!",
+    "title": "¡Bienvenido",
     "subtitle": "Esta es su página de inicio",
     "welcome": "Bienvenido",
     "viewLastAppointment": "Ver última cita",
     "requestAppointment": "Solicitar una cita",
     "createNewAppointment": "Crear una nueva cita",
     "upcomingAppointments": "Próximas citas",
-    "appointmentDetail": "Detalle",
+    "appointmentDetail": "Ver cita",
+    "patientDetail": "Ver paciente",
     "appointmentDelete": "Cancelar cita",
-    "appointmentDateChange": "Cambiar fecha",
+    "appointmentDateChange": "Reagendar",
     "appointmentDateChangeModal": {
-      "title": "Cambiar la fecha de la cita"
+      "title": "Reagendar cita"
     },
     "profile": {
       "identification": "Identificación:",
       "phone": "Teléfono:",
       "email": "Correo electrónico:",
       "specialty": "Especialidad:",
-      "rating": "Clasificación"
+      "rating": "Clasificación",
+      "name": "Nombre:"
     },
     "logged": {
       "message": "Está conectado como \"{{username}}\"."
@@ -28,7 +30,9 @@
       "cancelAppointmentTitle": "Cita cancelada",
       "cancelAppointmentMsj": "Esta cita ha sido cancelada, será removida del calendario.",
       "updatedAppointmentDatetitle": "Cambio de fecha",
-      "updatedAppointmentDateMsj": "La fecha de la cita fue Cambiada con éxito."
+      "updatedAppointmentDateMsj": "La fecha de la cita fue cambiada con éxito.",
+      "cancelInvoiceMsj": "La factura ha sido cancelada, recuerde emitir otra factura.",
+      "cancelInvoiceTitle": "Factura cancelada"
     },
     "btnNewContact": "Agregar nuevo contacto",
     "personalInfo": "Información personal",

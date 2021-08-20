@@ -1,0 +1,83 @@
+<section class="row p-0 m-0">
+  <div class="col-md-10 mx-auto my-5 card bg-dark">
+    <div class="text-center mt-3">
+      <h2 mediTranslate="medilabApp.appointment.history.title"></h2>
+    </div>
+    <div class="mt-4">
+      <div class="alert alert-warning text-center" id="no-result" *ngIf="appointments?.length === 0">
+        <span class="h5 text-dark" mediTranslate="medilabApp.appointment.home.notFound"></span>
+      </div>
+      <div class="table-responsive" *ngIf="appointments && appointments.length > 0">
+        <table class="table table-striped table-hover" aria-describedby="page-heading">
+          <thead>
+          <tr>
+            <th scope="col" class="text-primary"><span mediTranslate="medilabApp.appointment.history.date">Date</span></th>
+            <th scope="col" class="text-primary"><span mediTranslate="medilabApp.appointment.history.status">Status</span></th>
+            <th scope="col" class="text-primary" *ngIf="!isPatient"><span mediTranslate="medilabApp.appointment.history.patient">Patient</span></th>
+            <th scope="col" class="text-primary" *ngIf="!isDoctor"><span mediTranslate="medilabApp.appointment.history.doctor">Doctor</span></th>
+            <th scope="col" class="text-primary" *ngIf="!isDoctor"><span mediTranslate="medilabApp.appointment.history.specialty">Doctor</span></th>
+            <th scope="col"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let appointment of appointments" data-cy="entityTable">
+            <td>{{ appointment.date | date }}</td>
+            <td>{{ appointment.status | status }}</td>
+            <td *ngIf="!isPatient">
+              <div *ngIf="appointment.patient">
+                {{appointment.patient.internalUser?.completeName}} {{appointment.patient.secondSurname}}
+              </div>
+            </td>
+            <td *ngIf="!isDoctor">
+              <div>
+                {{appointment.doctor.internalUser?.completeName}} {{appointment.doctor.secondSurname}}
+              </div>
+            </td>
+            <td *ngIf="!isDoctor">
+              {{appointment.doctor.specialty}}
+            </td>
+            <td class="text-right">
+              <!-- VIEW DOCTOR PROFILE -->
+              <div class="btn-group" *ngIf="!isDoctor">
+                <button
+                  type="submit"
+                  [routerLink]="['/main/doctor', appointment.doctor.id, 'view']"
+                  class="btn btn-primary btn-sm"
+                  data-cy="entityDetailsButton"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                  <span class="d-none d-md-inline" mediTranslate="medilabApp.appointment.action.doctor">View</span>
+                </button>
+              </div>
+              <!-- VIEW PATIENT PROFILE -->
+              <div class="btn-group" *ngIf="!isPatient">
+                <button
+                  type="submit"
+                  [routerLink]="['/main/patient', appointment.patient.id, 'view']"
+                  class="btn btn-primary btn-sm"
+                  data-cy="entityDetailsButton"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                  <span class="d-none d-md-inline" mediTranslate="medilabApp.appointment.action.patient">View</span>
+                </button>
+              </div>
+              <!-- VIEW APPOINTMENT -->
+              <div class="btn-group">
+                <button
+                  type="submit"
+                  [routerLink]="['/main/appointment', appointment.id, 'view']"
+                  class="btn btn-primary btn-sm"
+                  data-cy="entityDetailsButton"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                  <span class="d-none d-md-inline" mediTranslate="medilabApp.appointment.action.view">View</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>

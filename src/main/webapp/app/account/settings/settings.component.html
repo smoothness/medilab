@@ -1,5 +1,5 @@
-<section class="row p-0 m-0 mt-5">
-  <div id="ml-modify" class="card col-md-7 mx-auto my-4">
+<section class="row p-0 m-0">
+  <div class="card bg-dark col-5 mx-auto my-4">
     <!-- Form -->
     <div id="formContainer" class="card-body overflow-auto">
       <form name="settingsForm" role="form" autocomplete="off" [formGroup]="settingsForm">
@@ -21,10 +21,10 @@
           type="button"
           [disabled]="settingsForm.invalid"
           (click)="save()"
-          class="btn btn-lg btn-primary col-4"
-          mediTranslate="settings.form.button"
+          class="btn btn-lg btn-primary w-100"
         >
-          Save
+         <fa-icon icon="save"></fa-icon>
+          <span mediTranslate="settings.form.button"></span>
         </button>
       </div>
     </div>

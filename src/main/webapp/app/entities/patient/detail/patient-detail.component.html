@@ -1,31 +1,33 @@
 <div class="container-fluid p-0 m-0">
-<section class="row p-0 m-0">
-  <div id="mgt" class="col-10 mx-auto">
-    <div class="text-center mb-5">
-      <h2 data-cy="patientDetailsHeading">{{ patient?.fullName }}</h2>
+  <div class="my-2 mx-2">
+    <medi-back-button></medi-back-button>
+    <div class="float-right m-top">
+      <button id="btnPdf" class="btn btn-primary" mediTranslate="medilabApp.patient.download" (click)="downloadProfileAsPDF()">
+        Export To PDF
+      </button>
     </div>
-    <div class="row p-0 m-0 card-body">
-      <div class="col-6">
-        <medi-user-profile [user]="patient"></medi-user-profile>
+  </div>
+  <section class="row p-0 m-0">
+    <div id="mgt" class="col-10 mx-auto">
+      <div class="text-center mb-5">
+        <h2 data-cy="patientDetailsHeading">{{ patient?.fullName }}</h2>
       </div>
-      <div class="col-6">
-        <medi-emergency-contact-detail [patientId]="patient?.patientId"></medi-emergency-contact-detail>
-      </div>
-    </div>
-
-    <div class="my-4" *ngIf="patientMedicalExams.length > 0">
-      <medi-medical-exams [medicalExams]="patientMedicalExams" [showButtons]="false"></medi-medical-exams>
-    </div>
-
-    <!--DIAGNOSIS -->
-    <div class="row p-0 m-0 card-body my-4">
-      <div class="col-12 card bg-dark">
-        <div class="text-center my-4">
-          <h1>AQUI VA EL COMPONENTE REUTILIZABLE DE LOS DIGANOSTICOS (PADECIMIENTO Y TRATAMIENTO) EN UN CARD</h1>
+      <div class="row p-0 m-0 card-body">
+        <div class="col-6">
+          <medi-user-profile [user]="patient"></medi-user-profile>
+        </div>
+        <div class="col-6">
+          <medi-emergency-contact-detail [patientId]="patient?.patientId"></medi-emergency-contact-detail>
         </div>
       </div>
-    </div>
 
-  </div>
-</section>
+      <div class="col-12 m-0 p-0 my-4" *ngIf="patientDiagnosis.length > 0">
+        <medi-appointment-treatment-ailment [appointmentTreatmentAilments]="patientDiagnosis"></medi-appointment-treatment-ailment>
+      </div>
+
+      <div class="my-4" *ngIf="patientMedicalExams.length > 0">
+        <medi-medical-exams [medicalExams]="patientMedicalExams" [showButtons]="false"></medi-medical-exams>
+      </div>
+    </div>
+  </section>
 </div>

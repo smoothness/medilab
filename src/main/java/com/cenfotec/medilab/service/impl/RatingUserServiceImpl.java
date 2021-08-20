@@ -60,8 +60,13 @@ public class RatingUserServiceImpl implements RatingUserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Object findAverageByDoctor(Long id) {
+        return ratingUserRepository.findAverageByDoctor(id);
+    }
+
+    @Override
     public void delete(Long id) {
-        log.debug("Request to delete RatingUser : {}", id);
         ratingUserRepository.deleteById(id);
     }
 }
