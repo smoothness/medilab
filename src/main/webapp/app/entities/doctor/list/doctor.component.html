@@ -7,7 +7,7 @@
       <div class="alert alert-warning text-center" id="no-result" *ngIf="doctors.length === 0">
         <span class="h5 text-dark" mediTranslate="medilabApp.doctor.home.notFound">No doctors found</span>
       </div>
-      <div class="table-responsive" id="entities" *ngIf="doctors && doctors.length > 0">
+      <div class="table-responsive table-hover" id="entities" *ngIf="doctors && doctors.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
           <thead>
             <tr class="text-primary">
@@ -27,9 +27,18 @@
               <td>{{ doctor.specialty }}</td>
               <td><medi-rating-user-detail [doctor]="doctor" class="h5"></medi-rating-user-detail> </td>
               <td class="text-right">
+                <button
+                  type="submit"
+                  [routerLink]="['/main/doctor', doctor.doctorId, 'view']"
+                  class="btn btn-primary"
+                  data-cy="entityDetailsButton"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                  <span class="d-none d-md-inline" mediTranslate="medilabApp.appointment.action.doctor">View</span>
+                </button>
                 <a
                   target="_blank"
-                  class="btn btn-secondary"
+                  class="btn btn-primary"
                   href="https://wa.me/50688885353?text=Solicito%20una%20cita%20con%20el%20doctor"
                 >
                   <fa-icon icon="calendar-alt"></fa-icon>
