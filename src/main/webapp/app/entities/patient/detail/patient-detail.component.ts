@@ -81,9 +81,6 @@ export class PatientDetailComponent implements OnInit {
   }
 
   downloadProfileAsPDF(): void {
-    console.log('this.patient', this.patient);
-    console.log('this.getMedicalExams()', this.patientMedicalExams);
-    console.log('this.getPatientDiagnoses()', this.patientDiagnosis);
     const documentDefinition = this.getPatientInfo();
     pdfMake.createPdf(documentDefinition).open();
   }
@@ -92,11 +89,12 @@ export class PatientDetailComponent implements OnInit {
     return {
       content: [
         {
-          text: 'Perfil',
+          text: 'Expediente médico',
           bold: true,
           fontSize: 20,
           alignment: 'center',
           margin: [0, 0, 0, 20],
+          color: '#639282',
         },
         {
           columns: [
@@ -104,15 +102,16 @@ export class PatientDetailComponent implements OnInit {
               {
                 text: this.patient?.fullName,
                 style: 'name',
+                color: '#639282',
               },
               {
-                text: `Identificación: ${this.patient?.id}`,
+                text: `Identificación: ${this.patient?.login}`,
               },
               {
-                text: `Email :   ${this.patient?.email}`,
+                text: `Email: ${this.patient?.email}`,
               },
               {
-                text: `Teléfono No : ${this.patient?.phone}`,
+                text: `Teléfono: ${this.patient?.phone}`,
               },
             ],
           ],
@@ -120,17 +119,20 @@ export class PatientDetailComponent implements OnInit {
         {
           text: 'Padecimientos',
           style: 'header',
+          color: '#639282',
         },
         this.getAilmentsForPDF(this.patientDiagnosis),
 
         {
           text: 'Tratamientos',
           style: 'header',
+          color: '#639282',
         },
         this.getTreatmentsForPdf(this.patientDiagnosis),
         {
           text: 'Examenes Médicos',
           style: 'header',
+          color: '#639282',
         },
 
         this.getMedicalExamsForPdf(this.patientMedicalExams),
@@ -138,14 +140,10 @@ export class PatientDetailComponent implements OnInit {
         {
           text: 'Contactos de emergencia',
           style: 'header',
+          color: '#639282',
         },
 
         this.getEmergencyContacsForPdf(this.emergencyContacs),
-
-        {
-          text: 'Signature',
-          style: 'sign',
-        },
       ],
       styles: {
         header: {
@@ -198,6 +196,7 @@ export class PatientDetailComponent implements OnInit {
         widths: ['*'],
         body: [...exs],
       },
+      layout: 'headerLineOnly',
     };
   }
 
@@ -230,6 +229,7 @@ export class PatientDetailComponent implements OnInit {
         widths: ['*'],
         body: [...exs],
       },
+      layout: 'headerLineOnly',
     };
   }
 
@@ -259,6 +259,7 @@ export class PatientDetailComponent implements OnInit {
         widths: ['*'],
         body: [...exs],
       },
+      layout: 'headerLineOnly',
     };
   }
 
@@ -280,11 +281,10 @@ export class PatientDetailComponent implements OnInit {
               {
                 text: emergencyContac.phone,
               },
+              {
+                text: `Parentezco: ${emergencyContac.relationShip}`,
+              },
             ],
-            {
-              text: emergencyContac.relationShip,
-              alignment: 'right',
-            },
           ],
         },
       ]);
@@ -295,6 +295,7 @@ export class PatientDetailComponent implements OnInit {
         widths: ['*'],
         body: [...exs],
       },
+      layout: 'headerLineOnly',
     };
   }
 }
