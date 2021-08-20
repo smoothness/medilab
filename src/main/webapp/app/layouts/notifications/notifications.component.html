@@ -39,7 +39,10 @@
         <ul>
           <li *ngFor="let canceled of canceledAppointments">
             <a class="notification" [routerLink]="['/main/appointment', canceled.id, 'view']" [id]="canceled.id">
-              <span mediTranslate="notifications.patient.canceled"> {{ canceled?.patientExt?.internalUser?.completeName }}</span>
+              <div>
+                <span mediTranslate="notifications.patient.canceled"></span>
+                <span>{{ canceled?.patientExt?.internalUser?.completeName }}</span>
+              </div>
               <span>{{ canceled?.date | date }}</span>
             </a>
           </li>
@@ -50,7 +53,10 @@
           <ul>
             <li *ngFor="let pending of pendingAppointments">
               <a class="notification" [routerLink]="['/main/appointment', pending.id, 'view']" [id]="pending.id">
-                <span>Cita pendiente con el médico {{ pending?.doctorExt?.internalUser?.completeName }}</span>
+                <div>
+                  <span mediTranslate="notifications.doctor.pending"></span>
+                  <span>{{ pending?.doctorExt?.internalUser?.completeName }}</span>
+                </div>
                 <span>{{ pending?.date | date }}</span>
               </a>
             </li>
@@ -58,7 +64,10 @@
           <ul>
             <li *ngFor="let updated of updatedAppointments">
               <a class="notification" [routerLink]="['/main/appointment', updated.id, 'view']" [id]="updated.id">
-                <span>Cita modificada con el médico {{ updated?.doctorExt?.internalUser?.completeName }}</span>
+                <div>
+                  <span mediTranslate="notifications.doctor.updated"></span>
+                  <span>{{ updated?.doctorExt?.internalUser?.completeName }}</span>
+                </div>
                 <span>{{ updated?.date | date }}</span>
               </a>
             </li>
@@ -66,7 +75,10 @@
           <ul>
             <li *ngFor="let canceled of canceledAppointments">
               <a class="notification" [routerLink]="['/main/appointment', canceled.id, 'view']" [id]="canceled.id">
-                <span>Cita cancelada con el médico {{ canceled?.doctorExt?.internalUser?.completeName }}</span>
+                <div>
+                  <span mediTranslate="notifications.doctor.cancled"></span>
+                  <span>{{ canceled?.doctorExt?.internalUser?.completeName }}</span>
+                </div>
                 <span>{{ canceled?.date | date }}</span>
               </a>
             </li>
