@@ -81,15 +81,27 @@ export class NotificationsComponent implements OnInit {
   }
 
   getInvoices(userId: any): void {
-    this.invoiceService.findInvoicesByDoctor(userId).subscribe((invoices: any) => {
-      invoices.body.forEach((invoice: any) => {
-        if (invoice.status === 'PENDING') {
-          this.pendingInvoices.push(invoice);
-        }
+    console.log('user', this.userType);
+    if (this.userType === 'doctor') {
+      this.invoiceService.findInvoicesByDoctor(userId).subscribe((invoices: any) => {
+        invoices.body.forEach((invoice: any) => {
+          if (invoice.status === 'PENDING') {
+            this.pendingInvoices.push(invoice);
+          }
+        });
+        this.calculateTotalNotifications();
       });
-
-      this.calculateTotalNotifications();
-    });
+    }
+    if (this.userType === 'patient') {
+      this.invoiceService.findInvoicesByPatient(userId).subscribe((invoices: any) => {
+        invoices.body.forEach((invoice: any) => {
+          if (invoice.status === 'PENDING') {
+            this.pendingInvoices.push(invoice);
+          }
+        });
+        this.calculateTotalNotifications();
+      });
+    }
   }
 
   initNotifications(): void {
