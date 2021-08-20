@@ -27,7 +27,8 @@
       "ratingUser": "Rating User",
       "commentUser": "Comment User",
       "internalUser": "Internal User",
-      "ailmentName": "Nombre:"
+      "ailmentName": "Nombre:",
+      "download": "Descargar expediente"
     }
   }
 }

@@ -1,28 +1,33 @@
 <div class="container-fluid p-0 m-0">
   <div class="my-2 mx-2">
     <medi-back-button></medi-back-button>
-  </div>
-<section class="row p-0 m-0">
-  <div id="mgt" class="col-10 mx-auto">
-    <div class="text-center mb-5">
-      <h2 data-cy="patientDetailsHeading">{{ patient?.fullName }}</h2>
-    </div>
-    <div class="row p-0 m-0 card-body">
-      <div class="col-6">
-        <medi-user-profile [user]="patient"></medi-user-profile>
-      </div>
-      <div class="col-6">
-        <medi-emergency-contact-detail [patientId]="patient?.patientId"></medi-emergency-contact-detail>
-      </div>
-    </div>
-
-    <div class="col-12 m-0 p-0 my-4" *ngIf="patientDiagnosis.length > 0">
-      <medi-appointment-treatment-ailment [appointmentTreatmentAilments]="patientDiagnosis"></medi-appointment-treatment-ailment>
-    </div>
-
-    <div class="my-4" *ngIf="patientMedicalExams.length > 0">
-      <medi-medical-exams [medicalExams]="patientMedicalExams" [showButtons]="false"></medi-medical-exams>
+    <div class="float-right m-top">
+      <button id="btnPdf" class="btn btn-primary" mediTranslate="medilabApp.patient.download" (click)="downloadProfileAsPDF()">
+        Export To PDF
+      </button>
     </div>
   </div>
-</section>
+  <section class="row p-0 m-0">
+    <div id="mgt" class="col-10 mx-auto">
+      <div class="text-center mb-5">
+        <h2 data-cy="patientDetailsHeading">{{ patient?.fullName }}</h2>
+      </div>
+      <div class="row p-0 m-0 card-body">
+        <div class="col-6">
+          <medi-user-profile [user]="patient"></medi-user-profile>
+        </div>
+        <div class="col-6">
+          <medi-emergency-contact-detail [patientId]="patient?.patientId"></medi-emergency-contact-detail>
+        </div>
+      </div>
+
+      <div class="col-12 m-0 p-0 my-4" *ngIf="patientDiagnosis.length > 0">
+        <medi-appointment-treatment-ailment [appointmentTreatmentAilments]="patientDiagnosis"></medi-appointment-treatment-ailment>
+      </div>
+
+      <div class="my-4" *ngIf="patientMedicalExams.length > 0">
+        <medi-medical-exams [medicalExams]="patientMedicalExams" [showButtons]="false"></medi-medical-exams>
+      </div>
+    </div>
+  </section>
 </div>
