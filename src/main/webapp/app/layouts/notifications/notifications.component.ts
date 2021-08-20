@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AppointmentService } from 'app/entities/appointment/service/appointment.service';
+import { InvoiceService } from 'app/entities/invoice/service/invoice.service';
 import { Doctor, Patient } from 'app/core/auth/account.model';
 import { DoctorService } from 'app/entities/doctor/service/doctor.service';
 import { PatientService } from 'app/entities/patient/service/patient.service';
@@ -15,14 +16,16 @@ export class NotificationsComponent implements OnInit {
   @Input() public user: any;
   expanded = false;
   userType = '';
-  allAppointments: any[] = [];
   pendingAppointments: any[] = [];
   updatedAppointments: any[] = [];
   canceledAppointments: any[] = [];
+  pendingInvoices: any[] = [];
+  totalNotificationsLength = 0;
   todayDate: NgbDateStruct;
 
   constructor(
     private appointmentService: AppointmentService,
+    private invoiceService: InvoiceService,
     private doctorService: DoctorService,
     private patientService: PatientService
   ) {
@@ -36,6 +39,11 @@ export class NotificationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.initNotifications();
+  }
+
+  calculateTotalNotifications(): void {
+    this.totalNotificationsLength =
+      this.pendingAppointments.length + this.updatedAppointments.length + this.canceledAppointments.length + this.pendingInvoices.length;
   }
 
   withExtendedData(appointment: any): any {
@@ -72,15 +80,41 @@ export class NotificationsComponent implements OnInit {
     });
   }
 
+  getInvoices(userId: any): void {
+    console.log('user', this.userType);
+    if (this.userType === 'doctor') {
+      this.invoiceService.findInvoicesByDoctor(userId).subscribe((invoices: any) => {
+        invoices.body.forEach((invoice: any) => {
+          if (invoice.status === 'PENDING') {
+            this.pendingInvoices.push(invoice);
+          }
+        });
+        this.calculateTotalNotifications();
+      });
+    }
+    if (this.userType === 'patient') {
+      this.invoiceService.findInvoicesByPatient(userId).subscribe((invoices: any) => {
+        invoices.body.forEach((invoice: any) => {
+          if (invoice.status === 'PENDING') {
+            this.pendingInvoices.push(invoice);
+          }
+        });
+        this.calculateTotalNotifications();
+      });
+    }
+  }
+
   initNotifications(): void {
     this.appointmentService.query().subscribe((appointments: any) => {
       if (appointments.body) {
+        let userTypeId: any;
         appointments.body.forEach((appointment: any) => {
           const userType = this.getUserType(this.user);
-          let userTypeId;
+
           if (userType) {
             userTypeId = `${userType}Id`;
           }
+
           if (
             userType &&
             userTypeId &&
@@ -99,6 +133,8 @@ export class NotificationsComponent implements OnInit {
             }
           }
         });
+
+        this.getInvoices(this.user[userTypeId]);
       }
     });
   }
