@@ -5,19 +5,9 @@
         <span mediTranslate="medilabApp.ailment.home.title">Ailments</span>
 
         <div class="d-flex justify-content-end">
-          <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
-            <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-            <span mediTranslate="medilabApp.ailment.home.refreshListLabel">Refresh List</span>
-          </button>
-
-          <button
-            id="jh-create-entity"
-            data-cy="entityCreateButton"
-            class="btn btn-primary jh-create-entity create-ailment"
-            [routerLink]="['/main/ailment/new']"
-          >
+          <button id="jh-create-entity" data-cy="entityCreateButton" class="btn btn-primary jh-create-entity create-ailment">
             <fa-icon icon="plus"></fa-icon>
-            <span mediTranslate="medilabApp.ailment.home.createLabel"> Create a new Ailment </span>
+            <span mediTranslate="medilabApp.ailment.home.createLabel" (click)="ShowRegisterAilmentModal()"> Create a new Ailment </span>
           </button>
         </div>
       </h2>

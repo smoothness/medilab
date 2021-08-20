@@ -27,8 +27,9 @@ export class InvoiceDetailComponent implements OnInit {
   currentUser: any = {};
   isVisible = true;
   addCol = false;
-
+  Logo = '../../../../content/images/logo.png';
   formatMediumDatetimePipe = new FormatMediumDatetimePipe();
+  logo: any;
 
   constructor(
     protected invoiceService: InvoiceService,
@@ -40,6 +41,9 @@ export class InvoiceDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getBase64ImageFromURL('../../../../content/images/logo.png').then((logo: any) => {
+      this.logo = logo;
+    });
     if (this.userCheck) {
       this.currentUser = this.userCheck;
     }
@@ -53,6 +57,32 @@ export class InvoiceDetailComponent implements OnInit {
       this.getInvoiceData();
       this.validateShow();
     }
+  }
+
+  getBase64ImageFromURL(url: any): any {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.setAttribute('crossOrigin', 'anonymous');
+
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(img, 0, 0);
+
+        const dataURL = canvas.toDataURL('image/png');
+
+        resolve(dataURL);
+      };
+
+      img.onerror = error => {
+        reject(error);
+      };
+
+      img.src = url;
+    });
   }
 
   getInvoiceData(): void {
@@ -114,10 +144,16 @@ export class InvoiceDetailComponent implements OnInit {
     return {
       content: [
         {
+          image: this.logo,
+          width: 30,
+          height: 30,
+          alignment: 'center',
+        },
+        {
           text: 'MediLab',
           fontSize: 16,
           alignment: 'center',
-          color: '#047886',
+          color: '#639282',
         },
         {
           text: `Factura número: ${this.invoice.id}`,
@@ -125,11 +161,12 @@ export class InvoiceDetailComponent implements OnInit {
           bold: true,
           alignment: 'center',
           decoration: 'underline',
-          color: 'skyblue',
+          color: '#639282',
         },
         {
           text: 'Detalles del cliente',
           style: 'sectionHeader',
+          color: '#639282',
         },
         {
           columns: [

@@ -10,7 +10,7 @@
             <div>
               <h5 data-cy="appointmentDetailsHeading" mediTranslate="medilabApp.appointment.detail.title">Detalle de la cita</h5>
             </div>
-            <div class="ml-auto">
+            <div class="ml-auto" *ngIf="!isCancel()">
               <button type="button" class="btn btn-secondary" (click)="showRegisterInvoiceModal()" *ngIf="showRegisterInvoiceBtn()">
                 <fa-icon icon="plus"></fa-icon>
                 <span mediTranslate="medilabApp.medicalExams.btnInvoice">add</span>
@@ -110,7 +110,10 @@
     </div>
 
     <div class="col-10 my-4" *ngIf="diagnosis.length">
-      <medi-appointment-treatment-ailment [appointmentTreatmentAilments]="diagnosis" (updateList)="loadDiagnosis($event)"></medi-appointment-treatment-ailment>
+      <medi-appointment-treatment-ailment
+        [appointmentTreatmentAilments]="diagnosis"
+        (updateList)="loadDiagnosis($event)"
+      ></medi-appointment-treatment-ailment>
     </div>
 
     <div class="col-10 mb-4" *ngIf="medicalExams.length > 0">

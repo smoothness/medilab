@@ -73,8 +73,6 @@ export class AppointmentDetailComponent implements OnInit {
         this.isPending = true;
       }
     });
-    console.log('invoicePending', this.invoicePending);
-    console.log('isPending', this.isPending);
   }
 
   showRegisterInvoiceBtn(): boolean {
@@ -158,6 +156,16 @@ export class AppointmentDetailComponent implements OnInit {
     this.diagnosisService.findByAppointment(this.appointment.id).subscribe((res: any) => {
       this.diagnosis = res.body;
     });
+  }
+
+  public isCancel(): boolean {
+    let show = false;
+
+    if (this.appointment.status === 'CANCELED') {
+      show = true;
+    }
+
+    return show;
   }
 
   previousState(): void {

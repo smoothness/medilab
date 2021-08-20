@@ -5,7 +5,7 @@
         "title": "Lista de padecimientos",
         "refreshListLabel": "Refrescar lista",
         "createLabel": "Crear nuevo padecimiento",
-        "createOrEditLabel": "Crear o editar padecimiento",
+        "createOrEditLabel": "Registrar de padecimiento",
         "notFound": "Ningún padecimiento encontrado"
       },
       "created": "El padecimiento se ha registrado  exitosamente",
@@ -26,7 +26,11 @@
       "ailmentName": "Nombre del padecimiento",
       "quantityPatients": "Cantidad de pacientes",
       "detail": "Detalle",
-      "viewReport": "Ver pacientes"
+      "viewReport": "Ver pacientes",
+      "register": {
+        "title": "Crear un padecimiento",
+        "registered": "El padecimiento se registrado de manera exitosa"
+      }
     }
   }
 }
