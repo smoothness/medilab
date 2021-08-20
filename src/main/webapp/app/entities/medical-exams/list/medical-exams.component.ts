@@ -5,6 +5,7 @@ import { IMedicalExams } from '../medical-exams.model';
 import { SweetAlertService } from "../../../shared/services/sweet-alert.service";
 import { MedicalExamsService } from '../service/medical-exams.service';
 import { MedicalExamsUpdateComponent } from "../update/medical-exams-update.component";
+import {Doctor} from "../../../core/auth/account.model";
 
 @Component({
   selector: 'medi-medical-exams',

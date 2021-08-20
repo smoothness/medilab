@@ -7,13 +7,15 @@ import { AppointmentTreatmentAilmentService } from '../service/appointment-treat
 
 import { Doctor, Patient } from "../../../core/auth/account.model";
 import {AccountService} from "../../../core/auth/account.service";
+import {Status} from "../../enumerations/status.model";
 
 @Component({
   selector: 'medi-appointment-treatment-ailment',
   templateUrl: './appointment-treatment-ailment.component.html',
 })
 export class AppointmentTreatmentAilmentComponent implements OnInit{
-
+  @Input() appointment: any = {};
+  @Input() isProfile = false;
   @Input() appointmentTreatmentAilments?: IAppointmentTreatmentAilment[];
   @Output() updateList: EventEmitter<boolean> = new EventEmitter();
   currentUser: any = {};
@@ -45,6 +47,26 @@ export class AppointmentTreatmentAilmentComponent implements OnInit{
     this.accountService.formatUserIdentity().subscribe(user => {
       this.currentUser = user;
     });
+  }
+
+  public showButtons(): boolean{
+
+    let show = false;
+
+    if(this.currentUser instanceof Doctor ){
+      if(this.appointment.status === Status.PENDING){
+        show = true;
+      }else if(this.isProfile){
+        show = true;
+      }else{
+        show = false;
+      }
+    }
+
+
+
+    console.log(show);
+    return show;
   }
 
   delete(diagnosis: IAppointmentTreatmentAilment): void {
