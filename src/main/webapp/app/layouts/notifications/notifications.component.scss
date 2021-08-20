@@ -29,11 +29,11 @@
 
 .notifications-dropdown-menu {
   background-color: $dark-bgd;
-  left: -5px;
+  left: -40px;
   padding: 0.5rem 1rem;
   position: absolute;
   top: 2.5rem;
-  width: 250%;
+  width: 260%;
   z-index: 99;
 
   @media (max-width: 63rem) {
