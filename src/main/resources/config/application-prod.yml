@@ -33,9 +33,9 @@ spring:
       enabled: false
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://sql5.freemysqlhosting.net/sql5427365?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-    username: sql5427365
-    password: 6CdCBW1eRR
+    url: jdbc:mysql://sql5.freemysqlhosting.net/sql3432004?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: sql3432004
+    password: zeyiYGLEGA
     hikari:
       poolName: Hikari
       auto-commit: false
