@@ -23,6 +23,7 @@ export class PatientDetailComponent implements OnInit {
   patientMedicalExams: IMedicalExams[] = [];
   patientDiagnosis: IAppointmentTreatmentAilment[] = [];
   emergencyContacs: any = [];
+  logo: any;
 
   constructor(
     protected activatedRoute: ActivatedRoute,
@@ -33,6 +34,9 @@ export class PatientDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getBase64ImageFromURL('../../../../content/images/logo.png').then((logo: any) => {
+      this.logo = logo;
+    });
     if (!this.patient) {
       this.getByUrl();
     } else {
@@ -40,6 +44,32 @@ export class PatientDetailComponent implements OnInit {
       this.getPatientDiagnoses();
       this.getEmergencyContacts();
     }
+  }
+
+  getBase64ImageFromURL(url: any): any {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.setAttribute('crossOrigin', 'anonymous');
+
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(img, 0, 0);
+
+        const dataURL = canvas.toDataURL('image/png');
+
+        resolve(dataURL);
+      };
+
+      img.onerror = error => {
+        reject(error);
+      };
+
+      img.src = url;
+    });
   }
 
   public getByUrl(): void {
@@ -88,6 +118,12 @@ export class PatientDetailComponent implements OnInit {
   getPatientInfo(): any {
     return {
       content: [
+        {
+          image: this.logo,
+          width: 50,
+          height: 50,
+          alignment: 'center',
+        },
         {
           text: 'Expediente médico',
           bold: true,

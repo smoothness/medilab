@@ -7,6 +7,8 @@ import { finalize } from 'rxjs/operators';
 
 import { IAilment, Ailment } from '../ailment.model';
 import { AilmentService } from '../service/ailment.service';
+import { SweetAlertService } from '../../../shared/services/sweet-alert.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'medi-ailment-update',
@@ -21,7 +23,13 @@ export class AilmentUpdateComponent implements OnInit {
     removed: [],
   });
 
-  constructor(protected ailmentService: AilmentService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
+  constructor(
+    protected ailmentService: AilmentService,
+    protected activatedRoute: ActivatedRoute,
+    protected fb: FormBuilder,
+    protected sweetAlertService: SweetAlertService,
+    public activeModal: NgbActiveModal
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ ailment }) => {
@@ -36,27 +44,15 @@ export class AilmentUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const ailment = this.createFromForm();
-    if (ailment.id !== undefined) {
-      this.subscribeToSaveResponse(this.ailmentService.update(ailment));
-    } else {
-      ailment.removed = true;
-      this.subscribeToSaveResponse(this.ailmentService.create(ailment));
-    }
-  }
+    ailment.removed = false;
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IAilment>>): void {
-    result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
-      () => this.onSaveSuccess(),
-      () => this.onSaveError()
-    );
-  }
-
-  protected onSaveSuccess(): void {
-    this.previousState();
-  }
-
-  protected onSaveError(): void {
-    // Api for inheritance.
+    ailment.removed = false;
+    this.ailmentService.create(ailment).subscribe(res => {
+      this.sweetAlertService.showMsjSuccess('reset.done', 'medilabApp.ailment.register.registered').then(() => {
+        this.editForm.reset();
+        this.activeModal.close('register');
+      });
+    });
   }
 
   protected onSaveFinalize(): void {
@@ -74,9 +70,7 @@ export class AilmentUpdateComponent implements OnInit {
   protected createFromForm(): IAilment {
     return {
       ...new Ailment(),
-      id: this.editForm.get(['id'])!.value,
       name: this.editForm.get(['name'])!.value,
-      removed: this.editForm.get(['removed'])!.value,
     };
   }
 }

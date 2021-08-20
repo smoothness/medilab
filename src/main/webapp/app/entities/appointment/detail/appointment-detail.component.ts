@@ -159,6 +159,16 @@ export class AppointmentDetailComponent implements OnInit {
     });
   }
 
+  public isCancel(): boolean {
+    let show = false;
+
+    if (this.appointment.status === 'CANCELED') {
+      show = true;
+    }
+
+    return show;
+  }
+
   previousState(): void {
     window.history.back();
   }
