@@ -2,7 +2,7 @@
   "medilabApp": {
     "ratingUser": {
       "home": {
-        "title": "Rating Users",
+        "title": "Calificación",
         "refreshListLabel": "Refrescar lista",
         "createLabel": "Crear nuevo Rating User",
         "createOrEditLabel": "Crear o editar Rating User",

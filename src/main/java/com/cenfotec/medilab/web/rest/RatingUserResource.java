@@ -154,6 +154,13 @@ public class RatingUserResource {
         return ResponseUtil.wrapOrNotFound(ratingUser);
     }
 
+
+    @GetMapping("/rating-users/average/{id}")
+    public ResponseEntity<Object> getAverageByDoctor(@PathVariable Long id) {
+        Object ratingUser = ratingUserService.findAverageByDoctor(id);
+        return ResponseEntity.ok(ratingUser);
+    }
+
     /**
      * {@code DELETE  /rating-users/:id} : delete the "id" ratingUser.
      *

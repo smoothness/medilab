@@ -39,6 +39,8 @@ public interface RatingUserService {
      */
     Optional<RatingUser> findOne(Long id);
 
+    Object findAverageByDoctor(Long id);
+
     /**
      * Delete the "id" ratingUser.
      *

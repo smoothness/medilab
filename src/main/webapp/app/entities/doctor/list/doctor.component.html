@@ -14,6 +14,7 @@
               <th scope="col" class="h6"><span mediTranslate="medilabApp.doctor.list.completeName">Complete Name</span></th>
               <th scope="col" class="h6"><span mediTranslate="medilabApp.doctor.list.email">Complete Name</span></th>
               <th scope="col" class="h6"><span mediTranslate="medilabApp.doctor.specialty">Specialty</span></th>
+              <th scope="col" class="h6"><span mediTranslate="medilabApp.ratingUser.home.title"></span></th>
               <th scope="col" class="h6"></th>
             </tr>
           </thead>
@@ -24,6 +25,7 @@
               </td>
               <td>{{ doctor.email }}</td>
               <td>{{ doctor.specialty }}</td>
+              <td><medi-rating-user-detail [doctor]="doctor" class="h5"></medi-rating-user-detail> </td>
               <td class="text-right">
                 <a
                   target="_blank"

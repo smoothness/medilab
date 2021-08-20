@@ -6,13 +6,15 @@ import { DoctorUpdateComponent } from './update/doctor-update.component';
 import { DoctorDeleteDialogComponent } from './delete/doctor-delete-dialog.component';
 import { DoctorRoutingModule } from './route/doctor-routing.module';
 import { LayoutsModule } from './../../layouts/layouts.module';
+import { RatingUserModule } from "../rating-user/rating-user.module";
 
 
 @NgModule({
   imports: [
     SharedModule,
-    DoctorRoutingModule,
     LayoutsModule,
+    RatingUserModule,
+    DoctorRoutingModule,
   ],
   declarations: [
     DoctorComponent,
