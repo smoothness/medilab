@@ -8,7 +8,7 @@
         "notFound": "No appointments found"
       },
       "created": "A new Appointment was created with identifier {{ param }}",
-      "updated": "An Appointment was updated with identifier {{ param }}",
+      "updated": "The appointment has been rescheduled successfully.",
       "deleted": "An Appointment was deleted with identifier {{ param }}",
       "delete": {
         "question": "Are you sure you want to delete Appointment {{ id }}?"
@@ -46,7 +46,11 @@
         "finished": "Done"
       },
       "invoicePending": "View pending invoice",
-      "viewInvoice": "View invoice"
+      "viewInvoice": "View invoice",
+      "register": {
+        "title": "Set an appointment",
+        "registered": "The appointment has been successfully scheduled."
+      }
     }
   }
 }

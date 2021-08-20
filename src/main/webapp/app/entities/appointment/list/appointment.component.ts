@@ -6,6 +6,8 @@ import { AccountService } from '../../../core/auth/account.service';
 import { AppointmentService } from '../service/appointment.service';
 import { SweetAlertService } from '../../../shared/services/sweet-alert.service';
 
+import { AppointmentUpdateComponent } from "../update/appointment-update.component";
+
 import { IAppointment } from '../appointment.model';
 import { Status } from '../../enumerations/status.model';
 import { Doctor, Patient } from '../../../core/auth/account.model';
@@ -45,6 +47,16 @@ export class AppointmentComponent implements OnInit {
   public authenticatedAccount(): void {
     this.accountService.formatUserIdentity().subscribe(user => {
       this.currentUser = user;
+    });
+  }
+
+  public openRescheduleModal(appointment: any): void {
+    const modalRef = this.modalService.open(AppointmentUpdateComponent, {centered: true});
+    modalRef.componentInstance.appointment = appointment;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'updated') {
+        this.updateList.emit(true);
+      }
     });
   }
 

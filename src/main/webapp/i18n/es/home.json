@@ -10,9 +10,9 @@
     "appointmentDetail": "Ver cita",
     "patientDetail": "Ver paciente",
     "appointmentDelete": "Cancelar cita",
-    "appointmentDateChange": "Cambiar fecha",
+    "appointmentDateChange": "Reagendar",
     "appointmentDateChangeModal": {
-      "title": "Cambiar la fecha de la cita"
+      "title": "Reagendar cita"
     },
     "profile": {
       "identification": "Identificación:",

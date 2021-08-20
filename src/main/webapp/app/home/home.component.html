@@ -49,7 +49,7 @@
                 id="jh-create-entity"
                 data-cy="entityCreateButton"
                 class="btn btn-primary col-12 jh-create-entity create-appointment"
-                [routerLink]="['/main/appointment/new', { doctorId: currentUser.doctorId }]"
+                (click)="showRegisterAppointmentModal()"
               >
                 <fa-icon icon="plus"></fa-icon>
                 <span mediTranslate="home.createNewAppointment">Crear una nueva cita</span>

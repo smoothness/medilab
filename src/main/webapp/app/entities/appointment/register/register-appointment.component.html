@@ -1,15 +1,15 @@
 <section>
   <div class="card bg-dark p-5">
     <div class="text-center p-0 m-0">
-      <h2 class="text-primary py-2" mediTranslate="home.appointmentDateChangeModal.title"></h2>
+      <h2 class="text-primary py-2" mediTranslate="medilabApp.appointment.register.title"></h2>
     </div>
     <div class="card-body">
-      <form name="editForm" role="form" (ngSubmit)="save()" [formGroup]="editForm">
+      <form name="registerForm" role="form" (ngSubmit)="save()" [formGroup]="registerForm">
         <div class="form-group">
-          <label class="form-control-label text-white" mediTranslate="medilabApp.appointment.detail.date" for="fieldDate"></label>
+          <label class="form-control-label text-white" mediTranslate="medilabApp.appointment.detail.date" for="field_date"></label>
           <div class="input-group">
             <input
-              id="fieldDate"
+              id="field_date"
               data-cy="date"
               type="text"
               class="form-control"
@@ -17,13 +17,24 @@
               ngbDatepicker
               #dateDp="ngbDatepicker"
               [minDate]="todayDate"
-              [startDate]="formattedDate"
               formControlName="date"
             />
             <span class="input-group-append">
                 <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
               </span>
           </div>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label text-white" mediTranslate="medilabApp.appointment.detail.patient" for="field_patient"></label>
+          <select class="form-control" id="field_patient" data-cy="patient" name="patient" formControlName="patient">
+            <option value="">{{ 'medilabApp.appointmentTreatmentAilment.select' | translate}}</option>
+            <option
+              [ngValue]="patient.id === registerForm.get('patient')!.value?.id ? registerForm.get('patient')!.value : patient"
+              *ngFor="let patient of patientList"
+            >
+              {{ patient.fullName }}
+            </option>
+          </select>
         </div>
 
         <div class="row m-0 p-0 mt-3">
@@ -35,7 +46,7 @@
               type="submit"
               id="save-entity"
               data-cy="entityCreateSaveButton"
-              [disabled]="editForm.invalid"
+              [disabled]="registerForm.invalid"
               class="btn btn-primary w-100"
             >
               <fa-icon icon="save"></fa-icon>&nbsp;<span mediTranslate="entity.action.save">Save</span>
