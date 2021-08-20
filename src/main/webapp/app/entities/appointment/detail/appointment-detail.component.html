@@ -6,8 +6,23 @@
     <div class="col-10">
       <div *ngIf="appointment">
         <div class="card bg-dark">
-          <div class="card-header">
-            <h5 data-cy="appointmentDetailsHeading" mediTranslate="medilabApp.appointment.detail.title">Detalle de la cita</h5>
+          <div class="card-header d-flex">
+            <div>
+              <h5 data-cy="appointmentDetailsHeading" mediTranslate="medilabApp.appointment.detail.title">Detalle de la cita</h5>
+            </div>
+            <div class="ml-auto">
+              <button type="button" class="btn btn-secondary" (click)="showRegisterInvoiceModal()" *ngIf="showRegisterInvoiceBtn()">
+                <fa-icon icon="plus"></fa-icon>
+                <span mediTranslate="medilabApp.medicalExams.btnInvoice">add</span>
+              </button>
+              <div *ngIf="showRegisterInvoiceBtn()">
+                <button type="button" class="btn btn-secondary" (click)="showInvoiceDetail()" *ngIf="!showRegisterInvoiceBtn()">
+                  <fa-icon icon="eye" *ngIf="!isPending || haveInvoice"></fa-icon>
+                  <span mediTranslate="medilabApp.appointment.invoicePending" *ngIf="!isPending"></span>
+                  <span mediTranslate="medilabApp.appointment.viewInvoice" *ngIf="haveInvoice"></span>
+                </button>
+              </div>
+            </div>
           </div>
           <div class="card-body">
             <ul class="list-group" *ngIf="appointment.userType === 'doctor'">
@@ -16,8 +31,10 @@
                 <span>{{ appointment.date | formatMediumDate }}</span>
               </li>
               <li class="list-group-item">
-                <span class="list-group-item__dt text-primary" mediTranslate="medilabApp.appointment.detail.status">Estado de la cita: </span>
-                <span>{{ appointment.status | status}}</span>
+                <span class="list-group-item__dt text-primary" mediTranslate="medilabApp.appointment.detail.status"
+                  >Estado de la cita:
+                </span>
+                <span>{{ appointment.status | status }}</span>
               </li>
               <li class="list-group-item">
                 <span class="list-group-item__dt text-primary" mediTranslate="medilabApp.appointment.detail.patient">Paciente: </span>
@@ -30,7 +47,9 @@
                 <span>{{ appointment.patient?.phone }}</span>
               </li>
               <li class="list-group-item">
-                <span class="list-group-item__dt text-primary" mediTranslate="medilabApp.appointment.detail.email">Correo electrónico: </span>
+                <span class="list-group-item__dt text-primary" mediTranslate="medilabApp.appointment.detail.email"
+                  >Correo electrónico:
+                </span>
                 <span>{{ appointment.patient?.internalUser?.email }}</span>
               </li>
             </ul>
@@ -40,7 +59,9 @@
                 <span>{{ appointment.date | formatMediumDate }}</span>
               </li>
               <li class="list-group-item">
-                <span class="list-group-item__dt text-primary" mediTranslate="medilabApp.appointment.detail.status">Estado de la cita: </span>
+                <span class="list-group-item__dt text-primary" mediTranslate="medilabApp.appointment.detail.status"
+                  >Estado de la cita:
+                </span>
                 <span>{{ appointment.status | status }}</span>
               </li>
               <li class="list-group-item">
@@ -58,7 +79,9 @@
                 <span>{{ appointment.doctor.phone }}</span>
               </li>
               <li class="list-group-item">
-                <span class="list-group-item__dt text-primary" mediTranslate="medilabApp.appointment.detail.email">Correo electrónico: </span>
+                <span class="list-group-item__dt text-primary" mediTranslate="medilabApp.appointment.detail.email"
+                  >Correo electrónico:
+                </span>
                 <span>{{ appointment.doctor.internalUser?.email }}</span>
               </li>
             </ul>
@@ -70,16 +93,13 @@
               type="button"
               class="btn btn-secondary"
               (click)="showRegisterMedicalExamModal()"
-              *ngIf="showRegisterMedicalExam(appointment.status)">
+              *ngIf="showRegisterMedicalExam(appointment.status)"
+            >
               <fa-icon icon="plus"></fa-icon>
               <span mediTranslate="medilabApp.medicalExams.btnAdd">add</span>
             </button>
 
-            <button
-              type="button"
-              class="btn btn-secondary"
-              (click)="showRegisterDiagnosisModal()"
-              *ngIf="isDoctor">
+            <button type="button" class="btn btn-secondary" (click)="showRegisterDiagnosisModal()" *ngIf="isDoctor">
               <fa-icon icon="plus"></fa-icon>
               <span mediTranslate="medilabApp.appointmentTreatmentAilment.add"></span>
             </button>
@@ -94,7 +114,11 @@
     </div>
 
     <div class="col-10 mb-4" *ngIf="medicalExams.length > 0">
-      <medi-medical-exams [medicalExams]="medicalExams" [showButtons]="showButtons" (updateList)="loadMedicalExams($event)"></medi-medical-exams>
+      <medi-medical-exams
+        [medicalExams]="medicalExams"
+        [showButtons]="showButtons"
+        (updateList)="loadMedicalExams($event)"
+      ></medi-medical-exams>
     </div>
   </div>
 </div>

@@ -21,7 +21,8 @@
       "description": "Description",
       "quantity": "Quantity",
       "unitPrice": "Unit Price",
-      "invoiceCode": "Invoice Code"
+      "invoiceCode": "Invoice Code",
+      "deleteLine": "Delete"
     }
   }
 }

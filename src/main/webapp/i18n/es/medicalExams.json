@@ -17,6 +17,8 @@
       "description": "Descripción",
       "removed": "Removed",
       "appointment": "Appointment",
+      "btnAdd": "Add medical exam",
+      "btnInvoice": "Agregar una factura",
       "btnAdd": "Agregar examen médico"
     }
   }

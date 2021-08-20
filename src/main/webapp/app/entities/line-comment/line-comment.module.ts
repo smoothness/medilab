@@ -10,5 +10,6 @@ import { LineCommentRoutingModule } from './route/line-comment-routing.module';
   imports: [SharedModule, LineCommentRoutingModule],
   declarations: [LineCommentComponent, LineCommentDetailComponent, LineCommentUpdateComponent, LineCommentDeleteDialogComponent],
   entryComponents: [LineCommentDeleteDialogComponent],
+  exports: [LineCommentComponent, LineCommentUpdateComponent, LineCommentDeleteDialogComponent],
 })
 export class LineCommentModule {}
