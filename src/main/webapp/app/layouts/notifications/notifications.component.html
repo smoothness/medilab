@@ -4,7 +4,7 @@
       type="button"
       class="ml-notifications__button nav-link font-weight-normal"
       (click)="expanded = !expanded"
-      [disabled]="pendingAppointments.length + canceledAppointments.length + updatedAppointments.length === 0 ? true : false"
+      [disabled]="totalNotificationsLength === 0 ? true : false"
     >
       <fa-icon icon="bell"></fa-icon>
       <span mediTranslate="notifications.title">Notifications</span>
