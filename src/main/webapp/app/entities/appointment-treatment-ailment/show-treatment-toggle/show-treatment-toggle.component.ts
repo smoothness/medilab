@@ -18,6 +18,7 @@ import {AccountService} from "../../../core/auth/account.service";
   styles: []
 })
 export class ShowTreatmentToggleComponent implements OnInit{
+  @Input() showButtons = false;
   @Input() ailment: any;
   @Input() appointment: any;
 

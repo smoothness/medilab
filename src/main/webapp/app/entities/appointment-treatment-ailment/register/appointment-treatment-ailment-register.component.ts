@@ -74,10 +74,10 @@ export class AppointmentTreatmentAilmentRegisterComponent implements OnInit {
         this.saveDiagnosis(treatment);
       },
       () => {
-        this.sweetAlertService.showMsjError('reset.done', 'reset.done');
+        this.sweetAlertService.showMsjError('register.messages.error.error', 'medilabApp.appointmentTreatmentAilment.error');
       },
       () => {
-        this.sweetAlertService.showMsjSuccess('reset.done', 'reset.done').then(() => {
+        this.sweetAlertService.showMsjSuccess('reset.done', 'medilabApp.appointmentTreatmentAilment.created').then(() => {
           this.registerForm.reset();
           this.treatmentComponent?.resetForms();
           this.activeModal.close('register');

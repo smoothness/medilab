@@ -9,9 +9,10 @@
         "notFound": "Ningún  diagnóstico detectado"
       },
       "register": "Registro de diagnóstico",
-      "created": "Un nuevo diagnóstico ha sido creado con el identificador {{ param }}",
+      "created": "Se ha creado el diagnóstico exitosamente.",
       "updated": "Un diagnóstico ha sido actualizado con el identificador {{ param }}",
       "deleted": "Un diagnóstico ha sido eliminado con el identificador {{ param }}",
+      "error": "No se pudo registrar el diagnóstico",
       "delete": {
         "question": "¿Seguro que quiere eliminar diagnóstico {{ id }}?"
       },

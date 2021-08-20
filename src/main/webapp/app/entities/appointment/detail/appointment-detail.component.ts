@@ -13,6 +13,7 @@ import { InvoiceDetailComponent } from '../../invoice/detail/invoice-detail.comp
 import { AppointmentTreatmentAilmentRegisterComponent } from '../../appointment-treatment-ailment/register/appointment-treatment-ailment-register.component';
 import { AppointmentTreatmentAilmentService } from '../../appointment-treatment-ailment/service/appointment-treatment-ailment.service';
 import { IAppointmentTreatmentAilment } from '../../appointment-treatment-ailment/appointment-treatment-ailment.model';
+import {Status} from "../../enumerations/status.model";
 
 @Component({
   selector: 'medi-appointment-detail',
@@ -46,9 +47,9 @@ export class AppointmentDetailComponent implements OnInit {
   }
 
   get showButtons(): boolean {
-    let show = true;
-    if (this.currentUser instanceof Patient) {
-      show = false;
+    let show = false;
+    if (this.currentUser instanceof Doctor && this.appointment.status === Status.PENDING) {
+      show = true;
     }
     return show;
   }
@@ -73,8 +74,6 @@ export class AppointmentDetailComponent implements OnInit {
         this.isPending = true;
       }
     });
-    console.log('invoicePending', this.invoicePending);
-    console.log('isPending', this.isPending);
   }
 
   showRegisterInvoiceBtn(): boolean {
@@ -118,7 +117,7 @@ export class AppointmentDetailComponent implements OnInit {
     modalRef.componentInstance.userCheck = this.currentUser;
   }
 
-  public showRegisterMedicalExam(status: any): boolean {
+  public showRegisterBtns(status: any): boolean {
     let show = false;
     if (this.isDoctor && status === 'PENDING') {
       show = true;
@@ -163,4 +162,5 @@ export class AppointmentDetailComponent implements OnInit {
   previousState(): void {
     window.history.back();
   }
+
 }

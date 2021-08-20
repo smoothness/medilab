@@ -15,7 +15,7 @@
     <div class="card border-0" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
       <div>
         <div class="card-body bg-dark">
-          <div *ngIf="isDoctor">
+          <div *ngIf="showButtons">
             <button class="btn btn-primary" (click)="showRegisterModal()">
               <fa-icon icon="plus"></fa-icon>
               <span mediTranslate="medilabApp.treatment.add"></span>
@@ -28,7 +28,7 @@
               <th scope="col" class="text-primary"><span mediTranslate="medilabApp.treatment.medicines"></span></th>
               <th scope="col" class="text-primary"><span mediTranslate="medilabApp.treatment.specifications"></span></th>
               <th scope="col" class="text-primary"><span mediTranslate="medilabApp.treatment.duration"></span></th>
-              <th scope="col" *ngIf="isDoctor"></th>
+              <th scope="col" *ngIf="showButtons"></th>
             </tr>
             </thead>
             <tbody>
@@ -36,7 +36,7 @@
               <td> {{treatment.medicines}} </td>
               <td> {{treatment.specifications}} </td>
               <td> {{treatment.duration}} </td>
-              <td class="text-right col-3" *ngIf="isDoctor">
+              <td class="text-right col-3" *ngIf="showButtons">
                 <div class="btn-group">
                   <button
                     type="submit"
