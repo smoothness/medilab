@@ -20,6 +20,9 @@ public class RatingUser implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Transient
+    private double average;
+
     @ManyToOne
     @JsonIgnoreProperties(value = { "ratingUsers" }, allowSetters = true)
     private Rating rating;
@@ -34,6 +37,8 @@ public class RatingUser implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties(value = { "internalUser", "ratingUsers", "commentUsers", "internalUsers" }, allowSetters = true)
     private Doctor doctor;
+
+
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -86,6 +91,19 @@ public class RatingUser implements Serializable {
 
     public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
+    }
+
+    public double getAverage() {
+        return average;
+    }
+
+    public RatingUser average(double average) {
+        this.setAverage(average);
+        return this;
+    }
+
+    public void setAverage(double average) {
+        this.average = average;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

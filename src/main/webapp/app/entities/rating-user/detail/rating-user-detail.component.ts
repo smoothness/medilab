@@ -1,24 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, Input, OnInit} from '@angular/core';
 
-import { IRatingUser } from '../rating-user.model';
+import { RatingUserService } from "../service/rating-user.service";
+import { Doctor } from "../../../core/auth/account.model";
 
 @Component({
   selector: 'medi-rating-user-detail',
-  templateUrl: './rating-user-detail.component.html',
+  templateUrl: './rating-user-detail.component.html'
 })
 export class RatingUserDetailComponent implements OnInit {
-  ratingUser: IRatingUser | null = null;
-
-  constructor(protected activatedRoute: ActivatedRoute) {}
+  @Input() doctor: any = {};
+  average = 3.5
+  constructor(protected ratingUserService: RatingUserService) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ ratingUser }) => {
-      this.ratingUser = ratingUser;
-    });
+    this.getAverageRating();
   }
 
-  previousState(): void {
-    window.history.back();
+  public getAverageRating(): void {
+    this.ratingUserService.findByDoctor(this.doctor.doctorId).subscribe((res: any) => {
+     this.average = <number>res.body;
+    })
   }
 }

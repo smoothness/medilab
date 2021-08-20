@@ -8,6 +8,9 @@ import {
   ViewChild,
   Input,
 } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+
+
 import { EmergencyFormComponent } from './emergency-form/emergency-form.component';
 import { EmergencyContact } from './../register.model';
 
@@ -17,48 +20,55 @@ import { EmergencyContact } from './../register.model';
   styleUrls: ['./emergency-contact.component.scss'],
 })
 export class EmergencyContactComponent implements OnInit {
-  @ViewChild('containerElement', { static: true, read: ViewContainerRef })
-  public container!: ViewContainerRef;
+  @ViewChild('containerForms', { static: true, read: ViewContainerRef })
+  public formsParent!: ViewContainerRef;
   @Input() emergencyContacts: any[] = [];
-  public formContacts: ComponentRef<EmergencyFormComponent>[] = [];
+  public formContactsComponents: ComponentRef<EmergencyFormComponent>[] = [];
 
   constructor(private formCreator: ComponentFactoryResolver) {}
 
-  get contacts(): {}[] {
-    const contacts: {}[] = Array.from(this.formContacts, el => new EmergencyContact(el.instance.emergencyContactForm.value));
-    return contacts;
+  public get formsContacts(): FormGroup[] {
+    return Array.from(this.formContactsComponents, component => component.instance.emergencyContactForm);
   }
 
-  get formComponentRef(): ComponentRef<EmergencyFormComponent> {
-    return this.container.createComponent(this.formFactory);
+  public get formsContactsValid(): boolean {
+    return this.formsContacts.every(form => form.valid === true);
   }
 
-  get formFactory(): ComponentFactory<EmergencyFormComponent> {
+  public get contacts(): EmergencyContact[] {
+    return Array.from(this.formsContacts, form => new EmergencyContact(form.value));
+  }
+
+  public get formComponentRef(): ComponentRef<EmergencyFormComponent> {
+    return this.formsParent.createComponent(this.formFactory);
+  }
+
+  public get formFactory(): ComponentFactory<EmergencyFormComponent> {
     return this.formCreator.resolveComponentFactory(EmergencyFormComponent);
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.createComponent();
   }
 
-  createComponent(): void {
-    const formComponent = this.container.createComponent(this.formFactory);
-    formComponent.instance.setInitData(this, this.formContacts.length);
-    this.formContacts.push(formComponent);
+  public createComponent(): void {
+    const formComponent = this.formsParent.createComponent(this.formFactory);
+    formComponent.instance.setInitData(this, this.formContactsComponents.length);
+    this.formContactsComponents.push(formComponent);
   }
 
-  removeForm(pIndex: number): void {
-    for (let i = 0; i < this.formContacts.length; i++) {
-      const currentEl = this.formContacts[i];
+  public removeForm(pIndex: number): void {
+    for (let i = 0; i < this.formContactsComponents.length; i++) {
+      const currentEl = this.formContactsComponents[i];
       if (i === pIndex) {
         currentEl.destroy();
-        this.formContacts.splice(pIndex, 1);
+        this.formContactsComponents.splice(pIndex, 1);
       }
     }
   }
 
-  resetComponent(): void {
-    this.formContacts[0].instance.clearForm();
+  public resetComponent(): void {
+    this.formContactsComponents[0].instance.clearForm();
     this.removeForm(1);
     this.removeForm(2);
   }

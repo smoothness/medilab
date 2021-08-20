@@ -1,36 +1,40 @@
 {
   "home": {
-    "title": "Welcome, Java Hipster!",
+    "title": "Welcome",
     "subtitle": "This is your homepage",
     "welcome": "Welcome: ",
     "viewLastAppointment": "View last appointment",
     "requestAppointment": "Request an appointment",
     "createNewAppointment": "Create a new appointment",
     "upcomingAppointments": "Upcoming appointments",
-    "appointmentDetail": "Detail",
+    "appointmentDetail": "Show appointment",
+    "patientDetail": "Show patient",
     "appointmentDelete": "Cancel appointment",
-    "appointmentDateChange": "Change date",
+    "appointmentDateChange": "Reschedule",
     "appointmentDateChangeModal": {
-      "title": "Change the date of the appointment"
+      "title": "Reschedule appointment"
     },
     "profile": {
       "identification": "Identification:",
       "phone": "Phone:",
       "email": "Email:",
       "specialty": "Specialty:",
-      "rating": "Rating"
+      "rating": "Rating",
+      "name": "Name:"
     },
     "logged": {
       "message": "You are logged in as user \"{{username}}\"."
     },
     "ailments": "Ailments",
     "messages": {
-      "cancelAppointmentTitle": "Appointent canceled",
+      "cancelAppointmentTitle": "Appointment canceled",
       "cancelAppointmentMsj": "This appointment has been canceled, it will be removed from the calendar.",
       "updatedAppointmentDatetitle": "Date change",
-      "updatedAppointmentDateMsj": "The appointment date was changed successfully"
+      "updatedAppointmentDateMsj": "The appointment date was changed successfully",
+      "cancelInvoiceMsj": "The invoice was cancel successfully, remember to issue another.",
+      "cancelInvoiceTitle": "Invoice canceled"
     },
-    "btnNewContact": "Add new contact",
+    "btnNewContact": "Add a new contact",
     "personalInfo": "Personal Info",
     "viewPatient": "View patient"
   }

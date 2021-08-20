@@ -2,15 +2,17 @@
   "medilabApp": {
     "appointmentTreatmentAilment": {
       "home": {
-        "title": "Appointment Treatment Ailments",
+        "title": "Diagnósticos",
         "refreshListLabel": "Refrescar lista",
         "createLabel": "Crear nuevo diagnóstico",
         "createOrEditLabel": "Crear o editar diagnóstico",
         "notFound": "Ningún  diagnóstico detectado"
       },
-      "created": "Un nuevo diagnóstico ha sido creado con el identificador {{ param }}",
+      "register": "Registro de diagnóstico",
+      "created": "Se ha creado el diagnóstico exitosamente.",
       "updated": "Un diagnóstico ha sido actualizado con el identificador {{ param }}",
       "deleted": "Un diagnóstico ha sido eliminado con el identificador {{ param }}",
+      "error": "No se pudo registrar el diagnóstico",
       "delete": {
         "question": "¿Seguro que quiere eliminar diagnóstico {{ id }}?"
       },
@@ -26,7 +28,9 @@
       "diagnosis": "Diagnóstico detallado",
       "date": "Fecha",
       "duration": "Duración",
-      "specification": "Especificación"
+      "specification": "Especificación",
+      "add": "Agregar diagnóstico",
+      "select": "Seleccione una opción"
     }
   }
 }

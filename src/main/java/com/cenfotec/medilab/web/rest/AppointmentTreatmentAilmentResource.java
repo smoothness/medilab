@@ -146,6 +146,7 @@ public class AppointmentTreatmentAilmentResource {
         return appointmentTreatmentAilmentService.findAll();
     }
 
+
     /**
      * {@code GET  /appointment-treatment-ailments/:id} : get the "id" appointmentTreatmentAilment.
      *
@@ -157,6 +158,19 @@ public class AppointmentTreatmentAilmentResource {
         log.debug("REST request to get AppointmentTreatmentAilment : {}", id);
         Optional<AppointmentTreatmentAilment> appointmentTreatmentAilment = appointmentTreatmentAilmentService.findOne(id);
         return ResponseUtil.wrapOrNotFound(appointmentTreatmentAilment);
+    }
+
+
+    @GetMapping("/appointment-treatment-ailments/patient/{id}")
+    public ResponseEntity<List<AppointmentTreatmentAilment>> getAllDiagnosisByPatient(@PathVariable Long id) {
+        List<AppointmentTreatmentAilment> diagnoses = appointmentTreatmentAilmentService.findAllDiagnosisByPatient(id);
+        return ResponseEntity.ok(diagnoses);
+    }
+
+    @GetMapping("/appointment-treatment-ailments/appointment/{id}")
+    public ResponseEntity<List<AppointmentTreatmentAilment>> getAllDiagnosisByAppointment(@PathVariable Long id) {
+        List<AppointmentTreatmentAilment> diagnoses = appointmentTreatmentAilmentService.findAllDiagnosisByAppointment(id);
+        return ResponseEntity.ok(diagnoses);
     }
 
     /**
@@ -172,6 +186,16 @@ public class AppointmentTreatmentAilmentResource {
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
+    }
+
+    @DeleteMapping("/appointment-treatment-ailments/delete/{ailmentId}/{appointmentId}")
+    public ResponseEntity<Void> deleteByAilmentAndAppointment(@PathVariable(name = "ailmentId") Long ailmentId,
+                                                              @PathVariable(name = "appointmentId") Long appointmentId) {
+        appointmentTreatmentAilmentService.deleteByAilmentAndAppointment(ailmentId,appointmentId);
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, appointmentId.toString()))
             .build();
     }
 }

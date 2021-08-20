@@ -1,0 +1,14 @@
+@import '../../../content/scss/bootstrap-variables';
+
+#ml-login {
+  > div {
+    background-color: $dark;
+    padding: 3rem;
+  }
+  .text-primary {
+    color: #f4f2f3 !important;
+  }
+  .tittle {
+    color: #639282;
+  }
+}

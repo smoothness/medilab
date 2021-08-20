@@ -17,37 +17,52 @@ import { SortByDirective } from './sort/sort-by.directive';
 import { SortDirective } from './sort/sort.directive';
 import { ItemCountComponent } from './pagination/item-count.component';
 import { HeaderComponent } from './header/header.component';
+import { PaymentComponent } from './payment/payment.component';
+import { CancelButtonComponent } from './cancel-button/cancel-button.component';
+import { BackButtonComponent } from './back-button/back-button.component'
+import { LanguageSettingComponent } from './language-setting/language-setting.component';
+import { AccountSettingComponent } from './account-setting/account-setting.component';
 
 @NgModule({
   imports: [RouterModule, SharedLibsModule],
   declarations: [
-    FindLanguageFromKeyPipe,
-    TranslateDirective,
-    AlertComponent,
-    AlertErrorComponent,
-    HasAnyAuthorityDirective,
     DurationPipe,
-    FormatMediumDatetimePipe,
-    FormatMediumDatePipe,
-    SortByDirective,
     SortDirective,
-    ItemCountComponent,
+    AlertComponent,
     HeaderComponent,
+    SortByDirective,
+    PaymentComponent,
+    ItemCountComponent,
+    TranslateDirective,
+    BackButtonComponent,
+    AlertErrorComponent,
+    FormatMediumDatePipe,
+    CancelButtonComponent,
+    FindLanguageFromKeyPipe,
+    HasAnyAuthorityDirective,
+    FormatMediumDatetimePipe,
+    AccountSettingComponent,
+    LanguageSettingComponent,
   ],
   exports: [
-    SharedLibsModule,
-    FindLanguageFromKeyPipe,
-    TranslateDirective,
-    AlertComponent,
-    AlertErrorComponent,
-    HasAnyAuthorityDirective,
     DurationPipe,
-    FormatMediumDatetimePipe,
-    FormatMediumDatePipe,
-    SortByDirective,
     SortDirective,
-    ItemCountComponent,
+    AlertComponent,
     HeaderComponent,
+    SortByDirective,
+    SharedLibsModule,
+    PaymentComponent,
+    TranslateDirective,
+    ItemCountComponent,
+    AlertErrorComponent,
+    FormatMediumDatePipe,
+    CancelButtonComponent,
+    FindLanguageFromKeyPipe,
+    HasAnyAuthorityDirective,
+    FormatMediumDatetimePipe,
+    LanguageSettingComponent,
+    AccountSettingComponent,
+    BackButtonComponent,
   ],
 })
 export class SharedModule {

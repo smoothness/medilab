@@ -1,5 +1,5 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
-import { CommonModule, registerLocaleData } from '@angular/common';
+import { registerLocaleData } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import locale from '@angular/common/locales/es';
 import { BrowserModule, Title } from '@angular/platform-browser';
@@ -25,38 +25,37 @@ import { FilterNotCancelled } from './shared/pipes/filterNotCancelled.pipe';
 import { LayoutsComponent } from './layouts/layouts.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    BrowserModule,
-    SharedModule,
-    LayoutsModule,
-    // jhipster-needle-angular-add-module JHipster will add new module here
-    AppRoutingModule,
-    // Set this to true to enable service worker (PWA)
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),
-    HttpClientModule,
-    NgxWebstorageModule.forRoot({ prefix: 'medi', separator: '-', caseSensitive: true }),
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: translatePartialLoader,
-        deps: [HttpClient],
-      },
-      missingTranslationHandler: {
-        provide: MissingTranslationHandler,
-        useFactory: missingTranslationHandler,
-      },
-    }),
-    SweetAlert2Module.forRoot(),
-  ],
-  providers: [
-    Title,
-    { provide: LOCALE_ID, useValue: 'es' },
-    { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
-    httpInterceptorProviders,
-  ],
-  declarations: [LayoutsComponent, FilterNotCancelled],
-  bootstrap: [LayoutsComponent],
+    imports: [
+        BrowserModule,
+        SharedModule,
+        LayoutsModule,
+        // jhipster-needle-angular-add-module JHipster will add new module here
+        AppRoutingModule,
+        // Set this to true to enable service worker (PWA)
+        ServiceWorkerModule.register('ngsw-worker.js', {enabled: false}),
+        HttpClientModule,
+        NgxWebstorageModule.forRoot({prefix: 'medi', separator: '-', caseSensitive: true}),
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: translatePartialLoader,
+                deps: [HttpClient],
+            },
+            missingTranslationHandler: {
+                provide: MissingTranslationHandler,
+                useFactory: missingTranslationHandler,
+            },
+        }),
+        SweetAlert2Module.forRoot(),
+    ],
+    providers: [
+        Title,
+        {provide: LOCALE_ID, useValue: 'es'},
+        {provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter},
+        httpInterceptorProviders,
+    ],
+    declarations: [LayoutsComponent, FilterNotCancelled],
+    bootstrap: [LayoutsComponent],
 })
 export class AppModule {
   constructor(

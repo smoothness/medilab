@@ -1,5 +1,9 @@
-<form name="emergencyContactForm" class="border-bottom py-3" role="form" autocomplete="on" [formGroup]="emergencyContactForm">
-  <div class="text-center">
+<form name="emergencyContactForm" class="border-bottom py-3" role="form" autocomplete="off" [formGroup]="emergencyContactForm">
+  <div class="text-center" *ngIf="!showTitleCount">
+    <h3 class="text-primary" mediTranslate="register.form.addContact">Register contact</h3>
+  </div>
+
+  <div class="text-center" *ngIf="showTitleCount">
     <h3 class="text-primary"><span mediTranslate="register.form.contact">Contact</span> {{ index + 1 }}</h3>
   </div>
 

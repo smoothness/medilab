@@ -79,6 +79,42 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Optional<Invoice> findPendingInvoicesByAppointmentID(Long id) {
+        log.debug("Request to get Invoice : {}", id);
+        return invoiceRepository.findPendingInvoicesByAppointmentID(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Invoice> findInvoicesByAppointmentID(Long id) {
+        log.debug("Request to get Invoice : {}", id);
+        return invoiceRepository.findInvoicesByAppointmentID(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Invoice> findInvoicesByPatient(Long id) {
+        return invoiceRepository.findInvoicesByPatient(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Invoice> findInvoicesByDoctor(Long id) {
+        return invoiceRepository.findInvoicesByDoctor(id);
+    }
+
+    @Override
+    public void payInvoice(Long id) {
+        invoiceRepository.payInvoice(id);
+    }
+
+    @Override
+    public void cancelPendingInvoice(Long id) {
+        invoiceRepository.cancelPendingInvoice(id);
+    }
+
+    @Override
     public void delete(Long id) {
         log.debug("Request to delete Invoice : {}", id);
         invoiceRepository.deleteById(id);

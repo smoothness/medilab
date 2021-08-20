@@ -7,8 +7,16 @@ import { RatingUserDeleteDialogComponent } from './delete/rating-user-delete-dia
 import { RatingUserRoutingModule } from './route/rating-user-routing.module';
 
 @NgModule({
-  imports: [SharedModule, RatingUserRoutingModule],
-  declarations: [RatingUserComponent, RatingUserDetailComponent, RatingUserUpdateComponent, RatingUserDeleteDialogComponent],
-  entryComponents: [RatingUserDeleteDialogComponent],
+  imports: [
+    SharedModule,
+    RatingUserRoutingModule
+  ],
+  declarations: [
+    RatingUserComponent,
+    RatingUserDetailComponent,
+    RatingUserUpdateComponent,
+    RatingUserDeleteDialogComponent
+  ],
+  exports: [ RatingUserDetailComponent ]
 })
 export class RatingUserModule {}

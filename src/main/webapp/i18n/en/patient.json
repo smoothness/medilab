@@ -27,7 +27,8 @@
       "ratingUser": "Rating User",
       "commentUser": "Comment User",
       "internalUser": "Internal User",
-      "ailmentName": "Name:"
+      "ailmentName": "Name:",
+      "download": "Download profile"
     }
   }
 }

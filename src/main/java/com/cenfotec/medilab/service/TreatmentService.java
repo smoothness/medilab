@@ -39,10 +39,13 @@ public interface TreatmentService {
      */
     Optional<Treatment> findOne(Long id);
 
+    List<Treatment> findAllTreatmentsByAilment(Long ailmentId, Long appointmentId);
+
     /**
      * Delete the "id" treatment.
      *
      * @param id the id of the entity.
      */
     void delete(Long id);
+    void updateRemoved(Long id);
 }

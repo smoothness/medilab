@@ -45,8 +45,43 @@ export class AppointmentService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
-  findDoctorAppointments(doctorId: number): Observable<EntityResponseType> {
+  /**
+   *
+   * @param doctorId
+   */
+  public findDoctorAppointments(doctorId: number): Observable<EntityResponseType> {
     return this.http.get<IAppointment>(`${this.resourceUrl}-doctor/${doctorId}`, { observe: 'response' });
+  }
+
+  /**
+   *
+   * @param doctorId
+   */
+  public findDoctorAppointmentsHistory(doctorId: number): Observable<EntityResponseType> {
+    return this.http.get<IAppointment>(`${this.resourceUrl}-doctor/history/${doctorId}`, { observe: 'response' });
+  }
+
+  /**
+   *
+   * @param patientId
+   */
+  public findPatientAppointments(patientId: number): Observable<EntityResponseType> {
+    return this.http.get<IAppointment>(`${this.resourceUrl}-patient/${patientId}`, { observe: 'response' });
+  }
+
+  /**
+   *
+   * @param patientId
+   */
+  public findPatientAppointmentsHistory(patientId: number): Observable<EntityResponseType> {
+    return this.http.get<IAppointment>(`${this.resourceUrl}-patient/history/${patientId}`, { observe: 'response' });
+  }
+
+  /**
+   *
+   */
+  public findAppointmentsHistory(): Observable<EntityResponseType> {
+    return this.http.get<IAppointment>(`${this.resourceUrl}/history`, { observe: 'response' });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {
@@ -81,8 +116,9 @@ export class AppointmentService {
   }
 
   protected convertDateFromClient(appointment: IAppointment): IAppointment {
+    appointment.date = dayjs(String(appointment.date));
     return Object.assign({}, appointment, {
-      date: appointment.date?.isValid() ? appointment.date.format(DATE_FORMAT) : undefined,
+      date: appointment.date.isValid() ? appointment.date.format(DATE_FORMAT) : undefined,
     });
   }
 

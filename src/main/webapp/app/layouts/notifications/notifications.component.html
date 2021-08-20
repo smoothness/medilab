@@ -1,0 +1,100 @@
+<div class="ml-notifications">
+  <div class="dropdown">
+    <button
+      type="button"
+      class="ml-notifications__button nav-link font-weight-normal"
+      (click)="expanded = !expanded"
+      [disabled]="totalNotificationsLength === 0 ? true : false"
+    >
+      <fa-icon icon="bell"></fa-icon>
+      <span mediTranslate="notifications.title">Notifications</span>
+      <span class="badge badge-light">{{ totalNotificationsLength }}</span>
+    </button>
+    <div *ngIf="expanded === true" class="notifications-dropdown-menu" (click)="setNotified($event.target)">
+      <div *ngIf="userType === 'doctor'; else patientBlock">
+        <ul>
+          <li *ngFor="let pending of pendingAppointments">
+            <a class="notification" [routerLink]="['/main/appointment', pending.id, 'view']" [id]="pending.id">
+              <div>
+                <span mediTranslate="notifications.appointments.patient.pending"></span>
+                <span>{{ pending?.patientExt?.internalUser?.completeName }}</span>
+              </div>
+              <span>{{ pending?.date | date }}</span>
+            </a>
+          </li>
+        </ul>
+        <ul>
+          <li *ngFor="let updated of updatedAppointments">
+            <a class="notification" [routerLink]="['/main/appointment', updated.id, 'view']" [id]="updated.id">
+              <div>
+                <span mediTranslate="notifications.appointments.patient.updated"></span>
+                <span>{{ updated?.patientExt?.internalUser?.completeName }}</span>
+              </div>
+              <span>{{ updated?.date | date }}</span>
+            </a>
+          </li>
+        </ul>
+        <ul>
+          <li *ngFor="let canceled of canceledAppointments">
+            <a class="notification" [routerLink]="['/main/appointment', canceled.id, 'view']" [id]="canceled.id">
+              <div>
+                <span mediTranslate="notifications.appointments.patient.canceled"></span>
+                <span>{{ canceled?.patientExt?.internalUser?.completeName }}</span>
+              </div>
+              <span>{{ canceled?.date | date }}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <ng-template #patientBlock>
+        <div>
+          <ul>
+            <li *ngFor="let pending of pendingAppointments">
+              <a class="notification" [routerLink]="['/main/appointment', pending.id, 'view']" [id]="pending.id">
+                <div>
+                  <span mediTranslate="notifications.appointments.doctor.pending"></span>
+                  <span>{{ pending?.doctorExt?.internalUser?.completeName }}</span>
+                </div>
+                <span>{{ pending?.date | date }}</span>
+              </a>
+            </li>
+          </ul>
+          <ul>
+            <li *ngFor="let updated of updatedAppointments">
+              <a class="notification" [routerLink]="['/main/appointment', updated.id, 'view']" [id]="updated.id">
+                <div>
+                  <span mediTranslate="notifications.appointments.doctor.updated"></span>
+                  <span>{{ updated?.doctorExt?.internalUser?.completeName }}</span>
+                </div>
+                <span>{{ updated?.date | date }}</span>
+              </a>
+            </li>
+          </ul>
+          <ul>
+            <li *ngFor="let canceled of canceledAppointments">
+              <a class="notification" [routerLink]="['/main/appointment', canceled.id, 'view']" [id]="canceled.id">
+                <div>
+                  <span mediTranslate="notifications.appointments.doctor.canceled"></span>
+                  <span>{{ canceled?.doctorExt?.internalUser?.completeName }}</span>
+                </div>
+                <span>{{ canceled?.date | date }}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </ng-template>
+      <div>
+        <ul>
+          <li *ngFor="let pending of pendingInvoices">
+            <a class="notification" [routerLink]="['/main/invoice', pending.id, 'view']" [id]="pending.id">
+              <div>
+                <span mediTranslate="notifications.invoices.pending" [translateValues]="{ id: pending.id }"></span>
+              </div>
+              <span>{{ pending?.date | date }}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

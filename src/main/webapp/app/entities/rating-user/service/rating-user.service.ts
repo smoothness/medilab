@@ -26,6 +26,7 @@ export class RatingUserService {
     });
   }
 
+
   partialUpdate(ratingUser: IRatingUser): Observable<EntityResponseType> {
     return this.http.patch<IRatingUser>(`${this.resourceUrl}/${getRatingUserIdentifier(ratingUser) as number}`, ratingUser, {
       observe: 'response',
@@ -34,6 +35,10 @@ export class RatingUserService {
 
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<IRatingUser>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  findByDoctor(id: number): Observable<{}> {
+    return this.http.get(`${this.resourceUrl}/average/${id}`, { observe: 'response' });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {

@@ -9,6 +9,7 @@ import { DATE_FORMAT } from 'app/config/input.constants';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IInvoice, getInvoiceIdentifier } from '../invoice.model';
+import { IAppointment } from '../../appointment/appointment.model';
 
 export type EntityResponseType = HttpResponse<IInvoice>;
 export type EntityArrayResponseType = HttpResponse<IInvoice[]>;
@@ -33,6 +34,14 @@ export class InvoiceService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  payInvoice(id: number): Observable<any> {
+    return this.http.put(`${this.resourceUrl}/payment/${id}`, { observe: 'response' });
+  }
+
+  cancelPendingInvoice(id: number): Observable<any> {
+    return this.http.put(`${this.resourceUrl}/cancel/${id}`, { observe: 'response' });
+  }
+
   partialUpdate(invoice: IInvoice): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(invoice);
     return this.http
@@ -43,6 +52,12 @@ export class InvoiceService {
   find(id: number): Observable<EntityResponseType> {
     return this.http
       .get<IInvoice>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  checkPending(id: number): Observable<EntityResponseType> {
+    return this.http
+      .get<IInvoice>(`${this.resourceUrl}/pending/${id}`, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
@@ -72,6 +87,18 @@ export class InvoiceService {
       return [...invoicesToAdd, ...invoiceCollection];
     }
     return invoiceCollection;
+  }
+
+  findInvoicesByAppointmentID(id: number): Observable<EntityResponseType> {
+    return this.http.get<IInvoice>(`${this.resourceUrl}/history/${id}`, { observe: 'response' });
+  }
+
+  findInvoicesByDoctor(id: number): Observable<EntityResponseType> {
+    return this.http.get<IInvoice>(`${this.resourceUrl}/doctor/${id}`, { observe: 'response' });
+  }
+
+  findInvoicesByPatient(id: number): Observable<EntityResponseType> {
+    return this.http.get<IInvoice>(`${this.resourceUrl}/patient/${id}`, { observe: 'response' });
   }
 
   protected convertDateFromClient(invoice: IInvoice): IInvoice {

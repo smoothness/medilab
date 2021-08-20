@@ -13,9 +13,10 @@
       "next": "Next",
       "previous": "Previous",
       "contact": "Contact",
-      "addContact": "Add emergency contact",
+      "addContact": "Emergency contact",
       "delContact": "Delete contact",
-      "specialty": "Specialty"
+      "specialty": "Specialty",
+      "doctorCode": "Doctor Code"
     },
     "messages": {
       "validate": {

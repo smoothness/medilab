@@ -5,24 +5,55 @@
         "title": "Citas",
         "refreshListLabel": "Refrescar lista",
         "createOrEditAppointment": "Crear o editar una cita",
-        "notFound": "Ningúna cita encontrada"
+        "notFound": "Ninguna cita encontrada"
       },
-      "created": "Una nuevo cita ha sido creada con el identificador {{ param }}",
-      "updated": "Una cita ha sido actualizado con el identificador {{ param }}",
-      "deleted": "Una cita ha sido eliminada con el identificador {{ param }}",
+      "created": "Una nueva cita ha sido creada.",
+      "updated": "Se ha reagendado la cita exitosamente.",
+      "deleted": "Una cita ha sido eliminada.",
       "delete": {
         "question": "¿Seguro que quiere eliminar la cita {{ id }}?"
       },
       "detail": {
-        "title": "Cita"
+        "title": "Detalle de la cita",
+        "date": "Fecha: ",
+        "status": "Estado de la cita: ",
+        "appointmentTreatmentAilment": "Dolencia, tratamiento",
+        "medicalExams": "Exámenes médicos",
+        "patient": "Paciente: ",
+        "doctor": "Doctor: ",
+        "phone": "Teléfono: ",
+        "email": "Correo electrónico: ",
+        "specialty": "Especialidad: "
       },
-      "id": "ID",
-      "date": "Fecha",
-      "status": "Status",
-      "appointmentTreatmentAilment": "Dolencia, tratamiento",
-      "medicalExams": "Exámenes médicos",
-      "patient": "Paciente",
-      "doctor": "Doctor"
+
+
+
+      "history": {
+        "title": "Historial de citas",
+        "date": "Fecha",
+        "status": "Estado de la cita",
+        "patient": "Paciente",
+        "doctor": "Doctor",
+        "phone": "Teléfono",
+        "email": "Correo electrónico",
+        "specialty": "Especialidad"
+      },
+      "action": {
+        "view": "Ver cita",
+        "doctor": "Ver médico",
+        "patient": "Ver paciente"
+      },
+      "pipe": {
+        "canceled": "Cancelada",
+        "pending": "Pendiente",
+        "finished": "Finalizada"
+      },
+      "invoicePending": "Ver factura pendiente",
+      "viewInvoice": "Ver factura",
+      "register": {
+        "title": "Agendar cita",
+        "registered": "La cita se ha agendado exitosamente."
+      }
     }
   }
 }

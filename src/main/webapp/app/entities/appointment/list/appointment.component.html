@@ -1,90 +1,135 @@
-<div class="container">
-  <h2 id="page-heading" data-cy="AppointmentHeading">
-    <span mediTranslate="medilabApp.appointment.home.title">Appointments</span>
-
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span mediTranslate="medilabApp.appointment.home.refreshListLabel">Refresh List</span>
-      </button>
-
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-appointment"
-        [routerLink]="['/appointment/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span mediTranslate="medilabApp.appointment.home.createLabel"> Create a new Appointment </span>
-      </button>
+<section class="row p-0 m-0">
+  <div class="col-12 card bg-dark p-0 m-0">
+    <div class="card-header">
+      <h5 mediTranslate="home.upcomingAppointments"></h5>
     </div>
-  </h2>
-
-  <medi-alert-error></medi-alert-error>
-
-  <medi-alert></medi-alert>
-
-  <div class="alert alert-warning" id="no-result" *ngIf="appointments?.length === 0">
-    <span mediTranslate="medilabApp.appointment.home.notFound">No appointments found</span>
-  </div>
-
-  <div class="table-responsive" id="entities" *ngIf="appointments && appointments.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
-      <thead>
-        <tr>
-          <th scope="col"><span mediTranslate="global.field.id">ID</span></th>
-          <th scope="col"><span mediTranslate="medilabApp.appointment.date">Date</span></th>
-          <th scope="col"><span mediTranslate="medilabApp.appointment.status">Status</span></th>
-          <th scope="col"><span mediTranslate="medilabApp.appointment.patient">Patient</span></th>
-          <th scope="col"><span mediTranslate="medilabApp.appointment.doctor">Doctor</span></th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let appointment of appointments; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/appointment', appointment.id, 'view']">{{ appointment.id }}</a>
-          </td>
-          <td>{{ appointment.date | formatMediumDate }}</td>
-          <td mediTranslate="{{ 'medilabApp.Status.' + appointment.status }}">{{ appointment.status }}</td>
-          <td>
-            <div *ngIf="appointment.patient">
-              <a [routerLink]="['/patient', appointment.patient?.id, 'view']">{{ appointment.patient?.id }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="appointment.doctor">
-              <a [routerLink]="['/doctor', appointment.doctor?.id, 'view']">{{ appointment.doctor?.id }}</a>
-            </div>
-          </td>
-          <td class="text-right">
-            <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/appointment', appointment.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
+    <div class="card-body mt-4">
+      <div class="alert alert-warning text-center" id="no-result" *ngIf="appointments?.length === 0">
+        <span class="h5 text-dark" mediTranslate="medilabApp.appointment.home.notFound"></span>
+      </div>
+      <div class="table-responsive" *ngIf="appointments && appointments.length > 0">
+        <table class="table table-striped table-hover" aria-describedby="page-heading">
+          <thead>
+          <tr class="text-primary">
+            <th scope="col" class="h6"><span mediTranslate="medilabApp.appointment.history.date">Date</span></th>
+            <th scope="col" class="h6" *ngIf="!isPatient"><span mediTranslate="medilabApp.appointment.history.patient">Patient</span></th>
+            <th scope="col" class="h6" *ngIf="!isDoctor"><span mediTranslate="medilabApp.appointment.history.doctor">Doctor</span></th>
+            <th scope="col" class="h6" *ngIf="!isDoctor"><span mediTranslate="medilabApp.appointment.history.specialty">Doctor</span></th>
+            <th scope="col" class="h6"><span mediTranslate="medilabApp.appointment.history.phone">Doctor</span></th>
+            <th scope="col"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let appointment of appointments; let i = index" [id]="i" data-cy="entityTable">
+            <td>
+              <span class="text-primary mr-2 h6">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </span>
+              {{ appointment.date | date }}
+            </td>
+            <td *ngIf="!isPatient">
+              <div *ngIf="appointment.patient">
+                {{appointment.patient.internalUser?.completeName}} {{appointment.patient.secondSurname}}
+              </div>
+            </td>
+            <td *ngIf="!isDoctor">
+              <div>
+                {{appointment.doctor.internalUser?.completeName}} {{appointment.doctor.secondSurname}}
+              </div>
+            </td>
+            <td *ngIf="!isDoctor">
+              {{appointment.doctor.specialty}}
+            </td>
+            <td>
+              <span class="text-primary mr-2 h6">
+              <fa-icon icon="mobile-alt"></fa-icon>
+            </span>
+              {{appointment.doctor.phone  || appointment.patient.phone}}
+            </td>
+            <td class="text-right">
+              <a
+                class="btn btn-primary"
+                [routerLink]="['/main/appointment', appointment.id, 'view']"
               >
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" mediTranslate="entity.action.view">View</span>
-              </button>
-              <button
-                type="submit"
-                [routerLink]="['/appointment', appointment.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" mediTranslate="entity.action.edit">Edit</span>
-              </button>
-              <button type="submit" (click)="delete(appointment)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+                <span mediTranslate="medilabApp.appointment.action.view"></span>
+              </a>
+              <!-- VIEW FOR PATIENT -->
+              <div class="btn-group" *ngIf="!isDoctor">
+                <button
+                  type="submit"
+                  [routerLink]="['/main/doctor', appointment.doctor.id, 'view']"
+                  class="btn btn-primary"
+                  data-cy="entityDetailsButton"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                  <span class="d-none d-md-inline" mediTranslate="medilabApp.appointment.action.doctor">View</span>
+                </button>
+              </div>
+              <!-- VIEW FOR DOCTOR -->
+              <div class="btn-group" *ngIf="!isPatient">
+                <!-- View Patient profile -->
+                <button
+                  class="btn btn-primary mr-1"
+                  mediTranslate="home.viewPatient"
+                  [routerLink]="['/main/patient', appointment.patient.id, 'view']"
+                >
+                  View Patient
+                </button>
+
+                <!-- Reschedule Appointment -->
+                <button
+                  class="btn btn-tertiary mr-1"
+                  mediTranslate="home.appointmentDateChange"
+                  (click)="openRescheduleModal(appointment)"
+                >
+                </button>
+
+                <!-- Cancel Appointment -->
+                <button class="btn btn-danger" mediTranslate="home.appointmentDelete" (click)="cancelAppointment(appointment)">
+                  Cancelar cita
+                </button>
+              </div>
+
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
-</div>
+</section>
+
+<ng-template #changeDateModal>
+  <div class="change-date-modal">
+    <div class="mt-3">
+      <div class="card bg-dark">
+        <h5 class="card-header" mediTranslate="home.appointmentDateChangeModal.title">Cambiar la fecha de la cita</h5>
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+              <div class="input-group">
+                <input
+                  class="form-control"
+                  [formControl]="updatedDate"
+                  placeholder="dd/mm/yyyy"
+                  name="dp"
+                  ngbDatepicker
+                  #dateDp="ngbDatepicker"
+                />
+                <span class="input-group-append">
+                  <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()">
+                    <fa-icon icon="calendar-alt"></fa-icon>
+                  </button>
+                </span>
+              </div>
+              <div class="change-date-modal__button-container">
+                <button type="button" class="btn btn-primary" (click)="handleChangeDate()">Cambiar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,88 +1,48 @@
-<div>
-  <h2 id="page-heading" data-cy="MedicalExamsHeading">
-    <span mediTranslate="medilabApp.medicalExams.home.title">Medical Exams</span>
-
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span mediTranslate="medilabApp.medicalExams.home.refreshListLabel">Refresh List</span>
-      </button>
-
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-medical-exams"
-        [routerLink]="['/medical-exams/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span mediTranslate="medilabApp.medicalExams.home.createLabel"> Create a new Medical Exams </span>
-      </button>
+<div class="row m-0 p-0">
+  <div class="card bg-dark col-12 m-0 p-0">
+    <div class="card-header">
+      <h5 mediTranslate="medilabApp.medicalExams.detail.title"></h5>
     </div>
-  </h2>
 
-  <medi-alert-error></medi-alert-error>
+    <div class="card-body">
+      <div class="alert alert-warning" id="no-result" *ngIf="medicalExams?.length === 0">
+        <span mediTranslate="medilabApp.emergencyContact.home.notFound">No emergencyContacts found</span>
+      </div>
+      <div class="table-responsive" id="entities" *ngIf="medicalExams && medicalExams.length > 0">
+        <table class="table table-striped table-hover" aria-describedby="page-heading">
+          <thead>
+          <tr>
+            <th scope="col" class="h6 text-primary"><span mediTranslate="medilabApp.medicalExams.name">Name</span></th>
+            <th scope="col" class="h6 text-primary"><span mediTranslate="medilabApp.medicalExams.description">Description</span></th>
+            <th scope="col" *ngIf="showButtons"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let medicalExam of medicalExams" data-cy="entityTable">
+            <td>{{ medicalExam.name }}</td>
+            <td>{{ medicalExam.description }}</td>
+            <td class="text-right" *ngIf="showButtons">
+              <div class="btn-group" *ngIf="showButtons">
+                <button
+                  type="submit"
+                  (click)="showEditModal(medicalExam)"
+                  class="btn btn-primary btn-sm"
+                  data-cy="entityEditButton"
+                >
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                  <span class="d-none d-md-inline" mediTranslate="entity.action.edit">Edit</span>
+                </button>
 
-  <medi-alert></medi-alert>
-
-  <div class="alert alert-warning" id="no-result" *ngIf="medicalExams?.length === 0">
-    <span mediTranslate="medilabApp.medicalExams.home.notFound">No medicalExams found</span>
-  </div>
-
-  <div class="table-responsive" id="entities" *ngIf="medicalExams && medicalExams.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
-      <thead>
-        <tr>
-          <th scope="col"><span mediTranslate="global.field.id">ID</span></th>
-          <th scope="col"><span mediTranslate="medilabApp.medicalExams.name">Name</span></th>
-          <th scope="col"><span mediTranslate="medilabApp.medicalExams.description">Description</span></th>
-          <th scope="col"><span mediTranslate="medilabApp.medicalExams.removed">Removed</span></th>
-          <th scope="col"><span mediTranslate="medilabApp.medicalExams.appointment">Appointment</span></th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let medicalExams of medicalExams; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/medical-exams', medicalExams.id, 'view']">{{ medicalExams.id }}</a>
-          </td>
-          <td>{{ medicalExams.name }}</td>
-          <td>{{ medicalExams.description }}</td>
-          <td>{{ medicalExams.removed }}</td>
-          <td>
-            <div *ngIf="medicalExams.appointment">
-              <a [routerLink]="['/appointment', medicalExams.appointment?.id, 'view']">{{ medicalExams.appointment?.id }}</a>
-            </div>
-          </td>
-          <td class="text-right">
-            <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/medical-exams', medicalExams.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" mediTranslate="entity.action.view">View</span>
-              </button>
-
-              <button
-                type="submit"
-                [routerLink]="['/medical-exams', medicalExams.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" mediTranslate="entity.action.edit">Edit</span>
-              </button>
-
-              <button type="submit" (click)="delete(medicalExams)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+                <button type="submit" (click)="delete(medicalExam)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                  <fa-icon icon="times"></fa-icon>
+                  <span class="d-none d-md-inline" mediTranslate="entity.action.delete">Delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>

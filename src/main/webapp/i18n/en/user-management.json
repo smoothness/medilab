@@ -15,8 +15,8 @@
     "detail": {
       "title": "User"
     },
-    "login": "Login",
-    "firstName": "First name",
+    "login": "Identification",
+    "firstName": "Name",
     "lastName": "Last name",
     "email": "Email",
     "activated": "Activated",
@@ -30,6 +30,15 @@
     "selectRole": "Select a user type",
     "roleDoctor": "Doctor",
     "rolePatient": "Patient",
-    "roleAdmin": "Admin"
+    "roleAdmin": "Admin",
+    "langPipe": {
+      "en": "English",
+      "es": "Spanish"
+    },
+    "rolePipe": {
+      "roleDoctor": "Doctor",
+      "rolePatient": "Patient",
+      "roleAdmin": "Admin"
+    }
   }
 }

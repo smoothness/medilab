@@ -1,0 +1,13 @@
+<header>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed">
+    <a class="navbar-brand" routerLink="/main">
+      <img src="./content/images/logo.png" width="30" class="d-inline-block p-0 m-0" />
+      <span jhiTranslate="global.title" class="mt-5 navbar-title">Medilab</span>
+    </a>
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ml-auto">
+      <medi-notifications [user]="notificationUser"></medi-notifications>
+      <medi-language-setting (menuEvent)="collapseNavbar()"></medi-language-setting>
+      <medi-account-setting></medi-account-setting>
+    </ul>
+  </nav>
+</header>

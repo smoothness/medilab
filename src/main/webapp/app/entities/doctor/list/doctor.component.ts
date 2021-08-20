@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { IDoctor } from '../doctor.model';
 import { DoctorService } from '../service/doctor.service';
-import { DoctorDeleteDialogComponent } from '../delete/doctor-delete-dialog.component';
+
 import { Doctor } from '../../../core/auth/account.model';
 
 @Component({
@@ -11,7 +10,7 @@ import { Doctor } from '../../../core/auth/account.model';
   templateUrl: './doctor.component.html',
 })
 export class DoctorComponent implements OnInit {
-  doctors?: Doctor[];
+  doctors: Doctor[] = [];
   isLoading = false;
 
   constructor(protected doctorService: DoctorService, protected modalService: NgbModal) {}
@@ -32,20 +31,5 @@ export class DoctorComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAll();
-  }
-
-  trackId(index: number, item: IDoctor): number {
-    return item.id!;
-  }
-
-  delete(doctor: IDoctor): void {
-    const modalRef = this.modalService.open(DoctorDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.doctor = doctor;
-    // unsubscribe not needed because closed completes on modal close
-    modalRef.closed.subscribe(reason => {
-      if (reason === 'deleted') {
-        this.loadAll();
-      }
-    });
   }
 }

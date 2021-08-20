@@ -39,10 +39,32 @@ public interface InvoiceService {
      */
     Optional<Invoice> findOne(Long id);
 
+    void payInvoice(Long id);
+
+    void cancelPendingInvoice(Long id);
+
     /**
      * Delete the "id" invoice.
      *
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Get the  invoice with "id".
+     *
+     * @param id the id of the entity.
+     * @return the entity.
+     */
+    Optional<Invoice> findPendingInvoicesByAppointmentID(Long id);
+
+    /**
+     * Get the  invoice with "id".
+     *
+     * @param id the id of the entity.
+     * @return the entity.
+     */
+    List<Invoice> findInvoicesByAppointmentID(Long id);
+    List<Invoice> findInvoicesByPatient(Long id);
+    List<Invoice> findInvoicesByDoctor(Long id);
 }

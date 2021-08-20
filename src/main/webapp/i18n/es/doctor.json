@@ -6,7 +6,7 @@
         "refreshListLabel": "Refrescar lista",
         "createLabel": "Crear nuevo Doctor",
         "createOrEditLabel": "Crear o editar Doctor",
-        "notFound": "Ningún Doctors encontrado"
+        "notFound": "Ningún médico encontrado"
       },
       "created": "Un nuevo Doctor ha sido creado con el identificador {{ param }}",
       "updated": "Un Doctor ha sido actualizado con el identificador {{ param }}",
@@ -28,7 +28,8 @@
         "completeName": "Nombre del médico",
         "email": "Correo electrónico",
         "btnDate": "Solicitar cita"
-      }
+      },
+      "doctorCode": "Su código de médico es:"
     }
   }
 }

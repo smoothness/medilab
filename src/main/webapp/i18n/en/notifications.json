@@ -1,0 +1,20 @@
+{
+  "notifications": {
+    "title": "Notifications",
+    "appointments": {
+      "patient": {
+        "pending": "Pending appointment with patient ",
+        "updated": "Modified appointment with patient ",
+        "canceled": "Canceled appointment with patient "
+      },
+      "doctor": {
+        "pending": "Pending appointment with doctor ",
+        "updated": "Updated appointment with doctor ",
+        "canceled": "Canceled appointment with doctor "
+      }
+    },
+    "invoices": {
+      "pending": "Invoice with number {{ id }} is pending payment."
+    }
+  }
+}

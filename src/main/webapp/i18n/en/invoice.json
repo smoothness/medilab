@@ -4,29 +4,42 @@
       "home": {
         "title": "Invoices",
         "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Invoice",
-        "createOrEditLabel": "Create or edit a Invoice",
-        "notFound": "No Invoices found"
+        "createLabel": "Register an invoice",
+        "createOrEditLabel": "Create or edit an invoice",
+        "notFound": "No invoices found"
       },
-      "created": "A new Invoice is created with identifier {{ param }}",
-      "updated": "A Invoice is updated with identifier {{ param }}",
-      "deleted": "A Invoice is deleted with identifier {{ param }}",
+      "created": "The invoice has been created successfully",
+      "updated": "An Invoice was updated with identifier {{ param }}",
+      "deleted": "An Invoice was deleted with identifier {{ param }}",
       "delete": {
         "question": "Are you sure you want to delete Invoice {{ id }}?"
       },
       "detail": {
         "title": "Invoice"
       },
-      "id": "ID",
+      "id": "Code",
       "date": "Date",
       "subtotal": "Subtotal",
-      "taxes": "Taxes 13%",
+      "taxes": "Tax 13%",
       "discount": "Discount",
       "total": "Total",
       "status": "Status",
       "appointment": "Appointment",
       "lineComment": "Line Comment",
-      "invoiceDetail": "Invoice Detail"
+      "invoiceDetail": "Invoice Detail",
+      "quantity": "Quantity Detail",
+      "description": "Description",
+      "unitPrice": "Unit Price",
+      "pending": "Pending",
+      "paid": "Paid",
+      "canceled": "Canceled",
+      "invoiceNumber": "Invoice number",
+      "download": "Download invoice",
+      "addLine": "Add line",
+      "action": {
+        "view": "View invoice",
+        "cancel": "Cancel invoice"
+      }
     }
   }
 }

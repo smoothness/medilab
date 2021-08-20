@@ -4,36 +4,46 @@
       <h2 mediTranslate="medilabApp.doctor.home.title"></h2>
     </div>
     <div class="mt-4">
-      <div class="table-responsive" id="entities" *ngIf="doctors && doctors.length > 0">
+      <div class="alert alert-warning text-center" id="no-result" *ngIf="doctors.length === 0">
+        <span class="h5 text-dark" mediTranslate="medilabApp.doctor.home.notFound">No doctors found</span>
+      </div>
+      <div class="table-responsive table-hover" id="entities" *ngIf="doctors && doctors.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
           <thead>
-            <tr>
-              <th scope="col"><span mediTranslate="medilabApp.doctor.list.completeName">Complete Name</span></th>
-              <th scope="col"><span mediTranslate="medilabApp.doctor.list.email">Complete Name</span></th>
-              <th scope="col"><span mediTranslate="medilabApp.doctor.specialty">Specialty</span></th>
-              <th scope="col"></th>
+            <tr class="text-primary">
+              <th scope="col" class="h6"><span mediTranslate="medilabApp.doctor.list.completeName">Complete Name</span></th>
+              <th scope="col" class="h6"><span mediTranslate="medilabApp.doctor.list.email">Complete Name</span></th>
+              <th scope="col" class="h6"><span mediTranslate="medilabApp.doctor.specialty">Specialty</span></th>
+              <th scope="col" class="h6"><span mediTranslate="medilabApp.ratingUser.home.title"></span></th>
+              <th scope="col" class="h6"></th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let doctor of doctors; trackBy: trackId" data-cy="entityTable">
+            <tr *ngFor="let doctor of doctors" data-cy="entityTable">
               <td>
                 {{ doctor.fullName }}
               </td>
               <td>{{ doctor.email }}</td>
               <td>{{ doctor.specialty }}</td>
-
+              <td><medi-rating-user-detail [doctor]="doctor" class="h5"></medi-rating-user-detail> </td>
               <td class="text-right">
-                <div>
-                  <button
-                    type="submit"
-                    [routerLink]="['/doctor', doctor.id, 'edit']"
-                    class="btn btn-primary btn-sm"
-                    data-cy="entityEditButton"
-                  >
-                    <fa-icon icon="calendar-alt"></fa-icon>
-                    <span class="d-none d-md-inline" mediTranslate="medilabApp.doctor.list.btnDate">Edit</span>
-                  </button>
-                </div>
+                <button
+                  type="submit"
+                  [routerLink]="['/main/doctor', doctor.doctorId, 'view']"
+                  class="btn btn-primary"
+                  data-cy="entityDetailsButton"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                  <span class="d-none d-md-inline" mediTranslate="medilabApp.appointment.action.doctor">View</span>
+                </button>
+                <a
+                  target="_blank"
+                  class="btn btn-primary"
+                  href="https://wa.me/50688885353?text=Solicito%20una%20cita%20con%20el%20doctor"
+                >
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                  <span class="d-none d-md-inline" mediTranslate="medilabApp.doctor.list.btnDate">Solicitar una cita</span>
+                </a>
               </td>
             </tr>
           </tbody>
@@ -42,13 +52,3 @@
     </div>
   </div>
 </section>
-
-<div>
-  <medi-alert-error></medi-alert-error>
-
-  <medi-alert></medi-alert>
-
-  <div class="alert alert-warning" id="no-result" *ngIf="doctors?.length === 0">
-    <span mediTranslate="medilabApp.doctor.home.notFound">No doctors found</span>
-  </div>
-</div>
