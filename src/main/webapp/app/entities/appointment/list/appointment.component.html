@@ -68,6 +68,7 @@
               </div>
               <!-- VIEW FOR DOCTOR -->
               <div class="btn-group" *ngIf="!isPatient">
+                <!-- View Patient profile -->
                 <button
                   class="btn btn-primary mr-1"
                   mediTranslate="home.viewPatient"
@@ -75,13 +76,16 @@
                 >
                   View Patient
                 </button>
+
+                <!-- Reschedule Appointment -->
                 <button
-                  class="btn btn-tertiary btn-sm mr-1"
+                  class="btn btn-tertiary mr-1"
                   mediTranslate="home.appointmentDateChange"
-                  (click)="openChangeDateModal(changeDateModal, i)"
+                  (click)="openRescheduleModal(appointment)"
                 >
-                  Cambiar fecha
                 </button>
+
+                <!-- Cancel Appointment -->
                 <button class="btn btn-danger" mediTranslate="home.appointmentDelete" (click)="cancelAppointment(appointment)">
                   Cancelar cita
                 </button>

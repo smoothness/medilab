@@ -8,7 +8,7 @@
         "notFound": "Ninguna cita encontrada"
       },
       "created": "Una nueva cita ha sido creada.",
-      "updated": "Una cita ha sido actualizado.",
+      "updated": "Se ha reagendado la cita exitosamente.",
       "deleted": "Una cita ha sido eliminada.",
       "delete": {
         "question": "¿Seguro que quiere eliminar la cita {{ id }}?"
@@ -49,7 +49,11 @@
         "finished": "Finalizada"
       },
       "invoicePending": "Ver factura pendiente",
-      "viewInvoice": "Ver factura"
+      "viewInvoice": "Ver factura",
+      "register": {
+        "title": "Agendar cita",
+        "registered": "La cita se ha agendado exitosamente."
+      }
     }
   }
 }

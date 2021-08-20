@@ -11,6 +11,7 @@ import { AppointmentHistoryComponent } from './history/appointment-history.compo
 import { StatusPipe } from './pipe/status.pipe';
 import { LineCommentModule } from '../line-comment/line-comment.module';
 import {AppointmentTreatmentAilmentModule} from "../appointment-treatment-ailment/appointment-treatment-ailment.module";
+import { RegisterAppointmentComponent } from './register/register-appointment.component';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import {AppointmentTreatmentAilmentModule} from "../appointment-treatment-ailmen
     AppointmentDeleteDialogComponent,
     AppointmentHistoryComponent,
     StatusPipe,
+    RegisterAppointmentComponent,
   ],
   entryComponents: [AppointmentDeleteDialogComponent],
   exports: [ AppointmentComponent ],

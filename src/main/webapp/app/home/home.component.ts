@@ -17,6 +17,8 @@ import { Doctor, Patient } from './../core/auth/account.model';
 import { IAppointment } from 'app/entities/appointment/appointment.model';
 import { IMedicalExams } from '../entities/medical-exams/medical-exams.model';
 import { IAppointmentTreatmentAilment } from 'app/entities/appointment-treatment-ailment/appointment-treatment-ailment.model';
+import {AppointmentUpdateComponent} from "../entities/appointment/update/appointment-update.component";
+import {RegisterAppointmentComponent} from "../entities/appointment/register/register-appointment.component";
 
 @Component({
   selector: 'medi-home',
@@ -176,6 +178,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   public getPatientDiagnoses(): void {
     this.appointmentTreatmentAilmentService.findByPatient(this.currentUser.patientId).subscribe((res: any) => {
       this.patientDiagnosis = res.body;
+    });
+  }
+
+  public showRegisterAppointmentModal(): void {
+    const modalRef = this.modalService.open(RegisterAppointmentComponent, {centered: true});
+    modalRef.componentInstance.doctor = this.currentUser;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'register') {
+        this.getAppointmentsDoctor();
+      }
     });
   }
 
