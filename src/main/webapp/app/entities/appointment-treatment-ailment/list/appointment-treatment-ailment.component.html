@@ -26,12 +26,16 @@
             <!-- Treatment table -->
             <td class="text-center" >
               <div>
-                <medi-show-treatment-toggle [ailment]="diagnosis.ailment" [appointment]="diagnosis.appointment"></medi-show-treatment-toggle>
+                <medi-show-treatment-toggle
+                  [ailment]="diagnosis.ailment"
+                  [appointment]="diagnosis.appointment"
+                  [showButtons]="showButtons()"
+                ></medi-show-treatment-toggle>
               </div>
             </td>
 
             <!-- Buttons Section -->
-            <td class="text-right" *ngIf="isDoctor">
+            <td class="text-right" *ngIf="showButtons()">
               <div class="btn-group">
                 <button
                   type="submit"
